@@ -1,0 +1,47 @@
+package com.hrt.frame.service.sysadmin;
+
+import java.util.List;
+
+import com.hrt.frame.entity.model.NoticeModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.NoticeBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface INoticeService {
+
+	/**
+	 * 查询公告发布
+	 */
+	DataGridBean queryNoticeRelease(NoticeBean notice,UserBean userBean) throws Exception;
+	
+	/**
+	 * 查询公告消息
+	 */
+	DataGridBean queryNoticeNew(NoticeBean notice,UserBean userBean) throws Exception;
+	
+	/**
+	 * 添加公告
+	 */
+	void saveNotice(NoticeBean notice, UserBean user) throws Exception;
+	
+	/**
+	 * 删除公告
+	 */
+	boolean deleteNotice(Integer id) throws Exception;
+	
+	/**
+	 * 修改状态为已读
+	 */
+	void updateStatus(NoticeBean notice) throws Exception;
+
+	/**
+	 * 查询公告内容
+	 */
+	List<NoticeModel> queryNoticeMsgById(Integer noticeID);
+	
+	/**
+	 * 查询有多少还未读公告
+	 */
+	long noticeCount(Integer status,String unNo) throws Exception;
+	
+}

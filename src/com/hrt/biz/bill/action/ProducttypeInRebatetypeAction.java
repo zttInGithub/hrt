@@ -1,0 +1,271 @@
+package com.hrt.biz.bill.action;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.biz.bill.entity.pagebean.ProducttypeInRebatetypeBean;
+import com.hrt.biz.bill.service.ProducttypeInRebatetypeService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.util.JxlOutExcelUtil;
+import com.opensymphony.xwork2.ModelDriven;
+
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
+public class ProducttypeInRebatetypeAction extends BaseAction implements ModelDriven<ProducttypeInRebatetypeBean> {
+
+	private static final long serialVersionUID = 1L;
+    private static final Log log = LogFactory.getLog(ProducttypeInRebatetypeAction.class);
+   
+    private ProducttypeInRebatetypeBean bean =new ProducttypeInRebatetypeBean();
+   
+    private ProducttypeInRebatetypeService producttypeInRebatetypeService;
+    public ProducttypeInRebatetypeService getProducttypeInRebatetypeService() {
+		return producttypeInRebatetypeService;
+	}
+
+	public void setProducttypeInRebatetypeService(ProducttypeInRebatetypeService producttypeInRebatetypeService) {
+		this.producttypeInRebatetypeService = producttypeInRebatetypeService;
+	}
+
+	@Override
+	public ProducttypeInRebatetypeBean getModel() {
+		return bean;
+	}
+    
+    /**
+	 * 活动产品--查询
+	 */
+	public void queryProducttypeInRebatetype(){
+		DataGridBean dgb = new DataGridBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try {
+			dgb=producttypeInRebatetypeService.queryProducttypeInRebatetype(bean,(UserBean)userSession);
+		} catch (Exception e) {
+			log.error("分页查询活动产品对应信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	/**
+	 * 活动产品--根据id查询
+	 */
+	public void queryProducttypeForId(){
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		bean.setId(Integer.parseInt(getRequest().getParameter("id")));
+		Map map=null;
+		try {
+			map = producttypeInRebatetypeService.queryProducttypeForId(bean,(UserBean)userSession);
+		} catch (Exception e) {
+			log.error("查询产品活动信息异常：" + e);
+		}
+		super.writeJson(map);
+	}
+    
+	/**
+	 * 产品类型--查询
+	 */
+	public void queryProducttype(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd = producttypeInRebatetypeService.queryProducttype();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			super.writeJson(dgd);
+	}
+	
+	/**
+	 * 产品类型/活动--添加
+	 */
+	public void addProducttypeInRebatetype(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {			
+			try {
+				if(bean.getRebatetype()==null||bean.getProducttype()==null) {
+					json.setSuccess(false);
+					json.setMsg("请确保所有信息已填写");
+					super.writeJson(json);
+				}
+				List list= producttypeInRebatetypeService.queryRebatetype(bean,(UserBean)userSession);
+				if(list.size()>0){
+					json.setSuccess(false);
+					json.setMsg("您设置的活动已被占用，请重新填写");
+				}else{
+					producttypeInRebatetypeService.addProducttypeInRebatetype(bean, (UserBean) userSession);
+					json.setSuccess(true);
+					json.setMsg("添加产品活动模版成功");
+				}
+			} catch (Exception e) {
+				log.error("添加产品活动模版异常：" + e);
+				json.setMsg("添加产品活动模版失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 产品类型/活动--修改
+	 */
+	public void updateProducttypeInRebatetype(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {			
+			try {
+				if(bean.getRebatetype()==null||bean.getProducttype()==null) {
+					json.setSuccess(false);
+					json.setMsg("请确保所有信息已填写");
+					super.writeJson(json);
+					return;
+				}
+				List list= producttypeInRebatetypeService.queryRebatetype(bean,(UserBean)userSession);
+				if(list.size()<1){
+					json.setSuccess(false);
+					json.setMsg("您设置的活动不存在，请确认");
+				}else{
+					String string = producttypeInRebatetypeService.updateProducttypeInRebatetype(bean, (UserBean) userSession);
+					if(!"修改成功".equals(string)) {
+						json.setSuccess(false);
+						json.setMsg("修改产品活动模版失败");
+						super.writeJson(json);
+						return;
+					}
+					json.setSuccess(true);
+					json.setMsg("修改产品活动模版成功");
+				}
+			} catch (Exception e) {
+				log.error("修改产品活动模版异常：" + e);
+				json.setMsg("修改产品活动模版失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 产品/活动关系删除
+	 */
+	public void delProducttypeInRebatetype(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		bean.setId(Integer.parseInt(getRequest().getParameter("id")));
+		try {
+			producttypeInRebatetypeService.delProducttypeInRebatetype(bean,(UserBean)userSession);
+			json.setMsg("删除成功！");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMsg("删除失败！");
+			json.setSuccess(false);
+			log.error("删除产品/活动关系异常：" + e);
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 *终端状态统计---产品类型
+	 */
+	public void queryTerminalStatistics(){
+		DataGridBean dgb = new DataGridBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try {
+			dgb=producttypeInRebatetypeService.queryTerminalStatistics(bean,(UserBean)userSession);
+		} catch (Exception e) {
+			log.error("分页查询终端统计异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 活动类型--查询
+	 */
+	public void queryRebatetype(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd = producttypeInRebatetypeService.queryRebatetype();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			super.writeJson(dgd);
+	}
+	
+	/**
+	 *终端状态统计---活动类型
+	 */
+	public void queryTerminalStatisticsForRebatetype(){
+		DataGridBean dgb = new DataGridBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try {
+			dgb=producttypeInRebatetypeService.queryTerminalStatisticsForRebatetype(bean,(UserBean)userSession);
+		} catch (Exception e) {
+			log.error("分页查询终端统计异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 导出终端状态统计---产品类型
+	 */
+	public void exportTerminalStatisticsForProducttype() throws IOException, RowsExceededException, WriteException {
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		HttpServletResponse response = super.getResponse();
+		List<Map<String, Object>> list = producttypeInRebatetypeService.exportTerminalStatisticsForProducttype(bean,(UserBean)userSession);
+		String titles[] = {"产品类型","已发货待注册","已注册待激活","激活量","运营中心机构号","运营中心名称","一代机构号","一代机构名称"};
+		List excelList = new ArrayList();
+		excelList.add(titles);
+		for (int i = 0; i < list.size(); i++) {
+			Map map = list.get(i);
+			String rowContents[] = {
+					map.get("PRODUCTTYPE")==null?"":map.get("PRODUCTTYPE").toString(),
+					map.get("DELIVERYNOREGISTERNUMBER")==null?"":map.get("DELIVERYNOREGISTERNUMBER").toString(),
+					map.get("REGISTERNOACTIVATIONNUMBER")==null?"":map.get("REGISTERNOACTIVATIONNUMBER").toString(),
+					map.get("ACTIVATIONNUMBER")==null?"":map.get("ACTIVATIONNUMBER").toString(),
+					map.get("YUNYING")==null?"":map.get("YUNYING").toString(),
+					map.get("YUNYINGNAME")==null?"":map.get("YUNYINGNAME").toString(),
+					map.get("YIDAI")==null?"":map.get("YIDAI").toString(),
+					map.get("YIDAINAME")==null?"":map.get("YIDAINAME").toString()
+			};
+			excelList.add(rowContents);
+		}
+		String excelName = "终端状态统计（产品类型）.csv";
+		JxlOutExcelUtil.writeCSVFile(excelList, titles.length, response, excelName);
+	}
+	
+	/**
+	 * 导出终端状态统计---活动类型
+	 */
+	public void exportTerminalStatisticsForRebatetype() throws IOException, RowsExceededException, WriteException {
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		HttpServletResponse response = super.getResponse();
+		List<Map<String, Object>> list = producttypeInRebatetypeService.exportTerminalStatisticsForRebatetype(bean,(UserBean)userSession);
+		String titles[] = {"活动类型","已发货待注册","已注册待激活","激活量"};
+		List excelList = new ArrayList();
+		excelList.add(titles);
+		for (int i = 0; i < list.size(); i++) {
+			Map map = list.get(i);
+			String rowContents[] = {
+					map.get("REBATETYPE")==null?"":map.get("REBATETYPE").toString(),
+					map.get("DELIVERYNOREGISTERNUMBER")==null?"":map.get("DELIVERYNOREGISTERNUMBER").toString(),
+					map.get("REGISTERNOACTIVATIONNUMBER")==null?"":map.get("REGISTERNOACTIVATIONNUMBER").toString(),
+					map.get("ACTIVATIONNUMBER")==null?"":map.get("ACTIVATIONNUMBER").toString(),
+			};
+			excelList.add(rowContents);
+		}
+		String excelName = "终端状态统计（活动类型）.csv";
+		JxlOutExcelUtil.writeCSVFile(excelList, titles.length, response, excelName);
+	}
+}

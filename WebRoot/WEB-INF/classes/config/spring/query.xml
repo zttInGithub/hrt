@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<bean id="queryDao" class="com.hrt.frame.dao.sysadmin.impl.QueryDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="queryService" class="com.hrt.frame.service.sysadmin.impl.QueryServiceImpl" >
+		<property name="queryDao" ref="queryDao"></property>
+	</bean>
+	
+	<bean id="queryAction" class="com.hrt.frame.action.sysadmin.QueryAction" scope="prototype">
+		<property name="queryService" ref="queryService"></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,16 @@
+.download_install:hover{
+    text-decoration:underline;
+}
+.download_install{
+    font:12px sans-serif;
+    border:1px solid #808080;
+    line-height:22px;
+    color:#000!important;
+    width:152px;
+    height:21px;
+    display:inline-block;
+    text-align:center;
+    cursor:pointer;
+    text-decoration:none;
+    outline:none;
+}

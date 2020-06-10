@@ -1,0 +1,46 @@
+package com.hrt.util;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+public class PropertiesUtil {
+    /**
+     * 读取properties属性值
+     *
+     * @param filePath
+     * @param key
+     * @return
+     */
+    public static String readValue(String filePath, String key) {
+        Properties props = new Properties();
+        InputStream in = null;
+        String value = null;
+        String path = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
+        try {
+            in = new BufferedInputStream(new FileInputStream(path + File.separator + filePath));
+            props.load(in);
+            value = props.getProperty(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return value;
+    }
+
+    public static void main(String[] args) {
+        //web下路径为readValue("/param.properties", "APPUNNO");
+        String s = readValue("resource/param.properties", "APPUNNO");
+        System.out.println(s);
+    }
+}

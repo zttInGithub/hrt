@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantTaskDetail5Model" table="BILL_MERCHANTTASKDETAIL5">
+        <id name="bt5id" column="BT5ID">
+            <generator class="sequence"> 
+				<param name="sequence">S_BILL_MERCHANTTASKDETAIL5</param>
+			</generator>
+        </id>
+        <property name="bmtkid" column="BMTKID"/>
+        <property name="bankAccName" column="BANKACCNAME"/>
+        <property name="legalNum" column="LEGALNUM"/>
+        <property name="legalPositiveName" column="LEGALPOSITIVENAME"/>
+        <property name="legalReverseName" column="LEGALREVERSENAME"/>
+        <property name="legalHandName" column="LEGALHANDNAME"/>
+        
+    </class>
+</hibernate-mapping>

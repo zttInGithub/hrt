@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PurchaseInvoiceModel" table="bill_PurchaseInvoice">
+        <id name="piid" column="PIID">
+            <generator class="sequence">
+				<param name="sequence">S_bill_PurchaseInvoice</param>
+			</generator>
+        </id>
+        <property name="poid" column="POID" />
+        <property name="invoiceOrderID" column="INVOICEORDERID" />
+        <property name="invoiceId" column="INVOICEID" />
+        <property name="invoiceStatus" column="INVOICESTATUS" />
+        <property name="invoiceAmt" column="INVOICEAMT"/>
+        <property name="text" column="TEXT" />
+        <property name="invoiceNum" column="INVOICENUM" />
+        <property name="noTax" column="NOTAX" />
+        <property name="tax" column="TAX" />
+        <property name="haveTax" column="HAVETAX" />
+        <property name="invoiceRemark" column="INVOICEREMARK" />
+        <property name="invoiceCdate" column="INVOICECDATE" type="timestamp" />
+        <property name="invoiceCby" column="INVOICECBY" />
+        <property name="invoiceApproveDate" column="INVOICEAPPROVEDATE" type="timestamp" />
+        <property name="invoiceApprover" column="INVOICEAPPROVER"/>
+        <property name="invoiceApproveNote" column="INVOICEAPPROVENOTE"/>
+        <property name="invoiceApproveStatus" column="INVOICEAPPROVESTATUS" />
+        <property name="invoiceType" column="INVOICETYPE" />
+    </class>
+</hibernate-mapping>

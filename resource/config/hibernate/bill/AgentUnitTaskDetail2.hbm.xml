@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="AgentUnitTaskDetail2Model" table="BILL_AGENTUNITTASKDETAIL2">
+		<id name="bautdid" column="BAUTDID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_AGENTUNITTASKDETAIL2</param>
+			</generator>
+		</id>
+        <property name="accType" column="ACCTYPE" />
+        <property name="bankBranch" column="BANKBRANCH" />
+        <property name="bankAccNo" column="BANKACCNO" />
+        <property name="bankAccName" column="BANKACCNAME" />
+        <property name="bankType" column="BANKTYPE" />
+        <property name="areaType" column="AREATYPE" />
+        <property name="bankArea" column="BANKAREA" />
+        <property name="accountLegalAUpLoad" column="ACCOUNTLEGALAUPLOAD" />
+        <property name="accountLegalBUpLoad" column="ACCOUNTLEGALBUPLOAD" />
+        <property name="accountLegalHandUpLoad" column="ACCOUNTLEGALHANDUPLOAD" />
+        <property name="accountAuthUpLoad" column="ACCOUNTAUTHUPLOAD" />
+        
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,395 @@
+package com.hrt.biz.bill.action;
+
+import java.io.OutputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.hrt.biz.bill.entity.model.MerchantTerminalInfoModel;
+import com.hrt.biz.bill.entity.pagebean.AggPayTerminfoBean;
+import com.hrt.biz.bill.service.IAggPayTerminfoService;
+import com.hrt.biz.bill.service.IMerchantInfoService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.opensymphony.xwork2.ModelDriven;
+
+/**
+ * 聚合商户终端
+ * @author tenglong
+ */
+public class AggPayTerminfoAction extends BaseAction implements ModelDriven<AggPayTerminfoBean> {
+	
+	private static final long serialVersionUID = 1L;
+
+	private static final Log log = LogFactory.getLog(AggPayTerminfoAction.class);
+
+	private AggPayTerminfoBean aggPayTerminfoBean = new AggPayTerminfoBean();
+
+	@Override
+	public AggPayTerminfoBean getModel() {
+		return aggPayTerminfoBean;
+	}
+
+	private IAggPayTerminfoService infoService;
+	private IMerchantInfoService merchantInfoService;
+
+	public AggPayTerminfoBean getAggPayTerminfoBean() {
+		return aggPayTerminfoBean;
+	}
+
+	public void setAggPayTerminfoBean(AggPayTerminfoBean aggPayTerminfoBean) {
+		this.aggPayTerminfoBean = aggPayTerminfoBean;
+	}
+
+	public IAggPayTerminfoService getInfoService() {
+		return infoService;
+	}
+
+	public void setInfoService(IAggPayTerminfoService infoService) {
+		this.infoService = infoService;
+	}
+
+	public IMerchantInfoService getMerchantInfoService() {
+		return merchantInfoService;
+	}
+
+	public void setMerchantInfoService(IMerchantInfoService merchantInfoService) {
+		this.merchantInfoService = merchantInfoService;
+	}
+	
+	/**
+	 * 生产聚合终端
+	 */
+	public void addAggPayTerminfoInfo(){
+		JsonBean json = new JsonBean();
+		UserBean user = (UserBean)super.getRequest().getSession().getAttribute("user");
+		Integer result = 0;
+		try{
+			if(aggPayTerminfoBean.getAggnum()<=5000){
+				result = infoService.addAggPayTerminfoStatus(aggPayTerminfoBean,user);
+				if(result==0){
+					json.setSuccess(false);
+					json.setMsg("机构号不存在");
+				}else{
+					json.setSuccess(true);
+					json.setMsg("生产"+result+"条聚合终端");
+				}
+			}else{
+				json.setSuccess(false);
+				json.setMsg("生成数量请填写5000之内！");
+			}
+		}catch (Exception e) {
+			json.setSuccess(false);
+			json.setMsg("生产聚合终端失败");
+			log.info("生产聚合终端异常"+e);
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 合成聚合终端
+	 */
+	public void updateAggPayTerminfoHeCh(){
+		JsonBean json = new JsonBean();
+		UserBean user = (UserBean)super.getRequest().getSession().getAttribute("user");
+		Integer result = 0;
+		try{
+			result = infoService.updateAggPayTerminfoHeCh(aggPayTerminfoBean,user);
+			json.setSuccess(true);
+			json.setMsg("合成"+result+"条聚合终端");
+		}catch (Exception e) {
+			json.setSuccess(false);
+			json.setMsg("合成聚合终端失败");
+			log.info("合成聚合终端异常"+e);
+		}
+		super.writeJson(json);
+	}
+	
+	//增机审批资料勾选审批
+	public void AddAggPayTerminalInfoSelected(){
+		String bmtids =super.getRequest().getParameter("BAPIDs");
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				String ids[]=bmtids.split(",");
+				infoService.updateAggPayTerminalinfosY(aggPayTerminfoBean, ((UserBean)userSession),ids);
+				json.setSuccess(true);
+				json.setMsg("增机审批成功");
+			} catch (Exception e) {
+				log.error("批量增机审批异常：" + e);
+				json.setMsg("批量增机审失败");
+				e.printStackTrace();
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 更新邀请码
+	 */
+//	public void updateAggPayTerminfo(){
+//		JsonBean json = new JsonBean();
+//		Integer result=01;
+//		if(aggPayTerminfoBean.get!=null&&!"".equals(qrInvitationInfoBean.getIcPassword())&&
+//				qrInvitationInfoBean.getInvitationCode()!=null&&!"".equals(qrInvitationInfoBean.getInvitationCode())&&
+//				qrInvitationInfoBean.getMid()!=null&&!"".equals(qrInvitationInfoBean.getMid())&&
+//				qrInvitationInfoBean.getBankAccName()!=null&&!"".equals(qrInvitationInfoBean.getBankAccName())&&
+//				qrInvitationInfoBean.getBankAccNum()!=null&&!"".equals(qrInvitationInfoBean.getBankAccNum())){
+//			try{
+//				result = infoService.updateQRInvitationStatus(qrInvitationInfoBean);
+//				if(result == 02){
+//					DataGridBean dgb = merchantInfoService.queryMerchantInfoMid(qrInvitationInfoBean.getMid());
+//					if(dgb!=null&&dgb.getRows().size()>0){
+//						MerchantInfoBean merchantInfoBean=(MerchantInfoBean) dgb.getRows().get(0);
+//						json.setMsg("注册成功");
+//						json.setSuccess(true);
+//						json.setObj(merchantInfoBean.getQrUrl());
+//					}
+//				}else if(result == 01){
+//					json.setMsg("密码错误");
+//					json.setSuccess(false);
+//				}else if(result == 00){
+//					json.setMsg("入账信息错误");
+//					json.setSuccess(false);
+//				}else if(result == 03){
+//					json.setMsg("邀请码已被使用");
+//					json.setSuccess(false);
+//				}
+//			}catch (Exception e) {
+//				log.info("手刷商户注册邀请码异常:"+e);
+//				json.setMsg("注册异常");
+//				json.setSuccess(false);
+//			}
+//		}else{
+//			json.setMsg("请填全信息");
+//			json.setSuccess(false);
+//		}
+//		super.writeJson(json);
+//	}
+	
+	/**
+	 * 查询所有
+	 * 
+	 */
+	public void queryAggPayTerminfo(){
+		DataGridBean dgb = new DataGridBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try{
+			dgb = infoService.queryAggPayTerminfo(aggPayTerminfoBean,((UserBean)userSession));
+		}catch (Exception e) {
+			log.info("查询异常:"+e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	public void listAggPayTerminalInfoZ(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			if(aggPayTerminfoBean==null){
+				aggPayTerminfoBean = new AggPayTerminfoBean();
+			}
+			aggPayTerminfoBean.setStatus(1);
+			dgb = infoService.queryAggPayTerminfoZ(aggPayTerminfoBean,((UserBean)userSession));
+		} catch (Exception e) {
+			log.error("分页查询聚合终端信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 分配邀请码
+	 */
+	public void updateAggPayTerminfoUnno(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		String bapids = super.getRequest().getParameter("bapids");
+		String unno = super.getRequest().getParameter("UNNO");
+		if(unno==null||"".equals(unno)){
+			json.setSuccess(false);
+			json.setMsg("请正确选择机构号");
+			super.writeJson(json);
+			return ;
+		}
+		aggPayTerminfoBean.setUnno(unno);
+		Integer result = 0 ;
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+//			String qrs[]=bapids.split(",");
+			try{
+				if("1".equals(aggPayTerminfoBean.getSecond())){
+					aggPayTerminfoBean.setSecondRate(aggPayTerminfoBean.getSecondRate1());
+				}
+				result = infoService.updateAggPayTerminfoUnno(aggPayTerminfoBean,bapids,(UserBean)userSession);
+				if(result>0){
+					json.setSuccess(true);
+					json.setMsg("成功分配给机构号:"+aggPayTerminfoBean.getUnno()+"-"+result+"个聚合终端");
+				}else{
+					json.setSuccess(false);
+					json.setMsg("请正确选择机构号");
+				}
+			}catch (Exception e) {
+				log.info("分配聚合终端异常"+e);
+				json.setSuccess(false);
+				json.setMsg("分配失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 区间分配邀请码
+	 */
+	public void updateAggPayTerminfoUnno1(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		String qrtid_10500 = super.getRequest().getParameter("qrtid_10500");
+		String qrtid1_10500 = super.getRequest().getParameter("qrtid1_10500");
+		String unno = super.getRequest().getParameter("UNNO");
+		if(unno==null||"".equals(unno)){
+			json.setSuccess(false);
+			json.setMsg("请正确选择机构号");
+			super.writeJson(json);
+			return ;
+		}
+		aggPayTerminfoBean.setUnno(unno);
+		aggPayTerminfoBean.setQrtid(qrtid_10500);
+		aggPayTerminfoBean.setQrtid1(qrtid1_10500);
+		Integer result = 0 ;
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				if("1".equals(aggPayTerminfoBean.getSecond())){
+					aggPayTerminfoBean.setSecondRate(aggPayTerminfoBean.getSecondRate1());
+				}
+				result = infoService.updateAggPayTerminfoUnno1(aggPayTerminfoBean,(UserBean)userSession);
+				if(result>0){
+					json.setSuccess(true);
+					json.setMsg("成功分配给机构号:"+aggPayTerminfoBean.getUnno()+"-"+result+"个聚合终端");
+				}else if (result==-1){
+					json.setSuccess(false);
+					json.setMsg("存在已使用的终端");	
+				}else{
+					json.setSuccess(false);
+					json.setMsg("请正确选择机构号");
+				}
+			}catch (Exception e) {
+				log.info("分配聚合终端异常"+e);
+				json.setSuccess(false);
+				json.setMsg("分配失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 区间修改费率和结算周期
+	 */
+	public void updateAggPayTerminfoRate(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		String qrtid_10500 = super.getRequest().getParameter("qrtid_10512");
+		String qrtid1_10500 = super.getRequest().getParameter("qrtid1_10512");
+		aggPayTerminfoBean.setQrtid(qrtid_10500);
+		aggPayTerminfoBean.setQrtid1(qrtid1_10500);
+		Integer result = 0 ;
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				if("1".equals(aggPayTerminfoBean.getSecond())){
+					aggPayTerminfoBean.setSecondRate(aggPayTerminfoBean.getSecondRate1());
+				}
+				result = infoService.updateAggPayTerminfoRate(aggPayTerminfoBean,(UserBean)userSession);
+				if(result>0){
+					json.setSuccess(true);
+					json.setMsg("成功修改:"+result+"个聚合终端");
+				}else if (result==-1){
+					json.setSuccess(false);
+					json.setMsg("存在已使用或非本机构的终端");	
+				}else{
+					json.setSuccess(false);
+					json.setMsg("修改失败!");
+				}
+			}catch (Exception e) {
+				log.info("修改聚合终端异常"+e);
+				json.setSuccess(false);
+				json.setMsg("修改失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 区间回拨邀请码
+	 */
+	public void updateAggPayTerminfoUnno2(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		Integer result = 0 ;
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				result = infoService.updateAggPayTerminfoUnno2(aggPayTerminfoBean,(UserBean)userSession);
+				if(result>0){
+					json.setSuccess(true);
+					json.setMsg("成功回拨"+result+"个聚合终端");
+				}else if (result==-1){
+					json.setSuccess(false);
+					json.setMsg("存在已使用的终端");	
+				}else{
+					json.setSuccess(false);
+					json.setMsg("禁止越级回拨终端");
+				}
+			}catch (Exception e) {
+				log.info("回拨聚合终端异常"+e);
+				json.setSuccess(false);
+				json.setMsg("回拨失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 导出所有
+	 */
+	public void exportAggPayTerminfoAll(){
+		HttpServletResponse response=getResponse();
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				HSSFWorkbook wb=infoService.exportAggPayTerminfoAll(aggPayTerminfoBean,((UserBean)userSession));
+				response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+				response.setHeader("Content-Disposition", "attachment; filename=" + new String("聚合终端资料导出".getBytes("GBK"), "ISO-8859-1") + ".xls");  
+		        OutputStream ouputStream= response.getOutputStream();
+		        wb.write(ouputStream);  
+		        ouputStream.flush();  
+		        ouputStream.close();
+				json.setSuccess(true);
+				json.setMsg("聚合终端资料导出Excel成功");
+			} catch (Exception e) {
+				log.error("聚合终端资料导出Excel异常：" + e);
+				json.setMsg("聚合终端资料导出Excel失败");
+			}
+		}
+	}
+}

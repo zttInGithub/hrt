@@ -1,0 +1,188 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+	$(function(){
+		$('#SignUserID').combogrid({
+			url : '${ctx}/sysAdmin/agentsales_searchAgentSales.action',
+			idField:'BUSID',
+			textField:'BUSID',
+			mode:'remote',
+			fitColumns:true,
+			columns:[[ 
+				{field:'SALENAME',title:'销售姓名',width:150},
+				{field:'BUSID',title:'id',width:150,hidden:true}
+			]]
+		});
+	});
+</script>
+<form id="sysAdmin_10600_saveForm" method="post" enctype="multipart/form-data" >
+	<fieldset>
+		<legend>商户信息</legend>
+		<table class="table">
+		<!-- MerchantInfoCommBean 类 -->
+		   	<tr>
+		   		<th>商户编号：</th>
+		   		<td><input type="text" name="MID" style="width:200px;"/><font color="red">&nbsp;*</font>
+		   		
+		   		</td>
+		   	
+		   		<th>商户名称：</th>
+	   			<td><input type="text" name="MERCHNAME" style="width:200px;"/><font color="red">&nbsp;*</font></td>
+		   	</tr>
+		   	<tr>
+			   	<th>法人：</th>
+	   			<td><input type="text" name="LegalPerson" style="width:200px;"/></td>
+	   			
+	   			<th>身份证号码：</th>
+	   			<td>
+	   				<input type="text" name="LegalNum" style="width:200px;" />
+	   			</td>
+	   		</tr>
+	   		<tr>
+	   			<th>经营范围：</th>
+	   			<td><input type="text" name="BusinessScope" style="width:200px;"/></td>
+		   	
+		   		<th>经营地址：</th>
+	   			<td><input type="text" name="BAddr" style="width:200px;"/></td>
+	   		</tr>
+		   	<tr>	
+		   		<th>注册地址：</th>
+	   			<td>
+	   				<input type="text" name="RAddr" style="width:200px;" />
+	   			</td>
+	   			
+	   			<th>店铺名称：</th>
+	   			<td>
+	   				<input type="text" name="ShoppingName" style="width:200px;" />
+	   			</td>
+	   		</tr>
+		   	<tr>
+		   		<th>押金：</th>
+		   		<td><input type="text" name="Deposit" style="width:200px;" class="easyui-validatebox" data-options="validType:'intOrFloat'" maxlength="100"/></td>
+		   		
+		   		<th>服务费：</th>
+		   		<td><input type="text" name="ServiceCharge" style="width:200px;" class="easyui-validatebox" data-options="validType:'intOrFloat'" maxlength="100"/></td>
+		   	</tr>
+		   	<tr>
+				<th>销售：</th>
+				<td><select id="SignUserID" name="SignUserID" class="easyui-combogrid" data-options="required:true,editable:false"  style="width:204px;"></select></td>
+	   		</tr>	
+		</table>
+	</fieldset>
+	
+	<fieldset>
+		<legend>卡类信息</legend>
+		<table class='table'>
+			<tr>
+				<th>卡种：</th>
+				<td>
+					<input type='text'  name='CardType'  style="width:200px;"/>
+				</td>
+			
+				<th> 安装卡种：</th>
+				<td>
+					<input type='text'  name='InstallCard'  style="width:200px;"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>开户行：</th>
+				<td>
+					<input type='text' name='BankName'  style="width:200px;"/>
+				</td>
+				
+				<th>账号：</th>
+				<td>
+					<input type='text' name='AccNo'   style="width:200px;"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>开户账号名称：</th>
+				<td>
+					<input type='text' name='BankAccName'  style="width:200px;"/>
+				</td>
+				<th>内卡费率：</th>
+				<td>
+					<input type='text' name='BankFeeRate'  style="width:200px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th>外卡费率：</th>
+				<td>
+					<input type='text' name='WildFeeRate' style="width:200px;"/>
+				</td>
+				<th>储联卡费率：</th>
+				<td>
+					<input type='text' name='StorageFeeRate'  style="width:200px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th>储值卡费率：</th>
+				<td>
+					<input type='text' name='FeeRate'  style="width:200px;"/>
+				</td>
+				<th>支付系统行号：</th>
+				<td>
+					<input type='text' name='PayBankID'  style="width:200px;"/>
+				</td>
+			</tr>
+			<tr>
+				<th>交换号：</th>
+				<td >
+					<input type='text' name='Exchange'  style="width:200px;"/>
+			</tr>
+		</table>
+	</fieldset>
+		
+	<fieldset>
+		<legend>联系人信息</legend>
+		<table class="table">
+			<tr>
+				<th>联系人：</th>
+		   		<td><input type="text" name="ContactPerson" style="width:200px;"/></td>
+		   		
+		   		<th>手机：</th>
+		   		<td><input type="text" name="ContactPhone" style="width:200px;"/></td>
+			</tr>
+		   	<tr>
+		   		<th>固话：</th>
+		   		<td><input type="text" name="ContactTel" style="width:200px;"/></td>
+				<th>邮箱：</th>
+		   		<td><input type="text" name="Email" style="width:200px;"/></td>
+			</tr>
+			<tr>
+				<th>第二联系人：</th>
+		   		<td><input type="text" name="SecondContactPerson" style="width:200px;"/></td>
+		   		
+		   		<th>第二手机：</th>
+		   		<td><input type="text" name="SecondContactPhone" style="width:200px;"/></td>
+			</tr>
+		   	<tr>
+		   		<th>第二固话：</th>
+		   		<td><input type="text" name="SecondContactTel" style="width:200px;"/></td>
+		   		<th>行业编码：</th>
+		   		<td><input type="text" name="MCCID" style="width:200px;"/></td>
+			</tr>
+		</table>
+	</fieldset>
+	
+	<fieldset>
+		<legend>备注</legend>
+		<table class='table'>
+			<tr>
+				<th>备注1</th>
+				<td>
+					<textarea rows="6" cols="38" style="resize:none;" name="MINFO1" readonly="readonly"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>备注2</th>
+				<td>
+					<textarea rows="6" cols="38" style="resize:none;" name="REMARKS" readonly="readonly"></textarea>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</form>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="HrtUnnoCostWModel" table="HRT_UNNO_COST_W">
+		<id name="hucwid" column="HUCWID">
+			<generator class="sequence">
+				<param name="sequence">s_hrt_unno_cost_w</param>
+			</generator>
+		</id>
+		
+		<property name="fiid" column="FIID" />
+        <property name="unno" column="UNNO" />
+        <property name="machine_type" column="MACHINE_TYPE" />
+        <property name="txn_type" column="TXN_TYPE" />
+        <property name="debit_rate" column="DEBIT_RATE" />
+        <property name="debit_feeamt" column="DEBIT_FEEAMT" />
+        <property name="credit_rate" column="CREDIT_RATE" />
+        <property name="cash_cost" column="CASH_COST" />
+        <property name="cash_rate" column="CASH_RATE" />
+        <property name="profittype" column="PROFITTYPE" />
+        <property name="rate" column="RATE" />
+        <property name="spostype" column="SPOSTYPE" />
+        <property name="mpostype" column="MPOSTYPE" />
+        <property name="teramt" column="TERAMT" />
+        <property name="status" column="STATUS" />
+        <property name="remarks" column="REMARKS" />
+        <property name="cdate" column="CDATE" />
+        <property name="cby" column="CBY" />
+        <property name="lmdate" column="LMDATE" />
+        <property name="lmby" column="LMBY" />
+        <property name="txn_detail" column="TXN_DETAIL" />
+        <property name="wxUpRate" column="WX_UPRATE" />
+        <property name="wxUpCash" column="WX_UPCASH" />
+        <property name="wxUpRate1" column="WX_UPRATE1" />
+        <property name="wxUpCash1" column="WX_UPCASH1" />
+        <property name="zfbRate" column="ZFB_RATE" />
+        <property name="zfbCash" column="ZFB_CASH" />
+        <property name="ewmRate" column="EWM_RATE" />
+        <property name="ewmCash" column="EWM_CASH" />
+        <property name="ysfRate" column="YSF_RATE" />
+        <property name="hbRate" column="HB_RATE" />
+        <property name="hbCash" column="HB_CASH" />
+	</class>
+</hibernate-mapping>

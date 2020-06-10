@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="HrtUnnoCostModel" table="HRT_UNNO_COST">
+		<id name="hucid" column="HUCID">
+			<generator class="sequence">
+				<param name="sequence">S_HRT_UNNO_COST</param>
+			</generator>
+		</id>
+		<property name="unno" column="UNNO" />
+		<property name="machineType" column="MACHINE_TYPE" />
+		<property name="txnType" column="TXN_TYPE" />
+		<property name="debitRate" column="DEBIT_RATE" />
+		<property name="debitFeeamt" column="DEBIT_FEEAMT" />
+		<property name="creditRate" column="CREDIT_RATE" />
+		<property name="cashCost" column="CASH_COST" />
+		<property name="cashRate" column="CASH_RATE" />
+		<property name="status" column="STATUS" />
+		<property name="flag" column="FLAG"/>
+		<property name="operateType" column="OPERATE_TYPE" />
+		<property name="cdate" column="CDATE" type="timestamp"/>
+		<property name="cby" column="CBY" />
+		<property name="lmDate" column="LMDATE" type="timestamp"/>
+		<property name="lmby" column="LMBY" />
+		<property name="buid" column="BUID" />
+		<property name="txnDetail" column="TXN_DETAIL" />
+		<property name="wxUpRate" column="WX_UPRATE" />
+		<property name="wxUpCash" column="WX_UPCASH" />
+		<property name="wxUpRate1" column="WX_UPRATE1" />
+		<property name="wxUpCash1" column="WX_UPCASH1" />
+		<property name="zfbRate" column="ZFB_RATE" />
+		<property name="zfbCash" column="ZFB_CASH" />
+		<property name="ewmRate" column="EWM_RATE" />
+		<property name="ewmCash" column="EWM_CASH" />
+		<property name="ysfRate" column="YSF_RATE" />
+	</class>
+</hibernate-mapping>

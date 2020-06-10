@@ -1,0 +1,307 @@
+package com.hrt.biz.check.service.impl;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.dao.DataAccessException;
+
+import com.hrt.biz.bill.entity.model.MerchantInfoModel;
+import com.hrt.biz.check.dao.CheckSettleReturnDao;
+import com.hrt.biz.check.entity.model.CheckSettleReturnModel;
+import com.hrt.biz.check.entity.pagebean.CheckSettleReturnBean;
+import com.hrt.biz.check.service.CheckSettleReturnService;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.utility.ExcelUtil;
+
+public class CheckSettleReturnServiceImpl implements CheckSettleReturnService {
+
+	private IUnitDao unitDao;
+	private CheckSettleReturnDao checkSettleReturnDao;
+	
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+
+
+	public CheckSettleReturnDao getCheckSettleReturnDao() {
+		return checkSettleReturnDao;
+	}
+	public void setCheckSettleReturnDao(CheckSettleReturnDao checkSettleReturnDao) {
+		this.checkSettleReturnDao = checkSettleReturnDao;
+	}
+	@Override
+	public boolean saveMoreFillPayInfo(String xlsfile, UserBean user,
+			String fileName) {
+		try {
+			File filename = new File(xlsfile);
+			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filename));
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			for(int i = 1; i < sheet.getLastRowNum()+1; i++){
+				HSSFRow row = sheet.getRow(i);
+				HSSFCell cell;
+				CheckSettleReturnModel csfp = new CheckSettleReturnModel();
+				cell = row.getCell((short)0);
+				if(cell == null || cell.toString().trim().equals("")){
+					break;
+				}else{
+					//mid
+					row.getCell((short)0).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setMid(row.getCell((short)0).getStringCellValue().trim());
+					
+					//归属
+					row.getCell((short)1).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setUnitAttribute(((row.getCell((short)1).getStringCellValue().trim())));
+					
+					//商户名称
+					row.getCell((short)2).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setRname((row.getCell((short)2).getStringCellValue().trim()));
+					
+					//销售名称
+					row.getCell((short)3).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setSalesName(((row.getCell((short)3).getStringCellValue().trim())));
+					
+					//开户行名称
+					row.getCell((short)4).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setBankBranch(((row.getCell((short)4).getStringCellValue().trim())));
+					
+					//开户行账号
+					row.getCell((short)5).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setBankAccNo(((row.getCell((short)5).getStringCellValue().trim())));
+	
+					//银行账户名称
+					row.getCell((short)6).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setBankAccName((((row.getCell((short)6).getStringCellValue().trim()))));
+	
+					//补付金额
+					row.getCell((short)7).setCellType(Cell.CELL_TYPE_NUMERIC);
+					double bb=row.getCell((short)7).getNumericCellValue();
+					csfp.setPayAmount(bb);
+					
+					//退回日期
+					row.getCell((short)8).setCellType(Cell.CELL_TYPE_STRING);
+					csfp.setBackPayDate((((row.getCell((short)8).getStringCellValue().trim()))));
+				}	
+				csfp.setMatainUserId(user.getUserID());
+				csfp.setStatus(0);
+				//查询机构unno
+				String hql ="from MerchantInfoModel t where t.mid=?";
+				MerchantInfoModel merchant =(MerchantInfoModel) checkSettleReturnDao.queryObjectByHql(hql, new Object[]{csfp.getMid()});
+				if(merchant!=null){
+					UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, merchant.getUnno());
+					if(unitModel != null){
+						if(unitModel.getUnLvl()==7){
+							UnitModel unitModel1= unitModel.getParent().getParent().getParent().getParent();
+							csfp.setUnno(unitModel1.getUnNo());
+						}else if(unitModel.getUnLvl()==6){
+							UnitModel unitModel2=unitModel.getParent().getParent().getParent();
+							csfp.setUnno(unitModel2.getUnNo());
+						}else if(unitModel.getUnLvl()==5){
+							UnitModel unitModel3=unitModel.getParent().getParent();
+							csfp.setUnno(unitModel3.getUnNo());
+						}else if(unitModel.getUnLvl()==3){
+							UnitModel unitModel4=unitModel.getParent();
+							csfp.setUnno(unitModel4.getUnNo());
+						}else{
+							csfp.setUnno(unitModel.getUnNo());
+						}
+					}
+				}
+				checkSettleReturnDao.saveObject(csfp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	
+	@Override
+	public DataGridBean queryFillPayListData(
+			CheckSettleReturnBean checkSettleReturnBean, UserBean user) {
+		Map<String ,Object> map = new HashMap<String, Object>();
+		String sql="select t.*,u.un_name  from check_settleReturn t ,sys_unit u where t.unno=u.unno ";
+		if(user.getUnitLvl()==0){//总公司
+		}else if(user.getUseLvl()==1||user.getUseLvl()==2) {//报单员或业务员只能看到自己签约的代理
+			sql +=" and u.unno in (SELECT b1.unno FROM bill_agentsalesinfo a1, bill_agentunitinfo b1 WHERE a1.busid = b1.signuserid AND a1.user_id =:USERID)";
+			map.put("USERID", user.getUserID());
+		}else if(user.getUnitLvl()==1){//运营中心
+			sql +=" and (u.unno=:UNNO or u.upper_unit=:UNNO) ";
+			map.put("UNNO", user.getUnNo());
+		}else{
+			sql+=" and u.unno=:UNNO ";
+			map.put("UNNO", user.getUnNo());
+		}
+		if(checkSettleReturnBean.getMid()!=null && !"".equals(checkSettleReturnBean.getMid())){
+			sql+=" and t.mid=:MID ";
+			map.put("MID", checkSettleReturnBean.getMid());
+		}
+		if(checkSettleReturnBean.getStatus()!=null && !"".equals(checkSettleReturnBean.getStatus())){
+			sql+=" and t.status=:status ";
+			map.put("status", checkSettleReturnBean.getStatus());
+		}
+		if(checkSettleReturnBean.getRname()!=null && !"".equals(checkSettleReturnBean.getRname())){
+			sql += " and t.rname like :RNAME ";
+			map.put("RNAME", checkSettleReturnBean.getRname()+'%');
+		}
+		if(checkSettleReturnBean.getBankAccName()!=null && !"".equals(checkSettleReturnBean.getBankAccName())){
+			sql += " and t.bankAccName like :BANKACCNAME ";
+			map.put("BANKACCNAME", '%'+checkSettleReturnBean.getBankAccName()+'%');
+		}
+		if(checkSettleReturnBean.getBankAccNo()!=null && !"".equals(checkSettleReturnBean.getBankAccNo())){
+			sql += " and t.bankAccNo like :BANKACCNO ";
+			map.put("BANKACCNO", '%'+checkSettleReturnBean.getBankAccNo()+'%');
+		}
+		if(checkSettleReturnBean.getBackPayDate()!=null && !"".equals(checkSettleReturnBean.getBackPayDate())){
+			sql += " and t.BackPayDate=:BDATE";
+			map.put("BDATE", checkSettleReturnBean.getBackPayDate().replaceAll("-", ""));
+		}
+		sql += " order by t.BackPayDate desc ";
+		String sqlCount="select count(*) from ("+sql+")";
+		Integer count =checkSettleReturnDao.querysqlCounts2(sqlCount, map);
+		List<Map<String ,Object>> list= checkSettleReturnDao.queryObjectsBySqlList2(sql, map, checkSettleReturnBean.getPage(), checkSettleReturnBean.getRows());
+		
+		DataGridBean dg = new DataGridBean();
+		dg.setRows(list);
+		dg.setTotal(count);
+		return dg;
+	}
+	@Override
+	public DataGridBean queryFillPayListDataByStatus(
+			CheckSettleReturnBean checkSettleReturnBean, UserBean user) {
+		Map<String ,Object> map = new HashMap<String, Object>();
+		String sql="select t.*,u.un_name  from check_settleReturn t ,sys_unit u where t.unno=u.unno ";
+		if(user.getUnitLvl()==0){
+		}else if(user.getUnitLvl()==1){
+			sql +=" and (u.unno=:UNNO or u.upper_unit=:UNNO) ";
+			map.put("UNNO", user.getUnNo());
+		}else{
+			sql+=" and u.unno=:UNNO ";
+			map.put("UNNO", user.getUnNo());
+		}
+		if(checkSettleReturnBean.getMid()!=null && !"".equals(checkSettleReturnBean.getMid())){
+			sql+=" and t.mid=:MID ";
+			map.put("MID", checkSettleReturnBean.getMid());
+		}
+		if(checkSettleReturnBean.getRname()!=null && !"".equals(checkSettleReturnBean.getRname())){
+			sql += " and t.rname like :RNAME ";
+			map.put("RNAME", checkSettleReturnBean.getRname()+'%');
+		}
+		if(checkSettleReturnBean.getBankAccName()!=null && !"".equals(checkSettleReturnBean.getBankAccName())){
+			sql += " and t.bankAccName like :BANKACCNAME ";
+			map.put("BANKACCNAME", '%'+checkSettleReturnBean.getBankAccName()+'%');
+		}
+		if(checkSettleReturnBean.getBankAccNo()!=null && !"".equals(checkSettleReturnBean.getBankAccNo())){
+			sql += " and t.bankAccNo like :BANKACCNO ";
+			map.put("BANKACCNO", '%'+checkSettleReturnBean.getBankAccNo()+'%');
+		}
+		if(checkSettleReturnBean.getBackPayDate()!=null && !"".equals(checkSettleReturnBean.getBackPayDate())){
+			sql += " and t.BackPayDate=:BDATE";
+			map.put("BDATE", checkSettleReturnBean.getBackPayDate().replaceAll("-", ""));
+		}
+		sql+=" and t.status=0 ";
+		String sqlCount="select count(*) from ("+sql+")";
+		Integer count =checkSettleReturnDao.querysqlCounts2(sqlCount, map);
+		List<Map<String ,Object>> list= checkSettleReturnDao.queryObjectsBySqlList2(sql, map, checkSettleReturnBean.getPage(), checkSettleReturnBean.getRows());
+		
+		DataGridBean dg = new DataGridBean();
+		dg.setRows(list);
+		dg.setTotal(count);
+		return dg;
+	}
+	@Override
+	public void updateFillPayInfoStatus(String ids) {
+		String sql=" update check_settleReturn t  set t.status=1 ,t.fillpaydate=sysdate where cfpid in("+ids+")";
+		checkSettleReturnDao.executeUpdate(sql);
+	}
+	
+	
+	@Override
+	public HSSFWorkbook exportFillPayInfo(
+			CheckSettleReturnBean checkSettleReturnBean, UserBean user) {
+		Map<String ,Object> map = new HashMap<String, Object>();
+		String sql="select t.unno,t.mid,t.rname,t.salesname,t.bankaccname,t.bankaccno,t.bankbranch,t.payamount," +
+					"t.fillpaydate,t.backpaydate,(case t.status when 1 then '已补付' when 0 then '未补付' else '' end) as status," +
+					"u.un_name  from check_settleReturn t ,sys_unit u where t.unno=u.unno ";
+		if(user.getUnitLvl()==0){
+		}else if(user.getUseLvl()==1||user.getUseLvl()==2) {//报单员或业务员只能看到自己签约的代理
+			sql +=" and u.unno in (SELECT b1.unno FROM bill_agentsalesinfo a1, bill_agentunitinfo b1 WHERE a1.busid = b1.signuserid AND a1.user_id =:USERID)";
+			map.put("USERID", user.getUserID());
+		}else if(user.getUnitLvl()==1){
+			sql +=" and (u.unno=:UNNO or u.upper_unit=:UNNO) ";
+			map.put("UNNO", user.getUnNo());
+		}else{
+			sql+=" and u.unno=:UNNO ";
+			map.put("UNNO", user.getUnNo());
+		}
+		if(checkSettleReturnBean.getMid()!=null && !"".equals(checkSettleReturnBean.getMid())){
+			sql+=" and t.mid=:MID ";
+			map.put("MID", checkSettleReturnBean.getMid());
+		}
+		if(checkSettleReturnBean.getRname()!=null && !"".equals(checkSettleReturnBean.getRname())){
+			sql += " and t.rname like :RNAME ";
+			map.put("RNAME", checkSettleReturnBean.getRname()+'%');
+		}
+		if(checkSettleReturnBean.getBankAccName()!=null && !"".equals(checkSettleReturnBean.getBankAccName())){
+			sql += " and t.bankAccName like :BANKACCNAME ";
+			map.put("BANKACCNAME", '%'+checkSettleReturnBean.getBankAccName()+'%');
+		}
+		if(checkSettleReturnBean.getBankAccNo()!=null && !"".equals(checkSettleReturnBean.getBankAccNo())){
+			sql += " and t.bankAccNo like :BANKACCNO ";
+			map.put("BANKACCNO", '%'+checkSettleReturnBean.getBankAccNo()+'%');
+		}
+		if(checkSettleReturnBean.getBackPayDate()!=null && !"".equals(checkSettleReturnBean.getBackPayDate())){
+			sql += " and t.BackPayDate=:BDATE";
+			map.put("BDATE", checkSettleReturnBean.getBackPayDate().replaceAll("-", ""));
+		}
+		List<Map<String ,Object>> list= checkSettleReturnDao.queryObjectsBySqlListMap2(sql, map);
+		
+		List<String> excelHeader=new ArrayList<String>();
+		Map<String, Object> headMap=new HashMap<String, Object>();
+		
+		excelHeader.add("UNNO");
+		excelHeader.add("UN_NAME");
+		excelHeader.add("MID");
+		excelHeader.add("RNAME");
+		excelHeader.add("SALESNAME");
+		excelHeader.add("BANKACCNAME");
+		excelHeader.add("BANKACCNO");
+		excelHeader.add("BANKBRANCH");
+		excelHeader.add("PAYAMOUNT");
+		excelHeader.add("FILLPAYDATE");
+		excelHeader.add("BACKPAYDATE");
+		excelHeader.add("STATUS");
+
+		
+		headMap.put("UNNO", "机构编号");
+		headMap.put("UN_NAME", "机构名称");
+		headMap.put("MID", "商户编号");
+		headMap.put("RNAME", "商户名称");
+		headMap.put("SALESNAME", "业务人员");
+		headMap.put("BANKACCNAME", "入账人名称");
+		headMap.put("BANKACCNO", "开户行账号");
+		headMap.put("BANKBRANCH", "开户行名称");
+		headMap.put("PAYAMOUNT", "补付金额");
+		headMap.put("FILLPAYDATE", "补付日期");
+		headMap.put("BACKPAYDATE", "银行退回日期");
+		headMap.put("STATUS", "状态");
+		
+		return ExcelUtil.export("补付记录", list, excelHeader, headMap);
+	}
+
+}

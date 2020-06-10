@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="UserModel" table="SYS_USER">
+		<id name="userID" column="USER_ID">
+			<generator class="sequence">
+				<param name="sequence">S_SYS_USER</param>
+			</generator>
+		</id>
+		<property name="loginName" column="LOGIN_NAME"/>
+		<property name="password" column="PWD"/>
+		<property name="userName" column="USER_NAME"/>
+		<property name="openid" column="OPENID"/>  
+		<property name="createDate" type="timestamp" column="CREATE_DATE"/>
+		<property name="createUser" column="CREATE_USER"/>
+		<property name="updateDate" type="timestamp" column="UPDATE_DATE"/>
+		<property name="updateUser" column="UPDATE_USER"/>
+		<property name="resetFlag" column="RESET_FLAG"/>
+		<property name="status" column="STATUS"/>
+		<property name="useLvl" column="USER_LVL"/>
+		<property name="isLogin" column="ISLOGIN"/>
+		<property name="sysFlag" column="SYSFLAG"/>
+		<property name="pwdModDate" column="PWD_MOD_DATE"/>
+		<property name="rebateType" column="REBATETYPE"/>
+		<set name="roles" table="SYS_USER_ROLE">
+			<key column="USER_ID"></key>
+			<many-to-many class="com.hrt.frame.entity.model.RoleModel" column="ROLE_ID"/>
+		</set>
+		<set name="units" table="SYS_UNIT_USER">
+			<key column="USER_ID"></key>
+			<many-to-many class="com.hrt.frame.entity.model.UnitModel" column="UNNO" />
+		</set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,180 @@
+package com.hrt.biz.bill.action;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.biz.bill.entity.pagebean.CheckIncomeBean;
+import com.hrt.biz.bill.entity.pagebean.CheckUnitdealCommBean;
+import com.hrt.biz.bill.service.ICheckIncomeService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.util.UsePioOutExcel;
+import com.opensymphony.xwork2.ModelDriven;
+
+
+public class CheckIncomeAction extends BaseAction implements ModelDriven<CheckIncomeBean>
+{
+	private File upload=null;
+	private Log log = LogFactory.getLog(CheckIncomeAction.class);
+	private ICheckIncomeService checkincomeservice;
+	private CheckIncomeBean checkIncomeBean=new CheckIncomeBean();
+	
+	public CheckIncomeBean getModel() {
+		// TODO Auto-generated method stub
+		return checkIncomeBean;
+	}
+	public File getUpload() {
+		return upload;
+	}
+
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+
+	public Log getLog() {
+		return log;
+	}
+
+
+	public void setLog(Log log) {
+		this.log = log;
+	}
+
+
+	public ICheckIncomeService getCheckincomeservice() {
+		return checkincomeservice;
+	}
+
+
+	public void setCheckincomeservice(ICheckIncomeService checkincomeservice) {
+		this.checkincomeservice = checkincomeservice;
+	}
+
+
+	public CheckIncomeBean getCheckIncomeBean() {
+		return checkIncomeBean;
+	}
+
+
+	public void setCheckIncomeBean(CheckIncomeBean checkIncomeBean) {
+		this.checkIncomeBean = checkIncomeBean;
+	}
+
+
+		//查询
+		public void CheckIncomeList(){
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			DataGridBean dgb = new DataGridBean();
+			try {
+				dgb = checkincomeservice.CheckIncomequeryLists(checkIncomeBean,(UserBean)userSession);
+				super.writeJson(dgb);
+			} catch (Exception e) {
+				log.error("信息异常：" + e);
+			}
+		}
+	
+	
+	//导出
+	public void CheckIncomeListExport() throws IOException{
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		List<Map<String, String>> list =checkincomeservice.CheckIncomeListExport(checkIncomeBean,(UserBean)userSession);
+		
+		// 查询总记录数
+		String[] titles ={"商户编号","商户名称","结算日期","交易日期","交易金额","商户手续费","应结算金额","退货扣款","结算调整 ","实结金额","备注"};
+		List excelList = new ArrayList();
+		excelList.add(titles);
+		for (int rowId = 0; rowId < list.size(); rowId++) {
+			
+			Map order = list.get(rowId);
+			
+			String[] rowContents = { 
+					 (String)order.get("MID"),
+					 order.get("RNAME").toString(),
+					 order.get("SETTLEDAY").toString(),
+					 order.get("TXNDAY").toString(),
+					 order.get("TOTSAMT").toString(),
+					 order.get("TOTMFEE").toString(),
+					 order.get("SHOUCOUNT").toString(),
+					 order.get("TOTRAMT").toString(),
+					 order.get("TOTAAMT").toString(),
+					 order.get("TOTMNAMT").toString(),//.toString()
+					 (String)order.get("REMARKS")//.toString()
+						};
+			excelList.add(rowContents);
+		}  
+		String excelName="进账单信息报表";
+		String sheetName="进账单信息报表";
+		String[] cellFormatType = {"t","t","t","t","t","t","t","t","t","t","t"};
+		UsePioOutExcel.writeExcel(excelList, 11, super.getResponse(), sheetName,excelName + ".xls", cellFormatType); // 调用导出方法
+	
+		
+	}
+	
+	
+	/**
+	 * 批量导入
+	 */
+	public void checkinsert() {
+		
+		//把文件保存到服务器的目录下
+		String filename = ServletActionContext.getRequest().getParameter("fileContact4");	//获取文件名
+		String dasePath = ServletActionContext.getServletContext().getRealPath("/upload");	
+		File dir = new File(dasePath);
+		dir.mkdirs();
+		// 使用UUID做为文件名，以解决重名的问题
+		String path = dasePath + "/" + filename;
+		File destFile = new File(path);
+		upload.renameTo(destFile);
+		String folderPath = ServletActionContext.getServletContext().getRealPath("/upload");// 存放上传文件的路径
+		String xlsfile = folderPath + "/" + filename;
+		JsonBean json = new JsonBean();
+		try {
+			if (xlsfile.length() > 0 && xlsfile != null) {
+				List<HashMap> list= checkincomeservice.saveimportCheckData(xlsfile); // 上传文件
+				checkincomeservice.updateSettleDate();
+				if (list.size()>0) {// 如果不为true,代表上传失败
+					json.setSuccess(false);
+					json.setMsg(list.size()+"记录更新失败!");
+				}else {
+					json.setSuccess(true);
+					json.setMsg("文件更新成功!");
+				}
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setSuccess(false);
+			json.setMsg("文件更新失败!");
+		}
+	
+		File file = new File(folderPath);
+		String[] tempList = file.list();
+		File temp = null;
+		for (int i = 0; i < tempList.length; i++) {
+			if (path.endsWith(File.separator)) {
+				temp = new File(folderPath + tempList[i]);
+			} else {
+				temp = new File(folderPath + File.separator + tempList[i]);
+			}
+			if (temp.exists() && temp.isFile()) {
+				boolean flag = temp.delete(); // 删除上传到服务器的文件
+				int j = i + 1;
+				log.error("成功删除文件:第" + j + "个文件删除是否成功？" + flag);
+			} else {
+				log.error("文件不存在");
+			}
+		}
+		super.writeJson(json);
+	} 
+}

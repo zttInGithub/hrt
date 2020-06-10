@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantInfoTempModel" table="BILL_MERCHANTINFO_TEMP">
+       <composite-id >
+        <key-property name="rname" column="RNAME" />
+        
+        <key-property name="busid" column="BUSID" />
+        <key-property name="saleName" column="SALENAME" />
+        <key-property name="legalPerson" column="LEGALPERSON" />
+        <key-property name="legalNum" column="LEGALNUM" />
+        <key-property name="bno" column="BNO" />
+        <key-property name="areaAddr" column="AREA_ADDR" />
+        <key-property name="baddr" column="BADDR" />
+        <key-property name="raddr" column="RADDR"/>
+        
+        <key-property name="mccid" column="MCCID" />
+        <key-property name="payBankId" column="PAYBANKID" />
+        <key-property name="bankFeeRate" column="BANKFEERATE" />
+        <key-property name="creditBankRate" column="CREDITBANKRATE" />
+        <key-property name="feeAmt" column="FEEAMT" />
+        <key-property name="merchantType" column="MERCHANTTYPE" />
+
+         <key-property name="accNum" column="ACC_NUM" />
+        <key-property name="bankBranch" column="BANKBRANCH" />
+        <key-property name="bankAccNo" column="BANKACCNO" />
+        <key-property name="bankAccName" column="BANKACCNAME" />
+        <key-property name="contactPerson" column="CONTACTPERSON" />
+        <key-property name="contactPhone" column="CONTACTPHONE" />
+        <key-property name="maintainDate" column="MAINTAINDATE" type="timestamp" />
+        <key-property name="fileId" column="FILE_ID" />
+       </composite-id>
+        <property name="areaCode" column="AREA_CODE" />
+        <property name="cby" column="CBY" />
+        <property name="isM35" column="ISM35" />
+        <property name="hybPhone" column="HYB_PHONE" />
+        <property name="accType" column="ACCTYPE" />
+        <property name="unno" column="UNNO" />
+    </class>
+</hibernate-mapping>

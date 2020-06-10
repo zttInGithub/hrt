@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantTaskDetail1Model" table="BILL_MERCHANTTASKDETAIL1">
+        <id name="bt1id" column="BT1ID">
+           <generator class="sequence"> 
+				<param name="sequence">S_BILL_MERCHANTTASKDETAIL1</param>
+			</generator>
+        </id>
+        <property name="bmtkid" column="BMTKID"/>
+        <property name="busid" column="BUSID"/>
+        <property name="rname" column="RName"/>
+        <property name="legalPerson" column="LegalPerson" />
+        <property name="legalType" column="LegalType" />
+        <property name="legalNum" column="legalNum" />
+        <property name="legalExpDate" column="LegalExpDate" />
+        <property name="contactAddress" column="ContactAddress"/>
+        <property name="contactPerson" column="ContactPerson"/>
+        <property name="contactPhone" column="ContactPhone"/> 
+        <property name="ContactTel" column="ContactTel"/>  
+        <property name="legalUploadFileName" column="LegalUploadFileName"></property>
+        <property name="bupload" column="BUpload"></property>
+        <property name="rupload" column="RUpload"></property>
+        <property name="registryUpLoad" column="RegistryUpLoad"></property>
+        <property name="materialUpLoad" column="MaterialUpLoad"></property>
+        <property name="legalUpload2FileName" column="LegalUpload2FileName"></property>
+    </class> 
+</hibernate-mapping>

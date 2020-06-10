@@ -1,0 +1,25 @@
+package quartz;
+
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import com.hrt.frame.service.sysadmin.IQuartzService;
+
+public class BatchJob1 extends QuartzJobBean{
+	@Override
+	protected void executeInternal(JobExecutionContext arg0)
+			throws JobExecutionException {
+		System.out.println("开始执行存储过程！");
+//		IQuartzService quartzService = (IQuartzService) new ClassPathXmlApplicationContext("applicationContext.xml").getBean("quartzService");
+		IQuartzService quartzService = (IQuartzService)ToolSpring.getBean("quartzService");
+		try {
+			quartzService.batchJob1();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("存储过程执行失败！");
+		}
+		System.out.println("存储过程执行成功！");
+	}
+	
+}

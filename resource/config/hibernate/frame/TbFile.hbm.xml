@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="FileModel" table="SYS_FILE">
+		<id name="fileID" column="FTID">
+			<generator class="sequence">
+				<param name="sequence">S_SYS_FILE</param>
+			</generator>
+		</id>
+		<property name="fileName" column="FNAME"/>
+		<property name="fileDesc" column="FDESC"/>
+		<property name="filePath" column="FPATH"/>
+		<property name="status" column="STATUS"/>
+		<property name="createDate" type="timestamp" column="CREATE_DATE"/>
+		<property name="createUser" column="CREATE_USER"/>
+		<property name="updateDate" type="timestamp" column="UPDATE_DATE"/>
+		<property name="updateUser" column="UPDATE_USER"/>
+    </class>
+</hibernate-mapping>

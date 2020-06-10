@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckMisTakeModel" table="CHECK_DISPATCHORDER">
+        <id name="dpid" column="DPID">
+            <!-- <generator class="sequence">
+				<param name="sequence">S_DISPATCHORDER</param>
+			</generator>-->
+        </id>
+      <property name="inportDate" column="INPORTDATE" ></property>
+      <property name="mid" column="MID" ></property>
+      <property name="cardNo" column="CARDNO" ></property>
+      <property name="transDate" column="TRANSDATE" ></property>
+      <property name="finalDate" column="FINALDATE" ></property>
+      <property name="bankRemarks" column="BANKREMARKS" ></property>
+      <property name="rrn" column="RRN" ></property>
+      <property name="rname" column="RNAME" ></property>
+      <property name="raddr" column="RADDR" ></property>
+      <property name="contactPhone" column="CONTACTPHONE" ></property>
+      <property name="contactPerson" column="CONTACTPERSON" ></property>
+      <property name="agRemarks" column="AGREMARKS" ></property>
+      <property name="orderUpload" column="ORDERUPLOAD" ></property>
+      <property name="status" column="STATUS" ></property>
+      <property name="orderType" column="ORDERTYPE" ></property>
+      <property name="unno" column="UNNO" ></property>
+      <property name="tid" column="TID" ></property>
+      <property name="reason" column="REASON" ></property>
+      <property name="maintainDate" column="MAINTAINDATE" type="timestamp"></property>
+      <property name="maintainUid" column="MAINTAINUID" ></property>
+      <property name="samt" column="SAMT" ></property>
+      <property name="minfo" column="MINFO" ></property>
+      <property name="minfo2" column="MINFO2" ></property>
+      
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,227 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<script type="text/javascript">
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_10507_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/merAdjustRate_queryAggPayTerminfo.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			ctrlSelect:true,
+			checkOnSelect:true,
+			pageSize : 10,
+			pageList : [ 10, 15 ,100],
+			sortName: 'MJRID',
+			sortOrder: 'desc',
+			idField : 'MJRID',
+			columns : [[{
+				field : 'MJRID',
+				checkbox:true
+			},{
+				title : '商户号',
+				field : 'MID',
+				width : 150
+			},{
+				title : '结算周期',
+				field : 'SETTLECYCLE',
+				width : 100
+			},{
+				title : '类型',
+				field : 'SETTMETHOD',
+				width : 50,
+				formatter : function(value,row,index) {
+					//结算方式 000000--钱包提现  100000--秒到   300000 --定时结算 400000--按金额结算
+					if(row.SETTLECYCLE==1){
+						return "其他";
+					}if(value=='000000'){
+						return "钱包提现";
+					}else if(value=='100000'){
+						return "秒到";
+					}else if(value=='300000'){
+						return "定时结算";
+					}else if(value=='400000'){
+						return "按金额结算";
+					}else{
+						return "其他";
+					}
+				}
+			},{
+				title : '扫码消费费率',
+				field : 'SCANRATE',
+				width : 80,
+				hidden:true
+			},{
+				title : '定时结算时间点',
+				field : 'PRESETTIME',
+				width : 80
+			},{
+				title : '按金额结算金额',
+				field : 'QUOTAAMT',
+				width : 80
+			},{
+				title :'使用状态',
+				field :'STATUS',
+				width : 50,
+				sortable :true,
+				formatter : function(value,row,index) {
+					 if(value=='Y'){
+						return "成功";
+					}else{
+						return "失败";
+					}
+				}
+			},{
+				title :'申请时间',
+				field :'CDATE',
+				width : 100,
+				sortable :true
+			},{
+				title :'修改时间',
+				field :'LMDATE',
+				width : 100,
+				sortable :true
+			}]],
+			toolbar:[{
+				id:'btn_add',
+				text:'申请',
+				iconCls:'icon-add',
+				handler:function(){
+					sysAdmin_merchantterminalinfo10507_shnenqing();
+				}
+			}]
+		});
+	});
+
+	function sysAdmin_merchantterminalinfo10507_shnenqing(){
+		$('<div id="sysAdmin_fen507_datagrid"/>').dialog({
+			title: '<span style="color:#157FCC;">申请调整结算周期</span>',
+			width: 550,
+		    height: 360,
+		    closed: false,
+		    href: '${ctx}/biz/bill/merchant/10508.jsp',
+		    modal: true,
+			buttons:[{
+				text:'提交',
+				iconCls:'icon-ok',
+				handler:function() {
+					var validator = $('#fenpeiInfo10508').form('validate');
+		    		if(validator){
+		    			$.messager.progress();
+		    		}
+					$('#fenpeiInfo10508').form('submit', {
+						url:'${ctx}/sysAdmin/merAdjustRate_addmerAdjustRateInfo.action',
+						success:function(data) {
+							$.messager.progress('close');
+							var result = $.parseJSON(data);
+							if (result.sessionExpire) {
+			    				window.location.href = getProjectLocation();
+				    		} else {
+				    			if (result.success) {
+				    				$('#sysAdmin_10507_datagrid').datagrid('unselectAll');
+				    				$('#sysAdmin_10507_datagrid').datagrid('reload');
+					    			$('#sysAdmin_fen507_datagrid').dialog('destroy');
+					    			$.messager.show({
+										title : '提示',
+										msg : result.msg
+									});
+					    		} else {
+					    			//$('#sysAdmin_fen507_datagrid').dialog('destroy');
+					    			$('#sysAdmin_10507_datagrid').datagrid('reload');
+					    			$('#sysAdmin_10507_datagrid').datagrid('unselectAll');
+					    			$.messager.alert('提示', result.msg);
+						    	}
+					    	}
+						}
+					});
+				}
+			},{
+				text:'取消',
+				iconCls:'icon-cancel',
+				handler:function() {
+					$('#sysAdmin_fen507_datagrid').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+			}
+		});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10507_exportFunAll() {
+		$('#sysAdmin_10507_searchForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/aggPayTerminfo_exportAggPayTerminfoAll.action?status=8'
+			    	});
+	}
+	
+	function sysAdmin_merchantterminalinfo10507_exportFun() {
+		$('#sysAdmin_10507_searchForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/merchant_updateMerchantWithQR.action'
+			    	});
+	}
+	
+	//表单查询
+	function sysAdmin_merchantAuthenticity_searchFun10507() {
+		$('#sysAdmin_10507_datagrid').datagrid('load', serializeObject($('#sysAdmin_10507_searchForm'))); 
+	}
+
+	//清除表单内容
+	function sysAdmin_merchantAuthenticity_cleanFun10507() {
+		$('#sysAdmin_10507_searchForm input').val('');
+		$('#sysAdmin_10507_searchForm #status').val('');
+	}
+	
+</script>
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:60px; overflow: hidden; padding-top:15px;">
+		<form id="sysAdmin_10507_searchForm" style="padding-left:2%" method="post">
+		<input type="hidden" id="bmids_10507" name="bmids" />
+			<table class="tableForm" >
+				<tr>
+					<th>商户号:</th>
+					<td><input name="mid" style="width: 150px;" /></td>
+					<td width="10px"></td>
+					<th>结算周期:</th>
+					<td>
+						<select name="settleCycle" style="width: 80px;">
+							<option value="" >所有</option>
+							<option value="0" >T0</option>
+							<option value="1" >T1</option>
+						</select>
+					</td>
+					<td width="10px"></td>
+					<th>结算方式:</th>
+					<td>
+						<select name="settMethod" style="width: 80px;">
+							<option value="" >所有</option>
+							<option value="000000" >钱包提现</option>
+							<option value="100000" >秒到</option>
+							<option value="300000" >定时结算</option>
+							<option value="400000" >按金额结算</option>
+						</select>
+					</td>
+					<td width="10px"></td>
+					<th>申请时间:起</th>
+					<td colspan="4"><input name="cdate" class="easyui-datebox" style="width: 150px;"  />
+						止 <input name="cdate1" class="easyui-datebox" style="width: 150px;"  />
+					</td>
+					<td width="10px"></td>
+					<td colspan="5" style="text-align: center;">
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" 
+						onclick="sysAdmin_merchantAuthenticity_searchFun10507();">查询</a> &nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="sysAdmin_merchantAuthenticity_cleanFun10507();">清空</a>	
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>  
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+      <table id="sysAdmin_10507_datagrid" style="overflow: hidden;"></table>
+    </div> 
+</div>

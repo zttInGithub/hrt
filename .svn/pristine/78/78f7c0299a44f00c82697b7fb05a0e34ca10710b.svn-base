@@ -1,0 +1,290 @@
+package com.hrt.biz.bill.action;
+
+import com.hrt.biz.bill.entity.pagebean.BillTerminalSimBean;
+import com.hrt.biz.bill.service.IBillTerminalSimService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.util.ExcelServiceImpl;
+import com.hrt.util.JxlOutExcelUtil;
+import com.hrt.util.UsePioOutExcel;
+import com.opensymphony.xwork2.ModelDriven;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * BillTerminalSimAction
+ * <p>
+ * This is description
+ * </p>
+ *
+ * @author xuegangliu 2020/05/12
+ * @since 1.8
+ **/
+public class BillTerminalSimAction extends BaseAction implements ModelDriven<BillTerminalSimBean> {
+    private static final Log log = LogFactory.getLog(BillTerminalSimAction.class);
+
+    /**
+     * 查询SIM卡管理列表grid
+     */
+    public void listTerminalSimGrid(){
+        DataGridBean dgd = new DataGridBean();
+        try {
+            Object userSession = super.getRequest().getSession().getAttribute("user");
+            if(userSession!=null){
+                dgd = billTerminalSimService.queryBillTerminalSimGrid(billTerminalSimBean, (UserBean) userSession);
+            }
+        } catch (Exception e) {
+            log.error("查询SIM卡管理列表grid异常",e);
+        }
+        super.writeJson(dgd);
+    }
+
+    /**
+     * 导出SIM卡管理列表grid
+     */
+    public void exportTerminalSimGrid(){
+        JsonBean json = new JsonBean();
+        try {
+            Object userSession = super.getRequest().getSession().getAttribute("user");
+            if (userSession == null) {
+                json.setSessionExpire(true);
+            } else {
+                List<Map<String, Object>> list = billTerminalSimService.exportBillTerminalSimGrid(
+                        billTerminalSimBean, (UserBean) userSession);
+                List<String[]> excelList = new ArrayList<String[]>();
+                String title [] = {"商户编号", "SIM卡号 ", "SN号 ", "SIM卡状态 ", "sn使用状态 ", "测试期结束时间",
+                        "SIM卡出厂日期","续费日期", "扣费日期","激活日期"};
+                excelList.add(title);
+                for (int i = 0; i < list.size(); i++) {
+                    Map<String, Object> map = list.get(i);
+                    String[] rowContents = getRowContents(map);
+                    excelList.add(rowContents);
+                }
+                String excelName = "导出SIM卡管理列表.csv";
+                JxlOutExcelUtil.writeCSVFile(excelList, title.length, getResponse(), excelName);
+                json.setSuccess(true);
+                json.setMsg("导出SIM卡管理列表成功");
+            }
+        } catch (Exception e) {
+            json.setSuccess(false);
+            json.setMsg("导出SIM卡管理列表异常");
+            log.error("导出SIM卡管理列表异常",e);
+        }
+        super.writeJson(json);
+    }
+
+    private String[] getRowContents(Map<String, Object> map) {
+        return new String[]{
+                map.get("MID") == null ? "" : map.get("MID").toString(),
+                map.get("SIM") == null ? "" : map.get("SIM").toString(),
+                map.get("SN") == null ? "" : "2".equals(map.get("SN").toString())?"已使用":"未使用",
+                map.get("STATUS") == null ? "" : getStatusName(map.get("STATUS").toString()),
+                map.get("SNSTATUS") == null ? "" : map.get("SNSTATUS").toString(),
+                map.get("TRYDATE") == null ? "" : map.get("TRYDATE").toString(),
+                map.get("INITDATE") == null ? "" : map.get("INITDATE").toString(),
+                map.get("PAYDATE") == null ? "" : map.get("PAYDATE").toString(),
+                map.get("DEDUCTDATE") == null ? "" : map.get("DEDUCTDATE").toString(),
+                map.get("ACTDATE") == null ? "" : map.get("ACTDATE").toString()
+        };
+    }
+
+    /**
+     * 修改SIM卡管理信息
+     */
+    public void modifyTerminalSim(){
+        JsonBean jsonBean=new JsonBean();
+        try {
+            Object userSession = super.getRequest().getSession().getAttribute("user");
+            if(userSession!=null){
+                if(billTerminalSimBean.getBtsId()!=null
+                        && billTerminalSimService.updateBillTerminalSim(billTerminalSimBean, (UserBean) userSession)){
+                    jsonBean.setSuccess(true);
+                    jsonBean.setMsg("修改成功");
+                }else{
+                    jsonBean.setSuccess(false);
+                    jsonBean.setMsg("修改失败");
+                }
+            }else{
+                jsonBean.setSessionExpire(true);
+                jsonBean.setSuccess(false);
+                jsonBean.setMsg("用户信息已过期");
+            }
+        } catch (Exception e) {
+            log.error("查询SIM卡管理列表grid异常",e);
+            jsonBean.setSuccess(false);
+            jsonBean.setMsg("修改异常");
+        }
+        super.writeJson(jsonBean);
+    }
+
+    /**
+     * SIM卡管理批量修改模板
+     */
+    public void dowloadTermSimModifyXls(){
+        try {
+            ExcelServiceImpl.download(getResponse(),"termSimModifyTmp.xls","批量修改导入模板.xls");
+        } catch (Exception e) {
+            log.info("SIM卡管理批量修改模板下载异常",e);
+        }
+    }
+
+    /**
+     * SIM卡管理批量修改模板导入
+     */
+    public void importTermSimModifyXls() {
+        JsonBean json = new JsonBean();
+        Object userSession = super.getRequest().getSession().getAttribute("user");
+        UserBean user = (UserBean) userSession;
+        if (user == null) {
+            json.setSessionExpire(true);
+        }
+        String UUID = System.currentTimeMillis() + "";
+        String uploadName = ServletActionContext.getRequest().getParameter("fileContact");
+        String fileName = UUID + uploadName;
+        String basePath = ServletActionContext.getRequest().getRealPath("/upload");
+        File dir = new File(basePath);
+        if (!dir.exists())
+            dir.mkdir();
+        String path = basePath + "/" + fileName;
+        File destFile = new File(path);
+        upload.renameTo(destFile);
+        String folderPath = ServletActionContext.getRequest().getRealPath("/upload");
+        String xlsfile = folderPath + "/" + fileName;
+        log.info("SIM卡管理批量修改模板导入Excel文件路径:" + xlsfile);
+        try {
+            if (xlsfile.length() > 0 && xlsfile != null) {
+                List<Map> listMap = billTerminalSimService.saveImportTermSimModifyXls(billTerminalSimBean, user, xlsfile);
+                if (listMap.isEmpty()) {
+                    json.setSuccess(true);
+                    json.setMsg("SIM卡管理批量修改模板导入文件成功!");
+                } else {
+                    json.setSuccess(false);
+                    json.setMsg("SIM卡管理批量修改模板导入文件失败");
+                    String excelName = "导入失败记录";
+                    String[] title = {"SIM", "错误通知"};
+                    List excellist = new ArrayList();
+                    excellist.add(title);
+                    for (int rowId = 0,n=listMap.size(); rowId < n; rowId++) {
+                        Map errInfo = listMap.get(rowId);
+                        String[] rowContents = {
+                                errInfo.get("sim") + "",
+                                errInfo.get("errMsg") + ""
+                        };
+                        excellist.add(rowContents);
+                    }
+                    String[] cellFormatType = {"t", "t"};
+                    UsePioOutExcel.writeExcel(excellist, title.length, super.getResponse(), excelName, excelName + ".xls", cellFormatType);
+                }
+            } else {
+                json.setSuccess(false);
+                json.setMsg("SIM卡管理批量修改模板导入文件异常!");
+            }
+        } catch (Exception e) {
+            log.info("SIM卡管理批量修改模板导入文件异常:",e);
+            json.setSuccess(false);
+            json.setMsg("sn修改导入失败!");
+        }
+        ExcelServiceImpl.deleteUploadFile(folderPath, path);
+        super.writeJson(json);
+    }
+
+    /**
+     * 匹配导入/导出模板下载
+     */
+    public void dowloadTermSimMatchXls(){
+        try {
+            ExcelServiceImpl.download(getResponse(),"termSimMatchTmp.xls","SIM卡管理匹配导出导入模板.xls");
+        } catch (Exception e) {
+            log.info("SIM卡管理匹配导出导入模板下载异常",e);
+        }
+    }
+
+    /**
+     * 匹配导入/导出模板导入处理
+     */
+    public void importTerminalSimMatchExport(){
+        JsonBean json = new JsonBean();
+        try {
+            Object userSession = super.getRequest().getSession().getAttribute("user");
+            if (userSession == null) {
+                json.setSessionExpire(true);
+            } else {
+                String UUID = System.currentTimeMillis() + "";
+                String uploadName = ServletActionContext.getRequest().getParameter("fileContact");
+                String fileName = UUID + uploadName;
+                String basePath = ServletActionContext.getRequest().getRealPath("/upload");
+                File dir = new File(basePath);
+                if (!dir.exists())
+                    dir.mkdir();
+                String path = basePath + "/" + fileName;
+                File destFile = new File(path);
+                upload.renameTo(destFile);
+                String folderPath = ServletActionContext.getRequest().getRealPath("/upload");
+                String xlsfile = folderPath + "/" + fileName;
+                log.info("匹配导入/导出Excel文件路径:" + xlsfile);
+                List<Map<String, Object>> list = billTerminalSimService.exportBillTerminalSimMatch(
+                        billTerminalSimBean, (UserBean) userSession,xlsfile);
+                List<String[]> excelList = new ArrayList<String[]>();
+                String title [] = {"商户编号", "SIM卡号 ", "SN号 ", "SIM卡状态 ", "sn使用状态 ", "测试期结束时间",
+                        "SIM卡出厂日期","续费日期", "扣费日期","激活日期"};
+                excelList.add(title);
+                for (int i = 0; i < list.size(); i++) {
+                    Map<String, Object> map = list.get(i);
+                    String []rowContents =getRowContents(map);
+                    excelList.add(rowContents);
+                }
+                String excelName = "匹配导入/导出列表.csv";
+                JxlOutExcelUtil.writeCSVFile(excelList, title.length, getResponse(), excelName);
+                json.setSuccess(true);
+                json.setMsg("匹配导入/导出模板导入成功");
+            }
+        } catch (Exception e) {
+            json.setSuccess(false);
+            json.setMsg("匹配导入/导出模板导入异常");
+            log.error("匹配导入/导出模板导入异常",e);
+        }
+        super.writeJson(json);
+    }
+
+    private String getStatusName(String status){
+        Map map=new HashMap();
+        map.put("1","正常");
+        map.put("2","欠费");
+        map.put("3","注销");
+        return map.containsKey(status)?map.get(status)+"":null;
+    }
+
+    private File upload;
+    private BillTerminalSimBean billTerminalSimBean=new BillTerminalSimBean();
+    private IBillTerminalSimService billTerminalSimService;
+
+    public File getUpload() {
+        return upload;
+    }
+
+    public void setUpload(File upload) {
+        this.upload = upload;
+    }
+
+    @Override
+    public BillTerminalSimBean getModel() {
+        return billTerminalSimBean;
+    }
+
+    public IBillTerminalSimService getBillTerminalSimService() {
+        return billTerminalSimService;
+    }
+
+    public void setBillTerminalSimService(IBillTerminalSimService billTerminalSimService) {
+        this.billTerminalSimService = billTerminalSimService;
+    }
+}

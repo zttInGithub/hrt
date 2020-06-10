@@ -1,0 +1,594 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<script type="text/javascript">
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_10500_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/aggPayTerminfo_queryAggPayTerminfo.action?status1=0,1,2,3,4',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			ctrlSelect:true,
+			checkOnSelect:true,
+			pageSize : 10,
+			pageList : [ 10, 15 ,100],
+			sortName: 'BAPID',
+			sortOrder: 'desc',
+			idField : 'BAPID',
+			columns : [[{
+				field : 'BAPID',
+				checkbox:true
+			},{
+				title : '机构编号',
+				field : 'UNNO',
+				width : 60
+			},{
+				title : '终端号',
+				field : 'QRTID',
+				width : 100
+			},{
+				title : '密码',
+				field : 'QRPWD',
+				width : 50
+			},{
+				title : '扫码消费费率',
+				field : 'SCANRATE',
+				width : 80
+			},{
+				title : '结算周期',
+				field : 'SETTLEMENT',
+				width : 80
+			},{
+				title : '转账手续费',
+				field : 'SECONDRATE',
+				width : 80
+			},{
+				title :'使用状态',
+				field :'STATUS',
+				width : 50,
+				sortable :true,
+				formatter : function(value,row,index) {
+					if (value=='0'){
+					   return "未使用";
+					}else if(value=='1'){
+						return "待审核";
+					}else if(value=='2'){
+						return "通过";
+					}else if(value=='3'){
+						return "退回";
+					}else{
+						return "停用";
+					}
+				}
+			},{
+				title : '终端分店名称',
+				field : 'SHOPNAME',
+				width : 100
+			},{
+				title : '绑定商户编号',
+				field : 'MID',
+				width : 100
+			},{
+				title :'绑定时间',
+				field :'USEDCONFIRMDATE',
+				width : 100
+				//sortable :true
+			},{
+				title :'操作时间',
+				field :'MAINTAINDATE',
+				width : 100,
+				sortable :true
+			},{
+				title :'查看二维码',
+				field :'maintainUserId',
+				width : 70,
+				align : 'center',
+				formatter : function(value,row,index) {
+					var rowData = $('#sysAdmin_10500_datagrid').datagrid('getData').rows[index];
+					if(rowData.QRURL!=null){
+						return '<img src="${ctx}/images/query_search.png" title="查看二维码" style="cursor:pointer;" onclick="sysAdmin_10500_queryFun('+index+')"/>&nbsp;&nbsp';
+					}
+			}}]],
+			toolbar:[{
+				id:'btn_add',
+				text:'勾选分配终端',
+				iconCls:'icon-add',
+				handler:function(){
+					sysAdmin_merchantterminalinfoSelected10500_fenpei();
+				}
+			},{
+				id:'btn_add',
+				text:'区间分配终端',
+				iconCls:'icon-add',
+				handler:function(){
+					sysAdmin_merchantterminalinfoSelected10500_fenpei2();
+				}
+			},{
+				id:'btn_add',
+				text:'区间回拨终端',
+				iconCls:'icon-add',
+				handler:function(){
+					sysAdmin_merchantterminalinfoSelected10500_huibo();
+				}
+			},{
+				id:'btn_add',
+				text:'区间修改终端',
+				iconCls:'icon-add',
+				handler:function(){
+					sysAdmin_merchantterminalinfoSelected10500_updateScanRate();
+				}
+			},{
+				id:'btn_run',
+				text:'导出查询所有',
+				iconCls:'icon-query-export',
+				handler:function(){
+					sysAdmin_merchantterminalinfoSelected10500_exportFunAll();
+				}
+			}/**,{
+				id:'btn_run',
+				text:'勾选导出',
+				iconCls:'icon-query-export',
+				handler:function(){
+					sysAdmin_merchantterminalinfoSelected10500_exportFun();
+				}
+			}**/]
+		});
+	});
+	
+	//查看二维码
+	var bool=true;
+	function sysAdmin_10500_queryFun(index){
+		if(bool){
+			bool=false;
+			var rows = $('#sysAdmin_10500_datagrid').datagrid('getRows');
+			var row = rows[index];
+			var url = row.QRURL;
+			url=url.replace("&", "");
+			$('<div id="sysAdmin_10500_run" />').dialog({
+				title: '查看二维码',
+				width: 395,   
+			    height: 415, 
+			    closed: false,
+			    href:'${ctx}/biz/bill/merchant/10492QR.jsp?url='+url,  
+			    modal: true,
+				onClose : function() {
+					$(this).dialog('destroy');
+					bool=true;
+				}  
+			});
+		}
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10500_exportFunAll() {
+		$('#sysAdmin_10500_searchForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/aggPayTerminfo_exportAggPayTerminfoAll.action?status1=0,1,2,3,4'
+			    	});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10500_fenpei(){
+		var checkedItems = $('#sysAdmin_10500_datagrid').datagrid('getChecked');
+		var names = [];
+		var result = true;
+		$.each(checkedItems, function(index, item){
+			if(item.STATUS != 0){
+				result = false;
+			}
+			names.push(item.BAPID);
+		});
+		if(!result){
+			$.messager.alert('提示','已有使用或停用的终端！');
+			return;
+		}
+		var bapids=names.join(",");
+		if(bapids==null||bapids==""){
+			$.messager.alert('提示','请勾选操作列');
+			return;
+		}
+		$.messager.confirm('确认','您确认所选终端都正确了吗?',function(result) {
+			if (result) {
+				$('<div id="sysAdmin_fen500_datagrid"/>').dialog({
+					title: '<span style="color:#157FCC;">选择机构</span>',
+					width: 550,   
+				    height: 330, 
+				    closed: false,
+				    href: '${ctx}/biz/bill/merchant/10502.jsp?bapids='+bapids,
+				    modal: true,
+					buttons:[{
+						text:'确认',
+						iconCls:'icon-ok',
+						handler:function() {
+							var validator = $('#fenpeiInfo10502').form('validate');
+				    		if(validator){
+				    			$.messager.progress();
+				    		}
+							$('#fenpeiInfo10502').form('submit', {
+								url:'${ctx}/sysAdmin/aggPayTerminfo_updateAggPayTerminfoUnno.action?bapids='+bapids,
+								success:function(data) {
+									$.messager.progress('close');
+									var result = $.parseJSON(data);
+									if (result.sessionExpire) {
+					    				window.location.href = getProjectLocation();
+						    		} else {
+						    			if (result.success) {
+						    				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+						    				$('#sysAdmin_10500_datagrid').datagrid('reload');
+							    			$('#sysAdmin_fen500_datagrid').dialog('destroy');
+							    			$.messager.show({
+												title : '提示',
+												msg : result.msg
+											});
+							    		} else {
+							    			$('#sysAdmin_fen500_datagrid').dialog('destroy');
+							    			$('#sysAdmin_10500_datagrid').datagrid('reload');
+							    			$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+							    			$.messager.alert('提示', result.msg);
+								    	}
+							    	}
+								}
+							});
+						}
+					},{
+						text:'取消',
+						iconCls:'icon-cancel',
+						handler:function() {
+							$('#sysAdmin_fen500_datagrid').dialog('destroy');
+						}
+					}],
+					onClose:function() {
+						$(this).dialog('destroy');
+					}
+				});
+			}else{
+				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10500_fenpei2(){
+		var qrtid_10500 = $('#sysAdmin_10500_searchForm #qrtid_10500').val();
+		var qrtid1_10500 = $('#sysAdmin_10500_searchForm #qrtid1_10500').val();
+		if(qrtid_10500==''||qrtid1_10500==''){
+			$.messager.show({
+				title : '提示',
+				msg : '请正确填写终端号区间'
+			});
+			return ;
+		}
+		var result = true;
+		$.messager.confirm('确认','您确认操作未使用终端{'+qrtid_10500+'}-{'+qrtid1_10500+'}吗?',function(result) {
+			if (result) {
+				$('<div id="sysAdmin_fen500_datagrid"/>').dialog({
+					title: '<span style="color:#157FCC;">选择机构</span>',
+					width: 550,   
+				    height: 330, 
+				    closed: false,
+				    href: '${ctx}/biz/bill/merchant/10502.jsp?qrtid_10500='+qrtid_10500+'&qrtid1_10500='+qrtid1_10500,
+				    modal: true,
+					buttons:[{
+						text:'确认',
+						iconCls:'icon-ok',
+						handler:function() {
+							var validator = $('#fenpeiInfo10502').form('validate');
+				    		if(validator){
+				    			$.messager.progress();
+				    		}
+							$('#fenpeiInfo10502').form('submit', {
+								url:'${ctx}/sysAdmin/aggPayTerminfo_updateAggPayTerminfoUnno1.action?qrtid_10500='+qrtid_10500+'&qrtid1_10500='+qrtid1_10500,
+								success:function(data) {
+									$.messager.progress('close');
+									var result = $.parseJSON(data);
+									if (result.sessionExpire) {
+					    				window.location.href = getProjectLocation();
+						    		} else {
+						    			if (result.success) {
+						    				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+						    				$('#sysAdmin_10500_datagrid').datagrid('reload');
+							    			$('#sysAdmin_fen500_datagrid').dialog('destroy');
+							    			$.messager.show({
+												title : '提示',
+												msg : result.msg
+											});
+							    		} else {
+							    			$('#sysAdmin_fen500_datagrid').dialog('destroy');
+							    			$('#sysAdmin_10500_datagrid').datagrid('reload');
+							    			$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+							    			$.messager.alert('提示', result.msg);
+								    	}
+							    	}
+								}
+							});
+						}
+					},{
+						text:'取消',
+						iconCls:'icon-cancel',
+						handler:function() {
+							$('#sysAdmin_fen500_datagrid').dialog('destroy');
+						}
+					}],
+					onClose:function() {
+						$(this).dialog('destroy');
+					}
+				});
+			}else{
+				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10500_updateScanRate(){
+		var qrtid_10500 = $('#sysAdmin_10500_searchForm #qrtid_10500').val();
+		var qrtid1_10500 = $('#sysAdmin_10500_searchForm #qrtid1_10500').val();
+		if(qrtid_10500==''||qrtid1_10500==''){
+			$.messager.show({
+				title : '提示',
+				msg : '请正确填写终端号区间'
+			});
+			return ;
+		}
+		var result = true;
+		$.messager.confirm('确认','您确认修改未使用终端{'+qrtid_10500+'}-{'+qrtid1_10500+'}的费率吗?',function(result) {
+			if (result) {
+				$('<div id="sysAdmin_update500_datagrid"/>').dialog({
+					title: '<span style="color:#157FCC;">费率调整</span>',
+					width: 550,   
+				    height: 330, 
+				    closed: false,
+				    href: '${ctx}/biz/bill/merchant/10512.jsp?qrtid_10500='+qrtid_10500+'&qrtid1_10500='+qrtid1_10500,
+				    modal: true,
+					buttons:[{
+						text:'确认',
+						iconCls:'icon-ok',
+						handler:function() {
+							var validator = $('#fenpeiInfo10512').form('validate');
+				    		if(validator){
+				    			$.messager.progress();
+				    		}
+							$('#fenpeiInfo10512').form('submit', {
+								url:'${ctx}/sysAdmin/aggPayTerminfo_updateAggPayTerminfoRate.action?qrtid_10512='+qrtid_10500+'&qrtid1_10512='+qrtid1_10500,
+								success:function(data) {
+									$.messager.progress('close');
+									var result = $.parseJSON(data);
+									if (result.sessionExpire) {
+					    				window.location.href = getProjectLocation();
+						    		} else {
+						    			if (result.success) {
+						    				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+						    				$('#sysAdmin_10500_datagrid').datagrid('reload');
+							    			$('#sysAdmin_update500_datagrid').dialog('destroy');
+							    			$.messager.show({
+												title : '提示',
+												msg : result.msg
+											});
+							    		} else {
+							    			$('#sysAdmin_update500_datagrid').dialog('destroy');
+							    			$('#sysAdmin_10500_datagrid').datagrid('reload');
+							    			$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+							    			$.messager.alert('提示', result.msg);
+								    	}
+							    	}
+								}
+							});
+						}
+					},{
+						text:'取消',
+						iconCls:'icon-cancel',
+						handler:function() {
+							$('#sysAdmin_update500_datagrid').dialog('destroy');
+						}
+					}],
+					onClose:function() {
+						$(this).dialog('destroy');
+					}
+				});
+			}else{
+				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+
+	function sysAdmin_merchantterminalinfoSelected10500_huibo(){
+		var qrtid_10500 = $('#sysAdmin_10500_searchForm #qrtid_10500').val();
+		var qrtid1_10500 = $('#sysAdmin_10500_searchForm #qrtid1_10500').val();
+		if(qrtid_10500==''||qrtid1_10500==''){
+			$.messager.show({
+				title : '提示',
+				msg : '请正确填写终端号区间'
+			});
+			return ;
+		}
+		var result = true;
+		$.messager.confirm('确认','您确认回拨未使用终端{'+qrtid_10500+'}-{'+qrtid1_10500+'}吗?',function(result) {
+			if (result) {
+				var validator = $('#fenpeiInfo10502').form('validate');
+	    		if(validator){
+	    			$.messager.progress();
+	    		}
+				$('#sysAdmin_10500_searchForm').form('submit', {
+					url:'${ctx}/sysAdmin/aggPayTerminfo_updateAggPayTerminfoUnno2.action',//?qrtid_10500='+qrtid_10500+'&qrtid1_10500='+qrtid1_10500,
+					success:function(data) {
+						$.messager.progress('close');
+						var result = $.parseJSON(data);
+						if (result.sessionExpire) {
+		    				window.location.href = getProjectLocation();
+			    		} else {
+			    			if (result.success) {
+			    				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+			    				$('#sysAdmin_10500_datagrid').datagrid('reload');
+				    			$.messager.show({
+									title : '提示',
+									msg : result.msg
+								});
+				    		} else {
+				    			$('#sysAdmin_10500_datagrid').datagrid('reload');
+				    			$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+				    			$.messager.alert('提示', result.msg);
+					    	}
+				    	}
+					}
+				});
+			}else{
+				$('#sysAdmin_10500_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10500_create(){
+		$('<div id="sysAdmin_add494_datagrid"/>').dialog({
+			title: '<span style="color:#157FCC;">生成二维码</span>', 
+			width: 500,    
+		    height: 300,  
+		    resizable:true,
+    		maximizable:true,
+		    closed: false,
+		    href: '${ctx}/biz/bill/merchant/10501.jsp',  
+		    modal: true,
+		    buttons:[{
+		    	text:'确认',
+		    	iconCls:'icon-ok',
+		    	handler:function() {
+		    		var validator = $('#createInfo10501').form('validate');
+		    		if(validator){
+		    			$.messager.progress();
+		    		}
+		    		//$('#areaCode').val($('#city').val());
+		    		$('#createInfo10501').form('submit',{
+			    		url:'${ctx}/sysAdmin/aggPayTerminfo_addAggPayTerminfo.action',
+		    			success:function(data) {
+		    				$.messager.progress('close'); 
+		    				var result = $.parseJSON(data);
+			    			if (result.sessionExpire) {
+			    				window.location.href = getProjectLocation();
+				    		} else {
+				    			if (result.success) {
+				    				$('#sysAdmin_10500_datagrid').datagrid('reload');
+					    			$('#sysAdmin_add494_datagrid').dialog('destroy');
+					    			$.messager.show({
+										title : '提示',
+										msg : result.msg
+									});
+					    		} else {
+					    			$.messager.alert('提示', result.msg);
+						    	}
+					    	}
+			    		 }
+			    	   });
+	    		}			    
+			},{
+				text:'取消',
+				iconCls:'icon-cancel',
+				handler:function() {
+				$('#sysAdmin_add494_datagrid').dialog('destroy');
+				}  
+			}], 
+			onClose:function() {
+			$(this).dialog('destroy');
+			}
+		});
+	}
+	
+	function sysAdmin_merchantterminalinfo10500_exportFun() {
+		$('#sysAdmin_10500_searchForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/merchant_updateMerchantWithQR.action'
+			    	});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10500_exportFun() {
+		var checkedItems = $('#sysAdmin_10500_datagrid').datagrid('getChecked');
+		var names = [];
+		$.each(checkedItems, function(index, item){
+			names.push(item.bmid);
+		});               
+		var bmids=names.join(",");
+		if(bmids==null||bmids==""){
+			$.messager.alert('提示',"请勾选操作列");
+			return;
+		}
+		$("#bmids_10500").val(bmids);
+		$('#sysAdmin_10500_searchForm').form('submit',{
+			url:'${ctx}/sysAdmin/merchant_updateMerchantWithQR.action',
+			success:function(data){
+			    $('#sysAdmin_10500_datagrid').datagrid('load', serializeObject($('#sysAdmin_10500_searchForm'))); 
+			    var result = $.parseJSON(data);
+			    $.messager.show({
+					title : '提示',
+					msg : result.msg
+				});
+			},
+			error:function(err){
+				$('#sysAdmin_10642_wait').dialog('destroy');
+				var result = $.parseJSON(err);
+				$.messager.show({
+					title : '提示',
+					msg : result.msg
+				});
+			}
+		});
+	}
+	
+	//表单查询
+	function sysAdmin_merchantAuthenticity_searchFun10500() {
+		$('#sysAdmin_10500_datagrid').datagrid('load', serializeObject($('#sysAdmin_10500_searchForm'))); 
+	}
+
+	//清除表单内容
+	function sysAdmin_merchantAuthenticity_cleanFun10500() {
+		$('#sysAdmin_10500_searchForm input').val('');
+		$('#sysAdmin_10500_searchForm #status').val('');
+	}
+	
+</script>
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:100px; overflow: hidden; padding-top:15px;">
+		<form id="sysAdmin_10500_searchForm" style="padding-left:2%" method="post">
+		<input type="hidden" id="bmids_10500" name="bmids" />
+			<table class="tableForm" >
+				<tr>
+					<th>归属机构号:</th>
+					<td><input name="unno" style="width: 120px;" />&nbsp;&nbsp;&nbsp;自营机构号 : <input name="unno1" style="width: 115px;" /></td>
+					<td width="10px"></td>
+					<th>商户号 :</th>
+					<td><input name="mid" style="width: 120px;" /></td>
+					<td width="10px"></td>
+					<th>分店名称:</th>
+					<td><input name="Shopname" style="width: 100px;" /></td>
+					<td width="10px"></td>
+					<th>绑定状态:</th>
+					<td>
+						<select name="status" id="status" style="width: 80px;">
+							<option value="" >所有</option>
+							<option value="0" >未使用</option>
+							<option value="1" >待审核</option>
+							<option value="2" >通过</option>
+							<option value="3" >退回</option>
+							<option value="4" >停用</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>聚合终端号:</th>
+					<td><input name="qrtid" id="qrtid_10500" style="width: 150px;" />&nbsp;&nbsp;-&nbsp;&nbsp;<input name="qrtid1" id="qrtid1_10500" style="width: 150px;" /></td>
+					<td width="10px"></td>
+					<th>操作时间:起</th>
+					<td colspan="4"><input name="maintainDate" class="easyui-datebox" style="width: 150px;"  />
+						止 <input name="maintainDate2" class="easyui-datebox" style="width: 150px;"  />
+					</td>
+					<td width="10px"></td>
+					<td colspan="5" style="text-align: center;">
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" 
+						onclick="sysAdmin_merchantAuthenticity_searchFun10500();">查询</a> &nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="sysAdmin_merchantAuthenticity_cleanFun10500();">清空</a>	
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>  
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+      <table id="sysAdmin_10500_datagrid" style="overflow: hidden;"></table>
+    </div> 
+</div>

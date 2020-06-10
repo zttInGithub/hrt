@@ -1,0 +1,38 @@
+package com.hrt.biz.bill.service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.entity.model.PurchaseDetailModel;
+import com.hrt.biz.bill.entity.pagebean.PurchaseDetailBean;
+import com.hrt.biz.bill.entity.pagebean.PurchaseOrderBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IPurchaseDetailService {
+	void savePurchaseDetail(PurchaseDetailModel purchaseDetailModel,UserBean user);
+	DataGridBean queryPurchaseDetail(PurchaseDetailBean purchaseDetailBean,UserBean user);
+	DataGridBean listPurchaseOrderAndDetail(PurchaseDetailBean purchaseDetailBean,UserBean user);
+	void deletePurchaseDetail(Integer poid ,UserBean user);
+	Integer deletePurchaseDetailById(Integer pdid ,UserBean user);
+	DataGridBean queryMachineModel();
+	DataGridBean listPurConfigure(String type);
+	List<Map<String, Object>> exportPurchase(PurchaseDetailBean purchaseDetailBean,UserBean user);
+	void savePurchaseDetailOrder(Integer integer, Integer integer2, String returnNum, String loginName);
+	List<Map<String, Object>> queryRemainMachinenum(PurchaseDetailBean purchaseDetailBean);
+	DataGridBean listReturnOrderAndDetail(PurchaseDetailBean purchaseDetailBean, UserBean userBean);
+	List<Map<String, Object>> exportReturnOrderAndDetail(PurchaseDetailBean purchaseDetailBean);
+	DataGridBean queryPurchaseDetailById(PurchaseDetailBean purchaseDetailBean, UserBean user);
+	Integer updateReturnDetail(PurchaseDetailBean purchaseDetailBean, UserBean userBean);
+	Integer updateReturnDetail2(PurchaseDetailBean purchaseDetailBean, UserBean userBean);
+	DataGridBean queryPurchaseDetailByPoid(PurchaseDetailBean purchaseDetailBean, UserBean userBean);
+	Integer updateBackReturnDetail(PurchaseDetailBean purchaseDetailBean, UserBean userBean);
+	List<Map<String, Object>> exportPurchaseOrderAndDetailForTongJi(PurchaseDetailBean purchaseDetailBean, UserBean userBean);
+	Integer updatePurchaseDetailCancel(PurchaseOrderBean purchaseOrderBean, UserBean userBean);
+	DataGridBean listPurchaseOrderAndDetailForTongJi(PurchaseDetailBean purchaseDetailBean,UserBean user);
+	Integer updatePurchaseDetail(PurchaseDetailBean purchaseDetailBean,UserBean user);
+	public List<Map<String, Object>> emportPurchaseInfo(PurchaseDetailBean purchaseDetailBean);
+	DataGridBean queryCenterCheckout(PurchaseDetailBean purchaseDetailBean);
+	public List<Map<String, Object>> exportCenterCheckout(PurchaseDetailBean purchaseDetailBean);
+	
+}

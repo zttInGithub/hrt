@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.BillTerminalSimModel" table="BILL_TERMINAL_SIM">
+        <id name="btsId" column="BTSID">
+            <generator class="sequence">
+                <param name="sequence">S_BILL_TERMINAL_SIM</param>
+            </generator>
+        </id>
+        <property name="mid" column="MID"/>
+        <property name="sim" column="SIM"/>
+        <property name="sn" column="SN"/>
+        <property name="status" column="STATUS"/>
+        <property name="snStatus" column="SNSTATUS"/>
+        <property name="initDate" column="INITDATE"/>
+        <property name="tryDate" column="TRYDATE"/>
+        <property name="payDate" column="PAYDATE"/>
+        <property name="deductDate" column="DEDUCTDATE"/>
+        <property name="actDate" column="ACTDATE"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+    </class>
+</hibernate-mapping>

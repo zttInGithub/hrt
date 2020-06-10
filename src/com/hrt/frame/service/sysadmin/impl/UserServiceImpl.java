@@ -1,0 +1,1047 @@
+package com.hrt.frame.service.sysadmin.impl;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeanUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.argorse.security.core.hash.MD5Wrapper;
+import com.csii.pe.enter.CSIIPinConvertor;
+import com.hrt.biz.bill.service.IMerchantInfoService;
+import com.hrt.frame.dao.sysadmin.IRoleDao;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.dao.sysadmin.IUserDao;
+import com.hrt.frame.dao.sysadmin.IUserLoginLogDao;
+import com.hrt.frame.entity.model.RoleModel;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.model.UserLoginLogModel;
+import com.hrt.frame.entity.model.UserModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.service.sysadmin.IUserService;
+import com.hrt.util.HttpXmlClient;
+import com.hrt.util.StringUtil;
+
+public class UserServiceImpl implements IUserService {
+	private static final Log log = LogFactory.getLog(UserServiceImpl.class);
+	
+	private IUserDao userDao;
+	
+	private IRoleDao roleDao;
+	
+	private IUnitDao unitDao;
+	
+	private IUserLoginLogDao userLoginLogDao;
+	
+	private String mesHybUrl;
+	
+	private IMerchantInfoService merchantInfoService;
+	
+	public String getMesHybUrl() {
+		return mesHybUrl;
+	}
+
+	public void setMesHybUrl(String mesHybUrl) {
+		this.mesHybUrl = mesHybUrl;
+	}
+
+	public IUserDao getUserDao() {
+		return userDao;
+	}
+	
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+
+	public IRoleDao getRoleDao() {
+		return roleDao;
+	}
+
+	public void setRoleDao(IRoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+	
+	public IMerchantInfoService getMerchantInfoService() {
+		return merchantInfoService;
+	}
+
+	public void setMerchantInfoService(IMerchantInfoService merchantInfoService) {
+		this.merchantInfoService = merchantInfoService;
+	}
+
+	
+	public IUserLoginLogDao getUserLoginLogDao() {
+		return userLoginLogDao;
+	}
+
+	public void setUserLoginLogDao(IUserLoginLogDao userLoginLogDao) {
+		this.userLoginLogDao = userLoginLogDao;
+	}
+
+	/**
+	 * 查询用户是否存在
+	 */
+	@Override
+	public Integer  queryUserCounts(UserBean userBean){
+		String hqlCount = "select count(userID) from UserModel where loginName = :name";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", userBean.getLoginName());
+		Long userCounts = userDao.queryCounts(hqlCount, map);
+		return userCounts.intValue();
+	}
+	
+	/**
+	 * 查询短信验证码
+	 */
+	@Override
+	public String  queryMesRand(UserBean userBean){
+		String phone = "";
+		String msgRand = "";
+		String ifInput = "";
+		UserModel u = userDao.queryObjectByHql("from UserModel where loginName=?", new Object[]{userBean.getLoginName()});
+		if(u==null){
+			return ""; 
+		}else if(u.getUseLvl()==3){
+			List<Map<String, String>> list = userDao.queryObjectsBySqlList("select f.mid,f.contactPhone from bill_merchantinfo f where f.mid='"+u.getLoginName()+"'");
+			if(list.size()>0){ 
+				phone = list.get(0).get("CONTACTPHONE");
+				ifInput = list.get(0).get("MID");
+			}
+		}else{
+			List<Map<String, String>> list = userDao.queryObjectsBySqlList("select SALENAME,phone from bill_agentsalesinfo where user_id='"+u.getUserID()+"'");
+			if(list.size()>0){
+				phone = list.get(0).get("PHONE");
+				ifInput = list.get(0).get("SALENAME");
+			}else if(u.getUseLvl()==0&&u.getLoginName().length()==8){
+				List<Map<String, String>> listAg = userDao.queryObjectsBySqlList("select unno, contactPhone from bill_agentunitinfo where unno='"+u.getLoginName().substring(0, 6)+"'");
+				if(listAg.size()>0){
+					phone = listAg.get(0).get("CONTACTPHONE");
+					ifInput = listAg.get(0).get("UNNO");
+				}
+			}
+		}
+		if(!"".equals(phone)&&!"null".equals(phone)){
+			for(int i=0;i<4;i++){
+				msgRand=msgRand+String.valueOf((int)(Math.random()*10));
+			}
+			Map<String,String> params = new HashMap<String, String>();
+			params.put("sendType","0");
+			params.put("validCode",msgRand);
+			params.put("phoneNum", phone);
+			params.put("message", "您正在登陆商户支付管理系统(https://merch.hrtpayment.com/HrtApp),登陆短信验证码为"+msgRand+".请妥善保管,如非本人操作,请忽略此条短信  【北京和融通支付科技有限公司】");
+			String json =JSON.toJSONString(params);
+			String ss=HttpXmlClient.post(mesHybUrl, json);
+		}else if("".equals(ifInput)){
+			msgRand = "sys";
+		}
+		return msgRand;
+	}
+	
+	/**
+	 * 添加用户
+	 */
+	@Override
+	public void saveUser(UserBean userBean, UserBean user) throws Exception {
+		
+			userBean.setCreateDate(new Date());
+			userBean.setPassword(MD5Wrapper.encryptMD5ToString("h888@2016"));		//默认密码h888@2016
+			userBean.setCreateUser(user.getLoginName());
+			userBean.setResetFlag(0);
+			userBean.setStatus(1);
+			String roleIds =userBean.getRoleIds();
+			String role[]=roleIds.split(",");
+			RoleModel aa=roleDao.getObjectByID(RoleModel.class, Integer.parseInt(role[0]));
+			if(userBean.isEnc()){
+			    // 活动用户设置
+				userBean.setUseLvl(6);
+			}else {
+				if (aa.getRoleLevel() == 0 || aa.getRoleLevel() == 1) {
+					userBean.setUseLvl(1);
+				} else {
+					userBean.setUseLvl(2);
+				}
+			}
+			UserModel userModel = new UserModel();
+			BeanUtils.copyProperties(userBean, userModel);
+			userModel.setIsLogin(0);
+			
+			//建立多对多对应关系
+			Set<RoleModel> roleSet = new HashSet<RoleModel>();
+			if (userBean.getRoleIds() != null) {
+				String[] ids = userBean.getRoleIds().split(","); 
+				for (String id : ids) {
+					RoleModel roleModel = new RoleModel();
+					roleModel.setRoleID(Integer.parseInt(id.trim()));
+					roleSet.add(roleModel);
+				}
+			}
+			userModel.setRoles(roleSet);
+
+			//建立多对多对应关系
+			Set<UnitModel> unitSet = new HashSet<UnitModel>();
+			if (userBean.getUnNo() != null) {
+				String[] ids = userBean.getUnNo().split(","); 
+				for (String id : ids) {
+					UnitModel unitModel = new UnitModel();
+					unitModel.setUnNo(id.trim());
+					unitSet.add(unitModel);
+				}
+			}
+			userModel.setUnits(unitSet);
+			userDao.saveObject(userModel);
+	}
+	
+	/**
+	 * 删除用户
+	 */
+	@Override
+	public void deleteUser(String ids) {
+		UserModel userModel = new UserModel();
+		userModel.setUserID(Integer.parseInt(ids));
+		
+		userDao.deleteObject(userModel);
+	}
+	
+	/**
+	 * 分页查询用户信息
+	 */
+	@Override
+	public DataGridBean queryUsers(UserBean user,String unNo,Integer userID) throws Exception {
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, unNo);
+		String sql = "";
+		String sqlCount = "";
+		Map<String, Object> map = new HashMap<String, Object>();
+		if("110000".equals(unNo)){
+			sql = "SELECT * FROM SYS_USER WHERE 1 = 1";
+			sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE 1 = 1";
+		}else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){		//如果为部门机构并且级别为总公司
+			UnitModel parent = unitModel.getParent();
+			System.out.println(parent.getUnNo());
+			if("110000".equals(parent.getUnNo())){
+				sql = "SELECT * FROM SYS_USER WHERE 1 = 1";
+				sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE 1 = 1";
+			}else{
+				sql = "SELECT * FROM SYS_USER WHERE USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO = :unNo)";
+				sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO = :unNo)";
+				map.put("unNo", unNo);
+			}
+		}else{
+			String childUnno=merchantInfoService.queryUnitUnnoUtil(unNo);
+			sql = "SELECT * FROM SYS_USER WHERE STATUS!=-1 AND USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO in("+childUnno+") )";
+			sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE STATUS!=-1 AND USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO in("+childUnno+") )";
+		}
+		
+		if (user != null && user.getLoginName() != null && !"".equals(user.getLoginName())) {
+			sql +=" AND LOGIN_NAME LIKE :loginName"; 
+			sqlCount += " AND LOGIN_NAME LIKE :loginName";
+			map.put("loginName", "%" + user.getLoginName() + "%");
+		}
+		if(user.isEnc()){
+			// 活动用户
+			sql +=" AND user_Lvl ="+6;
+			sqlCount += " AND user_Lvl ="+6;
+		}else {
+			if (user != null && user.getUseLvl() != null && user.getUseLvl() == 2) {
+				sql += " AND user_Lvl in (1,2)";
+				sqlCount += " AND user_Lvl in (1,2)";
+			} else if (user != null && user.getUseLvl() != null && !"".equals(user.getUseLvl())) {
+				sql += " AND user_Lvl =:useLvl";
+				sqlCount += " AND user_Lvl =:useLvl";
+				map.put("useLvl", user.getUseLvl());
+			} else if (user != null) {
+				sql += " AND user_Lvl =" + 0;
+				sqlCount += " AND user_Lvl =" + 0;
+			}
+		}
+		if (user != null && user.getUserName() != null && !user.getUserName().toString().equals("")) {
+			sql +=" AND USER_NAME LIKE :name"; 
+			sqlCount += " AND USER_NAME LIKE :name";
+			map.put("name", "%" + user.getUserName() + "%");
+		} 
+		if (user != null && user.getCreateDateStart() != null && !user.getCreateDateEnd().equals("")) {
+			sql +=" AND to_char(CREATE_DATE,'yyyy-MM-dd') >= :createDateTimeStart";
+			sqlCount += " AND to_char(CREATE_DATE,'yyyy-MM-dd') >= :createDateTimeStart";
+			map.put("createDateTimeStart", user.getCreateDateStart());
+		} 
+		if (user != null && user.getCreateDateEnd() != null && !user.getCreateDateEnd().equals("")) {
+			sql +=" AND to_char(CREATE_DATE,'yyyy-MM-dd') <= :createdatetimeEnd";
+			sqlCount += " AND to_char(CREATE_DATE,'yyyy-MM-dd') <= :createdatetimeEnd";
+			map.put("createdatetimeEnd", user.getCreateDateEnd());
+		} 
+		if (user != null && user.getUpdateDateStart() != null && !user.getUpdateDateStart().equals("")) {
+			sql +=" AND to_char(UPDATE_DATE,'yyyy-MM-dd') >= :modifydatetimeStart";
+			sqlCount += " AND to_char(UPDATE_DATE,'yyyy-MM-dd') >= :modifydatetimeStart";
+			map.put("modifydatetimeStart", user.getUpdateDateStart());
+		} 
+		if (user != null && user.getUpdateDateEnd() != null && !user.getUpdateDateStart().equals("")) {
+			sql +=" AND to_char(UPDATE_DATE,'yyyy-MM-dd') <= :modifydatetimeEnd";
+			sqlCount += " AND to_char(UPDATE_DATE,'yyyy-MM-dd') <= :modifydatetimeEnd";
+			map.put("modifydatetimeEnd", user.getUpdateDateEnd());
+		}
+
+		if(user.isEnc()){
+		    // 活动用户
+			sql +=" AND rebatetype is not null ";
+			sqlCount += " AND rebatetype is not null ";
+		}
+		if(StringUtils.isNotEmpty(user.getRebateType())){
+            sql +=" AND rebatetype=:rebateType ";
+            sqlCount += " AND rebatetype=:rebateType ";
+            map.put("rebateType", user.getRebateType());
+        }
+
+		sql += " AND USER_ID != :userID";
+		sqlCount += " AND USER_ID != :userID";
+		map.put("userID", userID);
+		
+		if (user.getSort() != null) {
+			sql += " ORDER BY "+ user.getSort() + " " + user.getOrder();
+		}
+		
+		List<UserModel> list = userDao.queryObjectsBySqlLists(sql, map, user.getPage(), user.getRows(), UserModel.class);
+		BigDecimal counts = userDao.querysqlCounts(sqlCount, map);
+		
+		List<Object> listDto = new ArrayList<Object>();
+		for (int i = 0; i < list.size(); i++) {
+			UserModel userModel = (UserModel)list.get(i);
+			UserBean userBean = new UserBean();
+			BeanUtils.copyProperties(userModel, userBean);
+			
+			if(userModel.getStatus() == 1){
+				userBean.setStatusName("启用");
+			}else{
+				userBean.setStatusName("停用");
+			}
+			
+			//查询该用户关联的角色信息
+			Set<RoleModel> roleSet = userModel.getRoles();
+			if (roleSet != null && !roleSet.isEmpty()) {
+				String roleIds = "";
+				String roleNames = "";
+				for (RoleModel role : roleSet) {
+					roleIds += role.getRoleID() + ",";
+					roleNames += role.getRoleName() + ",";
+				}
+				userBean.setRoleIds(roleIds.substring(0, roleIds.lastIndexOf(",")));
+				userBean.setRoleNames(roleNames.substring(0, roleNames.lastIndexOf(",")));
+			}
+			//查询该用户关联的机构信息
+			Set<UnitModel> unitSet = userModel.getUnits();
+			if (unitSet != null && !unitSet.isEmpty()) {
+				String unitIds = "";
+				String unitNames = "";
+				for (UnitModel unit : unitSet) {
+					unitIds += unit.getUnNo() + ",";
+					unitNames += unit.getUnitName() + ",";
+				}
+				userBean.setUnNo(unitIds.substring(0, unitIds.lastIndexOf(",")));
+				userBean.setUnitName(unitNames.substring(0, unitNames.lastIndexOf(",")));
+			}
+			listDto.add(userBean);
+		}
+		DataGridBean dgd = new DataGridBean();
+		dgd.setTotal(counts.intValue());
+		dgd.setRows(listDto);
+		return dgd;
+	}
+	
+	/**
+	 * 分页查询用户信息
+	 */
+	@Override
+	public DataGridBean queryUsers002401(UserBean user,String unNo,Integer userID) throws Exception {
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, unNo);
+		String sql = "";
+		String sqlCount = "";
+		Map<String, Object> map = new HashMap<String, Object>();
+		if("110000".equals(unNo)){
+			sql = "SELECT * FROM SYS_USER WHERE 1 = 1";
+			sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE 1 = 1";
+		}else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){		//如果为部门机构并且级别为总公司
+			UnitModel parent = unitModel.getParent();
+			System.out.println(parent.getUnNo());
+			if("110000".equals(parent.getUnNo())){
+				sql = "SELECT * FROM SYS_USER WHERE 1 = 1";
+				sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE 1 = 1";
+			}else{
+				sql = "SELECT * FROM SYS_USER WHERE USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO = :unNo)";
+				sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO = :unNo)";
+				map.put("unNo", unNo);
+			}
+		}else{
+			String childUnno=merchantInfoService.queryUnitUnnoUtil(unNo);
+			sql = "SELECT * FROM SYS_USER WHERE STATUS!=-1 AND USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO in("+childUnno+") )";
+			sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE STATUS!=-1 AND USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO in("+childUnno+") )";
+		}
+		if (user != null && user.getCreateUser() != null && !"".equals(user.getCreateUser())) {
+			sql +=" AND CREATE_USER like :CREATEUSER"; 
+			sqlCount += " AND CREATE_USER like :CREATEUSER";
+			map.put("CREATEUSER",  user.getCreateUser()+"%");
+		} 
+		if (user != null && user.getLoginName() != null && !"".equals(user.getLoginName())) {
+			sql +=" AND LOGIN_NAME LIKE :loginName"; 
+			sqlCount += " AND LOGIN_NAME LIKE :loginName";
+			map.put("loginName", "%" + user.getLoginName() + "%");
+		} 
+		if (user != null && user.getUseLvl() != null && user.getUseLvl()==2) {
+			sql +=" AND user_Lvl in (1,2)"; 
+			sqlCount += " AND user_Lvl in (1,2)";
+		}else if (user != null && user.getUseLvl() != null && !"".equals(user.getUseLvl())) {
+			sql +=" AND user_Lvl =:useLvl"; 
+			sqlCount += " AND user_Lvl =:useLvl";
+			map.put("useLvl",  user.getUseLvl() );
+		}else if (user != null){
+			sql +=" AND user_Lvl ="+0; 
+			sqlCount += " AND user_Lvl ="+0;
+		}
+		
+		if (user != null && user.getCreateDateStart() != null && !user.getCreateDateEnd().equals("")) {
+			sql +=" AND to_char(CREATE_DATE,'yyyy-MM-dd') >= :createDateTimeStart";
+			sqlCount += " AND to_char(CREATE_DATE,'yyyy-MM-dd') >= :createDateTimeStart";
+			map.put("createDateTimeStart", user.getCreateDateStart());
+		} 
+		if (user != null && user.getCreateDateEnd() != null && !user.getCreateDateEnd().equals("")) {
+			sql +=" AND to_char(CREATE_DATE,'yyyy-MM-dd') <= :createdatetimeEnd";
+			sqlCount += " AND to_char(CREATE_DATE,'yyyy-MM-dd') <= :createdatetimeEnd";
+			map.put("createdatetimeEnd", user.getCreateDateEnd());
+		} 
+		if (user != null && user.getUpdateDateStart() != null && !user.getUpdateDateStart().equals("")) {
+			sql +=" AND to_char(UPDATE_DATE,'yyyy-MM-dd') >= :modifydatetimeStart";
+			sqlCount += " AND to_char(UPDATE_DATE,'yyyy-MM-dd') >= :modifydatetimeStart";
+			map.put("modifydatetimeStart", user.getUpdateDateStart());
+		} 
+		if (user != null && user.getUpdateDateEnd() != null && !user.getUpdateDateStart().equals("")) {
+			sql +=" AND to_char(UPDATE_DATE,'yyyy-MM-dd') <= :modifydatetimeEnd";
+			sqlCount += " AND to_char(UPDATE_DATE,'yyyy-MM-dd') <= :modifydatetimeEnd";
+			map.put("modifydatetimeEnd", user.getUpdateDateEnd());
+		}
+		
+		sql += " AND USER_ID != :userID";
+		sqlCount += " AND USER_ID != :userID";
+		map.put("userID", userID);
+		
+		if (user.getSort() != null) {
+			sql += " ORDER BY "+ user.getSort() + " " + user.getOrder();
+		}
+		
+		List<UserModel> list = userDao.queryObjectsBySqlLists(sql, map, user.getPage(), user.getRows(), UserModel.class);
+		BigDecimal counts = userDao.querysqlCounts(sqlCount, map);
+		
+		List<Object> listDto = new ArrayList<Object>();
+		for (int i = 0; i < list.size(); i++) {
+			UserModel userModel = (UserModel)list.get(i);
+			UserBean userBean = new UserBean();
+			BeanUtils.copyProperties(userModel, userBean);
+			
+			if(userModel.getStatus() == 1){
+				userBean.setStatusName("启用");
+			}else{
+				userBean.setStatusName("停用");
+			}
+			
+			//查询该用户关联的角色信息
+			Set<RoleModel> roleSet = userModel.getRoles();
+			if (roleSet != null && !roleSet.isEmpty()) {
+				String roleIds = "";
+				String roleNames = "";
+				for (RoleModel role : roleSet) {
+					roleIds += role.getRoleID() + ",";
+					roleNames += role.getRoleName() + ",";
+				}
+				userBean.setRoleIds(roleIds.substring(0, roleIds.lastIndexOf(",")));
+				userBean.setRoleNames(roleNames.substring(0, roleNames.lastIndexOf(",")));
+			}
+			//查询该用户关联的机构信息
+			Set<UnitModel> unitSet = userModel.getUnits();
+			if (unitSet != null && !unitSet.isEmpty()) {
+				String unitIds = "";
+				String unitNames = "";
+				for (UnitModel unit : unitSet) {
+					unitIds += unit.getUnNo() + ",";
+					unitNames += unit.getUnitName() + ",";
+				}
+				userBean.setUnNo(unitIds.substring(0, unitIds.lastIndexOf(",")));
+				userBean.setUnitName(unitNames.substring(0, unitNames.lastIndexOf(",")));
+			}
+			listDto.add(userBean);
+		}
+		DataGridBean dgd = new DataGridBean();
+		dgd.setTotal(counts.intValue());
+		dgd.setRows(listDto);
+		return dgd;
+	}
+	
+	/**
+	 * 修改用户
+	 */
+	@Override
+	public void updateUser(UserBean userBean, String loginName) throws Exception {
+		UserModel userModel = userDao.getObjectByID(UserModel.class, userBean.getUserID());
+		userModel.setUserName(userBean.getUserName());
+		userModel.setStatus(userBean.getStatus());
+		userModel.setUpdateDate(new Date());
+		userModel.setUpdateUser(loginName);
+		userModel.setStatus(1);
+		
+		String roleIds =userBean.getRoleIds();
+		String role[]=roleIds.split(",");
+		RoleModel aa=roleDao.getObjectByID(RoleModel.class, Integer.parseInt(role[0]));
+		if(userBean.isEnc()){
+		    // 活动用户
+			userModel.setRebateType(userBean.getRebateType());
+			userBean.setUseLvl(6);
+		}else{
+			if(aa.getRoleLevel()==0 || aa.getRoleLevel() ==1){
+				userBean.setUseLvl(1);
+			}else{
+				userBean.setUseLvl(2);
+			}
+		}
+
+		//建立多对多对应关系
+		Set<RoleModel> roleSet = new HashSet<RoleModel>();
+		if (userBean.getRoleIds() != null) {
+			String[] ids = userBean.getRoleIds().split(","); 
+			for (String id : ids) {
+				RoleModel roleModel = new RoleModel();
+				roleModel.setRoleID(Integer.parseInt(id.trim()));
+				roleSet.add(roleModel);
+			}
+		}
+		userModel.setRoles(roleSet);
+		
+		//建立多对多对应关系
+		Set<UnitModel> unitSet = new HashSet<UnitModel>();
+		if (userBean.getUnNo() != null) {
+			String[] ids = userBean.getUnNo().split(","); 
+			for (String id : ids) {
+				UnitModel unitModel = new UnitModel();
+				unitModel.setUnNo(id.trim());
+				unitSet.add(unitModel);
+			}
+		}
+		userModel.setUnits(unitSet);
+		
+		userDao.updateObject(userModel);
+	}
+
+	/**
+	 * 登录
+	 */
+	@Override
+	public UserBean login(UserBean userBean) throws Exception {
+		UserBean result = null;
+		
+		//System.out.println("password" + userBean.getPassword());
+//        sun.misc.BASE64Encoder baseEncoder = new sun.misc.BASE64Encoder(); 
+//        StringUtil util=new StringUtil();
+//        userBean.setPassword(baseEncoder.encode(util.hexStringToByte(userBean.getPassword().toUpperCase())));
+        //System.out.println("MD5password" + userBean.getPassword());
+        
+		String sql = "SELECT * FROM SYS_USER WHERE LOGIN_NAME = :name AND PWD = :pwd and status !=:status";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", userBean.getLoginName());
+		map.put("status", "-1");
+		//String pwd = userBean.getPassword();
+		String pwd = null;
+		//是否MAC登录
+		if("MAC".equals(userBean.getMacTry())){
+			pwd = userBean.getPassword();
+		}else{
+			CSIIPinConvertor convertor = new CSIIPinConvertor();
+			pwd = convertor.convert(userBean.getPassword());
+		}
+//		map.put("pwd", pwd);
+		map.put("pwd", MD5Wrapper.encryptMD5ToString(pwd));
+		List<UserModel> userList = userDao.queryObjectsBySqlList(sql,map,UserModel.class);
+		if (userList != null && userList.size() > 0) {
+			UserModel user = userList.get(0);
+			if(user.getUseLvl()==3&&!"1".equals(user.getSysFlag())){
+				String sql2 = " select count(1) from bill_merchantinfo m where m.mid='"+userBean.getLoginName()+"'";
+//				if("1".equals(userBean.getIsM35Type())){
+//					sql2 += " and m.isM35 = 1";
+//				}else{
+//					sql2 += " and m.isM35 != 1";
+//				}
+				Integer flag = userDao.querysqlCounts2(sql2, null);
+				if(flag==0){
+					return null;
+				}
+			}
+			if(userBean.getUnNo() == null){
+				Set<UnitModel> unitModel = userList.get(0).getUnits();
+				for (UnitModel unit : unitModel) {
+					userBean.setUnNo(unit.getUnNo());
+					userBean.setUnitLvl(unit.getUnLvl());
+					userBean.setUnitStatus(unit.getStatus());
+				}
+			}
+			BeanUtils.copyProperties(user, userBean);
+			userBean.setUnitName(unitDao.getObjectByID(UnitModel.class, userBean.getUnNo()).getUnitName());
+			userBean.setPassword(pwd);
+			result = userBean;
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * 修改密码
+	 */
+	@SuppressWarnings("finally")
+	@Override
+	public boolean updatePwd(UserBean userBean, UserBean user) throws Exception {
+		UserModel userModel = userDao.getObjectByID(UserModel.class, user.getUserID());
+		if(!userModel.getPassword().equals(MD5Wrapper.encryptMD5ToString(userBean.getPassword()))){
+			return false;
+		}else{
+			try {
+//				if(user.getUseLvl()==3){
+//					String url="http://10.51.31.209:7010/CubeHRTAdminConsole/sso/updateUserPwd.do";
+//					Map<String,String> params = new HashMap<String, String>();
+//					params.put("userName",user.getLoginName());
+//					params.put("passWord", MD5Wrapper.encryptMD5ToString(userBean.getPassword()));
+//					String ss=HttpXmlClient.post(url, params);
+//					System.out.println("密码更新同步会员宝系统用户"+ss);
+//				}
+			} catch (Exception e) {
+				log.error("updatePwd 异常:"+e);
+			}finally{
+				userModel.setResetFlag(1);
+				userModel.setUpdateDate(new Date());
+				userModel.setPassword(MD5Wrapper.encryptMD5ToString(userBean.getNewPassword()));
+				userModel.setUpdateUser(user.getLoginName());
+				userDao.updateObject(userModel);
+				return true;
+			}
+			
+		}
+		
+	}
+
+	/**
+	 * 重置密码
+	 */
+	@Override
+	public void updatePwd(UserBean userBean, String loginName) throws Exception {
+		UserModel userModel = userDao.getObjectByID(UserModel.class, userBean.getUserID());
+		try {
+			if(userModel.getUseLvl()==3){
+//				String url="http://10.51.31.209:8080/CubeHRTAdminConsole/sso/updateUserPwd.do";
+//				Map<String,String> params = new HashMap<String, String>();
+//				params.put("userName",userModel.getLoginName());
+//				params.put("passWord", MD5Wrapper.encryptMD5ToString("h888@2016"));
+//				String ss=HttpXmlClient.post(url, params);
+//				System.out.println("密码更新同步会员宝系统用户"+ss);
+				
+				String mid =userModel.getLoginName();
+				userModel.setResetFlag(1);		//将密码修改状态改为未修改
+				userModel.setUpdateDate(new Date());
+				userModel.setPassword(MD5Wrapper.encryptMD5ToString(mid.substring(mid.length()-6, mid.length())));
+				userModel.setUpdateUser(loginName);
+			}else{
+				userModel.setResetFlag(0);		//将密码修改状态改为未修改
+				userModel.setUpdateDate(new Date());
+				userModel.setPassword(MD5Wrapper.encryptMD5ToString("h888@2016"));
+				userModel.setUpdateUser(loginName);
+			}
+			//更新修改密码日期
+			userModel.setPwdModDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+			userDao.updateObject(userModel);
+		} catch (Exception e) {
+			log.error("updatePwd 异常:"+e);
+		}finally{
+		}
+	}
+
+	/**
+	 * 判断当前账号是否有两个机构
+	 */
+	@Override
+	public UserBean loginNameUnit(String loginName){
+		UserBean result = new UserBean();
+		String hql = "from UserModel u where u.loginName = :loginName";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("loginName", loginName);
+		List<UserModel> users = userDao.queryObjectsByHqlList(hql, map);
+		String unitName = "";
+		String unNo = "";
+		if(users != null && users.size()>0){
+			if(users.get(0).getUnits().size() >= 2){
+				UserModel user = users.get(0);
+				Set<UnitModel> unitModel = user.getUnits();
+				for (UnitModel unit : unitModel) {
+					unitName += unitDao.getObjectByID(UnitModel.class, unit.getUnNo()).getUnitName() + ",";
+					result.setUnitName(unitName);
+					unNo += unit.getUnNo() + ",";
+					result.setUnNo(unNo);
+				}
+				BeanUtils.copyProperties(user, result);
+				return result;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 查询用户码
+	 */
+	@Override
+	public DataGridBean searchUser(String nameCode,String unno) throws Exception {
+		UnitModel unit = unitDao.getObjectByID(UnitModel.class, unno);
+		String sql = " SELECT USER_ID,USER_NAME FROM SYS_USER WHERE USER_LVL IN (1,2) AND STATUS = 1 ";
+		if(unit.getUnLvl() != 0 && !"901000".equals(unno)){
+			sql += " AND USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO = '" + unno + "')";
+		}
+		if("901000".equals(unno)){
+			sql += " AND USER_ID IN (SELECT USER_ID FROM SYS_UNIT_USER WHERE UNNO in(select unno from sys_unit g  where g.upper_unit=901000 or g.unno=901000))";
+		}
+		if(nameCode !=null){
+			sql += " AND USER_NAME LIKE '%" + nameCode.replaceAll("'", "") + "%'";
+		}
+		sql += " ORDER BY USER_ID DESC";
+		List<Map<String,String>> proList = userDao.executeSql(sql);
+		
+		List<Object>  list = new ArrayList<Object>();
+		for (int i = 0; i < proList.size(); i++) {
+			Map map = proList.get(i);
+			list.add(map);
+		}
+		DataGridBean dgd = new DataGridBean();
+		dgd.setTotal(proList.size());
+		dgd.setRows(list);
+		
+		return dgd;
+	}
+	
+	/**
+	 * 停用用户
+	 */
+	@Override
+	public void updateCloseUser(UserBean userBean) throws Exception {
+		UserModel userModel = userDao.getObjectByID(UserModel.class, userBean.getUserID());
+		userModel.setStatus(0);
+		userDao.updateObject(userModel);
+	}
+
+	/**
+	 * 启用用户
+	 */
+	@Override
+	public void updateStartRole(UserBean userBean) throws Exception {
+		UserModel userModel = userDao.getObjectByID(UserModel.class, userBean.getUserID());
+		userModel.setStatus(1);
+		userDao.updateObject(userModel);
+	}
+
+	@Override
+	public DataGridBean queryUsersForMerchant(UserBean user) {
+		String sql = "SELECT * FROM SYS_USER WHERE USER_LVL=3 ";
+		String sqlCount = "SELECT COUNT(*) FROM SYS_USER WHERE USER_LVL=3 ";
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (user != null && user.getLoginName() != null && !"".equals(user.getLoginName())) {
+			sql +=" AND LOGIN_NAME LIKE :loginName"; 
+			sqlCount += " AND LOGIN_NAME LIKE :loginName";
+			map.put("loginName", "%" + user.getLoginName() + "%");
+		} 
+		if (user != null && user.getUserName() != null && !user.getUserName().toString().equals("")) {
+			sql +=" AND USER_NAME LIKE :name"; 
+			sqlCount += " AND USER_NAME LIKE :name";
+			map.put("name", "%" + user.getUserName() + "%");
+		} 
+		if (user != null && user.getCreateDateStart() != null && !user.getCreateDateEnd().equals("")) {
+			sql +=" AND to_char(CREATE_DATE,'yyyy-MM-dd') >= :createDateTimeStart";
+			sqlCount += " AND to_char(CREATE_DATE,'yyyy-MM-dd') >= :createDateTimeStart";
+			map.put("createDateTimeStart", user.getCreateDateStart());
+		} 
+		if (user != null && user.getCreateDateEnd() != null && !user.getCreateDateEnd().equals("")) {
+			sql +=" AND to_char(CREATE_DATE,'yyyy-MM-dd') <= :createdatetimeEnd";
+			sqlCount += " AND to_char(CREATE_DATE,'yyyy-MM-dd') <= :createdatetimeEnd";
+			map.put("createdatetimeEnd", user.getCreateDateEnd());
+		} 
+		if (user != null && user.getUpdateDateStart() != null && !user.getUpdateDateStart().equals("")) {
+			sql +=" AND to_char(UPDATE_DATE,'yyyy-MM-dd') >= :modifydatetimeStart";
+			sqlCount += " AND to_char(UPDATE_DATE,'yyyy-MM-dd') >= :modifydatetimeStart";
+			map.put("modifydatetimeStart", user.getUpdateDateStart());
+		} 
+		if (user != null && user.getUpdateDateEnd() != null && !user.getUpdateDateStart().equals("")) {
+			sql +=" AND to_char(UPDATE_DATE,'yyyy-MM-dd') <= :modifydatetimeEnd";
+			sqlCount += " AND to_char(UPDATE_DATE,'yyyy-MM-dd') <= :modifydatetimeEnd";
+			map.put("modifydatetimeEnd", user.getUpdateDateEnd());
+		}
+		if (user.getSort() != null) {
+			if(user.getSort().equals("createDate")){
+				sql += " ORDER BY CREATE_DATE " + user.getOrder();
+			}else{
+				sql += " ORDER BY "+ user.getSort() + " " + user.getOrder();
+			}
+			
+		}
+		
+		List<UserModel> list = userDao.queryObjectsBySqlLists(sql, map, user.getPage(), user.getRows(), UserModel.class);
+		BigDecimal counts = userDao.querysqlCounts(sqlCount, map);
+		
+		List<Object> listDto = new ArrayList<Object>();
+		for (int i = 0; i < list.size(); i++) {
+			UserModel userModel = (UserModel)list.get(i);
+			UserBean userBean = new UserBean();
+			BeanUtils.copyProperties(userModel, userBean);
+			
+			if(userModel.getStatus() == 1){
+				userBean.setStatusName("启用");
+			}else{
+				userBean.setStatusName("停用");
+			}
+			
+			//查询该用户关联的角色信息
+			Set<RoleModel> roleSet = userModel.getRoles();
+			if (roleSet != null && !roleSet.isEmpty()) {
+				String roleIds = "";
+				String roleNames = "";
+				for (RoleModel role : roleSet) {
+					roleIds += role.getRoleID() + ",";
+					roleNames += role.getRoleName() + ",";
+				}
+				userBean.setRoleIds(roleIds.substring(0, roleIds.lastIndexOf(",")));
+				userBean.setRoleNames(roleNames.substring(0, roleNames.lastIndexOf(",")));
+			}
+			//查询该用户关联的机构信息
+			Set<UnitModel> unitSet = userModel.getUnits();
+			if (unitSet != null && !unitSet.isEmpty()) {
+				String unitIds = "";
+				String unitNames = "";
+				for (UnitModel unit : unitSet) {
+					unitIds += unit.getUnNo() + ",";
+					unitNames += unit.getUnitName() + ",";
+				}
+				userBean.setUnNo(unitIds.substring(0, unitIds.lastIndexOf(",")));
+				userBean.setUnitName(unitNames.substring(0, unitNames.lastIndexOf(",")));
+			}
+			listDto.add(userBean);
+		}
+		DataGridBean dgd = new DataGridBean();
+		dgd.setTotal(counts.intValue());
+		dgd.setRows(listDto);
+		return dgd;
+	}
+
+	@Override
+	public void updateIsLoginStatus(String loginName,int status) {
+		String sql="";
+		Map<String, Object> map =new HashMap<String, Object>();
+		if(status==0){
+			sql="update sys_user t set t.islogin=:status,t.end_date=sysdate where t.login_name=:loginName";
+			map.put("status", status);
+			map.put("loginName", loginName);
+		}else{
+			sql="update sys_user t set t.islogin=:status,t.start_date=sysdate where t.login_name=:loginName";
+			map.put("status", status);
+			map.put("loginName", loginName);
+		}
+		userDao.executeSqlUpdate(sql,map);
+	}
+
+	@Override
+	public boolean findIfAuto() {
+		String sql="select count(*) from sys_auto t where t.ifauto=0 and autid=1";
+		Integer count=userDao.querysqlCounts2(sql, null);
+		if(count>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	//1成功 0失败
+	@Override
+	public boolean updateIfAuto(String f,String name) {
+		String hql = "";
+		if("1".equals(f)){
+			hql = " update UserModel u set u.isLogin=0 where u.loginName='"+name+"'";
+		}else{
+			hql = " update UserModel u set u.isLogin=u.isLogin+1,u.status=0 where u.isLogin>=3 and u.loginName='"+name+"'";
+			Integer count=userDao.executeHql(hql);
+			if(count==0)
+			hql = " update UserModel u set u.isLogin=u.isLogin+1 where u.loginName='"+name+"'";
+		}
+		Integer count=userDao.executeHql(hql);
+		if(count>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean findIfAuto(Integer ifauto) {
+		String sql="select count(*) from sys_auto t where t.ifauto="+ifauto;
+		Integer count=userDao.querysqlCounts2(sql, null);
+		if(count>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	@Override
+	public Integer findIfAuth(Integer ifauto) {
+		String sql="select ifauto from sys_auto t where t.autid="+ifauto;
+		Integer count=userDao.querysqlCounts2(sql, null);
+		return count;
+	}
+
+	@Override
+	public DataGridBean queryUserLoginLog(UserBean user) {
+		String sql="select * from sys_login_log where 1=1 ";
+		String sqlCount = "select count(*) from sys_login_log where 1=1 ";
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(user.getLoginName()!=null&&!"".equals(user.getLoginName())){
+			sql +="and LOGIN_NAME='"+user.getLoginName()+"'";
+			sqlCount +="and LOGIN_NAME='"+user.getLoginName()+"'";
+		}
+		if(user.getLogin_type()!=null&&!"".equals(user.getLogin_type())){
+			sql +="and login_type='"+user.getLogin_type()+"'";
+			sqlCount +="and login_type='"+user.getLogin_type()+"'";
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if(user.getLogintime()!=null&&!"".equals(user.getLogintime())){
+			sql +="and logintime<=to_date('"+sdf.format(user.getLogintime())+" 23:59:59','yyyy-mm-dd hh24:mi:ss') and logintime>=to_date('"+sdf.format(user.getLogintime())+" 00:00:00','yyyy-mm-dd hh24:mi:ss')";
+			sqlCount +="and logintime<=to_date('"+sdf.format(user.getLogintime())+" 23:59:59','yyyy-mm-dd hh24:mi:ss') and logintime>=to_date('"+sdf.format(user.getLogintime())+" 00:00:00','yyyy-mm-dd hh24:mi:ss')";
+		}else{
+			sql +="and logintime<=to_date('"+sdf.format(new Date())+" 23:59:59','yyyy-mm-dd hh24:mi:ss') and logintime>=to_date('"+sdf.format(new Date())+" 00:00:00','yyyy-mm-dd hh24:mi:ss')";
+			sqlCount +="and logintime<=to_date('"+sdf.format(new Date())+" 23:59:59','yyyy-mm-dd hh24:mi:ss') and logintime>=to_date('"+sdf.format(new Date())+" 00:00:00','yyyy-mm-dd hh24:mi:ss')";
+		}
+		sql += "order by slid desc";
+		List<UserLoginLogModel> list = userLoginLogDao.queryObjectsBySqlLists(sql, map, user.getPage(), user.getRows(), UserLoginLogModel.class);
+		BigDecimal counts = userLoginLogDao.querysqlCounts(sqlCount, map);
+		
+		DataGridBean dgd = new DataGridBean();
+		dgd.setTotal(counts.intValue());
+		dgd.setRows(list);
+		return dgd;
+	}
+
+	@Override
+	public void saveUserLoginLog(UserBean user, String login_type, String login_message,
+			Integer status) {
+		//将登陆登出信息写入审计表
+		UserLoginLogModel userLogin = new UserLoginLogModel();
+		String sql="select * from sys_user where login_name=:login_name";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("login_name", user.getLoginName());
+		List<UserModel> list = userDao.queryObjectsBySqlList(sql, map,UserModel.class );
+		if(list.size()>0){
+			userLogin.setUser_ID(list.get(0).getUserID());
+		}else{
+			userLogin.setUser_ID(0);
+		}
+		userLogin.setStatus(status);
+		userLogin.setLogin_message(login_message);
+		userLogin.setLogin_name(user.getLoginName());
+		userLogin.setLogin_type(login_type);
+		userLogin.setLogintime(new Date());
+//		不再存储明文密码
+//		if(user.getPassword().length()>50){
+//			CSIIPinConvertor convertor = new CSIIPinConvertor();
+//			String pwd = convertor.convert(user.getPassword());
+//			userLogin.setPwd(pwd);
+//		}else{
+//			userLogin.setPwd(user.getPassword());
+//		}
+		userLogin.setPwd("******");
+//		//1chenggong 2shibai
+//		if(status==1){
+//			updateIfAuto("1",user.getLoginName());
+//		}else{
+//			updateIfAuto("0",user.getLoginName());
+//		}
+		userLoginLogDao.saveObject(userLogin);
+	}
+	@Override
+	public boolean queryRoleLvlByUser(UserBean user) {
+		String sql="select c.role_id from sys_user_role a,sys_role c where a.role_id = c.role_id and a.user_id ="+user.getUserID();
+		Integer i = userDao.querysqlCounts2(sql, null);
+		if(i==11||"superadmin".equals(user.getLoginName())){
+			UnitModel u = unitDao.queryObjectByHql("from UnitModel where unno = '"+user.getUnNo()+"'",new Object[]{});
+			if("1".equals(u.getBizCode())){
+				return false;
+			}
+			//unitDao.executeUpdate("update sys_unit set biz_code=1 where unno = '"+user.getUnNo()+"'");
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	@Override
+	public void updateBannerToClose(UserBean user) {
+		//修改广告状态为已关闭
+		unitDao.executeUpdate("update sys_unit set biz_code=1 where unno = '"+user.getUnNo()+"'");
+	}
+
+	@Override
+	public void updateErrorPass(UserBean user) {
+		userDao.executeUpdate("update sys_user set errorPassTime=errorPassTime+1 where login_name='"+user.getLoginName()+"'");
+	}
+
+	@Override
+	public Integer queryErrorPassTime(UserBean user) {
+		return userDao.querysqlCounts2("select nvl(errorPassTime,0) from sys_user where login_name='"+user.getLoginName()+"'", null);
+	}
+
+	@Override
+	public void updateErrorTimeRest(UserBean user) {
+		userDao.executeUpdate("update sys_user set errorPassTime=0 where login_name = '"+user.getLoginName()+"'");
+	}
+
+	@Override
+	public boolean queryPwdModDate(UserBean user) {
+		Integer i = userDao.querysqlCounts2("select count(1) from sys_user where login_name='"+user.getLoginName()+"' and pwd_mod_date is not null and pwd_mod_date<to_char(sysdate-90,'yyyymmdd')", null);
+		if(i==1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public DataGridBean searchUserGroup(String nameCode, UserBean user) {
+		String sql = " SELECT u.* FROM  SYS_USER u, sys_unit_user t"+
+				" WHERE u.user_id = t.user_id and USER_LVL IN (1, 2)"+
+				" AND u.STATUS = 1"+
+				" and t.unno in ('110000','b10000','111000','b11000','991000','j91000')"+
+				"ORDER BY u.USER_ID DESC";
+		
+		List<Map<String,String>> proList = userDao.executeSql(sql);
+		
+		List<Object>  list = new ArrayList<Object>();
+		for (int i = 0; i < proList.size(); i++) {
+			Map map = proList.get(i);
+			list.add(map);
+		}
+		DataGridBean dgd = new DataGridBean();
+		dgd.setTotal(proList.size());
+		dgd.setRows(list);
+		
+		return dgd;
+	}
+}

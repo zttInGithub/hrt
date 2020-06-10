@@ -1,0 +1,83 @@
+package com.hrt.biz.bill.entity.model;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * 自定义政策费率配置表
+ */
+public class SpecialRateConditionModel implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
+	private String unno;
+	private String rebatetype;
+	private BigDecimal specialRate1;
+	private BigDecimal specialRate2;
+	private BigDecimal specialAmt1;
+	private BigDecimal specialAmt2;
+	private String minfo1;
+	private String minfo2;
+	private String remark;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getUnno() {
+		return unno;
+	}
+	public void setUnno(String unno) {
+		this.unno = unno;
+	}
+	public String getRebatetype() {
+		return rebatetype;
+	}
+	public void setRebatetype(String rebatetype) {
+		this.rebatetype = rebatetype;
+	}
+	public BigDecimal getSpecialRate1() {
+		return specialRate1;
+	}
+	public void setSpecialRate1(BigDecimal specialRate1) {
+		this.specialRate1 = specialRate1;
+	}
+	public BigDecimal getSpecialRate2() {
+		return specialRate2;
+	}
+	public void setSpecialRate2(BigDecimal specialRate2) {
+		this.specialRate2 = specialRate2;
+	}
+	public BigDecimal getSpecialAmt1() {
+		return specialAmt1;
+	}
+	public void setSpecialAmt1(BigDecimal specialAmt1) {
+		this.specialAmt1 = specialAmt1;
+	}
+	public BigDecimal getSpecialAmt2() {
+		return specialAmt2;
+	}
+	public void setSpecialAmt2(BigDecimal specialAmt2) {
+		this.specialAmt2 = specialAmt2;
+	}
+	public String getMinfo1() {
+		return minfo1;
+	}
+	public void setMinfo1(String minfo1) {
+		this.minfo1 = minfo1;
+	}
+	public String getMinfo2() {
+		return minfo2;
+	}
+	public void setMinfo2(String minfo2) {
+		this.minfo2 = minfo2;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+}

@@ -1,0 +1,429 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+
+ 
+	//初始化datagrid
+	//$(function() {
+		$('#check_20501_datagrid').datagrid({
+			//url : '${ctx}/sysAdmin/paymentRisk_queryBeenPersonal',
+			fit : true,
+			fitColumns : false,
+			border : false,
+			pagination : true,//分页
+			nowrap : true,
+			striped : true,
+			ctrlSelect : true,
+			checkOnSelect : true,
+			pageSize : 9999,
+			pageList : [ 10, 15 ], 
+			sortName : 'id',
+			sortOrder : 'desc',
+			columns : [ [ {
+				title : '客户属性',
+				field : 'CUSPROPERTY',
+				width : 100,
+				formatter : function(value, row, index) {
+					if (value == '01') {
+						return "个人";
+					} else if (value == '02') {
+						return "商户";
+					}
+				}
+			}, {
+				title : '风险类型',
+				field : 'RISKTYPE',
+				width : 100,
+				sortable : true,
+				formatter : function(value, row, index) {
+					if (value == '01') {
+						return "虚假申请（受害人信息）";
+					} else if (value == '02') {
+						return "虚假申请（嫌疑人信息）";
+					} else if (value == '03') {
+						return "伪卡（受害人信息）";
+					} else if (value == '04') {
+						return "失窃卡（受害人信息）";
+					} else if (value == '05') {
+						return "未达卡（受害人信息）";
+					} else if (value == '06') {
+						return "银行卡转移（受害人信息）";
+					} else if (value == '07') {
+						return "盗用银行卡（嫌疑人信息）";
+					} else if (value == '08') {
+						return "银行卡网络欺诈（受害人信息）";
+					} else if (value == '09') {
+						return "银行卡网络欺诈（嫌疑人信息）";
+					} else if (value == '10') {
+						return "虚拟账户被盗（受害人信息）";
+					} else if (value == '11') {
+						return "盗用虚拟账户（嫌疑人信息）";
+					} else if (value == '12') {
+						return "套现、套积分（嫌疑人信息）";
+					} else if (value == '13') {
+						return "协助转移赃款";
+					} else if (value == '14') {
+						return "买卖或租借银行（支付）账户";
+					} else if (value == '15') {
+						return "专案风险信息";
+					} else if (value == '17') {
+						return "买卖银行卡信息";
+					}else if (value == '99') {
+						return "其它";
+					}
+				}
+			}, {
+				title : '手机号',
+				field : 'MOBILENO',
+				width : 100
+			}, {
+				title : 'MAC地址',
+				field : 'MAC',
+				width : 100
+			}, {
+				title : 'Imei',
+				field : 'IMEI',
+				width : 100
+			}, {
+				title : '银行帐/卡号',
+				field : 'BANKNO',
+				width : 100
+			}, {
+				title : '开户行',
+				field : 'OPENBANK',
+				width : 100
+			}, {
+				title : '客户姓名',
+				field : 'CUSNAME',
+				width : 100
+			}, {
+				title : '身份证件号码',
+				field : 'DOCCODE',
+				width : 100
+			}, {
+				title : 'IP地址',
+				field : 'IP',
+				width : 100
+			}, {
+				title : '收货地址',
+				field : 'ADDRESS',
+				width : 100
+			}, {
+				title : '固定电话',
+				field : 'TELEPHONE',
+				width : 100
+			}, {
+				title : '收款银行卡号',
+				field : 'RECBANKNO',
+				width : 100
+			}, {
+				title : '收款卡号开户行',
+				field : 'RECOPENBANK',
+				width : 100
+			}, {
+				title : '邮箱',
+				field : 'EMAIL',
+				width : 100
+			}, {
+				title : '有效期',
+				field : 'VALIDDATE',
+				width : 100
+			}, {
+				title : '风险信息等级',
+				field : 'LEVEL',
+				width : 100,
+				formatter : function(value, row, index) {
+					if (value == '01') {
+						return "一级";
+					} else if (value == '02') {
+						return "二级";
+					} else if (value == '03') {
+						return "三级";
+					}
+				}
+			}, {
+				title : '风险事件发生时间',
+				field : 'OCCURTIMEB',
+				width : 100
+			}, {
+				title : '风险事件结束时间',
+				field : 'OCCURTIMEE',
+				width : 100
+			}, {
+				title : '风险事件发生渠道',
+				field : 'OCCURCHAN',
+				width : 100,
+				formatter : function(value, row, index) {
+					if (value == '01') {
+						return "线上";
+					} else if (value == '02') {
+						return "线下";
+					}
+				}
+			}, {
+				title : '风险事件发生地域',
+				field : 'OCCURAREA',
+				width : 100
+			
+			} , {
+				title : '风险事件描述',
+				field : 'NOTE',
+				width : 100
+			}, {
+				title : '有效性',
+				field : 'VALIDSTATUS',
+				width : 100,
+				formatter : function(value, row, index) {
+					if (value == '01') {
+						return "有效";
+					} else if (value == '02') {
+						return "失效";
+					}
+				}
+			}] ],
+				toolbar:[{
+					text:'上报',
+					iconCls:'icon-add',
+					handler:function(){
+					up_check_20501();
+					                  }
+				}]	
+		});
+	
+	//});
+
+	function check_20500_jiaoyan() {
+			//不能全部为空：手机号、MAC、Imei、银行账/卡号、（客户姓名）身份证证件号码、IP地址、收款银行账/卡号 
+			var MobileNo = $('#MobileNoup').val();
+			var Mac = $('#macqqup').val();
+			var Imei = $('#Imeiup').val();
+			var bankNo = $('#BankNoup').val();
+			var DocCode = $('#DocCodeup').val();
+			var Ip = $('#Ipup').val();
+			var RecBankNo = $('#RecBankNoup').val();
+			//alert(MobileNo);alert(Mac);alert(Imei);alert(bankNo);alert(DocCode);alert(Ip);alert(RecBankNo);
+			if ( '' == MobileNo && Mac == '' && Imei == '' && bankNo == ''
+					&& DocCode == '' && Ip == '' && RecBankNo == '') {
+				$.messager.alert('提示','手机号、MAC、Imei、银行卡号、身份证号码、IP地址、收款银行账号不能全部为空！ ');
+			} else {
+				return true;
+			}
+	}
+
+	//上报
+	function up_check_20501() {
+		$('<div id="check_20501_add"/>').dialog({
+			title: '上报',
+			width: 600,   
+		    height: 400, 
+		    closed: false,
+		    href: '${ctx}/biz/bill/risk/20501up.jsp',  
+		    modal: true,
+		    buttons:[{
+				text:'确认',
+				iconCls:'icon-ok',
+				handler:function(){
+				if(check_20500_jiaoyan()){
+		    		var dia = $('#check_20501_add');
+					$('#sysAdmin_check_20501_up').form('submit', {
+						url:'${ctx}/sysAdmin/paymentRisk_reportPersonal', 
+					    success:function(data){   
+							var res = $.parseJSON(data);
+						/* 	if (res.sessionExpire) {
+								window.location.href = getProjectLocation();
+							} else { */
+								if(res.success) {
+									$('#check_20501_datagrid').datagrid('unselectAll');
+									$('#check_20501_datagrid').datagrid('reload');
+									dia.dialog('destroy');
+									$.messager.show({
+										title : '提示',
+										msg : res.msg
+									});
+								} else {
+									//dia.dialog('destroy');
+									$.messager.alert('提示', res.msg);
+								}  
+							//}
+					    }   
+					});
+				  }
+				}
+			},{
+				text:'取消',
+				handler:function(){
+					$('#check_20501_add').dialog('destroy');
+				}
+			}],
+			onClose : function() {
+				$(this).dialog('destroy');
+			}  
+		});
+	}
+	
+	
+	
+	//表单查询
+	function check_20501_Report() {
+	/* var Occurarea = $("#Occurarea").combotree("getValues");
+	alert(Occurarea);
+		$("#occurarea").val(Occurarea); */
+		$('#check_20501_datagrid').datagrid({url:'${ctx}/sysAdmin/paymentRisk_queryBeenPersonal'}); 
+		$('#check_20501_datagrid').datagrid('load', serializeObject($('#check_20501_searchForm'))); 
+	}
+
+	
+	//清除表单内容
+	function check_20501_Report_cleanFun() {
+	$('.easyui-combotree').combotree("clear");
+		$('#check_20501_searchForm input').val('');
+	}
+
+
+	//个人风险信息查询
+	function check_20501_Report1111() {
+
+		$.ajax({
+			type:'post',
+			url : '${ctx}/sysAdmin/paymentRisk_queryBeenPersonal',
+			//async : false,
+			data:$('#check_20501_searchForm').serialize(),
+			dataType : 'json',
+			success : function(data) {
+			//alert(data.success);
+			if (data.success) {
+				$.messager.alert('提示', data.msg);
+			}else{
+				 $("#check_20501_datagrid").datagrid("loadData", data.rows);  //动态取数据
+				}
+			},
+			error : function() {
+				alert('error');
+			}
+		});
+	}
+
+</script>
+
+
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+
+	<div data-options="region:'north',border:false"
+		style="height:114px; overflow: hidden; padding-top:16px;">
+		<form id="check_20501_searchForm" method="post">
+			<!-- <input type="hidden" id="occurarea" name="Occurarea" />  -->
+			<table class="tableForm">
+				<tr>
+					<th>风险类型</th>
+					<td><select class="easyui-combobox" name="RiskType"
+						id="RiskType" data-options=" overflow:'auto',overflow:'80px',editable:false"
+						style="width:180px;">
+							<option value=""></option>
+							<option value="01">虚假申请（受害人信息）</option>
+							<option value="02">虚假申请（嫌疑人信息）</option>
+							<option value="03">伪卡（受害人信息）</option>
+							<option value="04">失窃卡（受害人信息）</option>
+							<option value="05">未达卡（受害人信息）</option>
+							<option value="06">银行卡转移（受害人信息）</option>
+							<option value="07">盗用银行卡（嫌疑人信息）</option>
+							<option value="08">银行卡网络欺诈（受害人信息）</option>
+							<option value="09">银行卡网络欺诈（嫌疑人信息）</option>
+							<option value="10">虚拟账户被盗（受害人信息）</option>
+							<option value="11">盗用虚拟账户（嫌疑人信息）</option>
+							<option value="12">套现、套积分（嫌疑人信息）</option>
+							<option value="13">协助转移赃款</option>
+							<option value="14">买卖或租借银行（支付）账户</option>
+							<option value="15">专案风险信息</option>
+							<option value="17">买卖银行卡信息</option>
+							<option value="99">其他</option>
+					</select></td>
+					<th>客户姓名</th>
+					<td><input id="CusName" name="CusName" style="width: 130px;" />
+					</td>
+					<th>手机号</th>
+					<td><input id="MobileNo" name="MobileNo" style="width: 130px;" />
+					</td>
+					<th>事件发生地域</th>
+					<!-- 多选 -->
+					<td>
+				<select class="easyui-combotree" id="Occurarea" name="Occurarea" multiple  style="width:186px;" 
+    				data-options="
+	    				lines:true,
+	    				cascadeCheck:false,
+	    				url:'${ctx}/sysAdmin/paymentRisk_queryDictionary.action'
+    				">
+    			</select>
+					
+						<!-- <select id="Occurarea" name="Occurarea" data-options="panelHeight:'auto',editable:false" style="width:130px;">
+						 </select> -->
+					</td> 
+					<th>身份证</th>
+					<td><input id="DocCode" name="DocCode" style="width: 130px;" />
+					</td>
+				</tr>
+				<tr>
+					<th>银行卡账号</th>
+					<td><input id="bankNo" name="BankNo" style="width: 174px;" />
+					</td>
+					<th>开户行</th>
+					<td><input id="OpenBank" name="OpenBank" style="width: 130px;" />
+					</td>
+					<th>收货地址</th>
+					<td><input id="Address" name="Address" style="width: 130px;" />
+					</td>
+					<th>固话</th>
+					<td><input id="Telephone" name="Telephone"
+						style="width: 130px;" />
+					</td>
+					<th>IP地址</th>
+					<td><input id="Ip" name="Ip" style="width: 130px;" />
+					</td>
+				</tr>
+				<tr>
+					<th>MAC地址</th>
+					<td><input id="macqq" name="Mac" style="width: 174px;" />
+					</td>
+					
+					<th>收款银卡号</th>
+					<td><input id="RecBankNo" name="RecBankNo"
+						style="width: 130px;" />
+					</td>
+					<th>收款卡号开户行</th>
+					<td><input id="RecOpenBank" name="RecOpenBank"
+						style="width: 130px;" />
+					</td>
+					<th>事件发生时间</th>
+					<td><input id="Occurtimeb" name="Occurtimeb" class="easyui-datebox" style="width: 83px;" /> <a>&nbsp;-&nbsp;</a>
+						<input id="Occurtimee" name="Occurtimee" class="easyui-datebox" style="width: 83px;" />
+					</td>
+				
+					
+				<!-- 	<th>发生渠道</th>
+					<td><select class="easyui-combobox" name="Occurchan"
+						id="Occurchan" data-options="panelHeight:'auto',editable:false"
+						style="width:136px;">
+							<option value=""></option>
+							<option value="01">线上</option>
+							<option value="02">线下</option>
+					</select></td> -->
+				
+					<td><a href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="check_20501_Report();">查询</a>
+					</td>
+					<td>
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="check_20501_Report_cleanFun();">清空</a>	
+						</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<div data-options="region:'center', border:false"
+		style="overflow: hidden;">
+		<table id="check_20501_datagrid"></table>
+	</div>
+</div>

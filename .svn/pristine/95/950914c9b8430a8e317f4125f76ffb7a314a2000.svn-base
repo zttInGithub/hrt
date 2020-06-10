@@ -1,0 +1,34 @@
+package com.hrt.biz.bill.service;
+
+import com.hrt.biz.bill.entity.pagebean.BillTerminalSimBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+import java.util.List;
+import java.util.Map;
+
+public interface IBillTerminalSimService {
+
+    /**
+     * 查询SIM卡管理grid列表
+     * @param billTerminalSimBean
+     * @param userBean
+     * @return
+     */
+    DataGridBean queryBillTerminalSimGrid(BillTerminalSimBean billTerminalSimBean, UserBean userBean);
+
+    /**
+     * 导出SIM卡管理grid列表
+     * @param billTerminalSimBean
+     * @param userBean
+     * @return
+     */
+    List<Map<String, Object>> exportBillTerminalSimGrid(BillTerminalSimBean billTerminalSimBean, UserBean userBean);
+
+    /**
+     * 修改SIM卡管理信息
+     * @param billTerminalSimBean
+     * @param userBean
+     */
+    boolean updateBillTerminalSim(BillTerminalSimBean billTerminalSimBean, UserBean userBean);
+}

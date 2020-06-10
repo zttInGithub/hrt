@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="LoanApplicationModel" table="BILL_LOANAPPLICATION">
+		<id name="blaid" column="BLAID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_LOANAPPLICATION</param>
+			</generator>
+		</id>
+		<property name="unno" column="UNNO"/>
+		<property name="manageType" column="MANAGETYPE"/>
+		<property name="manageMode" column="MANAGEMODE"/>
+		<property name="staffNum" column="STAFFNUM"/>
+		<property name="manageAddr" column="MANAGEADDR"/>
+		<property name="profitAmt" column="PROFITAMT"/>
+		<property name="applicant"  column="APPLICANT"/>
+		<property name="legalNum"  column="LEGALNUM"/>
+		<property name="applyQuota"  column="APPLYQUOTA"/>
+		<property name="phone" column="PHONE"/>
+		<property name="busName" column="BUSNAME"/>
+		<property name="cdate" column="CDATE" type="timestamp"/>
+		<property name="cby" column="CBY"/>
+		<property name="approveDate" column="APPROVEDATE" type="timestamp"/>
+		<property name="approver" column="APPROVER"/>
+		<property name="approveStatus" column="APPROVESTATUS"/>
+		<property name="approveNote" column="APPROVENOTE"/>
+    </class>
+</hibernate-mapping>

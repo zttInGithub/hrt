@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="ProblemFeedbackModel" table="BILL_PROBLEM_FEEDBACK">
+		<id name="probId" column="PROBID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_PROBLEM_FEEDBACK</param>
+			</generator>
+		</id>
+		<property name="orderId" column="ORDERID" />
+		<property name="mid" column="MID" />
+		<property name="trantype" column="TRANTYPE" />
+		<property name="amount" column="AMOUNT" />
+		<property name="trantime" column="TRANTIME" />
+		<property name="msg" column="MSG" />
+		<property name="remark" column="REMARK" />
+		<property name="createTime" column="CREATETIME" type="timestamp" />
+	</class>
+</hibernate-mapping>

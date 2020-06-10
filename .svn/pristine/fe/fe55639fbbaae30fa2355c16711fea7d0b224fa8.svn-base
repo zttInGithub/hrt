@@ -1,0 +1,17 @@
+package com.hrt.biz.check.dao.impl;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import com.hrt.biz.check.dao.CheckReceiptsOpreationDao;
+import com.hrt.frame.base.dao.impl.BaseHibernateDaoImpl;
+
+public class CheckReceiptsOpreationDaoImpl extends BaseHibernateDaoImpl implements CheckReceiptsOpreationDao  {
+
+	public String queryUploadPath(String sql) {
+		Session session=this.getCurrentSession();
+		Query query=session.createSQLQuery(sql);
+		return query.list().get(0)+"";
+	}
+
+}

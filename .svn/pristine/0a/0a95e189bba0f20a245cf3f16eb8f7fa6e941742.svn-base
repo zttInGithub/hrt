@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="QRInvitationInfoModel" table="BILL_MERQRINVITATIONINFO">
+        <id name="icid" column="ICID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_MERQRINVITATIONINFO</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="mid" column="MID" />
+        <property name="invitationCode" column="INVITATIONCODE" />
+        <property name="icPassword" column="ICPASSWORD" />
+        <property name="scanRate" column="SCANRATE" />
+        <property name="status" column="STATUS" />
+        <property name="usedConfirmDate" column="USEDCONFIRMDATE" type="timestamp"/>
+        <property name="maintainDate" column="MAINTAINDATE" type="timestamp"/>
+        <property name="maintainUserId" column="MAINTAINUSERID" />
+        <property name="minfo1" column="MINFO1" />
+        <property name="minfo2" column="MINFO2" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="SpecialRateConditionModel" table="bill_specialRateCondition">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">S_bill_specialRateCondition</param>
+			</generator>
+		</id>
+        <property name="unno" column="UNNO" />
+        <property name="rebatetype" column="REBATETYPE" />
+        <property name="specialRate1" column="SPECIALRATE1" />
+        <property name="specialRate2" column="SPECIALRATE2" />
+        <property name="specialAmt1" column="SPECIALAMT1" />
+        <property name="specialAmt2" column="SPECIALAMT2" />
+        <property name="minfo1" column="MINFO1" />
+        <property name="minfo2" column="MINFO2" />
+        <property name="remark" column="REMARK" />
+        <property name="scanSpecialRate1" column="SCANSPECIALRATE1" />
+        <property name="scanSpecialRate2" column="SCANSPECIALRATE2" />
+        <property name="depositamt" column="DEPOSITAMT" />
+        <property name="ratetype" column="RATETYPE" />
+        <property name="scanSpecialRate3" column="SCANSPECIALRATE3" />
+        <property name="scanSpecialRate4" column="SCANSPECIALRATE4" />
+        <property name="huabei1" column="HUABEIRATE1" />
+        <property name="huabei2" column="HUABEIRATE2" />
+	</class>
+</hibernate-mapping>

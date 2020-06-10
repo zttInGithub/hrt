@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.multipart.maxSize" value="9999999999"></constant>
+	<package name="sysAdmin" namespace="/sysAdmin" extends="struts-default">
+
+		<action name="user_*" method="{1}" class="userAction">
+			<result name="success" type="redirect">/Index.jsp</result>
+			<result name="error">/Login.jsp</result>
+		</action>
+
+		<action name="role_*" method="{1}" class="roleAction">
+		</action>
+
+		<action name="menu_*" method="{1}" class="menuAction">
+		</action>
+
+		<action name="unit_*" method="{1}" class="unitAction">
+		</action>
+
+		<action name="notice_*" method="{1}" class="noticeAction">
+		</action>
+
+		<action name="todo_*" method="{1}" class="todoAction">
+		</action>
+
+		<action name="file_*" method="{1}" class="fileAction">
+		</action>
+
+		<action name="machineInfo_*" method="{1}" class="machineInfoAction">
+		</action>
+
+		<action name="machineApprove_*" method="{1}" class="machineOrderDataAction">
+		</action>
+
+		<action name="terminalInfo_*" method="{1}" class="terminalInfoAction">
+		</action>
+
+		<action name="agentunit_*" method="{1}" class="agentUnitAction">
+		</action>
+
+		<action name="agentsales_*" method="{1}" class="agentSalesAction">
+		</action>
+
+		<action name="merchant_*" method="{1}" class="merchantInfoAction">
+		</action>
+
+		<action name="merchantterminalinfo_*" method="{1}"
+			class="merchantTerminalInfoAction">
+		</action>
+
+		<action name="midseqinfo_*" method="{1}" class="midSeqInfoAction">
+		</action>
+
+		<!-- 2014-4-26 -->
+		<action name="checkUnitDealData_*" method="{1}"
+			class="checkUnitDealDataAction">
+		</action>
+
+		<action name="checkRealtime_*" method="{1}" class="checkRealtimeAction">
+		</action>
+
+		<action name="checkUnitDealDetail_*" method="{1}"
+			class="checkUnitDealDetailAction">
+		</action>
+
+
+		<action name="merchantTaskDetail1_*" method="{1}"
+			class="merchantTaskDetail1Action">
+		</action>
+
+		<action name="merchantTaskDetail2_*" method="{1}"
+			class="merchantTaskDetail2Action">
+		</action>
+
+		<action name="merchantTaskDetail3_*" method="{1}"
+			class="merchantTaskDetail3Action">
+		</action>
+		
+		<action name="merchantTaskDetail4_*" method="{1}"
+			class="merchantTaskDetail4Action">
+		</action>
+		
+		<action name="merchantTaskDetail5_*" method="{1}"
+			class="merchantTaskDetail5Action">
+		</action>
+
+		<action name="merchantTaskDetailOther_*" method="{1}"
+			class="merchantTaskDetailOtherAction">
+		</action>
+
+		<action name="merchantTaskOperate_*" method="{1}"
+			class="merchantTaskOperateAction">
+		</action>
+
+		<action name="taskDataApprove_*" method="{1}"
+			class="merchantTaskDataAction">
+		</action>
+
+		<action name="machineTaskData_*" method="{1}" class="machineTaskDataAction">
+		</action>
+
+		<action name="trafficBankInsert_*" method="{1}"
+			class="trafficBankInsertAction">
+		</action>
+		
+		<action name="merchantInfoComm_*" method="{1}" class="merchantInfoCommAction"></action>
+
+		<!-- 2014 09 11 hl -->
+		<action name="checkIncome_*" method="{1}" class="checkIncomeAction"></action>
+		
+
+		<!-- 验证码 -->
+		<action name="rand_*" method="{1}" class="randomAction">
+		</action>
+		
+		<action name="merchantTerminalInfoComm_*" method="{1}" class="merchantTerminalInfoCommAction">
+		</action>
+		
+		<action name="checkReceiptsOpreation_*" method="{1}" class="checkReceiptsOpreationAction">
+		</action>
+		
+		<action name="hotCard_*" method="{1}" class="hotCardAction">
+		</action>
+		
+		<action name="CheckUnitProfitMicro_*" method="{1}" class="checkUnitProfitMicroAction">
+		</action>
+		
+		<action name="checkUnitProfitTradit_*" method="{1}" class="checkUnitProfitTraditAction">
+		</action>
+		
+		<action name="checkSettleReturn_*" method="{1}" class="checkSettleReturnAction">
+		</action>
+		
+		<action name="checkCash_*" method="{1}" class="checkCashAction">
+		</action>
+		
+		<action name="checkRebate_*" method="{1}" class="checkRebateAction">
+		</action>
+		
+		<action name="checkWechatTxnDetail_*" method="{1}" class="checkWechatTxnDetailAction">
+		</action>
+		
+		<action name="checkRefund_*" method="{1}" class="checkReFundAction">
+		</action>
+		
+		<action name="checkMisTake_*" method="{1}" class="checkMisTakeAction">
+		</action>
+		
+		<action name="checkReOrder_*" method="{1}" class="checkReOrderAction">
+		</action>
+		
+		<action name="merchantAuthenticity_*" method="{1}" class="merchantAuthenticityAction">
+		</action>
+		
+		<action name="qrInvitationInfo_*" method="{1}" class="QRInvitationInfoAction">
+		</action>
+		
+		<action name="paymentRisk_*" method="{1}" class="paymentRiskAction">
+		</action>
+
+		<action name="specialMerchant_*" method="{1}" class="riskSpecialMerchantAction">
+		</action> 
+
+		
+		<action name="creditAgent_*" method="{1}" class="creditAgentAction">
+		</action>
+		
+		<action name="loan_*" method="{1}" class="loanAction">
+		</action>
+		
+		<action name="loanRepay_*" method="{1}" class="loanRepayAction">
+		</action>
+
+		<action name="aggPayTerminfo_*" method="{1}" class="aggPayTerminfoAction">
+		</action>
+		
+		<action name="merAdjustRate_*" method="{1}" class="merAdjustRateAction">
+		</action>
+		
+		<action name="purchaseOrder_*" method="{1}" class="purchaseOrderAction">
+		</action>
+		
+		<action name="purchaseDetail_*" method="{1}" class="purchaseDetailAction">
+		</action>
+		
+		<action name="purchaseDeliver_*" method="{1}" class="purchaseDeliverAction">
+		</action>
+		<action name="purchaseAccount_*" method="{1}" class="purchaseAccountAction">
+		</action>
+		<action name="purchaseInvoice_*" method="{1}" class="purchaseInvoiceAction">
+		</action>
+		<action name="purchaseStorage_*" method="{1}" class="purchaseStorageAction">
+		</action>
+		<action name="purchaseRecord_*" method="{1}" class="purchaseRecordAction">
+		</action>
+		<action name="loanApplication_*" method="{1}" class="loanApplicationAction">
+		</action>
+		<action name="merchantTwoUpload_*" method="{1}" class="merchantTwoUploadAction">
+		</action>
+		<action name="agentUnitTask_*" method="{1}" class="agentUnitTaskAction">
+		</action>
+		<action name="merchantUpdateTer_*" method="{1}" class="merchantUpdateTerAction">
+		</action>
+		<action name="merchantThreeUpload_*" method="{1}" class="merchantThreeUploadAction">
+		</action>
+		<action name="checkRealtxn_*" method="{1}" class="checkRealtxnAction">
+		</action>
+		<action name="changeTerRate_*" method="{1}" class="changeTerRateAction">
+		</action>
+		<action name="checkDeductionAction_*" method="{1}" class="checkDeductionAction"/>
+		<action name="checkCashbackDayAction_*" method="{1}" class="checkCashbackDayAction"/>
+		<action name="problemFeedbackAction_*" method="{1}" class="problemFeedbackAction"/>
+		
+		<!--分润调整  -->
+		<action name="ProxyPurse_*" method="{1}" class="proxyPurseAction"></action>
+		<action name="checkWalletCashSwitch_*" method="{1}" class="checkWalletCashSwitchAction"></action>
+		<!-- 特殊活动返现查询 -->
+		<action name="pgCashbackSpecialAction_*" method="{1}" class="pgCashbackSpecialAction"/>
+		<!-- 活动产品对应-->
+		<action name="producttypeInRebatetypeAction_*" method="{1}" class="producttypeInRebatetypeAction"/>
+	</package>
+</struts>

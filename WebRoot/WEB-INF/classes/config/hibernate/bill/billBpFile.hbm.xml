@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="BillBpFileModel" table="BILL_BP_FILE">
+		<id name="fid" column="FID">
+			<generator class="sequence">
+				<param name="sequence">s_bill_bp_file</param>
+			</generator>
+		</id>
+		
+		<property name="fName" column="FNAME" />
+        <property name="fType" column="FTYPE" />
+        <property name="status" column="STATUS" />
+        <property name="cdate" column="CDATE" />
+        <property name="cby" column="CBY" />
+        <property name="aby" column="ABY" />
+        <property name="adate" column="ADATE" />
+        <property name="remarks" column="REMARKS" />
+        <property name="imgUpload" column="IMGUPLOAD" />
+        <property name="costType" column="COSTTYPE" />
+	</class>
+</hibernate-mapping>

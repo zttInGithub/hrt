@@ -1,0 +1,148 @@
+package com.hrt.frame.service.sysadmin.impl;
+
+import com.hrt.frame.dao.sysadmin.IEnumDao;
+import com.hrt.frame.entity.model.EnumModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.EnumBean;
+import com.hrt.frame.service.sysadmin.IEnumService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeanUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * EnumServiceImpl
+ * <p>
+ * This is description
+ * </p>
+ *
+ * @author xuegangliu 2020/01/16
+ * @since 1.8
+ **/
+public class EnumServiceImpl implements IEnumService {
+
+    private Log log = LogFactory.getLog(EnumServiceImpl.class);
+
+    private IEnumDao enumDao;
+
+    public IEnumDao getEnumDao() {
+        return enumDao;
+    }
+
+    public void setEnumDao(IEnumDao enumDao) {
+        this.enumDao = enumDao;
+    }
+
+    @Override
+    public DataGridBean queryEunmGrid(EnumBean enumBean) {
+        Map map=new HashMap();
+        StringBuilder hql=new StringBuilder(32);
+        StringBuilder hqlCount=new StringBuilder(32);
+        hql.append(" from EnumModel where 1=1 ");
+        if(null!=enumBean.getEnumStatus()){
+            hql.append(" and enumStatus=:enumStatus ");
+            map.put("enumStatus",enumBean.getEnumStatus());
+        }
+
+        if(StringUtils.isNotEmpty(enumBean.getEnumTable())){
+            hql.append(" and enumTable=:enumTable ");
+            map.put("enumTable",enumBean.getEnumTable());
+        }
+
+        if(StringUtils.isNotEmpty(enumBean.getEnumColumn())){
+            hql.append(" and enumColumn=:enumColumn ");
+            map.put("enumColumn",enumBean.getEnumColumn());
+        }
+
+        if(StringUtils.isNotEmpty(enumBean.getEnumCode())){
+            hql.append(" and enumCode=:enumCode ");
+            map.put("enumCode",enumBean.getEnumCode());
+        }
+
+        hqlCount.append(" select count(*) ").append(hql.toString());
+        long counts = enumDao.queryCounts(hqlCount.toString(), map);
+        hql.append(" order by enumTable desc");
+        List<EnumModel> list = enumDao.queryObjectsByHqlList(hql.toString(), map, enumBean.getPage(), enumBean.getRows());
+        DataGridBean dataGridBean = new DataGridBean();
+        dataGridBean.setTotal(counts);
+        dataGridBean.setRows(list);
+        return dataGridBean;
+    }
+
+    public void saveEnumModel(EnumBean enumBean){
+        EnumModel enumModel=new EnumModel();
+        BeanUtils.copyProperties(enumBean,enumModel);
+        enumDao.saveObject(enumModel);
+    }
+
+    @Override
+    public boolean deleteEnumModelById(EnumModel enumModel) {
+        enumDao.deleteObject(enumModel);
+        return true;
+    }
+
+    @Override
+    public DataGridBean getEnumModelList(EnumBean enumBean) {
+        Map map=new HashMap();
+        StringBuilder hql=new StringBuilder(32);
+        hql.append(" from EnumModel a where 1=1 ");
+        if(StringUtils.isNotEmpty(enumBean.getEnumTable())){
+            hql.append(" and a.enumTable=:enumTable ");
+            map.put("enumTable",enumBean.getEnumTable());
+        }
+        if(StringUtils.isNotEmpty(enumBean.getEnumColumn())){
+            hql.append(" and a.enumColumn=:enumColumn ");
+            map.put("enumColumn",enumBean.getEnumColumn());
+        }
+        StringBuilder hqlCount=new StringBuilder(32);
+        hqlCount.append(" select count(*) ").append(hql.toString());
+        long counts = enumDao.queryCounts(hqlCount.toString(), map);
+        List<EnumModel> list = enumDao.queryObjectsByHqlList(hql.toString(), map, enumBean.getPage(), enumBean.getRows());
+        DataGridBean dataGridBean = new DataGridBean();
+        dataGridBean.setTotal(counts);
+        dataGridBean.setRows(list);
+        return dataGridBean;
+    }
+
+    /**
+     * 修改枚举信息状态
+     * @param enumBean
+     * @return
+     */
+    @Override
+    public boolean updateEnumStatus(EnumBean enumBean){
+        Map map=new HashMap();
+        StringBuilder hql=new StringBuilder(32);
+        hql.append(" update EnumModel a set a.enumStatus=:enumStatus where enumId=:enumId");
+        map.put("enumStatus",enumBean.getEnumStatus());
+        map.put("enumId",enumBean.getEnumId());
+        return enumDao.executeHql(hql.toString(),map)>0;
+    }
+
+    @Override
+    public boolean updateEnumInfo(EnumBean enumBean){
+        EnumModel enumModel=new EnumModel();
+        BeanUtils.copyProperties(enumBean,enumModel);
+        enumDao.saveOrUpdateObject(enumModel);
+        return true;
+    }
+
+    public Map getEnumNameList(){
+        Map map=new HashMap(64);
+        List<EnumModel> list = enumDao.queryObjectsByHqlList(" from EnumModel ",new HashMap<String, Object>());
+        for (EnumModel model : list) {
+            StringBuilder key=new StringBuilder();
+            key.append(model.getEnumType()).append("|")
+                    .append(model.getEnumTable()).append("|")
+                    .append(model.getEnumColumn()).append("|")
+                    .append(model.getEnumCode()).append("|")
+                    .append(model.getEnumValue());
+            map.put(key.toString(),model.getEnumName());
+        }
+        return map;
+    }
+}

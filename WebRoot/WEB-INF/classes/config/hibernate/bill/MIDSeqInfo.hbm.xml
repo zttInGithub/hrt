@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MIDSeqInfoModel" table="BILL_MIDSEQINFO">
+        <id name="bmsid" column="BMSID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_MIDSEQINFO</param>
+			</generator>
+        </id>
+        <property name="areaCode" column="AREA_CODE" />
+        <property name="mccid" column="MCCID" />
+        <property name="seqNo" column="SeqNo" />
+        <property name="minfo1" column="Minfo1" />
+        <property name="minfo2" column="Minfo2" />
+        <property name="createDate" column="CREATE_DATE" type="timestamp" />
+        <property name="createUser" column="CREATE_USER" />
+    </class>
+</hibernate-mapping>

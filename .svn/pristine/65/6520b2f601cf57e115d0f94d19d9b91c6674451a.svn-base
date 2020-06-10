@@ -1,0 +1,13 @@
+package com.hrt.biz.bill.service;
+
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoCommBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IMerchantTerminalInfoCommService {
+
+	void updateSingleData(
+			MerchantTerminalInfoCommBean merchantTerminalInfoCommBean);
+
+	boolean saveTermianlInfoCommFile(String xlsfile, UserBean user);
+
+}

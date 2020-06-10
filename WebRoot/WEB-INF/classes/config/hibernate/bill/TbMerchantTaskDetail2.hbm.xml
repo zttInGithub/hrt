@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantTaskDetail2Model" table="bill_MerchantTaskDetail2">
+        <id name="bt2id" column="BT2ID">
+            <generator class="sequence"> 
+				<param name="sequence">S_BILL_MERCHANTTASKDETAIL2</param>
+			</generator>
+        </id>
+        <property name="bmtkid" column="BMTKID"/>
+        <property name="bankBranch" column="BankBranch"/>
+        <property name="bankAccNo" column="BankAccNo" />
+        <property name="bankAccName" column="BankAccName" />
+        <property name="bankType" column="BankType" />
+        <property name="areaType" column="AreaType" />
+        <property name="settleCycle" column="SettleCycle" />
+        <property name="accUpLoad" column="AccUpLoad"></property> 
+        <property name="authUpLoad" column="AUTHUPLOAD"></property>
+        <property name="DUpLoad" column="DUPLOAD"></property>
+        <property name="openUpLoad" column="OPENUPLOAD"></property>
+         <property name="payBankId" column="PayBankId" />
+         <property name="accType" column="ACCTYPE" />
+    </class> 
+</hibernate-mapping>

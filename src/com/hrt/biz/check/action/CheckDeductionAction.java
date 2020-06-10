@@ -1,0 +1,117 @@
+package com.hrt.biz.check.action;
+
+import com.hrt.biz.check.entity.pagebean.CheckDeductionBean;
+import com.hrt.biz.check.service.CheckDeductionService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.util.JxlOutExcelUtil;
+import com.opensymphony.xwork2.ModelDriven;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class CheckDeductionAction extends BaseAction implements ModelDriven<CheckDeductionBean> {
+
+    private static final Log log = LogFactory.getLog(CheckDeductionAction.class);
+
+    private CheckDeductionBean checkDeductionBean =new CheckDeductionBean();
+
+    private CheckDeductionService checkDeductionService;
+
+    public CheckDeductionService getCheckDeductionService() {
+        return checkDeductionService;
+    }
+
+    public void setCheckDeductionService(CheckDeductionService checkDeductionService) {
+        this.checkDeductionService = checkDeductionService;
+    }
+
+    @Override
+    public CheckDeductionBean getModel() {
+        return checkDeductionBean;
+    }
+
+    /**
+     * 查询扣款记录
+     */
+    public void queryCheckDeductionListInfo10170(){
+        Object userSession = super.getRequest().getSession().getAttribute("user");
+        UserBean user=(UserBean)userSession;
+        DataGridBean dgb = new DataGridBean();
+        try {
+            dgb=checkDeductionService.queryCheckDeductionInfo(checkDeductionBean,user);
+        } catch (Exception e) {
+            log.info(e);
+        }
+        super.writeJson(dgb);
+    }
+
+    /**
+     * 导出扣款记录
+     */
+    public void export10170(){
+        JsonBean json = new JsonBean();
+        List<Map<String, Object>> list = null;
+        List<String[]>cotents = new ArrayList<String[]>();
+        String titles[] = {"一代机构","一代机构名称","二代机构","二代机构名称","最终机构","最终机构名称","归属分公司","商户编号",
+                "SN号", "型号","激活日期","销售日期","出库日期","扣款金额","活动类型"};
+        cotents.add(titles);
+        try {
+            Object userSession = super.getRequest().getSession().getAttribute("user");
+            if(userSession!=null){
+                list = checkDeductionService.export10170(checkDeductionBean,(UserBean)userSession);
+                if (list!=null&&list.size()>0) {
+                    for (Map<String, Object>map  : list) {
+                        String rowCoents[] = {
+                                map.get("YIDAI")==null?"":map.get("YIDAI").toString(),
+                                map.get("YIDAINAME")==null?"":map.get("YIDAINAME").toString(),
+                                map.get("ERDAI")==null?"":map.get("ERDAI").toString(),
+                                map.get("ERDAINAME")==null?"":map.get("ERDAINAME").toString(),
+                                map.get("UNNO")==null?"":map.get("UNNO").toString(),
+                                map.get("UNNONAME")==null?"":map.get("UNNONAME").toString(),
+                                map.get("YUNYING")==null?"":map.get("YUNYING").toString(),
+                                map.get("MID")==null?"":map.get("MID").toString(),
+                                map.get("SN")==null?"":map.get("SN").toString(),
+                                map.get("SNTYPE")==null?"":map.get("SNTYPE").toString(),
+                                map.get("USEDDATE")==null?"":map.get("USEDDATE").toString(),
+                                map.get("KEYCONFIRMDATE")==null?"":map.get("KEYCONFIRMDATE").toString(),
+                                map.get("OUTDATE")==null?"":map.get("OUTDATE").toString(),
+                                map.get("DEDUCTION")==null?"":map.get("DEDUCTION").toString(),
+                                map.get("REBATETYPE")==null?"":map.get("REBATETYPE").toString(),
+                        };
+                        cotents.add(rowCoents);
+                    }
+                }
+                String excelName = "扣款报表.csv";
+//                String [] cellFormatType = {"t","t","t","t","t","t","t","t","t"};
+                JxlOutExcelUtil.writeCSVFile(cotents, titles.length, getResponse(), excelName);
+                json.setSuccess(true);
+                json.setMsg("扣款报表导出成功");
+            }
+        } catch (Exception e) {
+            log.error("扣款报表导出异常：" + e);
+            json.setSuccess(false);
+            json.setMsg("扣款报表导出");
+            super.writeJson(json);
+        }
+    }
+    
+    /**
+     * 查询扣款记录-活动下拉框
+     */
+    public void queryCheckDeductionListInfo10170_selectRebateType(){
+        DataGridBean dgb = new DataGridBean();
+        try {
+            dgb=checkDeductionService.queryCheckDeductionListInfo10170_selectRebateType();
+        } catch (Exception e) {
+            log.info(e);
+        }
+        super.writeJson(dgb);
+    }
+    
+}

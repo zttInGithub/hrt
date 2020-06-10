@@ -1,0 +1,726 @@
+package com.hrt.frame.action.sysadmin;
+
+import java.io.ByteArrayInputStream;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.biz.util.ParamUtil;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.TreeNodeBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.service.sysadmin.IMenuService;
+import com.hrt.frame.service.sysadmin.IUserService;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ModelDriven;
+
+/**
+ * 用户管理Action
+ */
+public class UserAction extends BaseAction implements ModelDriven<UserBean> {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private IUserService userService;
+	
+	private ParamUtil paramUtil;
+
+	private IMenuService menuService;
+	
+	private UserBean user = new UserBean();
+	
+	private ByteArrayInputStream inputStream;	//显示验证码
+	
+	private String ids;
+	
+	private static final Log log = LogFactory.getLog(UserAction.class);
+
+	@Override
+	public UserBean getModel() {
+		return user;
+	}
+
+	public ParamUtil getParamUtil() {
+		return paramUtil;
+	}
+
+	public void setParamUtil(ParamUtil paramUtil) {
+		this.paramUtil = paramUtil;
+	}
+
+	public IUserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
+
+	public UserBean getUser() {
+		return user;
+	}
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public IMenuService getMenuService() {
+		return menuService;
+	}
+
+	public void setMenuService(IMenuService menuService) {
+		this.menuService = menuService;
+	}
+
+	public ByteArrayInputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(ByteArrayInputStream inputStream) {
+		this.inputStream = inputStream;
+	}
+	/**
+	 * 发送短信验证码(仅支持代理管理员&销售&商户账户)
+	 */
+	public void getMesRand(){
+		String flag = "";
+		JsonBean jsonBean = new JsonBean();
+		if(user.getLoginName()!=null&&!"".equals(user.getLoginName())){
+			flag = userService.queryMesRand(user);
+			if(flag==null||"".equals(flag)){
+				jsonBean.setSuccess(false);
+				jsonBean.setMsg("该账户未注册手机号");
+			}else if("sys".equals(flag)){
+				jsonBean.setSuccess(false);
+				jsonBean.setMsg("该账户未注册手机号！");
+				super.getRequest().getSession().setAttribute("mesRand", flag);
+			}else{
+				jsonBean.setSuccess(true);
+				super.getRequest().getSession().setAttribute("mesRand", flag);
+			}
+		}else{
+			jsonBean.setSuccess(false);
+			jsonBean.setMsg("请填写登陆账号");
+		}
+		super.writeJson(jsonBean);
+	}
+	/**
+	 * 方法功能：加载表格数据
+	 * 参数：
+	 * 返回值：dgb
+	 * 异常：
+	 */
+	public void listUsers() {
+		DataGridBean dgd = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgd = userService.queryUsers(user,((UserBean)userSession).getUnNo(),((UserBean)userSession).getUserID());
+		} catch (Exception e) {
+			log.error("load datagrid error" + e);
+		}
+		
+		super.writeJson(dgd);
+	}
+
+	/**
+	 * 活动用户定义列表
+	 */
+	public void listRebateUsers() {
+		DataGridBean dgd = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			user.setEnc(true);
+			dgd = userService.queryUsers(user,((UserBean)userSession).getUnNo(),((UserBean)userSession).getUserID());
+		} catch (Exception e) {
+			log.error("load listRebateUsers error" + e);
+		}
+		super.writeJson(dgd);
+	}
+	
+	public void listUsers002401() {
+		DataGridBean dgd = new DataGridBean();
+		try {
+			UserBean userSession = (UserBean)super.getRequest().getSession().getAttribute("user");
+			user.setCreateUser(userSession.getLoginName());
+			dgd = userService.queryUsers002401(user,userSession.getUnNo(),userSession.getUserID());
+		} catch (Exception e) {
+			log.error("load datagrid error" + e);
+		}
+		
+		super.writeJson(dgd);
+	}
+	
+	/**
+	 * 方法功能：添加用户
+	 * 参数：
+	 * 返回值：json
+	 * 异常：
+	 */
+	public void addUser() {
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				int falg=userService.queryUserCounts(user);
+				if(falg>0){
+					json.setSuccess(false);
+					json.setMsg("用户已存在");
+				}else{
+					userService.saveUser(user, ((UserBean)userSession));
+					json.setSuccess(true);
+					json.setMsg("添加用户成功");
+				}
+			} catch (Exception e) {
+				log.error("添加用户异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		super.writeJson(json);
+	}
+
+	/**
+	 * 活动用户定义添加
+	 */
+	public void addRebateUser() {
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				int falg=userService.queryUserCounts(user);
+				if(falg>0){
+					json.setSuccess(false);
+					json.setMsg("用户已存在");
+				}else{
+					user.setEnc(true);
+					userService.saveUser(user, ((UserBean)userSession));
+					json.setSuccess(true);
+					json.setMsg("添加活动用户成功");
+				}
+			} catch (Exception e) {
+				log.error("添加活动用户异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 方法功能：删除用户
+	 * 参数：
+	 * 返回值：json
+	 * 异常：
+	 */
+	public void deleteUser() {
+		JsonBean json = new JsonBean();
+		try {
+			userService.deleteUser(ids);
+			json.setSuccess(true);
+			json.setMsg("删除用户成功");
+		} catch (Exception e) {
+			log.error("删除用户异常：" + e);
+			json.setMsg(e.getMessage());
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 方法功能：修改用户信息
+	 * 参数：
+	 * 返回值：json
+	 * 异常：
+	 */
+	public void editUser() {
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				userService.updateUser(user, ((UserBean)userSession).getLoginName());
+				json.setSuccess(true);
+				json.setMsg("修改用户成功");
+			} catch (Exception e) {
+				log.error("修改用户异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		super.writeJson(json);
+	}
+
+	/**
+	 * 活动用户定义修改
+	 */
+	public void editRebateUser() {
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				user.setEnc(true);
+				userService.updateUser(user, ((UserBean)userSession).getLoginName());
+				json.setSuccess(true);
+				json.setMsg("修改活动用户成功");
+			} catch (Exception e) {
+				log.error("修改活动用户异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		super.writeJson(json);
+	}
+	/**
+	 * 是否开启短信验证
+	 */
+	public void findIfAuto(){
+		JsonBean jsonBean = new JsonBean();
+		String mag_flag = paramUtil.getTypeMap("mag_flag")+"";
+		if("true".equals(mag_flag)){
+			jsonBean.setSuccess(true);
+			jsonBean.setMsg("开启");
+		}else{
+			jsonBean.setSuccess(false);
+			jsonBean.setMsg("不启用");
+		}
+		super.writeJson(jsonBean);
+	}
+	
+	/**
+	 * 方法功能：用户登陆
+	 * 参数：
+	 * 返回值：void
+	 * 异常：
+	 */
+	public String login() {
+		//从session中取出RandomAction.java 中生成的验证码random  
+		String arandom=(String)(ActionContext.getContext().getSession().get("random"));
+//		if(CheckBadStr(user.getLoginName())||CheckBadStr(user.getPassword())||CheckBadStr(user.getMacTry())||CheckBadStr(user.getRand())){
+//			super.addFieldError("errorInfo", "检测非法登陆！");
+//			userService.saveUserLoginLog(user, "L", "检测非法登陆！", 2);
+//			return "error";
+//		}
+		try {
+			UserBean userbean =(UserBean)super.getRequest().getSession().getAttribute("user");
+			if(userbean!= null){
+				//super.getRequest().getSession().invalidate();
+				super.addFieldError("errorInfo", "当前浏览器已登录其他用户！请退出浏览器重登");
+				userService.saveUserLoginLog(user, "L", "当前浏览器已登录其他用户！请退出浏览器重登", 2);
+				return "error";
+			}
+			if(arandom.equalsIgnoreCase(user.getRand())) {
+				//1手刷；0传统
+				String IsM35Type = "1";
+				user.setIsM35Type(IsM35Type);
+				//限制密码错误次数
+				if(userService.findIfAuto()) {
+					Integer errorTimes = userService.queryErrorPassTime(user);
+					if(errorTimes>=3) {
+						super.addFieldError("errorInfo", "当前用户登录失败过多！");
+						userService.saveUserLoginLog(user, "L", "当前用户登录失败过多！", 2);
+						return "error";
+					}
+				}
+				UserBean userBean = userService.login(user);
+				if (userBean != null) {
+					//限制密码错误次数打开，登陆成功修改次数为0
+					if(userService.findIfAuto()) {
+						//超过90天没有修改密码
+						if(userService.queryPwdModDate(user)) {
+							super.addFieldError("errorInfo", "长时间未修改密码，请联系管理员修改密码。");
+							userService.saveUserLoginLog(user, "L", "长时间未修改密码，请联系管理员修改密码。", 2);
+							return "error";
+						}
+						userService.updateErrorTimeRest(user);
+					}
+					//110000登陆重置认证通道
+					if("superadmin".equals(userBean.getLoginName())||"tenglong".equals(userBean.getLoginName())){
+						paramUtil.initParameter();
+					}
+					//代理
+					if(userBean.getUnitLvl()>0&&!"1".equals(userBean.getSysFlag())){
+						userBean.setIsM35Type(IsM35Type);
+					}else{
+						userBean.setIsM35Type("");
+					}
+					if(userBean.getUnitStatus()==0){
+						super.addFieldError("errorInfo", "该机构已被停用！");
+						userService.saveUserLoginLog(user, "L", "该机构已被停用！", 2);
+						return "error";
+					}
+					//验证短信验证码
+					String mag_flag = paramUtil.getTypeMap("mag_flag")+"";
+					if("true".equals(mag_flag)){
+						String mesRand = super.getRequest().getParameter("mesRand");
+						String s_mesRand = super.getRequest().getSession().getAttribute("mesRand")+"";
+						if("sys".equals(s_mesRand)){
+						}else if(!"".equals(mesRand)&&!"".equals(s_mesRand)&&mesRand.equals(s_mesRand)){
+						}else{
+							super.addFieldError("errorInfo", "短信验证失败！");
+							userService.saveUserLoginLog(user, "L", "短信验证失败！", 2);
+							return "error";
+						}
+//						super.getRequest().getSession().setAttribute("mesRand","");
+					}
+					//单点登录
+					boolean flag=userService.findIfAuto();
+					if(flag){
+						if(userBean.getIsLogin()==0){
+							userService.updateIsLoginStatus(userBean.getLoginName(), 1);
+//							if(userBean.getIsLogin()>=3){
+//								super.addFieldError("errorInfo", "该账户已经登陆失败过多！");
+//								userService.saveUserLoginLog(user, "L", "该账户已经登陆失败过多！", 2);
+//								return "error";
+//							}else 
+							if(userBean.getStatus() == 1){
+								if(userBean.getUseLvl()==3){
+									userBean.setResetFlag(1);
+								}
+								super.getRequest().getSession().setAttribute("user", userBean);
+								List<TreeNodeBean> nodeList = menuService.queryMenuTreeByUser(null, userBean);
+								super.getRequest().getSession().setAttribute("userMenus", nodeList);
+								List<Map<String, Object>> showList =menuService.queryShowNode(userBean);
+								super.getRequest().getSession().setAttribute("menus", showList);
+								super.getRequest().getSession().setAttribute("mesRand","");
+								userService.saveUserLoginLog(user, "L", "登陆成功！", 1);
+								return "success";
+							}else{
+								super.addFieldError("errorInfo", "该账户已停用！");
+								userService.saveUserLoginLog(user, "L", "该账户已停用！", 2);
+								return "error";
+							}
+						}else{
+							super.addFieldError("errorInfo", "用户已登录，不可重复登录！");
+							return "error";
+						}
+					}else{
+//						if(userBean.getIsLogin()>=3){
+//							super.addFieldError("errorInfo", "该账户已经登陆失败过多！");
+//							userService.saveUserLoginLog(user, "L", "该账户已经登陆失败过多！", 2);
+//							return "error";
+//						}else
+						if(userBean.getStatus() == 1){
+							if(userBean.getUseLvl()==3){
+								userBean.setResetFlag(1);
+							}
+							super.getRequest().getSession().setAttribute("user", userBean);
+							List<TreeNodeBean> nodeList = menuService.queryMenuTreeByUser(null, userBean);
+							super.getRequest().getSession().setAttribute("userMenus", nodeList);
+							List<Map<String, Object>> showList =menuService.queryShowNode(userBean);
+							super.getRequest().getSession().setAttribute("menus", showList);
+							super.getRequest().getSession().setAttribute("mesRand","");
+							userService.saveUserLoginLog(user, "L", "登陆成功！", 1);
+							return "success";
+						}else{
+							super.addFieldError("errorInfo", "该账户已停用！");
+							userService.saveUserLoginLog(user, "L", "该账户已停用！", 2);
+							return "error";
+						}
+					}
+				} else {
+					super.addFieldError("errorInfo", "登录失败，请重新登录！");
+					userService.updateErrorPass(user);
+					userService.saveUserLoginLog(user, "L", "登录失败，请重新登录！", 2);
+					return "error";
+				}
+			} else {
+				super.addFieldError("errorInfo", "验证码错误！");
+				userService.saveUserLoginLog(user, "L", "验证码错误！", 2);
+				return "error";
+			}
+		} catch (Exception e) {
+			log.error("用户登录异常：" + e);
+			super.addFieldError("errorInfo", "用户登录异常！");
+			userService.saveUserLoginLog(user, "L", "用户登录异常！", 2);
+			return "error";
+		}
+	}
+	
+	/**
+	 * 方法功能：注销
+	 * 参数：
+	 * 返回值：void
+	 * 异常：
+	 */
+	public void logout() {
+		UserBean user = (UserBean)super.getRequest().getSession().getAttribute("user");
+		if(user!=null){
+			try{
+				userService.saveUserLoginLog(user, "Q", "用户注销", 1);
+			}catch(Exception e){
+				log.error("日志审计失败"+e);
+			}
+		}
+		super.getRequest().getSession().invalidate();
+		JsonBean json = new JsonBean();
+		json.setSuccess(true);
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 修改密码
+	 */
+	public void editPwd() {
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				boolean result = userService.updatePwd(user, ((UserBean)userSession));
+				if(result){
+					json.setSuccess(true);
+					json.setMsg("修改密码成功");
+				}else{
+					json.setMsg("请输入正确的原始密码");
+				}
+			} catch (Exception e) {
+				log.error("修改密码异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 重置密码
+	 */
+	public void updatePwd(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				userService.updatePwd(user, ((UserBean)userSession).getLoginName());
+				json.setSuccess(true);
+				json.setMsg("重置用户密码成功");
+			} catch (Exception e) {
+				log.error("重置用户密码异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 判断当前账号是否有两个机构
+	 */
+	public void loginNameUnit(){
+		UserBean result = userService.loginNameUnit(user.getLoginName());
+		if(result != null){
+			super.writeJson(result);
+		}
+	}
+	
+	/**
+	 * 查询用户码
+	 */
+	public void searchUser(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			String nameCode = super.getRequest().getParameter("q");
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgd = userService.searchUser(nameCode, ((UserBean)userSession).getUnNo());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	super.writeJson(dgd);
+	}
+	
+	/**
+	 * 停用用户
+	 */
+	public void closeUser(){
+		JsonBean json = new JsonBean();
+		try {
+			userService.updateCloseUser(user);
+			json.setSuccess(true);
+			json.setMsg("停用用户成功");
+		} catch (Exception e) {
+			log.error("停用用户异常：" + e);
+			json.setMsg(e.getMessage());
+		}
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 启用用户
+	 */
+	public void startUser(){
+		JsonBean json = new JsonBean();
+		try {
+			userService.updateStartRole(user);
+			json.setSuccess(true);
+			json.setMsg("启用用户成功");
+		} catch (Exception e) {
+			log.error("启用用户异常：" + e);
+			json.setMsg(e.getMessage());
+		}
+		
+		super.writeJson(json);
+	}
+	
+	
+	/**
+	 * 方法功能：加载表格数据
+	 * 参数：
+	 * 返回值：dgb
+	 * 异常：
+	 */
+	public void listUsersForKeFu() {
+		DataGridBean dgd = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgd = userService.queryUsersForMerchant(user);
+		} catch (Exception e) {
+			log.error("load datagrid error" + e);
+		}
+		
+		super.writeJson(dgd);
+	}
+
+	/**
+	 * 方法功能：日志审计功能
+	 * 参数：
+	 * 返回值：dgb
+	 * 异常：
+	 */
+	public void listUserLoginLog() {
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd = userService.queryUserLoginLog(user);
+		} catch (Exception e) {
+			log.error("日志审计失败" + e);
+		}
+		
+		super.writeJson(dgd);
+	}
+	/**
+	  * 登录防sql注入
+	  * @author zhq
+	  * @date 2018年1月9日
+	  * @return
+	  */
+	 public boolean CheckBadStr(String loginInfo) {
+	   if(loginInfo==null||"".equals(loginInfo))return false;
+       String[] bidStrlist = new String[40];    
+       bidStrlist[0] = "'";    
+       bidStrlist[1] = ";";    
+       bidStrlist[2] = ":";    
+       bidStrlist[3] = "%";    
+       bidStrlist[4] = "&";    
+       bidStrlist[5] = "#";    
+       bidStrlist[6] = "\"";    
+       bidStrlist[7] = "net user";    
+       bidStrlist[8] = "exec";    
+       bidStrlist[9] = "net localgroup";    
+       bidStrlist[10] = "select"; 
+       bidStrlist[11] = ",";
+       bidStrlist[12] = "asc";    
+       bidStrlist[13] = "char";    
+       bidStrlist[14] = "mid";    
+       bidStrlist[15] = "insert";    
+       bidStrlist[16] = "order";    
+       bidStrlist[17] = "exec";    
+       bidStrlist[18] = "delete";    
+       bidStrlist[19] = "drop";    
+       bidStrlist[20] = "truncate";    
+       bidStrlist[21] = "xp_cmdshell";    
+       bidStrlist[22] = "<";    
+       bidStrlist[23] = ">";    
+       bidStrlist[24] = "`"; 
+       bidStrlist[25] = "/"; 
+       bidStrlist[26] = "\\";
+       bidStrlist[27] = "or";
+       bidStrlist[28] = "and";
+       bidStrlist[29] = "*";
+       bidStrlist[30] = "true";
+       bidStrlist[31] = "1=1";
+       bidStrlist[32] = " ";
+       bidStrlist[33] = "update";
+       bidStrlist[34] = "count";
+       bidStrlist[35] = "chr";
+       bidStrlist[36] = "master";
+       bidStrlist[37] = "declare";
+       bidStrlist[38] = "-";
+       bidStrlist[39] = "+";
+       
+       
+       String tempStr = loginInfo.toLowerCase();
+       for (int i = 0; i < bidStrlist.length; i++) {    
+           if (tempStr.contains(bidStrlist[i]))  {    
+          	    return true; 
+           } 
+       }
+       return false;
+   }  
+	/**
+	 * 根据用户判断角色是否为一代(弹窗广告)
+	 */
+	public void queryRoleLvlByUser(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				boolean f = userService.queryRoleLvlByUser((UserBean)userSession);
+				json.setSuccess(f);
+			} catch (Exception e) {
+				log.error("根据用户判断角色是否为一代：" + e);
+				json.setSuccess(false);
+			}
+		}
+		super.writeJson(json);
+	}
+	/**
+	 * 弹窗广告关闭
+	 */
+	public void updateBannerToClose(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				userService.updateBannerToClose((UserBean)userSession);
+				json.setSuccess(true);
+			} catch (Exception e) {
+				log.error("弹窗广告关闭异常：" + e);
+				json.setSuccess(false);
+			}
+		}
+		super.writeJson(json);
+	}
+	/**
+	 * 查询用户码--只查询本公司下
+	 */
+	public void searchUserGroup(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			String nameCode = super.getRequest().getParameter("q");
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgd = userService.searchUserGroup(nameCode, ((UserBean)userSession));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	super.writeJson(dgd);
+	}
+}

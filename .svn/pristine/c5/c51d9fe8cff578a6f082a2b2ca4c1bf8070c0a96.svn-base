@@ -1,0 +1,299 @@
+package com.hrt.biz.bill.action;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.biz.bill.entity.pagebean.ProxyPurseBean;
+import com.hrt.biz.bill.service.IProxyPurseService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.util.UsePioOutExcel;
+import com.opensymphony.xwork2.ModelDriven;
+
+/**
+ *   分润调整
+ * @author ztt
+ * */
+public class ProxyPurseAction extends BaseAction implements ModelDriven<ProxyPurseBean>{
+	
+	private static final long serialVersionUID = 1L;
+
+	private static final Log log = LogFactory.getLog(ProxyPurseAction.class);
+	
+	private ProxyPurseBean proxyPurseBean = new ProxyPurseBean();
+	
+	private IProxyPurseService proxyPurseService;
+	
+	@Override
+	public ProxyPurseBean getModel() {
+		return proxyPurseBean;
+	}
+	
+	public ProxyPurseBean getProxyPurseBean() {
+		return proxyPurseBean;
+	}
+	public void setProxyPurseBean(ProxyPurseBean proxyPurseBean) {
+		this.proxyPurseBean = proxyPurseBean;
+	}
+	public IProxyPurseService getProxyPurseService() {
+		return proxyPurseService;
+	}
+	public void setProxyPurseService(IProxyPurseService proxyPurseService) {
+		this.proxyPurseService = proxyPurseService;
+	}
+	
+	File upload=null;
+
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+	
+	/**
+	 * 钱包分润调整查询
+	 * @author ztt
+	 */
+	public void queryUnnoAdjtxn(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd = proxyPurseService.queryUnnoAdj(proxyPurseBean);
+		} catch (Exception e) {
+			log.error("查询分润调整异常：" + e);
+		}
+		super.writeJson(dgd);
+	}
+	
+	/**
+	 * 钱包分润调整--添加
+	 * @author ztt
+	 */
+	public void addUnnoAdj() {
+		boolean flag=false;
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if(userSession == null) {
+			json.setSessionExpire(true);
+			super.writeJson(json);
+		}
+		try {
+			//判断机构号是否存在
+			List<Map<String, Object>> list = proxyPurseService.queryUnno(proxyPurseBean);
+			if (list.size() < 1) {
+				json.setSuccess(false);
+				json.setMsg("机构不存在，请核查");
+			} else {
+				//判断机构是否存在于钱包内
+				List<Map<String, Object>> purseList = proxyPurseService.queryPurse(proxyPurseBean.getUNNO());
+				if (purseList.size() > 0) {
+					Object object = purseList.get(0).get("PUPID");
+					//添加
+					flag = proxyPurseService.addUnnAdj(proxyPurseBean, ((UserBean) userSession).getLoginName(),
+							object.toString());
+					if (flag) {
+						json.setSuccess(true);
+						json.setMsg("添加成功");
+					} else {
+						json.setSuccess(false);
+						json.setMsg("添加失败");
+					}
+				} else {
+					json.setSuccess(false);
+					json.setMsg("该机构暂无分润钱包无法调整余额，请核对！");
+				}
+			} 
+		} catch (Exception e) {
+			log.error("添加异常：" + e);
+			json.setMsg("添加失败");
+		}
+		super.writeJson(json);
+	}
+	/**
+	 * 钱包分润调整--批量导入
+	 * @author ztt
+	 */
+	public void importUnnoAdj() {
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {	
+				synchronized(proxyPurseService){
+					String filename = ServletActionContext.getRequest().getParameter("fileUnnoAdj");	//获取文件名
+					String dasePath = ServletActionContext.getServletContext().getRealPath("/upload");	
+					File dir = new File(dasePath);
+					dir.mkdirs();
+					// 使用UUID做为文件名，以解决重名的问题
+					String path = dasePath + "/" + filename;
+					File destFile = new File(path);
+					upload.renameTo(destFile);
+					String folderPath = ServletActionContext.getServletContext().getRealPath("/upload");// 存放上传文件的路径
+					String xlsfile = folderPath + "/" + filename;
+					try {
+						if (xlsfile.length() > 0 && xlsfile != null) {
+							//判断该批次是否已经上传
+							List<Map<String,String>> lis=proxyPurseService.queryPsmj(filename.substring(0, filename.indexOf(".")));
+							Object obj=lis.get(0).get("NUMS");
+							if(Integer.parseInt(obj.toString())>1){
+								json.setSuccess(false);
+								json.setMsg("该批次余额调整已经上传,请勿重新导入！");
+								super.writeJson(json);
+							}else{
+								List<Map<String,Object>> list = proxyPurseService.saveUnnoAdj(xlsfile,((UserBean)userSession).getLoginName(),filename); // 上传文件
+								if (list.size()>0) {// 如果不为true,代表上传失败	
+									String[] titles = {"unno","调整金额","调整原因(备注)","失败原因"};
+									List excelList = new ArrayList();
+									excelList.add(titles);
+									for (int rowId = 0; rowId < list.size(); rowId++) {
+										Map order = (Map)list.get(rowId);
+										String[] rowContents = { 
+												String.valueOf(order.get("UNNO")==null?"":order.get("UNNO")),
+												String.valueOf(order.get("FEEAMT")==null?"":order.get("FEEAMT")),
+												String.valueOf(order.get("FEENOTE")==null?"":order.get("FEENOTE")),	
+												String.valueOf(order.get("INFO")==null?"":order.get("INFO"))
+										};
+										excelList.add(rowContents);
+									}
+									list=null;
+									String[] cellFormatType = {"t","t","t","t"};
+									UsePioOutExcel.writeExcel(excelList, 4, super.getResponse(), "钱包分润调整记录","钱包分润调整记录" + ".xls", cellFormatType); // 调用导出方法								
+								}else{
+									json.setSuccess(true);
+									json.setMsg("记录更新成功！");
+									super.writeJson(json);
+								}
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						json.setMsg("文件更新失败!"+e);
+						super.writeJson(json);
+					}
+					File file = new File(folderPath);
+					String[] tempList = file.list();
+					log.info("上传文件夹中文件的个数：" + tempList.length);
+					File temp = null;
+					for (int i = 0; i < tempList.length; i++) {
+						if (path.endsWith(File.separator)) {
+							temp = new File(folderPath + tempList[i]);
+						} else {
+							temp = new File(folderPath + File.separator + tempList[i]);
+						}
+						if (temp.exists() && temp.isFile()) {
+							boolean flag = temp.delete(); // 删除上传到服务器的文件
+							int j = i + 1;
+							log.info("成功删除文件:第" + j + "个文件删除是否成功？" + flag);
+						} else {
+							log.info("文件不存在");
+						}
+					}
+			   }
+			} catch (Exception e) {
+				e.printStackTrace();
+				json.setSuccess(true);
+				json.setMsg("文件更新失败!");
+			}		
+		}
+	}
+	/**
+	 * 钱包分润调整--导出
+	 * @author ztt
+	 */
+	public void reportUnnoAdj() {
+		try {
+			String excelName;
+			excelName = "钱包分润调整表";
+			List<Map<String, Object>> list = proxyPurseService.reportUnnoAdj(proxyPurseBean);
+			
+			String[] titles = { "机构号","机构简称","机构名称","调整日期","调整金额","调整原因(备注)","导入文件名称"};
+			List excelList = new ArrayList();
+			excelList.add(titles);
+			try {
+				for (int rowId = 0; rowId < list.size(); rowId++) {
+					Map order = list.get(rowId);
+					String[] rowContents = { 
+							String.valueOf(order.get("UNNO")==null?"":order.get("UNNO")),
+							String.valueOf(order.get("PROVINCE")==null?"":order.get("PROVINCE")),
+							String.valueOf(order.get("AGENTNAME")==null?"":order.get("AGENTNAME")),
+							String.valueOf(order.get("SETTLEDAY")==null?"":order.get("SETTLEDAY")),
+							String.valueOf(order.get("FEEAMT")==null?"":order.get("FEEAMT")),
+							String.valueOf(order.get("FEENOTE")==null?"":order.get("FEENOTE")),
+							String.valueOf(order.get("REMARKS")==null?"":order.get("REMARKS"))
+					};
+					excelList.add(rowContents);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			list=null;
+			String[] cellFormatType = { "t","t","t","t","t","t","t"};
+			UsePioOutExcel.writeExcel(excelList, 7, super.getResponse(), excelName,excelName+".xls", cellFormatType); // 调用导出方法
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 钱包一代额度查询统计---查询
+	 */
+	public void queryGenerationQuotaStatistics(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd = proxyPurseService.queryGenerationQuotaStatistics(proxyPurseBean);
+		} catch (Exception e) {
+			log.error("查询分润调整异常：" + e);
+		}
+		super.writeJson(dgd);
+	}
+	/**
+	 * 钱包一代额度查询统计---导出
+	 */
+	public void reportGenerationQuotaStatistics(){
+		try {
+			if(null!=proxyPurseBean.getPROVINCE() && !"".equals(proxyPurseBean.getPROVINCE())) {
+				String string = new String(proxyPurseBean.getPROVINCE().getBytes("ISO-8859-1"),"utf-8");
+				proxyPurseBean.setPROVINCE(string);//中文乱码处理
+			}
+			String excelName;
+			excelName = "钱包一代额度统计表";
+			List<Map<String, Object>> list = proxyPurseService.reportGenerationQuotaStatistics(proxyPurseBean);
+			
+			String[] titles = { "一代机构号","一代机构名称","总额度","已提现额度","剩余额度","归属中心机构号","归属中心机构名称"};
+			List excelList = new ArrayList();
+			excelList.add(titles);
+			try {
+				for (int rowId = 0; rowId < list.size(); rowId++) {
+					Map order = list.get(rowId);
+					String[] rowContents = { 
+							String.valueOf(order.get("FIRSTUNNO")==null?"":order.get("FIRSTUNNO")),
+							String.valueOf(order.get("PROVINCE")==null?"":order.get("PROVINCE")),
+							String.valueOf(order.get("BALANCE")==null?"":order.get("BALANCE")),
+							String.valueOf(order.get("FEEAMT")==null?"":order.get("FEEAMT")),
+							String.valueOf(order.get("CURAMT")==null?"":order.get("CURAMT")),
+							String.valueOf(order.get("CENTERUNNO")==null?"":order.get("CENTERUNNO")),
+							String.valueOf(order.get("CENTERUNNONAME")==null?"":order.get("CENTERUNNONAME")),
+					};
+					excelList.add(rowContents);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			list=null;
+			String[] cellFormatType = { "t","t","t","t","t","t","t"};
+			UsePioOutExcel.writeExcel(excelList, 7, super.getResponse(), excelName,excelName+".xls", cellFormatType); // 调用导出方法
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

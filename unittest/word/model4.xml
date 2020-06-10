@@ -1,0 +1,2155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?mso-application progid="Word.Document"?>
+<w:wordDocument xmlns:aml="http://schemas.microsoft.com/aml/2001/core"
+	xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"
+	xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml"
+	xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.microsoft.com/office/word/2003/wordml"
+	xmlns:wx="http://schemas.microsoft.com/office/word/2003/auxHint"
+	xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+	xmlns:wsp="http://schemas.microsoft.com/office/word/2003/wordml/sp2"
+	xmlns:sl="http://schemas.microsoft.com/schemaLibrary/2003/core"
+	w:macrosPresent="no" w:embeddedObjPresent="no" w:ocxPresent="no"
+	xml:space="preserve"><w:ignoreSubtree
+	w:val="http://schemas.microsoft.com/office/word/2003/wordml/sp2" /><o:DocumentProperties><o:Author>fanxiying</o:Author><o:LastAuthor>Thinkpad</o:LastAuthor><o:Revision>2</o:Revision><o:TotalTime>0</o:TotalTime><o:Created>2014-06-07T11:11:00Z</o:Created><o:LastSaved>2014-06-07T11:11:00Z</o:LastSaved><o:Pages>1</o:Pages><o:Words>180</o:Words><o:Characters>1032</o:Characters><o:Lines>8</o:Lines><o:Paragraphs>2</o:Paragraphs><o:CharactersWithSpaces>1210</o:CharactersWithSpaces><o:Version>15</o:Version></o:DocumentProperties><w:fonts><w:defaultFonts
+	w:ascii="Calibri" w:fareast="宋体" w:h-ansi="Calibri" w:cs="Times New Roman" /><w:font
+	w:name="Times New Roman"><w:panose-1 w:val="02020603050405020304" /><w:charset
+	w:val="00" /><w:family w:val="Roman" /><w:pitch w:val="variable" /><w:sig
+	w:usb-0="E0002AFF" w:usb-1="C0007841" w:usb-2="00000009" w:usb-3="00000000"
+	w:csb-0="000001FF" w:csb-1="00000000" /></w:font><w:font w:name="宋体"><w:altName
+	w:val="SimSun" /><w:panose-1 w:val="02010600030101010101" /><w:charset
+	w:val="86" /><w:family w:val="auto" /><w:pitch w:val="variable" /><w:sig
+	w:usb-0="00000003" w:usb-1="288F0000" w:usb-2="00000016" w:usb-3="00000000"
+	w:csb-0="00040001" w:csb-1="00000000" /></w:font><w:font w:name="宋体"><w:altName
+	w:val="SimSun" /><w:panose-1 w:val="02010600030101010101" /><w:charset
+	w:val="86" /><w:family w:val="auto" /><w:pitch w:val="variable" /><w:sig
+	w:usb-0="00000003" w:usb-1="288F0000" w:usb-2="00000016" w:usb-3="00000000"
+	w:csb-0="00040001" w:csb-1="00000000" /></w:font><w:font w:name="Calibri"><w:panose-1
+	w:val="020F0502020204030204" /><w:charset w:val="00" /><w:family
+	w:val="Swiss" /><w:pitch w:val="variable" /><w:sig
+	w:usb-0="E00002FF" w:usb-1="4000ACFF" w:usb-2="00000001" w:usb-3="00000000"
+	w:csb-0="0000019F" w:csb-1="00000000" /></w:font><w:font w:name="sansserif"><w:altName
+	w:val="Times New Roman" /><w:panose-1 w:val="00000000000000000000" /><w:charset
+	w:val="00" /><w:family w:val="auto" /><w:notTrueType /><w:pitch
+	w:val="default" /><w:sig w:usb-0="00000003" w:usb-1="00000000"
+	w:usb-2="00000000" w:usb-3="00000000" w:csb-0="00000001" w:csb-1="00000000" /></w:font><w:font
+	w:name="@宋体"><w:panose-1 w:val="02010600030101010101" /><w:charset
+	w:val="86" /><w:family w:val="auto" /><w:pitch w:val="variable" /><w:sig
+	w:usb-0="00000003" w:usb-1="288F0000" w:usb-2="00000016" w:usb-3="00000000"
+	w:csb-0="00040001" w:csb-1="00000000" /></w:font></w:fonts><w:styles><w:versionOfBuiltInStylenames
+	w:val="7" /><w:latentStyles w:defLockedState="off"
+	w:latentStyleCount="371"><w:lsdException w:name="Normal" /><w:lsdException
+	w:name="heading 1" /><w:lsdException w:name="heading 2" /><w:lsdException
+	w:name="heading 3" /><w:lsdException w:name="heading 4" /><w:lsdException
+	w:name="heading 5" /><w:lsdException w:name="heading 6" /><w:lsdException
+	w:name="heading 7" /><w:lsdException w:name="heading 8" /><w:lsdException
+	w:name="heading 9" /><w:lsdException w:name="index 1" /><w:lsdException
+	w:name="index 2" /><w:lsdException w:name="index 3" /><w:lsdException
+	w:name="index 4" /><w:lsdException w:name="index 5" /><w:lsdException
+	w:name="index 6" /><w:lsdException w:name="index 7" /><w:lsdException
+	w:name="index 8" /><w:lsdException w:name="index 9" /><w:lsdException
+	w:name="toc 1" /><w:lsdException w:name="toc 2" /><w:lsdException
+	w:name="toc 3" /><w:lsdException w:name="toc 4" /><w:lsdException
+	w:name="toc 5" /><w:lsdException w:name="toc 6" /><w:lsdException
+	w:name="toc 7" /><w:lsdException w:name="toc 8" /><w:lsdException
+	w:name="toc 9" /><w:lsdException w:name="Normal Indent" /><w:lsdException
+	w:name="footnote text" /><w:lsdException w:name="annotation text" /><w:lsdException
+	w:name="header" /><w:lsdException w:name="footer" /><w:lsdException
+	w:name="index heading" /><w:lsdException w:name="caption" /><w:lsdException
+	w:name="table of figures" /><w:lsdException w:name="envelope address" /><w:lsdException
+	w:name="envelope return" /><w:lsdException w:name="footnote reference" /><w:lsdException
+	w:name="annotation reference" /><w:lsdException w:name="line number" /><w:lsdException
+	w:name="page number" /><w:lsdException w:name="endnote reference" /><w:lsdException
+	w:name="endnote text" /><w:lsdException w:name="table of authorities" /><w:lsdException
+	w:name="macro" /><w:lsdException w:name="toa heading" /><w:lsdException
+	w:name="List" /><w:lsdException w:name="List Bullet" /><w:lsdException
+	w:name="List Number" /><w:lsdException w:name="List 2" /><w:lsdException
+	w:name="List 3" /><w:lsdException w:name="List 4" /><w:lsdException
+	w:name="List 5" /><w:lsdException w:name="List Bullet 2" /><w:lsdException
+	w:name="List Bullet 3" /><w:lsdException w:name="List Bullet 4" /><w:lsdException
+	w:name="List Bullet 5" /><w:lsdException w:name="List Number 2" /><w:lsdException
+	w:name="List Number 3" /><w:lsdException w:name="List Number 4" /><w:lsdException
+	w:name="List Number 5" /><w:lsdException w:name="Title" /><w:lsdException
+	w:name="Closing" /><w:lsdException w:name="Signature" /><w:lsdException
+	w:name="Default Paragraph Font" /><w:lsdException
+	w:name="Body Text" /><w:lsdException w:name="Body Text Indent" /><w:lsdException
+	w:name="List Continue" /><w:lsdException w:name="List Continue 2" /><w:lsdException
+	w:name="List Continue 3" /><w:lsdException w:name="List Continue 4" /><w:lsdException
+	w:name="List Continue 5" /><w:lsdException w:name="Message Header" /><w:lsdException
+	w:name="Subtitle" /><w:lsdException w:name="Salutation" /><w:lsdException
+	w:name="Date" /><w:lsdException w:name="Body Text First Indent" /><w:lsdException
+	w:name="Body Text First Indent 2" /><w:lsdException
+	w:name="Note Heading" /><w:lsdException w:name="Body Text 2" /><w:lsdException
+	w:name="Body Text 3" /><w:lsdException w:name="Body Text Indent 2" /><w:lsdException
+	w:name="Body Text Indent 3" /><w:lsdException w:name="Block Text" /><w:lsdException
+	w:name="Hyperlink" /><w:lsdException w:name="FollowedHyperlink" /><w:lsdException
+	w:name="Strong" /><w:lsdException w:name="Emphasis" /><w:lsdException
+	w:name="Document Map" /><w:lsdException w:name="Plain Text" /><w:lsdException
+	w:name="E-mail Signature" /><w:lsdException w:name="HTML Top of Form" /><w:lsdException
+	w:name="HTML Bottom of Form" /><w:lsdException w:name="Normal (Web)" /><w:lsdException
+	w:name="HTML Acronym" /><w:lsdException w:name="HTML Address" /><w:lsdException
+	w:name="HTML Cite" /><w:lsdException w:name="HTML Code" /><w:lsdException
+	w:name="HTML Definition" /><w:lsdException w:name="HTML Keyboard" /><w:lsdException
+	w:name="HTML Preformatted" /><w:lsdException w:name="HTML Sample" /><w:lsdException
+	w:name="HTML Typewriter" /><w:lsdException w:name="HTML Variable" /><w:lsdException
+	w:name="Normal Table" /><w:lsdException w:name="annotation subject" /><w:lsdException
+	w:name="No List" /><w:lsdException w:name="Outline List 1" /><w:lsdException
+	w:name="Outline List 2" /><w:lsdException w:name="Outline List 3" /><w:lsdException
+	w:name="Table Simple 1" /><w:lsdException w:name="Table Simple 2" /><w:lsdException
+	w:name="Table Simple 3" /><w:lsdException w:name="Table Classic 1" /><w:lsdException
+	w:name="Table Classic 2" /><w:lsdException w:name="Table Classic 3" /><w:lsdException
+	w:name="Table Classic 4" /><w:lsdException w:name="Table Colorful 1" /><w:lsdException
+	w:name="Table Colorful 2" /><w:lsdException w:name="Table Colorful 3" /><w:lsdException
+	w:name="Table Columns 1" /><w:lsdException w:name="Table Columns 2" /><w:lsdException
+	w:name="Table Columns 3" /><w:lsdException w:name="Table Columns 4" /><w:lsdException
+	w:name="Table Columns 5" /><w:lsdException w:name="Table Grid 1" /><w:lsdException
+	w:name="Table Grid 2" /><w:lsdException w:name="Table Grid 3" /><w:lsdException
+	w:name="Table Grid 4" /><w:lsdException w:name="Table Grid 5" /><w:lsdException
+	w:name="Table Grid 6" /><w:lsdException w:name="Table Grid 7" /><w:lsdException
+	w:name="Table Grid 8" /><w:lsdException w:name="Table List 1" /><w:lsdException
+	w:name="Table List 2" /><w:lsdException w:name="Table List 3" /><w:lsdException
+	w:name="Table List 4" /><w:lsdException w:name="Table List 5" /><w:lsdException
+	w:name="Table List 6" /><w:lsdException w:name="Table List 7" /><w:lsdException
+	w:name="Table List 8" /><w:lsdException w:name="Table 3D effects 1" /><w:lsdException
+	w:name="Table 3D effects 2" /><w:lsdException w:name="Table 3D effects 3" /><w:lsdException
+	w:name="Table Contemporary" /><w:lsdException w:name="Table Elegant" /><w:lsdException
+	w:name="Table Professional" /><w:lsdException w:name="Table Subtle 1" /><w:lsdException
+	w:name="Table Subtle 2" /><w:lsdException w:name="Table Web 1" /><w:lsdException
+	w:name="Table Web 2" /><w:lsdException w:name="Table Web 3" /><w:lsdException
+	w:name="Balloon Text" /><w:lsdException w:name="Table Grid" /><w:lsdException
+	w:name="Table Theme" /><w:lsdException w:name="Placeholder Text" /><w:lsdException
+	w:name="No Spacing" /><w:lsdException w:name="Light Shading" /><w:lsdException
+	w:name="Light List" /><w:lsdException w:name="Light Grid" /><w:lsdException
+	w:name="Medium Shading 1" /><w:lsdException w:name="Medium Shading 2" /><w:lsdException
+	w:name="Medium List 1" /><w:lsdException w:name="Medium List 2" /><w:lsdException
+	w:name="Medium Grid 1" /><w:lsdException w:name="Medium Grid 2" /><w:lsdException
+	w:name="Medium Grid 3" /><w:lsdException w:name="Dark List" /><w:lsdException
+	w:name="Colorful Shading" /><w:lsdException w:name="Colorful List" /><w:lsdException
+	w:name="Colorful Grid" /><w:lsdException w:name="Light Shading Accent 1" /><w:lsdException
+	w:name="Light List Accent 1" /><w:lsdException w:name="Light Grid Accent 1" /><w:lsdException
+	w:name="Medium Shading 1 Accent 1" /><w:lsdException
+	w:name="Medium Shading 2 Accent 1" /><w:lsdException
+	w:name="Medium List 1 Accent 1" /><w:lsdException
+	w:name="Revision" /><w:lsdException w:name="List Paragraph" /><w:lsdException
+	w:name="Quote" /><w:lsdException w:name="Intense Quote" /><w:lsdException
+	w:name="Medium List 2 Accent 1" /><w:lsdException
+	w:name="Medium Grid 1 Accent 1" /><w:lsdException
+	w:name="Medium Grid 2 Accent 1" /><w:lsdException
+	w:name="Medium Grid 3 Accent 1" /><w:lsdException
+	w:name="Dark List Accent 1" /><w:lsdException
+	w:name="Colorful Shading Accent 1" /><w:lsdException
+	w:name="Colorful List Accent 1" /><w:lsdException
+	w:name="Colorful Grid Accent 1" /><w:lsdException
+	w:name="Light Shading Accent 2" /><w:lsdException
+	w:name="Light List Accent 2" /><w:lsdException w:name="Light Grid Accent 2" /><w:lsdException
+	w:name="Medium Shading 1 Accent 2" /><w:lsdException
+	w:name="Medium Shading 2 Accent 2" /><w:lsdException
+	w:name="Medium List 1 Accent 2" /><w:lsdException
+	w:name="Medium List 2 Accent 2" /><w:lsdException
+	w:name="Medium Grid 1 Accent 2" /><w:lsdException
+	w:name="Medium Grid 2 Accent 2" /><w:lsdException
+	w:name="Medium Grid 3 Accent 2" /><w:lsdException
+	w:name="Dark List Accent 2" /><w:lsdException
+	w:name="Colorful Shading Accent 2" /><w:lsdException
+	w:name="Colorful List Accent 2" /><w:lsdException
+	w:name="Colorful Grid Accent 2" /><w:lsdException
+	w:name="Light Shading Accent 3" /><w:lsdException
+	w:name="Light List Accent 3" /><w:lsdException w:name="Light Grid Accent 3" /><w:lsdException
+	w:name="Medium Shading 1 Accent 3" /><w:lsdException
+	w:name="Medium Shading 2 Accent 3" /><w:lsdException
+	w:name="Medium List 1 Accent 3" /><w:lsdException
+	w:name="Medium List 2 Accent 3" /><w:lsdException
+	w:name="Medium Grid 1 Accent 3" /><w:lsdException
+	w:name="Medium Grid 2 Accent 3" /><w:lsdException
+	w:name="Medium Grid 3 Accent 3" /><w:lsdException
+	w:name="Dark List Accent 3" /><w:lsdException
+	w:name="Colorful Shading Accent 3" /><w:lsdException
+	w:name="Colorful List Accent 3" /><w:lsdException
+	w:name="Colorful Grid Accent 3" /><w:lsdException
+	w:name="Light Shading Accent 4" /><w:lsdException
+	w:name="Light List Accent 4" /><w:lsdException w:name="Light Grid Accent 4" /><w:lsdException
+	w:name="Medium Shading 1 Accent 4" /><w:lsdException
+	w:name="Medium Shading 2 Accent 4" /><w:lsdException
+	w:name="Medium List 1 Accent 4" /><w:lsdException
+	w:name="Medium List 2 Accent 4" /><w:lsdException
+	w:name="Medium Grid 1 Accent 4" /><w:lsdException
+	w:name="Medium Grid 2 Accent 4" /><w:lsdException
+	w:name="Medium Grid 3 Accent 4" /><w:lsdException
+	w:name="Dark List Accent 4" /><w:lsdException
+	w:name="Colorful Shading Accent 4" /><w:lsdException
+	w:name="Colorful List Accent 4" /><w:lsdException
+	w:name="Colorful Grid Accent 4" /><w:lsdException
+	w:name="Light Shading Accent 5" /><w:lsdException
+	w:name="Light List Accent 5" /><w:lsdException w:name="Light Grid Accent 5" /><w:lsdException
+	w:name="Medium Shading 1 Accent 5" /><w:lsdException
+	w:name="Medium Shading 2 Accent 5" /><w:lsdException
+	w:name="Medium List 1 Accent 5" /><w:lsdException
+	w:name="Medium List 2 Accent 5" /><w:lsdException
+	w:name="Medium Grid 1 Accent 5" /><w:lsdException
+	w:name="Medium Grid 2 Accent 5" /><w:lsdException
+	w:name="Medium Grid 3 Accent 5" /><w:lsdException
+	w:name="Dark List Accent 5" /><w:lsdException
+	w:name="Colorful Shading Accent 5" /><w:lsdException
+	w:name="Colorful List Accent 5" /><w:lsdException
+	w:name="Colorful Grid Accent 5" /><w:lsdException
+	w:name="Light Shading Accent 6" /><w:lsdException
+	w:name="Light List Accent 6" /><w:lsdException w:name="Light Grid Accent 6" /><w:lsdException
+	w:name="Medium Shading 1 Accent 6" /><w:lsdException
+	w:name="Medium Shading 2 Accent 6" /><w:lsdException
+	w:name="Medium List 1 Accent 6" /><w:lsdException
+	w:name="Medium List 2 Accent 6" /><w:lsdException
+	w:name="Medium Grid 1 Accent 6" /><w:lsdException
+	w:name="Medium Grid 2 Accent 6" /><w:lsdException
+	w:name="Medium Grid 3 Accent 6" /><w:lsdException
+	w:name="Dark List Accent 6" /><w:lsdException
+	w:name="Colorful Shading Accent 6" /><w:lsdException
+	w:name="Colorful List Accent 6" /><w:lsdException
+	w:name="Colorful Grid Accent 6" /><w:lsdException
+	w:name="Subtle Emphasis" /><w:lsdException w:name="Intense Emphasis" /><w:lsdException
+	w:name="Subtle Reference" /><w:lsdException w:name="Intense Reference" /><w:lsdException
+	w:name="Book Title" /><w:lsdException w:name="Bibliography" /><w:lsdException
+	w:name="TOC Heading" /><w:lsdException w:name="Plain Table 1" /><w:lsdException
+	w:name="Plain Table 2" /><w:lsdException w:name="Plain Table 3" /><w:lsdException
+	w:name="Plain Table 4" /><w:lsdException w:name="Plain Table 5" /><w:lsdException
+	w:name="Grid Table Light" /><w:lsdException w:name="Grid Table 1 Light" /><w:lsdException
+	w:name="Grid Table 2" /><w:lsdException w:name="Grid Table 3" /><w:lsdException
+	w:name="Grid Table 4" /><w:lsdException w:name="Grid Table 5 Dark" /><w:lsdException
+	w:name="Grid Table 6 Colorful" /><w:lsdException
+	w:name="Grid Table 7 Colorful" /><w:lsdException
+	w:name="Grid Table 1 Light Accent 1" /><w:lsdException
+	w:name="Grid Table 2 Accent 1" /><w:lsdException
+	w:name="Grid Table 3 Accent 1" /><w:lsdException
+	w:name="Grid Table 4 Accent 1" /><w:lsdException
+	w:name="Grid Table 5 Dark Accent 1" /><w:lsdException
+	w:name="Grid Table 6 Colorful Accent 1" /><w:lsdException
+	w:name="Grid Table 7 Colorful Accent 1" /><w:lsdException
+	w:name="Grid Table 1 Light Accent 2" /><w:lsdException
+	w:name="Grid Table 2 Accent 2" /><w:lsdException
+	w:name="Grid Table 3 Accent 2" /><w:lsdException
+	w:name="Grid Table 4 Accent 2" /><w:lsdException
+	w:name="Grid Table 5 Dark Accent 2" /><w:lsdException
+	w:name="Grid Table 6 Colorful Accent 2" /><w:lsdException
+	w:name="Grid Table 7 Colorful Accent 2" /><w:lsdException
+	w:name="Grid Table 1 Light Accent 3" /><w:lsdException
+	w:name="Grid Table 2 Accent 3" /><w:lsdException
+	w:name="Grid Table 3 Accent 3" /><w:lsdException
+	w:name="Grid Table 4 Accent 3" /><w:lsdException
+	w:name="Grid Table 5 Dark Accent 3" /><w:lsdException
+	w:name="Grid Table 6 Colorful Accent 3" /><w:lsdException
+	w:name="Grid Table 7 Colorful Accent 3" /><w:lsdException
+	w:name="Grid Table 1 Light Accent 4" /><w:lsdException
+	w:name="Grid Table 2 Accent 4" /><w:lsdException
+	w:name="Grid Table 3 Accent 4" /><w:lsdException
+	w:name="Grid Table 4 Accent 4" /><w:lsdException
+	w:name="Grid Table 5 Dark Accent 4" /><w:lsdException
+	w:name="Grid Table 6 Colorful Accent 4" /><w:lsdException
+	w:name="Grid Table 7 Colorful Accent 4" /><w:lsdException
+	w:name="Grid Table 1 Light Accent 5" /><w:lsdException
+	w:name="Grid Table 2 Accent 5" /><w:lsdException
+	w:name="Grid Table 3 Accent 5" /><w:lsdException
+	w:name="Grid Table 4 Accent 5" /><w:lsdException
+	w:name="Grid Table 5 Dark Accent 5" /><w:lsdException
+	w:name="Grid Table 6 Colorful Accent 5" /><w:lsdException
+	w:name="Grid Table 7 Colorful Accent 5" /><w:lsdException
+	w:name="Grid Table 1 Light Accent 6" /><w:lsdException
+	w:name="Grid Table 2 Accent 6" /><w:lsdException
+	w:name="Grid Table 3 Accent 6" /><w:lsdException
+	w:name="Grid Table 4 Accent 6" /><w:lsdException
+	w:name="Grid Table 5 Dark Accent 6" /><w:lsdException
+	w:name="Grid Table 6 Colorful Accent 6" /><w:lsdException
+	w:name="Grid Table 7 Colorful Accent 6" /><w:lsdException
+	w:name="List Table 1 Light" /><w:lsdException w:name="List Table 2" /><w:lsdException
+	w:name="List Table 3" /><w:lsdException w:name="List Table 4" /><w:lsdException
+	w:name="List Table 5 Dark" /><w:lsdException w:name="List Table 6 Colorful" /><w:lsdException
+	w:name="List Table 7 Colorful" /><w:lsdException
+	w:name="List Table 1 Light Accent 1" /><w:lsdException
+	w:name="List Table 2 Accent 1" /><w:lsdException
+	w:name="List Table 3 Accent 1" /><w:lsdException
+	w:name="List Table 4 Accent 1" /><w:lsdException
+	w:name="List Table 5 Dark Accent 1" /><w:lsdException
+	w:name="List Table 6 Colorful Accent 1" /><w:lsdException
+	w:name="List Table 7 Colorful Accent 1" /><w:lsdException
+	w:name="List Table 1 Light Accent 2" /><w:lsdException
+	w:name="List Table 2 Accent 2" /><w:lsdException
+	w:name="List Table 3 Accent 2" /><w:lsdException
+	w:name="List Table 4 Accent 2" /><w:lsdException
+	w:name="List Table 5 Dark Accent 2" /><w:lsdException
+	w:name="List Table 6 Colorful Accent 2" /><w:lsdException
+	w:name="List Table 7 Colorful Accent 2" /><w:lsdException
+	w:name="List Table 1 Light Accent 3" /><w:lsdException
+	w:name="List Table 2 Accent 3" /><w:lsdException
+	w:name="List Table 3 Accent 3" /><w:lsdException
+	w:name="List Table 4 Accent 3" /><w:lsdException
+	w:name="List Table 5 Dark Accent 3" /><w:lsdException
+	w:name="List Table 6 Colorful Accent 3" /><w:lsdException
+	w:name="List Table 7 Colorful Accent 3" /><w:lsdException
+	w:name="List Table 1 Light Accent 4" /><w:lsdException
+	w:name="List Table 2 Accent 4" /><w:lsdException
+	w:name="List Table 3 Accent 4" /><w:lsdException
+	w:name="List Table 4 Accent 4" /><w:lsdException
+	w:name="List Table 5 Dark Accent 4" /><w:lsdException
+	w:name="List Table 6 Colorful Accent 4" /><w:lsdException
+	w:name="List Table 7 Colorful Accent 4" /><w:lsdException
+	w:name="List Table 1 Light Accent 5" /><w:lsdException
+	w:name="List Table 2 Accent 5" /><w:lsdException
+	w:name="List Table 3 Accent 5" /><w:lsdException
+	w:name="List Table 4 Accent 5" /><w:lsdException
+	w:name="List Table 5 Dark Accent 5" /><w:lsdException
+	w:name="List Table 6 Colorful Accent 5" /><w:lsdException
+	w:name="List Table 7 Colorful Accent 5" /><w:lsdException
+	w:name="List Table 1 Light Accent 6" /><w:lsdException
+	w:name="List Table 2 Accent 6" /><w:lsdException
+	w:name="List Table 3 Accent 6" /><w:lsdException
+	w:name="List Table 4 Accent 6" /><w:lsdException
+	w:name="List Table 5 Dark Accent 6" /><w:lsdException
+	w:name="List Table 6 Colorful Accent 6" /><w:lsdException
+	w:name="List Table 7 Colorful Accent 6" /></w:latentStyles><w:style
+	w:type="paragraph" w:default="on" w:styleId="a"><w:name w:val="Normal" /><wx:uiName
+	wx:val="正文" /><w:pPr><w:widowControl w:val="off" /><w:jc
+	w:val="both" /></w:pPr><w:rPr><wx:font wx:val="Calibri" /><w:kern
+	w:val="2" /><w:sz w:val="21" /><w:sz-cs w:val="22" /><w:lang
+	w:val="EN-US" w:fareast="ZH-CN" w:bidi="AR-SA" /></w:rPr></w:style><w:style
+	w:type="character" w:default="on" w:styleId="a0"><w:name
+	w:val="Default Paragraph Font" /><wx:uiName wx:val="默认段落字体" /></w:style><w:style
+	w:type="table" w:default="on" w:styleId="a1"><w:name w:val="Normal Table" /><wx:uiName
+	wx:val="普通表格" /><w:rPr><wx:font wx:val="Calibri" /><w:lang
+	w:val="EN-US" w:fareast="ZH-CN" w:bidi="AR-SA" /></w:rPr><w:tblPr><w:tblInd
+	w:w="0" w:type="dxa" /><w:tblCellMar><w:top w:w="0" w:type="dxa" /><w:left
+	w:w="108" w:type="dxa" /><w:bottom w:w="0" w:type="dxa" /><w:right
+	w:w="108" w:type="dxa" /></w:tblCellMar></w:tblPr></w:style><w:style
+	w:type="list" w:default="on" w:styleId="a2"><w:name w:val="No List" /><wx:uiName
+	wx:val="无列表" /></w:style><w:style w:type="paragraph" w:styleId="a3"><w:name
+	w:val="header" /><wx:uiName wx:val="页眉" /><w:basedOn
+	w:val="a" /><w:link w:val="Char" /><w:rsid w:val="004157D1" /><w:pPr><w:pBdr><w:bottom
+	w:val="single" w:sz="6" wx:bdrwidth="15" w:space="1" w:color="auto" /></w:pBdr><w:tabs><w:tab
+	w:val="center" w:pos="4153" /><w:tab w:val="right" w:pos="8306" /></w:tabs><w:snapToGrid
+	w:val="off" /><w:jc w:val="center" /></w:pPr><w:rPr><wx:font
+	wx:val="Calibri" /><w:sz w:val="18" /><w:sz-cs w:val="18" /></w:rPr></w:style><w:style
+	w:type="character" w:styleId="Char"><w:name w:val="页眉 Char" /><w:link
+	w:val="a3" /><w:rsid w:val="004157D1" /><w:rPr><w:sz w:val="18" /><w:sz-cs
+	w:val="18" /></w:rPr></w:style><w:style w:type="paragraph"
+	w:styleId="a4"><w:name w:val="footer" /><wx:uiName wx:val="页脚" /><w:basedOn
+	w:val="a" /><w:link w:val="Char0" /><w:rsid w:val="004157D1" /><w:pPr><w:tabs><w:tab
+	w:val="center" w:pos="4153" /><w:tab w:val="right" w:pos="8306" /></w:tabs><w:snapToGrid
+	w:val="off" /><w:jc w:val="left" /></w:pPr><w:rPr><wx:font
+	wx:val="Calibri" /><w:sz w:val="18" /><w:sz-cs w:val="18" /></w:rPr></w:style><w:style
+	w:type="character" w:styleId="Char0"><w:name w:val="页脚 Char" /><w:link
+	w:val="a4" /><w:rsid w:val="004157D1" /><w:rPr><w:sz w:val="18" /><w:sz-cs
+	w:val="18" /></w:rPr></w:style></w:styles><w:shapeDefaults><o:shapedefaults
+	v:ext="edit" spidmax="2049" /><o:shapelayout v:ext="edit"><o:idmap
+	v:ext="edit" data="1" /></o:shapelayout></w:shapeDefaults><w:docPr><w:view
+	w:val="print" /><w:zoom w:percent="100" /><w:bordersDontSurroundHeader /><w:bordersDontSurroundFooter /><w:defaultTabStop
+	w:val="720" /><w:drawingGridHorizontalSpacing
+	w:val="120" /><w:drawingGridVerticalSpacing
+	w:val="120" /><w:displayHorizontalDrawingGridEvery
+	w:val="0" /><w:displayVerticalDrawingGridEvery
+	w:val="3" /><w:useMarginsForDrawingGridOrigin /><w:doNotShadeFormData /><w:punctuationKerning /><w:characterSpacingControl
+	w:val="CompressPunctuation" /><w:optimizeForBrowser /><w:validateAgainstSchema
+	w:val="off" /><w:saveInvalidXML w:val="off" /><w:ignoreMixedContent
+	w:val="off" /><w:alwaysShowPlaceholderText
+	w:val="off" /><w:doNotUnderlineInvalidXML /><w:hdrShapeDefaults><o:shapedefaults
+	v:ext="edit" spidmax="2049" /></w:hdrShapeDefaults><w:footnotePr><w:footnote
+	w:type="separator"><w:p wsp:rsidR="00BA2B4F" wsp:rsidRDefault="00BA2B4F"
+	wsp:rsidP="004157D1"><w:r><w:separator /></w:r></w:p></w:footnote><w:footnote
+	w:type="continuation-separator"><w:p wsp:rsidR="00BA2B4F" wsp:rsidRDefault="00BA2B4F"
+	wsp:rsidP="004157D1"><w:r><w:continuationSeparator /></w:r></w:p></w:footnote></w:footnotePr><w:endnotePr><w:endnote
+	w:type="separator"><w:p wsp:rsidR="00BA2B4F" wsp:rsidRDefault="00BA2B4F"
+	wsp:rsidP="004157D1"><w:r><w:separator /></w:r></w:p></w:endnote><w:endnote
+	w:type="continuation-separator"><w:p wsp:rsidR="00BA2B4F" wsp:rsidRDefault="00BA2B4F"
+	wsp:rsidP="004157D1"><w:r><w:continuationSeparator /></w:r></w:p></w:endnote></w:endnotePr><w:compat><w:spaceForUL /><w:balanceSingleByteDoubleByteWidth /><w:doNotLeaveBackslashAlone /><w:ulTrailSpace /><w:doNotExpandShiftReturn /><w:adjustLineHeightInTable /><w:breakWrappedTables /><w:snapToGridInCell /><w:wrapTextWithPunct /><w:useAsianBreakRules /><w:dontGrowAutofit /><w:useFELayout /></w:compat><wsp:rsids><wsp:rsidRoot
+	wsp:val="004157D1" /><wsp:rsid wsp:val="001962BA" /><wsp:rsid
+	wsp:val="004157D1" /><wsp:rsid wsp:val="006D58BD" /><wsp:rsid
+	wsp:val="00AB2FFD" /><wsp:rsid wsp:val="00BA2B4F" /><wsp:rsid
+	wsp:val="00F03643" /></wsp:rsids></w:docPr><w:body><wx:sect><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="638" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="640"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="961"
+	w:y="1717" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><aml:annotation
+	aml:id="0" w:type="Word.Bookmark.Start" w:name="JR_PAGE_ANCHOR_0_1" /><aml:annotation
+	aml:id="0" w:type="Word.Bookmark.End" /><w:r wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect
+	id="_x0000_s1026"
+	style="position:absolute;margin-left:48pt;margin-top:84pt;width:32pt;height:15pt;z-index:-93;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>编号：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1098" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1100"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="8301"
+	w:y="1717" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1027"
+	style="position:absolute;margin-left:415pt;margin-top:84pt;width:55pt;height:15pt;z-index:-92;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>联系客服：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1958" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1960"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1621"
+	w:y="1717" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1028"
+	style="position:absolute;margin-left:81pt;margin-top:84pt;width:98pt;height:15pt;z-index:-91;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>${machineTaskDataBean.bmtidstring}</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1058" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1060"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="921"
+	w:y="721" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="right" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1029"
+	style="position:absolute;left:0;text-align:left;z-index:-90;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="78pt,100pt" to="183pt,100pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1030"
+	style="position:absolute;left:0;text-align:left;z-index:-89;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="467pt,100pt" to="547pt,100pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1031"
+	style="position:absolute;left:0;text-align:left;margin-left:46pt;margin-top:36pt;width:53pt;height:15pt;z-index:-88;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>商户来源：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1398" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1400"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="3741"
+	w:y="1717" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="right" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>POS</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>连接方式：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2798" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="2800"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5181"
+	w:y="1717" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1032"
+	style="position:absolute;z-index:-87;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="252pt,100pt" to="402pt,100pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>${machineTaskDataBean.installedsim}</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="9998" /><wx:height wx:val="382" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="10000"
+	w:h="382" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1001"
+	w:y="1230" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="382" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="28" /><w:sz-cs w:val="28" /></w:rPr><w:t>设备安装记录</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="28" /><w:sz-cs w:val="28" /></w:rPr><w:t></w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="28" /><w:sz-cs w:val="28" /></w:rPr><w:t></w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="28" /><w:sz-cs w:val="28" /></w:rPr><w:t></w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3398" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="3400"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2021"
+	w:y="721" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>集团商户</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="6178" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="6180"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2101"
+	w:y="2157" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1033"
+	style="position:absolute;margin-left:105pt;margin-top:106pt;width:309pt;height:15pt;z-index:-86;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>${machineTaskDataBean.rname}</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1001"
+	w:y="2157" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1034"
+	style="position:absolute;margin-left:50pt;margin-top:106pt;width:50pt;height:15pt;z-index:-85;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>商户名称：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1018" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1020"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="981"
+	w:y="3117" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1035"
+	style="position:absolute;margin-left:49pt;margin-top:154pt;width:51pt;height:15pt;z-index:-84;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>银行卡</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>1:</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="8918" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="8920"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2081"
+	w:y="2497" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1036"
+	style="position:absolute;margin-left:104pt;margin-top:123pt;width:446pt;height:15pt;z-index:-83;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>${machineTaskDataBean.installedaddress}</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="9998" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="10000"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="961"
+	w:y="4714" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1037"
+	style="position:absolute;margin-left:48pt;margin-top:234pt;width:500pt;height:17pt;z-index:-82;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="24" /><w:sz-cs
+	w:val="24" /></w:rPr><w:t>设备清单</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4278" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="4280"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1001"
+	w:y="5077" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1038"
+	style="position:absolute;left:0;text-align:left;margin-left:50pt;margin-top:252pt;width:214pt;height:15pt;z-index:-81;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>名</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>称</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5401"
+	w:y="5087" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1039"
+	style="position:absolute;left:0;text-align:left;margin-left:270pt;margin-top:253pt;width:50pt;height:14pt;z-index:-80;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>数量</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4458" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="4460"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6521"
+	w:y="5097" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1040"
+	style="position:absolute;left:0;text-align:left;margin-left:326pt;margin-top:253pt;width:223pt;height:15pt;z-index:-79;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>说明（规格、编号、运行状态等）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4438" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="4440"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6541"
+	w:y="5777" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1041"
+	style="position:absolute;margin-left:327pt;margin-top:287pt;width:222pt;height:15pt;z-index:-78;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>电源适配器及连接线</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4438" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="4440"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6541"
+	w:y="6497" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1042"
+	style="position:absolute;margin-left:327pt;margin-top:323pt;width:222pt;height:15pt;z-index:-77;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>POS</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>交易终端操作手册</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="358" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="360"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="7237" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1043"
+	style="position:absolute;left:0;text-align:left;margin-left:74pt;margin-top:5in;width:18pt;height:15pt;z-index:-76;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>无</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="9038" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="9040"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2001"
+	w:y="7237" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1044"
+	style="position:absolute;left:0;text-align:left;margin-left:100pt;margin-top:5in;width:452pt;height:15pt;z-index:-75;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>合约书</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3318" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3320"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1981"
+	w:y="7577" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1045"
+	style="position:absolute;left:0;text-align:left;margin-left:99pt;margin-top:377pt;width:166pt;height:15pt;z-index:-74;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>交通银行协议书</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3318" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3320"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1961"
+	w:y="7937" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1046"
+	style="position:absolute;left:0;text-align:left;margin-left:98pt;margin-top:395pt;width:166pt;height:15pt;z-index:-73;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>服务合约</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4498" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="4500"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6501"
+	w:y="7581" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1047"
+	style="position:absolute;margin-left:325pt;margin-top:379pt;width:225pt;height:30pt;z-index:-72;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>合约编号：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="658" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="660"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6541"
+	w:y="5417" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1048"
+	style="position:absolute;margin-left:327pt;margin-top:269pt;width:33pt;height:15pt;z-index:-71;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>S/N:</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1098" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1100"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="5417" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1049"
+	style="position:absolute;margin-left:74pt;margin-top:269pt;width:55pt;height:15pt;z-index:-70;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> POS</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>终端</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2678" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="2680"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2601"
+	w:y="5417" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1050"
+	style="position:absolute;margin-left:130pt;margin-top:269pt;width:134pt;height:15pt;z-index:-69;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>(${machineTaskDataBean.machinemodel})</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3778" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3780"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="5797" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1051"
+	style="position:absolute;margin-left:74pt;margin-top:4in;width:189pt;height:15pt;z-index:-68;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>电源、电源线、</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="5417" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1052"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:269pt;width:50pt;height:15pt;z-index:-67;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（台）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3778" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3780"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1501"
+	w:y="6517" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1053"
+	style="position:absolute;margin-left:75pt;margin-top:324pt;width:189pt;height:15pt;z-index:-66;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>用户操作手册</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3798" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3800"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="6877" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1054"
+	style="position:absolute;margin-left:74pt;margin-top:342pt;width:190pt;height:15pt;z-index:-65;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>打印纸带（热敏纸）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3778" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3780"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="6157" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1055"
+	style="position:absolute;margin-left:74pt;margin-top:306pt;width:189pt;height:15pt;z-index:-64;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>电话线</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="5797" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1056"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:4in;width:50pt;height:15pt;z-index:-63;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（套）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="6157" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1057"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:306pt;width:50pt;height:15pt;z-index:-62;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（条）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="6517" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1058"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:324pt;width:50pt;height:15pt;z-index:-61;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（份）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="6854" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="right" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1059"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:342pt;width:50pt;height:15pt;z-index:-60;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr><w:t>(</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="24" /><w:sz-cs
+	w:val="24" /></w:rPr><w:t>卷</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体"/><wx:font wx:val="宋体"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="24"/><w:sz-cs w:val="24"/></w:rPr><w:t>)</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width wx:val="1598"/><wx:height wx:val="340"/></wx:apo><w:p wsp:rsidR="00B66F81" wsp:rsidRDefault="00882E3A" wsp:rsidP="00882E3A"><w:pPr><w:framePr w:w="1600" w:h="340" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="9211" w:y="2146"/><w:autoSpaceDE w:val="off"/><w:autoSpaceDN w:val="off"/><w:adjustRightInd w:val="off"/><w:jc w:val="left"/><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体"/><wx:font wx:val="宋体"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="20"/><w:sz-cs w:val="20"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast"/><wx:font wx:val="宋体"/><w:color w:val="000000"/><w:kern w:val="0"/>
+	<w:sz w:val="20"/><w:sz-cs w:val="20"/></w:rPr><w:t>${machineTaskDataBean.contactphone}</w:t></w:r><w:r wsp:rsidR="00605701" wsp:rsidRPr="00775C7A"><w:rPr><w:noProof/></w:rPr><w:pict><v:rect id="_x0000_s1060" style="position:absolute;margin-left:469pt;margin-top:106pt;width:80pt;height:17pt;z-index:-59;mso-position-horizontal-relative:page;mso-position-vertical-relative:page" o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black"/><w10:wrap anchorx="page" anchory="page"/></v:rect></w:pict></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width wx:val="598"/><wx:height wx:val="228"/></wx:apo><w:p wsp:rsidR="00B66F81" wsp:rsidRDefault="00605701"><w:pPr><w:framePr w:w="600" w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="8481" w:y="3107"/><w:autoSpaceDE w:val="off"/><w:autoSpaceDN w:val="off"/><w:adjustRightInd w:val="off"/><w:spacing w:line="228" w:line-rule="at-least"/><w:jc w:val="left"/><w:rPr><w:rFonts w:ascii="sansserif" w:h-ansi="sansserif"/><wx:font wx:val="sansserif"/><w:kern w:val="0"/><w:sz w:val="24"/><w:sz-cs w:val="24"/></w:rPr></w:pPr><w:r wsp:rsidRPr="00775C7A"><w:rPr><w:noProof/></w:rPr><w:pict><v:rect id="_x0000_s1061" style="position:absolute;margin-left:424pt;margin-top:154pt;width:30pt;height:14pt;z-index:-58;mso-position-horizontal-relative:page;mso-position-vertical-relative:page" o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black"/><w10:wrap anchorx="page" anchory="page"/></v:rect></w:pict></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast"/><wx:font wx:val="宋体"/><w:color w:val="000000"/><w:kern w:val="0"/><w:sz w:val="20"/><w:sz-cs w:val="20"/></w:rPr><w:t>外卡</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>:</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3758" /><wx:height wx:val="300" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3760"
+	w:h="300" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7221"
+	w:y="5531" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1062"
+	style="position:absolute;margin-left:361pt;margin-top:269pt;width:188pt;height:15pt;z-index:-57;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1898" /><wx:height wx:val="300" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1900"
+	w:h="300" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="9081"
+	w:y="3231" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1063"
+	style="position:absolute;margin-left:454pt;margin-top:154pt;width:95pt;height:15pt;z-index:-56;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3318" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3320"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2081"
+	w:y="3117" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1064"
+	style="position:absolute;margin-left:104pt;margin-top:154pt;width:166pt;height:15pt;z-index:-55;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>MID:${machineTaskDataBean.oldmid}</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="7577" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1065"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:377pt;width:50pt;height:15pt;z-index:-54;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1(</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>份</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>)</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5381"
+	w:y="7957" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1066"
+	style="position:absolute;left:0;text-align:left;margin-left:269pt;margin-top:396pt;width:50pt;height:15pt;z-index:-53;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1(</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>份</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>)</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="5821" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="6161" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="6901" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1581"
+	w:y="7961" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="7961" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1581"
+	w:y="7601" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="7601" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="358" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="360"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1001"
+	w:y="7217" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="center" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1067"
+	style="position:absolute;left:0;text-align:left;margin-left:50pt;margin-top:359pt;width:18pt;height:15pt;z-index:-52;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>有</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="6521" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1081"
+	w:y="5441" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1598" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1600"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1021"
+	w:y="8261" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1068"
+	style="position:absolute;z-index:-51;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,285pt" to="551pt,285pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1069"
+	style="position:absolute;z-index:-50;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,304pt" to="551pt,304pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1070"
+	style="position:absolute;z-index:-49;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,322pt" to="552pt,322pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1071"
+	style="position:absolute;z-index:-48;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,340pt" to="551pt,340pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1072"
+	style="position:absolute;z-index:-47;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="551pt,105pt" to="551pt,768pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1073"
+	style="position:absolute;z-index:-46;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="46pt,580pt" to="551pt,580pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1074"
+	style="position:absolute;z-index:-45;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="46pt,393pt" to="322pt,393pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1075"
+	style="position:absolute;z-index:-44;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,376pt" to="551pt,376pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1076"
+	style="position:absolute;z-index:-43;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="266pt,377pt" to="266pt,409pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1077"
+	style="position:absolute;z-index:-42;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,411pt" to="551pt,411pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1078"
+	style="position:absolute;z-index:-41;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,358pt" to="551pt,358pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1079"
+	style="position:absolute;z-index:-40;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="46pt,105pt" to="46pt,768pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1080"
+	style="position:absolute;z-index:-39;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,267pt" to="551pt,267pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1081"
+	style="position:absolute;z-index:-38;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,252pt" to="551pt,252pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1082"
+	style="position:absolute;z-index:-37;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="266pt,253pt" to="266pt,357pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1083"
+	style="position:absolute;z-index:-36;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="322pt,253pt" to="322pt,357pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1084"
+	style="position:absolute;z-index:-35;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,233pt" to="551pt,233pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1085"
+	style="position:absolute;z-index:-34;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,185pt" to="551pt,185pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1086"
+	style="position:absolute;z-index:-33;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,138pt" to="551pt,138pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1087"
+	style="position:absolute;z-index:-32;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,121pt" to="551pt,121pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1088"
+	style="position:absolute;z-index:-31;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="102pt,107pt" to="102pt,217pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1089"
+	style="position:absolute;z-index:-30;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="70pt,269pt" to="70pt,409pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1090"
+	style="position:absolute;z-index:-29;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="95pt,5in" to="95pt,410pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1091"
+	style="position:absolute;z-index:-28;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="322pt,377pt" to="322pt,409pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="sansserif" w:h-ansi="sansserif"
+	w:cs="sansserif" /><wx:font wx:val="sansserif" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>现场培训：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="6978" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="6980"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="8581" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、刷卡机的正常使用包括消费、撤销、退货、结账、重打印与更换打印纸。</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="6978" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="6980"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="8881" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>2</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、信用卡的识别，信用卡的违规操作（套现、分单、代刷）。</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="8518" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="8520"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="9181" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>3</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、客服电话（</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>62356767</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>）、账务咨询电话（</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>66102288</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>）、授权电话（</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>880888868</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>）。</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="6978" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="6980"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="9481" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>4</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、所有交易小票需保存</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>24</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>个月，若因保存不当出现的纠纷责任由商方承担。</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t> </w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3278" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="3280"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="10401" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>以下为开外卡用户进行的培训内容</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>:  </w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2718" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="2720"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="10701" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、外卡的基本识别方法。</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4478" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="4480"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="11001" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>2</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、外卡的风险防范，严格禁止进行分单消费。</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>         </w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4678" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="4680"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="11301" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>请您确认以上内容工程师都已培训且商方都已清楚。</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>       </w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3178" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3180"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6661"
+	w:y="11093" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1092"
+	style="position:absolute;margin-left:333pt;margin-top:549pt;width:159pt;height:17pt;z-index:-27;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>-------------------------------</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2578" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="2580"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6961"
+	w:y="11261" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1093"
+	style="position:absolute;margin-left:348pt;margin-top:563pt;width:129pt;height:16pt;z-index:-26;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（商户签名</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>/</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>盖章）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="7618" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="7620"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1161"
+	w:y="11681" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1094"
+	style="position:absolute;margin-left:58pt;margin-top:584pt;width:381pt;height:16pt;z-index:-25;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>上述终端设备及配件数量正确，外壳完整，安装运行情况良好，经由用户检验签收。</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2578" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="2580"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1461"
+	w:y="12633" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1095"
+	style="position:absolute;margin-left:73pt;margin-top:627pt;width:129pt;height:16pt;z-index:-24;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>------------------------</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1918" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1920"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1461"
+	w:y="12841" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1096"
+	style="position:absolute;margin-left:73pt;margin-top:642pt;width:96pt;height:16pt;z-index:-23;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（服务工程师签名）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="698" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="700"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1481"
+	w:y="13161" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1097"
+	style="position:absolute;margin-left:74pt;margin-top:658pt;width:35pt;height:16pt;z-index:-22;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>日期：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2578" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="2580"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7661"
+	w:y="12633" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1098"
+	style="position:absolute;margin-left:383pt;margin-top:627pt;width:129pt;height:16pt;z-index:-21;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>------------------------</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="898" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="900"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7681"
+	w:y="13141" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1099"
+	style="position:absolute;margin-left:384pt;margin-top:657pt;width:45pt;height:16pt;z-index:-20;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>日期：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1718" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1720"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7661"
+	w:y="12821" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1100"
+	style="position:absolute;margin-left:383pt;margin-top:641pt;width:86pt;height:16pt;z-index:-19;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>（商户签名</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>/</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>盖章）</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1938" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1940"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1161"
+	w:y="12113" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1101"
+	style="position:absolute;margin-left:58pt;margin-top:602pt;width:97pt;height:15pt;z-index:-18;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>服务满意度调查：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="3361"
+	w:y="12101" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1018" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1020"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="3561"
+	w:y="12113" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1102"
+	style="position:absolute;margin-left:178pt;margin-top:602pt;width:51pt;height:15pt;z-index:-17;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>非常满意</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="4901"
+	w:y="12101" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="458" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="460"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5121"
+	w:y="12113" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1103"
+	style="position:absolute;margin-left:256pt;margin-top:602pt;width:23pt;height:15pt;z-index:-16;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>满意</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6121"
+	w:y="12101" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="498" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="500"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6321"
+	w:y="12093" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1104"
+	style="position:absolute;margin-left:316pt;margin-top:601pt;width:25pt;height:15pt;z-index:-15;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>一般</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:borders><wx:top
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:left
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:bottom
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /><wx:right
+	wx:val="solid" wx:bdrwidth="10" wx:space="0" wx:color="000000" /></wx:borders><wx:apo><wx:width
+	wx:val="138" /><wx:height wx:val="140" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="140"
+	w:h="140" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7261"
+	w:y="12101" /><w:pBdr><w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+	w:space="0" w:color="000000" /><w:left w:val="single" w:sz="4"
+	wx:bdrwidth="10" w:space="0" w:color="000000" /><w:bottom
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /><w:right
+	w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="000000" /></w:pBdr><w:autoSpaceDE
+	w:val="off" /><w:autoSpaceDN w:val="off" /><w:adjustRightInd
+	w:val="off" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1018" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1020"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7461"
+	w:y="12113" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1105"
+	style="position:absolute;margin-left:373pt;margin-top:601pt;width:51pt;height:16pt;z-index:-14;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>不满意</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1000"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="8321"
+	w:y="2148" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>联系电话：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="273" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1000"
+	w:h="273" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1001"
+	w:y="2461" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>注册地址：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1001"
+	w:y="2807" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>装机路线：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="8898" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="8900"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2081"
+	w:y="2781" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1106"
+	style="position:absolute;z-index:-13;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,153pt" to="551pt,153pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="981"
+	w:y="3757" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>储联卡：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="998" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1000"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="981"
+	w:y="4077" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1107"
+	style="position:absolute;z-index:-12;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,201pt" to="551pt,201pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1108"
+	style="position:absolute;z-index:-11;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,217pt" to="551pt,217pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>储值卡：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1078" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1080"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="981"
+	w:y="4397" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1109"
+	style="position:absolute;z-index:-10;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="280pt,154pt" to="280pt,215pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1110"
+	style="position:absolute;z-index:-9;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="421pt,154pt" to="421pt,168pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1111"
+	style="position:absolute;z-index:-8;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="212pt,218pt" to="212pt,233pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>商户限额：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1118" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1120"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="4301"
+	w:y="4397" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1112"
+	style="position:absolute;z-index:-7;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="383pt,218pt" to="383pt,233pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>三联小票：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1118" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1120"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="7721"
+	w:y="4397" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t> </w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>绑定电话：</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="9298" /><wx:height wx:val="546" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="9300"
+	w:h="546" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1501"
+	w:y="9781" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="273" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>5</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>、由于不仔细核对签名及信用卡有效期、以现金方式退货、私自挪动</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="sansserif" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>POS</w:t></w:r><w:r><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" w:cs="sansserif" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>机等违规操作行为而引发的纠纷与损失，由商户方承担全部责任。</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="9598" /><wx:height wx:val="1368" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="9600"
+	w:h="1368" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="1181"
+	w:y="13661" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1113"
+	style="position:absolute;z-index:-6;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="53pt,680pt" to="543pt,680pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>感谢您配合我们的工作，</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>POS</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>机如有任何问题，请尽快与我们联系！</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:br /><w:t>24</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>小时服务热线：</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>010-62356767</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:br /></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>提醒：根据银行</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>POS</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>机银行卡受理协议：商户有以下行为，属于违规操作，应当承担相应责任：涂改签单金额、分单操作、套现、超授权限额使用、不仔细核对签名及信用卡有效期、以现金方式退货、超过规定期限请款，私自挪动</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>POS</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>机等。商户同时应对签购单及交易相关的原始凭证等保存至少</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>24</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:b /><w:b-cs /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>个月。如因商户对交易签购单据保管不当或遗失而造成的经济损失由商户承担。</w:t></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:b /><w:b-cs /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>  </w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3378" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3380"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2081"
+	w:y="3721" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1114"
+	style="position:absolute;z-index:-5;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,768pt" to="551pt,768pt" o:allowincell="f" strokeweight="1pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3378" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="3380"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2081"
+	w:y="4041" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2498" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="2500"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5681"
+	w:y="3101" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>TID:${machineTaskDataBean.ordtid}</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2498" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="2500"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5681"
+	w:y="3721" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2498" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="2500"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5681"
+	w:y="4041" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1798" /><wx:height wx:val="300" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="1800"
+	w:h="300" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="8861"
+	w:y="4511" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1398" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00AB2FFD"><w:pPr><w:framePr w:w="1400"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5461"
+	w:y="4397" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" w:hint="fareast" /><wx:font
+	wx:val="宋体" /><w:color w:val="000000" /><w:kern w:val="0" /><w:sz
+	w:val="20" /><w:sz-cs w:val="20" /></w:rPr><w:t>否</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1878" /><wx:height wx:val="300" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="1880"
+	w:h="300" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2101"
+	w:y="4511" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="1018" /><wx:height wx:val="228" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="1020"
+	w:h="228" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="981"
+	w:y="3427" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:spacing
+	w:line="228" w:line-rule="at-least" /><w:jc w:val="left" /><w:rPr><w:rFonts
+	w:ascii="sansserif" w:h-ansi="sansserif" /><wx:font wx:val="sansserif" /><w:kern
+	w:val="0" /><w:sz w:val="24" /><w:sz-cs w:val="24" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:line id="_x0000_s1115"
+	style="position:absolute;z-index:-4;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="47pt,169pt" to="551pt,169pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1116"
+	style="position:absolute;margin-left:49pt;margin-top:170pt;width:51pt;height:14pt;z-index:-3;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r><w:r
+	wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" w:hint="fareast" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>银行卡</w:t></w:r><w:r wsp:rsidR="00AB2FFD"><w:rPr><w:rFonts
+	w:ascii="宋体" w:h-ansi="sansserif" w:cs="宋体" /><wx:font wx:val="宋体" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr><w:t>2:</w:t></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3318" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00BA2B4F"><w:pPr><w:framePr w:w="3320"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="2081"
+	w:y="3541" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr><w:r
+	wsp:rsidRPr="006D58BD"><w:rPr><w:noProof /></w:rPr><w:pict><v:rect id="_x0000_s1117"
+	style="position:absolute;margin-left:104pt;margin-top:170pt;width:166pt;height:14pt;z-index:-2;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	o:allowincell="f" stroked="f" strokeweight="0"><v:fill color2="black" /><w10:wrap
+	anchorx="page" anchory="page" /></v:rect></w:pict></w:r></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="2498" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="2500"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="5681"
+	w:y="3401" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="宋体" w:h-ansi="sansserif"
+	w:cs="宋体" /><wx:font wx:val="宋体" /><w:color w:val="000000" /><w:kern
+	w:val="0" /><w:sz w:val="20" /><w:sz-cs w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="3998" /><wx:height wx:val="360" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="4000"
+	w:h="360" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6541"
+	w:y="6061" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="sansserif" w:h-ansi="sansserif"
+	w:cs="sansserif" /><wx:font wx:val="sansserif" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><wx:pBdrGroup><wx:apo><wx:width
+	wx:val="4198" /><wx:height wx:val="280" /></wx:apo><w:p
+	wsp:rsidR="00F03643" wsp:rsidRDefault="00F03643"><w:pPr><w:framePr w:w="4200"
+	w:h="280" w:wrap="auto" w:vanchor="page" w:hanchor="page" w:x="6581"
+	w:y="6821" /><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /><w:rPr><w:rFonts w:ascii="sansserif" w:h-ansi="sansserif"
+	w:cs="sansserif" /><wx:font wx:val="sansserif" /><w:color
+	w:val="000000" /><w:kern w:val="0" /><w:sz w:val="20" /><w:sz-cs
+	w:val="20" /></w:rPr></w:pPr></w:p></wx:pBdrGroup><w:p wsp:rsidR="00AB2FFD"
+	wsp:rsidRDefault="00BA2B4F"><w:pPr><w:autoSpaceDE w:val="off" /><w:autoSpaceDN
+	w:val="off" /><w:adjustRightInd w:val="off" /><w:jc
+	w:val="left" /></w:pPr><w:r><w:rPr><w:noProof /></w:rPr><w:pict><v:line
+	id="_x0000_s1118"
+	style="position:absolute;z-index:-1;mso-position-horizontal-relative:page;mso-position-vertical-relative:page"
+	from="46pt,104pt" to="551pt,104pt" o:allowincell="f" strokeweight=".5pt"><w10:wrap
+	anchorx="page" anchory="page" /></v:line></w:pict></w:r></w:p><w:sectPr
+	wsp:rsidR="00AB2FFD"><w:pgSz w:w="11900" w:h="16840" /><w:pgMar
+	w:top="0" w:right="0" w:bottom="0" w:left="0" w:header="720" w:footer="720"
+	w:gutter="0" /><w:cols w:space="720" /><w:noEndnote /></w:sectPr></wx:sect></w:body></w:wordDocument>

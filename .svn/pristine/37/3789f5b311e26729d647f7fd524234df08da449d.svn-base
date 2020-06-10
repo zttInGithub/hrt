@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PurchaseStorageModel" table="bill_PurchaseStorage">
+        <id name="psid" column="PSID">
+            <generator class="sequence">
+				<param name="sequence">S_bill_PurchaseStorage</param>
+			</generator>
+        </id>
+        <property name="storageID" column="STORAGEID" />
+        <property name="storageType" column="STORAGETYPE" />
+        <property name="storageStatus" column="STORAGESTATUS" />
+        <property name="storageBrandName" column="STORAGEBRANDNAME" />
+        <property name="storageMachineModel" column="STORAGEMACHINEMODEL" />
+        <property name="storageMachineNum" column="STORAGEMACHINENUM"/>
+        <property name="lendDate" column="LENDDATE" />
+        <property name="returnDate" column="RETURNDATE" />
+        <property name="lender" column="LENDER" />
+        <property name="department" column="DEPARTMENT" />
+        <property name="storageRemark" column="STORAGEREMARK"/>
+        <property name="outStorage" column="OUTSTORAGE" />
+        <property name="inStorage" column="INSTORAGE" />
+        <property name="loadStorageNum" column="LOADSTORAGENUM" />
+        <property name="storageCby" column="STORAGECBY" />
+        <property name="storageCdate" column="STORAGECDATE" type="timestamp" />
+        <property name="storageApprover" column="STORAGEAPPROVER" />
+        <property name="storageApproveDate" column="STORAGEAPPROVEDATE" type="timestamp" />
+        <property name="storageApproveNote" column="STORAGEAPPROVENOTE" />
+        <property name="storageApproveStatus" column="STORAGEAPPROVESTATUS"/>
+    </class>
+</hibernate-mapping>

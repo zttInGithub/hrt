@@ -1,0 +1,152 @@
+package com.hrt.biz.bill.service.impl;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+
+import com.hrt.biz.bill.dao.IMerchantTerminalInfoCommDao;
+import com.hrt.biz.bill.dao.MerchantInfoCommDao;
+import com.hrt.biz.bill.entity.model.MerchantTerminalInfoCommModel;
+import com.hrt.biz.bill.entity.model.MerchantinfoCommModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoCommBean;
+import com.hrt.biz.bill.service.IMerchantTerminalInfoCommService;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public class MerchantTerminalInfoCommServiceImpl implements IMerchantTerminalInfoCommService {
+
+	private IMerchantTerminalInfoCommDao merchantTerminalInfoCommDao;
+	
+	private MerchantInfoCommDao merchantInfoCommDao;
+	
+	public IMerchantTerminalInfoCommDao getMerchantTerminalInfoCommDao() {
+		return merchantTerminalInfoCommDao;
+	}
+	public void setMerchantTerminalInfoCommDao(IMerchantTerminalInfoCommDao merchantTerminalInfoCommDao) {
+		this.merchantTerminalInfoCommDao = merchantTerminalInfoCommDao;
+	}
+	public MerchantInfoCommDao getMerchantInfoCommDao() {
+		return merchantInfoCommDao;
+	}
+	public void setMerchantInfoCommDao(MerchantInfoCommDao merchantInfoCommDao) {
+		this.merchantInfoCommDao = merchantInfoCommDao;
+	}
+	
+	
+	
+	@Override
+	public void updateSingleData(MerchantTerminalInfoCommBean mticb) {
+		MerchantTerminalInfoCommModel mticm = new MerchantTerminalInfoCommModel();
+		mticm.setApprovalDate(mticb.getAPPROVALDATE());
+		mticm.setATTENDEDMODEL(mticb.getATTENDEDMODEL());
+		mticm.setBELONG(mticb.getBELONG());
+		mticm.setBINGNUM(mticb.getBINGNUM());
+		mticm.setBMTID(mticb.getBMTID());
+		mticm.setCardID(mticb.getCARDID());
+		mticm.setClSetupDate(mticb.getCLSETUPDATE());
+		mticm.setContactPerson(mticb.getCONTACTPERSON());
+		mticm.setContactPhone(mticb.getCONTACTPHONE());
+		mticm.setContactTel(mticb.getCONTACTTEL());
+		mticm.setCzSetupDate(mticb.getCZSETUPDATE());
+		mticm.setDeposit(mticb.getDEPOSIT());
+		mticm.setIFtrigeminy(mticb.getIFTRIGEMINY());
+		mticm.setInstalledAddress(mticb.getINSTALLEDADDRESS());
+		mticm.setInstalledName(mticb.getINSTALLEDNAME());
+		mticm.setInstalledSIM(mticb.getINSTALLEDSIM());
+		mticm.setLargeMID(mticb.getLARGEMID());
+		mticm.setLargeTID(mticb.getLARGETID());
+		mticm.setLimit(mticb.getLIMIT());
+		mticm.setLinkman2(mticb.getLINKMAN2());
+		mticm.setMAID(mticb.getMAID());
+		mticm.setRemarks(mticb.getREMARKS());
+		mticm.setMINFO1(mticb.getMINFO1());
+		mticm.setMINFO2(mticb.getMINFO2());
+		mticm.setMODELTYPE(mticm.getMODELTYPE());
+		mticm.setPhone2(mticb.getPHONE2());
+		mticm.setReportDate(mticb.getREPORTDATE());
+		mticm.setReserveMID(mticb.getRESERVEMID());
+		mticm.setReserveTID(mticb.getRESERVETID());
+		mticm.setService_value(mticb.getSERVICE_VALUE());
+		mticm.setSetup_date(mticb.getSETUP_DATE());
+		mticm.setSetupLine(mticb.getSETUPLINE());
+		mticm.setShopName(mticb.getSHOPNAME());
+		mticm.setSN(mticb.getSN());
+		mticm.setStatus(mticb.getSTATUS());
+		mticm.setStoredMID(mticb.getSTOREDMID());
+		mticm.setStoredTID(mticb.getSTOREDTID());
+		mticm.setTID(mticb.getTID());
+		mticm.setWILDMID(mticb.getWILDMID());
+		mticm.setWILDTID(mticb.getWILDTID());
+		mticm.setMID(mticb.getMID());
+		
+		merchantTerminalInfoCommDao.updateObject(mticm);
+		
+		MerchantinfoCommModel merchantinfoCommModel =merchantInfoCommDao.getObjectByID(MerchantinfoCommModel.class, mticb.getMAID());
+		merchantinfoCommModel.setAccNo(mticb.getACCNO());
+		merchantinfoCommModel.setBankName(mticb.getBANKNAME());
+		merchantinfoCommModel.setEmail(mticb.getEMAIL());
+		merchantinfoCommModel.setBusinessScope(mticb.getBUSINESSSCOPE());
+		merchantInfoCommDao.updateObject(merchantinfoCommModel);
+	}
+	
+	
+	@Override
+	public boolean saveTermianlInfoCommFile(String xlsfile, UserBean user) {
+		boolean flag=false;
+		try {
+			File filename = new File(xlsfile);
+			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filename));
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			for(int i = 1; i < sheet.getLastRowNum()+1; i++){
+				HSSFRow row = sheet.getRow(i);
+				HSSFCell cell;
+				String midValue="";
+				String tidValue="";
+				cell = row.getCell((short)0);
+				if(cell == null || cell.toString().trim().equals("")){
+					flag=false;
+					break;
+				}else{
+					//mid
+					row.getCell((short)0).setCellType(Cell.CELL_TYPE_STRING);
+					midValue = row.getCell((short)0).getStringCellValue().trim();
+					//tid
+					row.getCell((short)1).setCellType(Cell.CELL_TYPE_STRING);
+					tidValue=row.getCell((short)1).getStringCellValue().trim();
+					String sql="select maid from bill_merchantinfo_comm t where t.mid='"+midValue+"'";	
+					List<Map<String, Object>> midList= merchantTerminalInfoCommDao.queryObjectsBySqlObject(sql);
+					if(midList.size()>0){
+						Map<String, Object> map=midList.get(0);
+						Integer maid=Integer.parseInt(map.get("MAID").toString());
+						MerchantTerminalInfoCommModel mtComm = new MerchantTerminalInfoCommModel();
+						mtComm.setMID(midValue.trim());
+						mtComm.setTID(tidValue.trim());
+						mtComm.setMAID(maid);
+						merchantTerminalInfoCommDao.saveObject(mtComm);
+						flag=true;
+					}else{
+						flag=false;
+						break;
+					}
+				}				
+			}		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return flag;
+	}
+
+}

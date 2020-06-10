@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="CashbackTemplateLogModel" table="BILL_CASHBACKTEMPLATE_LOG">
+        <id name="wid" column="WID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_CASHBACKTEMPLATE_LOG</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="rebatetype" column="REBATETYPE" />
+        <property name="cashbacktype" column="CASHBACKTYPE" />
+        <property name="cashbackratio" column="CASHBACKRATIO" />
+        <property name="maintainuser" column="MAINTAINUSER" />
+        <property name="maintaintype" column="MAINTAINTYPE" />
+        <property name="maintaindate" column="MAINTAINDATE" />
+        <property name="startdate" column="STARTDATE"/>
+        <property name="enddate" column="ENDDATE"/>
+        <property name="remark" column="REMARK"/>
+        <property name="minfo1" column="MINFO1"/>
+        <property name="minfo2" column="MINFO2"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,106 @@
+/*-------加载图片----------*/
+
+body {
+	background: #F2F3F8;
+	;
+}
+
+.loading {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	background-color: rgba(0, 0, 0, .5);
+	display: none;
+}
+
+.loading .main {
+	text-align: center;
+	padding-top: 40%;
+	color: #fff;
+}
+
+.loading .main img {
+	margin-bottom: 10px;
+	width: 100px;
+}
+
+
+/*错误提示框样式*/
+
+.error_wrap {
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgba(255, 255, 255, 0.5);
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	display: none;
+}
+
+.errorwrap {
+	text-align: center;
+	border-radius: 3px;
+	width: 5rem;
+	background: rgba(0, 0, 0, 0.80);
+	text-align: center;
+	font-family: PingFangSC-Regular;
+	color: #FFFFFF;
+	position: absolute;
+	top: 200px;
+	z-index: 999;
+	padding: 0 0.2rem;
+	border-radius: 4px;
+	display: block;
+	left: 50%;
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.errorwrap img {
+	width: 4.2rem;
+	height: 0.04rem;
+}
+
+
+/*底部按钮*/
+
+.bottom_btn {
+	width: 100%;
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	padding: 0 20px;
+	background: #F2F3F8;
+	justify-content: space-between;
+	padding: 0.3rem 20px 0.1rem;
+}
+
+.btn_pre {
+	width: 2.56rem;
+	height: 0.8rem;
+	background: url(../images/01_disbtn.png) no-repeat;
+	background-size: contain;
+	line-height: 0.8rem;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #CCCCCC;
+	border-radius: 0.44rem;
+}
+
+.btn_next {
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #499CEF;
+	line-height: 0.8rem;
+	width: 2.56rem;
+	height: 0.8rem;
+	background: url(../images/com_btn.png) no-repeat;
+	background-size: contain;
+	border-radius: 0.44rem;
+}

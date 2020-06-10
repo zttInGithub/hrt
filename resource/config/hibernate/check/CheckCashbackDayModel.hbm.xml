@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckCashbackDayModel" table="CHECK_CASHBACK_DAY">
+        <id name="ccdid" column="CDID">
+            <generator class="sequence">
+				<param name="sequence">S_CHECK_CASHBACK_DAY</param>
+			</generator>
+        </id>
+      <property name="unno" column="UNNO" ></property>
+      <property name="unnoName" column="UNNO_NAME" ></property>
+      <property name="upper2Unit" column="UPPER2_UNIT" ></property>
+      <property name="upper2Name" column="UPPER2_NAME" ></property>
+      <property name="upper1Unit" column="UPPER1_UNIT" ></property>
+      <property name="upper1Name" column="UPPER1_NAME" ></property>
+      <property name="upperUnit" column="UPPER_UNIT" ></property>
+      <property name="upperName" column="UPPER_NAME" ></property>
+      <property name="mid" column="MID"></property>
+      <property name="tid" column="TID"></property>
+      <property name="sn" column="SN" ></property>
+      <property name="snType" column="SN_TYPE"></property>
+      <property name="keyConfirmDate" column="KEYCONFIRMDATE"></property>
+      <property name="keyMonth" column="KEYMONTH"></property>
+      <property name="usedConfirmDate" column="USEDCONFIRMDATE" type="timestamp"></property>
+      <property name="useMonth" column="USEMONTH" ></property>
+      <property name="txnMonth" column="TXNMONTH"></property>
+      <property name="rebate1Amt" column="REBATE1_AMT" ></property>
+      <property name="rebate1Month" column="REBATE1_MONTH" ></property>
+      <property name="rebate2Amt" column="REBATE2_AMT" ></property>
+      <property name="rebate2Month" column="REBATE2_MONTH"></property>
+      <property name="rebate3Amt" column="REBATE3_AMT"></property>
+      <property name="rebate3Month" column="REBATE3_MONTH"></property>
+      <property name="txnAmount" column="TXNAMOUNT"></property>
+      <property name="txnCount" column="TXNCOUNT"></property>
+      <property name="rebateType" column="REBATETYPE"></property>
+      <property name="mInfo1" column="MINFO1"></property>
+      <property name="mInfo2" column="MINFO2"></property>
+      <property name="cDate" column="CDATE" type="timestamp"></property>
+      <property name="lmDate" column="LMDATE" type="timestamp"></property>
+    </class>
+</hibernate-mapping>

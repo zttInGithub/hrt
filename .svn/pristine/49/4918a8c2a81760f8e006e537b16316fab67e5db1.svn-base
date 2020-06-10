@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="CheckUnitdealdetailCommFCModel" table="CHECK_UNITDEALDETAIL_COMM_FC">
+		<id name="pkid" column="PKID">
+			<generator class="sequence">
+				<param name="sequence">S_CHECK_UNITDEALDETAIL_COMM_FC</param>
+			</generator>
+		</id>
+		<property name="mid" column="MID"/>
+		<property name="merchname" column="MERCHNAME"/>
+		<property name="devno" column="DEVNO"/>
+		<property name="cardkind"  column="CARDKIND"/>
+		<property name="cardno"  column="CARDNO"/>
+		<property name="txnamt" column="TXNAMT"/>
+		<property name="mda" column="MDA"/>
+		<property name="txndate" type="timestamp" column="TXNDATE"/>
+		<property name="signdate" type="timestamp" column="SIGNDATE"/>
+		<property name="minfo1" column="MINFo1"/>
+		<property name="minfo2" column="MINFo2"/>
+		<property name="remarks"  column="REMARKS"/>
+    </class>
+</hibernate-mapping>

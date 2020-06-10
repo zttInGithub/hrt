@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckRealtxnModel" table="CHECK_REALTXN">
+        <id name="pkid" column="PKID">
+            <generator class="native"></generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="unName" column="UNNAME" />
+        <property name="isMpos" column="ISMPOS" />
+        <property name="mid" column="MID" />
+        <property name="rname" column="RNAME" />
+        <property name="tid" column="TID" />
+        <property name="installedName" column="INSTALLEDNAME" />
+        <property name="cardPan" column="CARDPAN" />
+        <property name="txnAmount" column="TXNAMOUNT" />
+        <property name="txnDay" column="TXNDAY" />
+        <property name="txnTime" column="TXNTIME" />
+        <property name="txnType" column="TXNTYPE" />
+        <property name="authCode" column="AUTHCODE" />
+        <property name="orderID" column="ORDERID" />
+        <property name="rrn" column="RRN" />
+        <property name="txnState" column="TXNSTATE" />
+        <property name="cardType" column="CARDTYPE" />
+        <property name="busid" column="BUSID" />
+        <property name="saleName" column="SALENAME" />
+        <property name="mti" column="MTI" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.RebateInfoModel" table="BILL_REBATE_INFO">
+        <id name="brId" column="BRID">
+            <generator class="sequence">
+                <param name="sequence">S_bill_rebate_info</param>
+            </generator>
+        </id>
+        <property name="rebateType" column="REBATETYPE"/>
+        <property name="rebateName" column="REBATENAME"/>
+        <property name="startDate" column="STARTDATE"/>
+        <property name="endDate" column="ENDDATE"/>
+        <property name="settlement" column="SETTLEMENT"/>
+        <property name="status" column="STATUS"/>
+        <property name="cardBack" column="CARDBACK"/>
+        <property name="merDefine" column="MERDEFINE"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+        
+        <property name="auditStatus" column="AUDITSTATUS"/>
+        <property name="rejectReason" column="REJECTREASON"/>
+        <property name="auditDate" column="AUDITDATE"/>
+        <property name="auditUser" column="AUDITUSER"/>
+        <property name="defaultTxnRate" column="DEFAULTTXNRATE"/>
+        <property name="defaultTxnCashfee" column="DEFAULTTXNCASHFEE"/>
+        <property name="defaultScanRate" column="DEFAULTSCANRATE"/>
+        <property name="defaultScanRateUp" column="DEFAULTSCANRATEUP"/>
+        <property name="defaultScanCashfee" column="DEFAULTSCANCASHFEE"/>
+        <property name="defaultScanCashfeeUp" column="DEFAULTSCANCASHFEEUP"/>
+        <property name="defaultScanhbRate" column="DEFAULTSCANHBRATE"/>
+        <property name="defaultScanhbCashfee" column="DEFAULTSCANHBCASHFEE"/>
+        <property name="sumMonth" column="SUMMONTH"/>
+        <property name="flag" column="FLAG"/>
+        <property name="operateType" column="OPERATE_TYPE"/>
+        
+    </class>
+</hibernate-mapping>

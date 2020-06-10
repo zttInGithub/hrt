@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="TodoModel" table="SYS_TODO">
+		<id name="todoID" column="TODOID">
+			<generator class="sequence">
+				<param name="sequence">S_SYS_TODO</param>
+			</generator>
+		</id>
+		<property name="unNo" column="UNNO"/>
+		<property name="batchJobNo" column="BATCHJOBNO"/>
+		<property name="msgSendUnit" column="MSGSENDUNIT"/>
+		<property name="msgSender" column="MSGSENDER"/>
+		<property name="msgTopic" column="MSGTOPIC"/>
+		<property name="msgSendTime" type="timestamp" column="MSGSENDTIME"/>
+		<property name="tranCode" column="TRANCODE"/>
+		<property name="bizType" column="BIZTYPE"/>
+		<property name="status" column="STATUS"/>
+    </class>
+</hibernate-mapping>

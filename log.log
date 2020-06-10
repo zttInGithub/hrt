@@ -1,0 +1,18 @@
+
+ time="2020-02-20 16:47:07" 
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@50c283c: startup date [Thu Feb 20 16:47:07 CST 2020]; root of context hierarchy
+
+ time="2020-02-20 16:47:08" 
+Loading XML bean definitions from class path resource [applicationContext-dev.xml]
+
+ time="2020-02-20 16:47:39" 
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@cd7e89c: startup date [Thu Feb 20 16:47:39 CST 2020]; root of context hierarchy
+
+ time="2020-02-20 16:47:39" 
+Loading XML bean definitions from class path resource [applicationContext-dev.xml]
+
+ time="2020-02-20 16:48:52" 
+Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4cbb138d: startup date [Thu Feb 20 16:48:52 CST 2020]; root of context hierarchy
+
+ time="2020-02-20 16:48:52" 
+Loading XML bean definitions from class path resource [applicationContext-dev.xml]

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckDeductionModel" table="CHECK_DEDUCTION">
+        <id name="cdId" column="CDID">
+            <generator class="sequence">
+				<param name="sequence">S_CHECK_DEDUCTION</param>
+			</generator>
+        </id>
+      <property name="yiDai" column="YIDAI" ></property>
+      <property name="yiDaiName" column="YIDAINAME" ></property>
+      <property name="erDai" column="ERDAI" ></property>
+      <property name="erDaiName" column="ERDAINAME" ></property>
+      <property name="unno" column="UNNO" ></property>
+      <property name="unnoName" column="UNNONAME" ></property>
+      <property name="yunYing" column="YUNYING" ></property>
+      <property name="mid" column="MID" ></property>
+      <property name="sn" column="SN" ></property>
+      <property name="snType" column="SNTYPE" type="timestamp"></property>
+      <property name="usedDate" column="USEDDATE" type="timestamp"></property>
+      <property name="keyConfirmDate" column="KEYCONFIRMDATE" type="timestamp"></property>
+      <property name="outDate" column="OUTDATE" type="timestamp"></property>
+      <property name="deduction" column="DEDUCTION"></property>
+      <property name="rebateType" column="REBATETYPE"></property>
+      <property name="maintainDate" column="MAINTAINDATE" type="timestamp"></property>
+    </class>
+</hibernate-mapping>

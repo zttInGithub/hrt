@@ -1,0 +1,278 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script type="text/javascript" src="${ctx}/js/jquery.qrcode.min.js"></script>    
+<script type="text/javascript">
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_10492_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/merchant_listMerchanWithQR.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			ctrlSelect:true,
+			checkOnSelect:true,
+			pageSize : 10,
+			pageList : [ 10, 15 ,100],
+			sortName: 'bmid',
+			sortOrder: 'desc',
+			idField : 'bmid',
+			columns : [[{
+				field : 'bmid',
+				checkbox:true
+			},{
+				title : '机构编号',
+				field : 'unno',
+				width : 60
+			},{
+				title : '商户编号',
+				field : 'mid',
+				width : 100
+			},{
+				title : '商户注册名',
+				field : 'rname',
+				width : 150
+			},{
+				title :'商户类型',
+				field :'isM35',
+				width : 50,
+				sortable :true,
+				formatter : function(value,row,index) {
+					if (value=='1'){
+					   return "微商户";
+					}else{
+						return "传统商户";
+					}  
+				}
+			},{
+				title : '商户入网时间',
+				field : 'joinConfirmDate',
+				width : 80
+			},{
+				title :'二维码链接',
+				field :'qrUrl',
+				width : 470
+				//sortable :true
+			},{
+				title :'二维码存放地址',
+				field :'qrUpload',
+				width : 200,
+				sortable :true,
+				hidden:true
+			},{
+				title :'查看二维码',
+				field :'operation',
+				width : 70,
+				align : 'center',
+				formatter : function(value,row,index) {
+					var rowData = $('#sysAdmin_10492_datagrid').datagrid('getData').rows[index];
+					if(rowData.qrUrl!=null&&rowData.qrUpload!=null){
+						return '<img src="${ctx}/images/query_search.png" title="查看二维码" style="cursor:pointer;" onclick="sysAdmin_10492_queryFun('+index+')"/>&nbsp;&nbsp';
+					}
+			}
+			}]],
+			toolbar:[{
+				id:'btn_run',
+				text:'生成二维码',
+				iconCls:'icon-query-export',
+				handler:function(){
+				sysAdmin_merchantterminalinfoSelected10492_exportFun();
+				}
+			}]
+		});
+	});
+	
+	function sysAdmin_merchantterminalinfo10492_exportFun() {
+		$('#sysAdmin_10492_searchForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/merchant_updateMerchantWithQR.action'
+			    	});
+	}
+	
+	function sysAdmin_merchantterminalinfoSelected10492_exportFun() {
+		var checkedItems = $('#sysAdmin_10492_datagrid').datagrid('getChecked');
+		var names = [];
+		$.each(checkedItems, function(index, item){
+			names.push(item.bmid);
+		});               
+		var bmids=names.join(",");
+		if(bmids==null||bmids==""){
+			$.messager.alert('提示',"请勾选操作列");
+			return;
+		}
+		$("#bmids_10492").val(bmids);
+		$('#sysAdmin_10492_searchForm').form('submit',{
+			url:'${ctx}/sysAdmin/merchant_updateMerchantWithQR.action',
+			success:function(data){
+			    $('#sysAdmin_10492_datagrid').datagrid('load', serializeObject($('#sysAdmin_10492_searchForm'))); 
+			    var result = $.parseJSON(data);
+			    $.messager.show({
+					title : '提示',
+					msg : result.msg
+				});
+			},
+			error:function(err){
+				$('#sysAdmin_10642_wait').dialog('destroy');
+				var result = $.parseJSON(err);
+				$.messager.show({
+					title : '提示',
+					msg : result.msg
+				});
+			}
+		});
+	}
+
+	//表单查询
+	function sysAdmin_merchantAuthenticity_searchFun10492() {
+		if($("#qrUrl").val()=="1"){
+			$("#btn_run").hide();
+		}else{
+			$("#btn_run").show();
+		}
+		$('#sysAdmin_10492_datagrid').datagrid('load', serializeObject($('#sysAdmin_10492_searchForm'))); 
+	}
+
+	//清除表单内容
+	function sysAdmin_merchantAuthenticity_cleanFun10492() {
+		$('#sysAdmin_10492_searchForm input').val('');
+		$('#sysAdmin_10492_searchForm #qrUrl').val('未生成');
+		$('#sysAdmin_10492_searchForm #isM35').val('');
+	}
+	
+	//查看二维码
+	var bool=true;
+	function sysAdmin_10492_queryFun(index){
+		if(bool){
+			bool=false;
+			var rowData = $('#sysAdmin_10492_datagrid').datagrid('getData').rows[index];
+			var url = rowData.qrUrl;
+			url=url.replace("&", "");
+			//$('#sysAdmin_10492_run').qrcode("http://www.helloweba.com"); 
+			//$('<div id="sysAdmin_10492_run"><img src="sysAdmin/rand_ImageShow.action?upload='+rowData.qrUpload+'" alt="加载失败" style="width:380px;height:380px"></div>').dialog({
+			$('<div id="sysAdmin_10492_run" />').dialog({
+				title: '查看二维码',
+				width: 395,   
+			    height: 415, 
+			    closed: false,
+			    href:'${ctx}/biz/bill/merchant/10492QR.jsp?url='+url,  
+			    modal: true,
+				onClose : function() {
+					$(this).dialog('destroy');
+					bool=true;
+				}  
+			});
+		}
+	}
+
+	
+	
+	
+	
+	//************************************************************
+	/* function sysAdmin_10492_queryFun0(index) {
+		var rowData = $('#sysAdmin_10492_datagrid').datagrid('getData').rows[index];
+		alert(rowData.qrUrl);
+		$('<div id="sysAdmin_machineInfo_addDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">添加机具库存</span>',
+			width: 440,   
+		    height: 300,
+		    closed: false,
+		    href: '${ctx}/biz/bill/pos/10211.jsp',  
+		    modal: true,
+		    buttons:[{
+		    	text:'确认',
+		    	iconCls:'icon-ok',
+		    	handler:function() {
+		    		$('#sysAdmin_machineInfo_addForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/machineInfo_add.action',
+		    			success:function(data) {
+			    			var result = $.parseJSON(data);
+			    			if (result.sessionExpire) {
+			    				window.location.href = getProjectLocation();
+				    		} else {
+				    			if (result.success) {
+				    				$('#sysAdmin_machineInfo_datagrid').datagrid('reload');
+					    			$('#sysAdmin_machineInfo_addDialog').dialog('destroy');
+					    			$.messager.show({
+										title : '提示',
+										msg : result.msg
+									});
+					    		} else {
+					    			$('#sysAdmin_machineInfo_addDialog').dialog('destroy');
+					    			$.messager.alert('提示', result.msg);
+						    	}
+					    	}
+			    		}
+			    	});
+		    	}			    
+			},{
+				text:'取消',
+				iconCls:'icon-cancel',
+				handler:function() {
+					$('#sysAdmin_machineInfo_addDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+			}
+		});
+	} */
+</script>
+
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:100px; overflow: hidden; padding-top:10px;">
+		<form id="sysAdmin_10492_searchForm" style="padding-left:2%" method="post">
+		<input type="hidden" id="bmids_10492" name="bmids" />
+			<table class="tableForm" >
+				<tr>
+					<th>商户编号</th>
+					<td><input name="mid" style="width: 150px;" /></td>
+					<td width="10px"></td>
+					<th>商户注册名称</th>
+					<td><input name="rname" style="width: 150px;" /></td>
+					<td width="10px"></td>
+					<th>商户状态</th>
+					<td>
+						<select name="isM35" id="isM35" style="width: 80px;">
+							<option value="" selected="selected">传统商户</option>
+							<option value="1">微商户</option>
+							<option value="3" >全部</option>
+						</select>
+					</td>
+					
+					<td width="10px"></td>
+					<th>二维码状态</th>
+					<td>
+						<select name="qrUrl" id="qrUrl" style="width: 80px;">
+							<option value="" >未生成</option>
+							<option value="1" >已生成</option>
+						</select>
+					</td>
+					<td width="10px"></td>
+					<td colspan="5" style="text-align: center;">
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" 
+						onclick="sysAdmin_merchantAuthenticity_searchFun10492();">查询</a> &nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="sysAdmin_merchantAuthenticity_cleanFun10492();">清空</a>	
+					</td>
+					</tr>
+					<tr>
+					<th>机构编号</th>
+					<td><input name="unno" style="width: 150px;" /></td>
+					<td width="10px"></td>
+					<th>商户入网时间:起</th>
+					<td colspan="4"><input name="createDateStart" class="easyui-datebox" style="width: 150px;"  />
+						止 <input name="createDateEnd" class="easyui-datebox" style="width: 150px;"  />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>  
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+      <table id="sysAdmin_10492_datagrid" style="overflow: hidden;"></table>
+    </div> 
+</div>
+
+

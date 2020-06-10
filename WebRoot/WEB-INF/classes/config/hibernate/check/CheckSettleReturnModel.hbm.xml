@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckSettleReturnModel" table="CHECK_SETTLERETURN">
+        <id name="cfpid" column="CFPID">
+            <generator class="sequence">
+				<param name="sequence">S_CHECK_SETTLERETURN</param>
+			</generator>
+        </id>
+      <property name="mid" column="MID" ></property>
+      <property name="unno" column="unno" ></property>
+      <property name="unitAttribute" column="UNITATTRIBUTE" ></property>
+      <property name="rname" column="RNAME" ></property>
+      <property name="bankAccName" column="BANKACCNAME" ></property>
+      <property name="bankAccNo" column="BANKACCNO" ></property>
+      <property name="salesName" column="SALESNAME" ></property>
+      <property name="bankBranch" column="BANKBRANCH" ></property>
+      <property name="payAmount" column="PAYAMOUNT" ></property>
+      <property name="fillPayDate" column="FILLPAYDATE" type="timestamp"></property>
+      <property name="backPayDate" column="BACKPAYDATE" ></property>
+      <property name="matainUserId" column="MATAINUSERID" ></property>
+      <property name="status" column="STATUS" ></property>
+    </class>
+</hibernate-mapping>

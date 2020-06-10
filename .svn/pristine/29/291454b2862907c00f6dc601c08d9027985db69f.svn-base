@@ -1,0 +1,547 @@
+package com.hrt.phone.action;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.biz.bill.entity.model.MerchantInfoModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoBean;
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoBean;
+import com.hrt.biz.bill.service.IMerchantInfoService;
+import com.hrt.biz.bill.service.IMerchantTerminalInfoService;
+import com.hrt.biz.bill.service.ITerminalInfoService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.NoticeBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.service.sysadmin.INoticeService;
+import com.hrt.frame.service.sysadmin.IUnitService;
+import com.hrt.phone.service.IPhoneMerchantInfoService;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class PhoneMerchantInfoAction extends BaseAction implements ModelDriven<MerchantInfoBean> {
+
+	private static final long serialVersionUID = 1L;
+	private static final Log log =LogFactory.getLog(PhoneMerchantInfoAction.class);
+	
+	private MerchantInfoBean merchantInfo =new MerchantInfoBean();
+	private IPhoneMerchantInfoService phoneMerchantInfoService;
+	private IMerchantInfoService merchantInfoService;
+	private IUnitService unitService;
+	private INoticeService noticeService;
+	private ITerminalInfoService terminalInfoService;
+	private IMerchantTerminalInfoService merchantTerminalInfoService;
+	
+	@Override
+	public MerchantInfoBean getModel() {
+		// TODO Auto-generated method stub
+		return merchantInfo;
+	}
+
+	public IMerchantTerminalInfoService getMerchantTerminalInfoService() {
+		return merchantTerminalInfoService;
+	}
+
+	public void setMerchantTerminalInfoService(
+			IMerchantTerminalInfoService merchantTerminalInfoService) {
+		this.merchantTerminalInfoService = merchantTerminalInfoService;
+	}
+
+	public ITerminalInfoService getTerminalInfoService() {
+		return terminalInfoService;
+	}
+
+	public void setTerminalInfoService(ITerminalInfoService terminalInfoService) {
+		this.terminalInfoService = terminalInfoService;
+	}
+
+	public INoticeService getNoticeService() {
+		return noticeService;
+	}
+
+	public void setNoticeService(INoticeService noticeService) {
+		this.noticeService = noticeService;
+	}
+
+	public IUnitService getUnitService() {
+		return unitService;
+	}
+
+	public void setUnitService(IUnitService unitService) {
+		this.unitService = unitService;
+	}
+
+	public MerchantInfoBean getMerchantInfo() {
+		return merchantInfo;
+	}
+
+	public void setMerchantInfo(MerchantInfoBean merchantInfo) {
+		this.merchantInfo = merchantInfo;
+	}
+
+	public IPhoneMerchantInfoService getPhoneMerchantInfoService() {
+		return phoneMerchantInfoService;
+	}
+
+	public void setPhoneMerchantInfoService(
+			IPhoneMerchantInfoService phoneMerchantInfoService) {
+		this.phoneMerchantInfoService = phoneMerchantInfoService;
+	}
+
+	public IMerchantInfoService getMerchantInfoService() {
+		return merchantInfoService;
+	}
+
+	public void setMerchantInfoService(IMerchantInfoService merchantInfoService) {
+		this.merchantInfoService = merchantInfoService;
+	}
+	
+	/**
+	 * 传统商户销售端app查询公告消息
+	 */
+	public void listNoticeNew() {
+		DataGridBean dgb = new DataGridBean();
+		JsonBean json = new JsonBean();
+		try {
+			NoticeBean notice = new NoticeBean();
+			Integer page = Integer.valueOf(super.getRequest().getParameter("page"));
+			Integer rows = Integer.valueOf(super.getRequest().getParameter("rows"));
+			notice.setPage(page);
+			notice.setRows(rows);
+			notice.setSort("msgSendTime");
+			notice.setOrder("desc");
+			//维护传统app商户公告人 unno
+			//Object userSession = super.getRequest().getSession().getAttribute("user");
+			UserBean userSession = new UserBean();
+			userSession.setUnNo("110000");
+			userSession.setUserID(0);
+			dgb = noticeService.queryNoticeNew(notice,userSession);
+			json.setCountTxnAmount(page+"");
+			if(dgb.getTotal()==0L){
+				json.setSuccess(false);
+			}else{
+				json.setSuccess(true);
+			}
+			json.setObj(dgb.getRows());
+		} catch (Exception e) {
+			log.error("传统商户销售端app查询公告消息：" + e);
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 传统商户销售端查询MCCID
+	 */
+	public void searchMCC(){
+		JsonBean json = new JsonBean();
+		try {
+			DataGridBean dgd = merchantInfoService.searchMCC(null);
+			json.setObj(dgd.getRows());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("传统商户销售端app查询MCCID：" + e);
+		}
+    	super.writeJson(json);
+	}
+	
+	/**
+	 * 传统商户销售端查询省市信息
+	 */
+	public void searchProvince(){
+		JsonBean json = new JsonBean();
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd=unitService.searchProvince();
+			json.setObj(dgd.getRows());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("传统商户销售端app查询省市信息：" + e);
+		}
+    	super.writeJson(json);
+	}
+	
+	/**
+	 * 传统商户销售端查询SYS_AREA
+	 */
+	public void searchAreaCode(){
+		JsonBean json = new JsonBean();
+		DataGridBean dgd = new DataGridBean();
+		try {
+			String PROVINCE_CODE = super.getRequest().getParameter("PROVINCE_CODE");
+			String type = super.getRequest().getParameter("type");
+			if(PROVINCE_CODE!=null&&!"".equals(PROVINCE_CODE)){
+				dgd = merchantInfoService.searchAreaByProvince(PROVINCE_CODE);
+				json.setObj(dgd.getRows());
+			}
+			if(type!=null&&!"".equals(type)){
+				super.writeJson(dgd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("传统商户销售端app查询SYS_AREA：" + e);
+		}
+    	super.writeJson(json);
+	}
+	
+	/**
+	 * 传统商户销售端添加商户+挂号？
+	 */
+	public  void addMerchantInfo(){
+		JsonBean json = new JsonBean();
+		//Object userSession = super.getRequest().getSession().getAttribute("user");
+		String busid = super.getRequest().getParameter("busid")+"";
+		String unNo = super.getRequest().getParameter("unNo")+"";
+		String loginName = super.getRequest().getParameter("loginName")+"";
+		String userID = super.getRequest().getParameter("userID")+"";
+		String installedSIM = super.getRequest().getParameter("installedSIM");
+		String bmaid = super.getRequest().getParameter("bmaid");
+		
+		UserBean userSession = new UserBean();
+		//session失效
+		if (busid == null||"".equals(busid)||unNo==null||"".equals(unNo)||loginName==null||"".equals(loginName)||userID==null||"".equals(userID)||installedSIM==null||"".equals(installedSIM)||bmaid==null||"".equals(bmaid)) {
+			json.setSessionExpire(true);
+		} else {
+			userSession.setBusid(Integer.valueOf(busid));
+			userSession.setUnNo(unNo);
+			userSession.setLoginName(loginName);
+			userSession.setUserID(Integer.valueOf(userID));
+			boolean flag3=merchantInfoService.queryIsHotMerch(merchantInfo);
+			if(flag3){
+					merchantInfo.setAreaCode(merchantInfo.getCity());
+					String tt=merchantInfo.getBankProvinceCode()+merchantInfo.getBankName()+"";
+					if(tt.indexOf("青海")>=0 || tt.indexOf("西藏")>=0 || tt.indexOf("新疆")>=0 ){
+						json.setMsg("不支持此开户行！");
+						json.setSuccess(false);
+					}else{
+						boolean flag2=true;
+						if(merchantInfo.getAreaCode()==null ||"".equals(merchantInfo.getAreaCode()))
+							flag2=false;
+						//判断页面传来的areacode是否是数字形式，不是则查出相应的数字格式
+						if(!isNumeric(merchantInfo.getAreaCode().trim())){
+							String aa=merchantInfoService.queryAreaCode(merchantInfo.getAreaCode());
+							if(aa!=null && !"".equals(aa)){
+								merchantInfo.setAreaCode(aa.trim());
+							}else{
+								flag2=false;
+							}
+						}
+						if(flag2){
+							try {
+								merchantInfo.setIsForeign(2);
+								merchantInfo.setContactAddress(merchantInfo.getBaddr());
+								if(merchantInfo.getContactPerson()==null||"".equals(merchantInfo.getContactPerson())){
+									merchantInfo.setContactPerson(merchantInfo.getLegalPerson());
+								}									
+								merchantInfo.setJoinConfirmDate(new Date());
+								//merchantInfo.setBankSendCode("未知");
+								//merchantInfo.setBankName("");
+								merchantInfo.setBusinessScope("未知");
+								if(merchantInfo.getBno()==null||"".equals(merchantInfo.getBno())){
+									merchantInfo.setBno("000000000000");
+								}	
+								boolean flag =merchantInfoService.searchMCCById(merchantInfo.getMccid());
+								if(flag){
+										MerchantInfoModel m= merchantInfoService.saveMerchantInfo(merchantInfo, userSession);
+										//挂号
+										try{
+											String[] values={merchantInfo.getTid()+"#separate#"+bmaid+"#separate#"+m.getBaddr()+"#separate#"+m.getRname()+"#separate#"+m.getLegalPerson()+"#separate#"+m.getContactPhone()+"#separate#"+m.getContactTel()+"#separate#"+installedSIM};
+											String bmid=m.getBmid()+"";
+											String mid=m.getMid();
+											MerchantTerminalInfoBean merchantTerminalInfo = new MerchantTerminalInfoBean();
+											merchantTerminalInfo.setMid(m.getMid());
+											int result = 0;
+											if(values != null && values.length > 0){
+												for (int i = 0; i < values.length; i++) {
+													String[] pram=values[i].split("#separate#");
+													boolean falg =merchantTerminalInfoService.queryMachineInfo(pram[1]);
+													if(falg){
+														result += merchantTerminalInfoService.TerminalInfoTerMID(pram[0]);
+													}else{
+														json.setSuccess(false);
+														json.setMsg("商户添加成功,但设备型号不存在！");
+														super.writeJson(json);
+													}
+												}
+											}
+											if(result==0){
+												merchantTerminalInfoService.saveMerchantTerminalInfo(merchantTerminalInfo, userSession, values, Integer.parseInt(bmid), mid);
+												json.setSuccess(true);
+												json.setMsg("商户添加成功");
+											}else{
+												json.setSuccess(false);
+												json.setMsg("商户添加成功,但绑定终端不存在或已使用.请在商户支付平台挂号");
+											}
+										}catch (Exception e) {
+											log.error("传统商户销售端app 商户添加(挂号异常)：" + e);
+											json.setSuccess(false);
+											json.setMsg("商户添加成功,但绑定终端失败.请在商户支付平台挂号");
+										}
+								}else{
+									json.setSuccess(false);
+									json.setSessionExpire(true);
+									json.setMsg("行业编码不存在！");
+								}
+							} catch (Exception e) {
+								log.error("传统商户销售端app 商户添加异常：" + e);
+								json.setSuccess(false);
+								json.setSessionExpire(true);
+								json.setMsg("商户添加失败");
+							}
+						}else{
+							json.setSuccess(false);
+							json.setSessionExpire(true);
+							json.setMsg("商户地区码不存在！");
+						}
+					}
+		}else{
+			json.setSuccess(false);
+			json.setSessionExpire(true);
+			json.setMsg("该户在黑名单商户中，请核查！");
+		}
+	  }
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 商户代码(布放中用到)
+	 */
+	public void searchMerchantInfo(){
+		DataGridBean dgb = new DataGridBean();
+		JsonBean json = new JsonBean();
+		try {
+			String type="0,2,3,4,5";
+			String nameCode = super.getRequest().getParameter("nameCode");
+			String userID = super.getRequest().getParameter("userID");
+			String unNo = super.getRequest().getParameter("unNo");
+			UserBean userSession = new UserBean();
+			userSession.setUnNo(unNo);
+			userSession.setUserID(Integer.valueOf(userID));
+			dgb = merchantInfoService.searchMerchantInfo(type,nameCode, userSession, merchantInfo);
+			json.setObj(dgb.getRows());
+		} catch (Exception e) {
+			log.error("查询商户异常：" + e);
+		}
+		super.writeJson(json);
+	}
+	
+	public void searchTerminalInfo(){
+		DataGridBean dgd = new DataGridBean();
+		JsonBean json = new JsonBean();
+		try {
+			String mid = super.getRequest().getParameter("mid");
+			String unno = super.getRequest().getParameter("unNo");
+			if(mid!=null&&!"".equals(mid)){
+				dgd = terminalInfoService.searchTerminalInfo(mid);
+				json.setObj(dgd.getRows());
+			}
+			if(unno!=null&&!"".equals(unno)){
+				dgd = phoneMerchantInfoService.searchTerminalInfo(unno);
+				json.setObj(dgd.getRows());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	super.writeJson(json);
+	}
+	
+	/**
+	 * 查询已开通的商户
+	 */
+//	public void listMerchantInfoY(){
+//		DataGridBean dgb = new DataGridBean();
+//		JsonBean json = new JsonBean();
+//		String busid = super.getRequest().getParameter("busid")+"";
+//		String unNo = super.getRequest().getParameter("unNo")+"";
+//		String loginName = super.getRequest().getParameter("loginName")+"";
+//		String userID = super.getRequest().getParameter("userID")+"";
+//		Integer page = Integer.valueOf(super.getRequest().getParameter("page"));
+//		Integer rows = Integer.valueOf(super.getRequest().getParameter("rows"));
+//		merchantInfo.setPage(page);
+//		merchantInfo.setRows(rows);
+//		merchantInfo.setSort("mid");
+//		merchantInfo.setOrder("desc");
+//		
+//		UserBean userSession = new UserBean();
+//		//session失效
+//		if (busid == null||"".equals(busid)||unNo==null||"".equals(unNo)||loginName==null||"".equals(loginName)||userID==null||"".equals(userID)) {
+//			json.setSessionExpire(true);
+//		}else{
+//			try {
+//				userSession.setUnNo(unNo);
+//				userSession.setUserID(Integer.valueOf(userID));
+//				userSession.setBusid(Integer.valueOf(busid));
+//				userSession.setLoginName(loginName);
+//				//Object userSession = super.getRequest().getSession().getAttribute("user");
+//				dgb = merchantInfoService.queryMerchantInfoY(merchantInfo,userSession);
+//				json.setObj(dgb.getRows());
+//			} catch (Exception e) {
+//				log.error("分页查询商户信息异常：" + e);
+//			}
+//		}
+//		super.writeJson(json);
+//	}
+	
+	/**
+	 * 查询商户+终端
+	 */
+	public void listMerchantInfo(){
+		DataGridBean dgb = new DataGridBean();
+		JsonBean json = new JsonBean();
+		String busid = super.getRequest().getParameter("busid")+"";
+		String unNo = super.getRequest().getParameter("unNo")+"";
+		String loginName = super.getRequest().getParameter("loginName")+"";
+		String userID = super.getRequest().getParameter("userID")+"";
+		Integer page = Integer.valueOf(super.getRequest().getParameter("page"));
+		Integer rows = Integer.valueOf(super.getRequest().getParameter("rows"));
+		merchantInfo.setPage(page);
+		merchantInfo.setRows(rows);
+		
+		UserBean userSession = new UserBean();
+		//session失效
+		if (busid == null||"".equals(busid)||unNo==null||"".equals(unNo)||loginName==null||"".equals(loginName)||userID==null||"".equals(userID)) {
+			json.setSessionExpire(true);
+		}else{
+			try {
+				userSession.setBusid(Integer.valueOf(busid));
+				userSession.setUnNo(unNo);
+				userSession.setLoginName(loginName);
+				userSession.setUserID(Integer.valueOf(userID));
+				//Object userSession = super.getRequest().getSession().getAttribute("user");
+				dgb = phoneMerchantInfoService.queryMerchantInfoZK(merchantInfo,userSession);
+				json.setObj(dgb.getRows());
+			} catch (Exception e) {
+				log.error("分页查询商户信息异常：" + e);
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 修改
+	 */
+	public void editMerchantInfo(){
+		JsonBean json = new JsonBean();
+		//Object userSession = super.getRequest().getSession().getAttribute("user");
+		String busid = super.getRequest().getParameter("busid")+"";
+		String unNo = super.getRequest().getParameter("unNo")+"";
+		String loginName = super.getRequest().getParameter("loginName")+"";
+		String userID = super.getRequest().getParameter("userID")+"";
+		
+		UserBean userSession = new UserBean();
+		//session失效
+		if (busid == null||"".equals(busid)||unNo==null||"".equals(unNo)||loginName==null||"".equals(loginName)||userID==null||"".equals(userID)) {
+			json.setSessionExpire(true);
+		} else {
+			userSession.setBusid(Integer.valueOf(busid));
+			userSession.setUnNo(unNo);
+			userSession.setLoginName(loginName);
+			userSession.setUserID(Integer.valueOf(userID));
+			String tt=merchantInfo.getBankProvinceCode()+merchantInfo.getBankName()+"";
+			if(tt.indexOf("青海")>=0 || tt.indexOf("西藏")>=0 || tt.indexOf("新疆")>=0 ){
+				json.setMsg("不支持此开户行！");
+				json.setSuccess(false);
+			}else{
+				try {
+//					if(merchantInfo.getLegalUploadFile() != null && merchantInfo.getLegalUploadFile().length()>1024*512){
+//						json.setMsg("您上传的法人身份图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getRegistryUpLoadFile() != null && merchantInfo.getRegistryUpLoadFile().length()>1024*512){
+//						json.setMsg("您上传的税务登记证图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getBupLoadFile() != null && merchantInfo.getBupLoadFile().length()>1024*512){
+//						json.setMsg("您上传的营业执照图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getMaterialUpLoadFile() != null && merchantInfo.getMaterialUpLoadFile().length()>1024*512){ 
+//						json.setMsg("您上传的补充材料图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getRupLoadFile() != null && merchantInfo.getRupLoadFile().length()>1024*512){
+//						json.setMsg("您上传的组织机构证图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getPhotoUpLoadFile() != null && merchantInfo.getPhotoUpLoadFile().length()>1024*512){
+//						json.setMsg("您上传的门面照片图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getBigdealUpLoadFile() != null && merchantInfo.getBigdealUpLoadFile().length()>1024*512){
+//						json.setMsg("您上传的大协议照片图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getMaterialUpLoad1File() != null && merchantInfo.getMaterialUpLoad1File().length()>1024*512){
+//						json.setMsg("您上传的补充材料1图片大于512KB，请重新添加！");
+//					}else if(merchantInfo.getMaterialUpLoad2File() != null && merchantInfo.getMaterialUpLoad2File().length()>1024*512){
+//						json.setMsg("您上传的补充材料2图片大于512KB，请重新添加！");
+//					}else{
+						//synchronized(MerchantInfoServiceImpl.class){
+						//判断页面传来的areacode是否是数字形式，不是则查出相应的数字格式
+					merchantInfo.setAreaCode(merchantInfo.getCity());
+					if(!isNumeric(merchantInfo.getAreaCode().trim())){
+						String aa=merchantInfoService.queryAreaCode(merchantInfo.getAreaCode());
+						if(aa!=null && !"".equals(aa)){
+							merchantInfo.setAreaCode(aa.trim());
+						}else{
+							json.setSuccess(false);
+							json.setMsg("区域码不存在");
+							super.writeJson(json);
+							return ;
+						}	
+					}
+					merchantInfo.setShortName(merchantInfo.getRname());
+					merchantInfo.setIsForeign(0);
+					merchantInfo.setContactAddress(merchantInfo.getBaddr());
+					if(merchantInfo.getContactPerson()==null||"".equals(merchantInfo.getContactPerson())){
+						merchantInfo.setContactPerson(merchantInfo.getLegalPerson());
+					}
+					merchantInfo.setJoinConfirmDate(new Date());
+					merchantInfo.setBankBranch(merchantInfo.getBankSendCode()+merchantInfo.getBankName());
+					merchantInfo.setRaddr(merchantInfo.getBaddr());
+					merchantInfo.setBusinessScope("未知");
+					merchantInfo.setSettleCycle(1);
+					if(merchantInfo.getBno()==null||"".equals(merchantInfo.getBno())){
+						merchantInfo.setBno("000000000000");
+					}	
+					boolean flag=phoneMerchantInfoService.updateMerchantInfo(merchantInfo, userSession);
+					if(flag){
+						json.setSuccess(true);
+						json.setMsg("修改商户成功");
+					}else{
+						json.setSuccess(false);
+						json.setMsg("此刻状态为锁定状态，请刷新该页面再进行操作！");
+					}
+						//}
+//					}
+				} catch (Exception e) {
+					log.error("修改商户异常" + e);
+					json.setMsg("修改商户失败");
+				}
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	/*
+	 * 判断字符串是否是数字或者‘非数字’
+	 */
+	public  boolean isNumeric(String str){ 
+		   Pattern pattern = Pattern.compile("[0-9]*"); 
+		   Matcher isNum = pattern.matcher(str);
+		   if( !isNum.matches() ){
+		       return false; 
+		   } 
+		   return true; 
+		}
+	
+	/*
+	 * 获取返利类型
+	 */
+	public void getRebateType() {
+		JsonBean jsonBean = new JsonBean();
+		try {
+			List<Map<String, Object>> list = merchantInfoService.getRebateType(merchantInfo.getMid(),merchantInfo.getSn());
+			jsonBean.setObj(list);
+			jsonBean.setSuccess(true);
+		} catch (Exception e) {
+			jsonBean.setSuccess(false);
+			log.info("获取返利类型异常"+e);
+		}
+		super.writeJson(jsonBean);
+	}
+	
+}

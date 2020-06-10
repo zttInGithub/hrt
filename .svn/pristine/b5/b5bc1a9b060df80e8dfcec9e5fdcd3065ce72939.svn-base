@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MerchantinfoCommModel" table="BILL_MERCHANTINFO_COMM">
+		<id name="MAID" column="MAID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTINFO_COMM</param>
+			</generator>
+		</id>
+		<property name="MID" column="MID"/>
+		<property name="MERCHNAME" column="MERCHNAME"/>
+		<property name="BNO" column="BNO"/>
+		<property name="LegalPerson" column="LegalPerson"/>
+		<property name="LegalNum"  column="LegalNum"/>
+		<property name="BusinessScope" column="BusinessScope"/>
+		<property name="BAddr" column="BAddr"/>
+		<property name="RAddr" column="RAddr"/>
+		<property name="ShoppingName" column="ShoppingName"/>
+		<property name="ReportDate" type="timestamp" column="ReportDate"/>
+		<property name="ApprovalDate" type="timestamp" column="ApprovalDate"/>
+		<property name="ReceiptDate" type="timestamp" column="ReceiptDate"/>
+		<property name="InstallDate" type="timestamp" column="InstallDate"/>
+		<property name="Deposit" column="Deposit"/>
+		<property name="ServiceCharge"  column="ServiceCharge"/>
+		<property name="CardType"  column="CardType"/>
+		<property name="BankName"  column="BankName"/>
+		<property name="AccNo"  column="AccNo"/>
+		<property name="BankAccName"  column="BankAccName"/>
+		<property name="BankFeeRate"  column="BankFeeRate"/>
+		
+		<property name="InstallCard"  column="InstallCard"/>
+		<property name="WildFeeRate"  column="WildFeeRate"/>
+		<property name="StorageFeeRate"  column="StorageFeeRate"/>
+		<property name="FeeRate"  column="FeeRate"/>
+		<property name="PayBankID"  column="PayBankID"/>
+		<property name="Exchange"  column="Exchange"/>
+		<property name="ContactPerson"  column="ContactPerson"/>
+		<property name="ContactPhone"  column="ContactPhone"/>
+		<property name="ContactTel"  column="ContactTel"/>
+		<property name="Email"  column="Email"/>
+		<property name="SecondContactPerson"  column="SecondContactPerson"/>
+		<property name="SecondContactPhone"  column="SecondContactPhone"/>
+		<property name="SecondContactTel"  column="SecondContactTel"/>
+		<property name="MCCID"  column="MCCID"/>
+		
+		<property name="SignUserID"  column="SignUserID"/>
+		<property name="MaintainUserID"  column="MaintainUserID"/>
+		<property name="Status"  column="Status"/>
+		<property name="MINFO1"  column="MINFO1"/>
+		<property name="MINFO2"  column="MINFO2"/>
+		<property name="Remarks"  column="Remarks"/>
+		<property name="sourceName"  column="SOURCENAME"/>
+    </class>
+</hibernate-mapping>

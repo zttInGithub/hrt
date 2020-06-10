@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MerchantUpdateTerModel" table="BILL_MERCHANTUPDATETER">
+		<id name="bmutID" column="BMUTID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTUPDATETER</param>
+			</generator>
+		</id>
+		<property name="unno" column="UNNO"/>
+		<property name="mid" column="MID"/>
+		<property name="type" column="TYPE"/>
+		<property name="tid"  column="TID"/>
+		<property name="sn" column="SN"/>
+		<property name="snImg" column="SNIMG"/>
+		<property name="maintainType"  column="MAINTAINTYPE"/>
+		<property name="maintainDate" column="MAINTAINDATE" type="timestamp"  />
+		<property name="approveType" column="APPROVETYPE"/>
+		<property name="approveDate" type="timestamp"  column="APPROVEDATE"/>
+    </class>
+</hibernate-mapping>

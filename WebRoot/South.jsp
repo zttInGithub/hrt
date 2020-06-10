@@ -1,0 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<div style="text-align:center; padding-top:8px; background-color: #FFF; height: 100%;">
+    【Copyright(c)2014-2029 HRT Technology Co,Ltd. All Rights Reserved. 北京和融通科技有限公司 版权所有】版本号：190919_1.0
+</div>

@@ -1,0 +1,15 @@
+package com.hrt.biz.bill.service;
+
+import com.hrt.biz.bill.entity.pagebean.MerAdjustRateBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IMerAdjustRateService {
+	
+	Integer addmerAdjustRateInfo (MerAdjustRateBean adjustRateBean,UserBean user)throws Exception;
+	
+	Integer updateHYBAdjustRateInfo (MerAdjustRateBean adjustRateBean)throws Exception;
+	
+	DataGridBean queryAdjustRateinfo (MerAdjustRateBean adjustRateBean,UserBean user)throws Exception;
+	
+}

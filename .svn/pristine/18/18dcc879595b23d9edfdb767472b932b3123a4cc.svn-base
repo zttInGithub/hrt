@@ -1,0 +1,40 @@
+package com.hrt.biz.bill.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.hrt.biz.bill.entity.pagebean.AggPayTerminfoBean;
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IAggPayTerminfoService {
+	
+//	Integer updateAggPayTerminfoStatus (AggPayTerminfoBean infoBean)throws Exception;
+	
+	Integer addAggPayTerminfoStatus (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	Integer updateAggPayTerminfoHeCh (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	void updateAggPayTerminalinfosY (AggPayTerminfoBean infoBean,UserBean user,String [] ids)throws Exception;
+	
+	Integer updateAggPayTerminfoUnno (AggPayTerminfoBean infoBean,String icids ,UserBean user)throws Exception;
+	
+	Integer updateAggPayTerminfoUnno1 (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	Integer updateAggPayTerminfoRate (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	Integer updateAggPayTerminfoUnno2 (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	DataGridBean queryAggPayTerminfo (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	DataGridBean queryAggPayTerminfoZ (AggPayTerminfoBean infoBean,UserBean user)throws Exception;
+	
+	HSSFWorkbook exportAggPayTerminfoAll(AggPayTerminfoBean qrInvitationInfoBean,UserBean userSession);
+	
+	List<Map<String,String>> queryAggPayTerminalInfoBmidPhone(AggPayTerminfoBean aggPayTerminfoBean)throws Exception;
+
+	
+}

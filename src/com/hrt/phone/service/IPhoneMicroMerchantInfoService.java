@@ -1,0 +1,160 @@
+package com.hrt.phone.service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.entity.model.MerchantInfoModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+
+public interface IPhoneMicroMerchantInfoService {
+
+	/**
+	 * 查询SN是否已使用
+	 * @param sn
+	 * @return  boolean
+	 */
+	Integer findHrtSnIsUsing(String sn,String mid);
+	/**
+	 * 查询Qrid否已使用
+	 * @param sn
+	 * @return  boolean
+	 */
+	Integer updateHrtQridIsUsing(String Qrid,String mid,String sign);
+	/**
+	 * 查询SN是否存在
+	 * @param sn
+	 * @return  boolean
+	 */
+	boolean findHrtSnInfo(String sn);
+	/**
+	 * 查询SN是否存在(增机)
+	 * @param sn
+	 * @return  boolean
+	 */
+	Integer findHrtSnInfoT(String sn,String unno);
+
+	/**
+	 * 保存商户信息
+	 * @param merchantInfoBean
+	 * @return  List<Map<String, String>>
+	 */
+	List<Map<String, Object>> saveHrtMerchantInfo(
+			MerchantInfoBean merchantInfoBean) throws Exception;
+	List<Map<String, Object>> saveHrtMerchantInfoDGL(
+			MerchantInfoBean merchantInfoBean) throws Exception;
+	
+	List<Map<String, Object>> saveAggPayMerchantInfo(
+			MerchantInfoBean merchantInfoBean) throws Exception;
+	
+	void hrtMerchantToHYB(MerchantInfoModel merchantInfoModel,MerchantInfoBean merchantInfoBean);
+	void hrtMerchantToDGL(MerchantInfoModel merchantInfoModel,MerchantInfoBean merchantInfoBean);
+	void hrtAggPayMerchantToHYB(MerchantInfoModel merchantInfoModel,MerchantInfoBean merchantInfoBean);
+	void saveHrtMerToADMDB(MerchantInfoBean merchantInfoBean,List<Map<String, Object>> list) throws Exception ;
+	void saveAggMerToADMDB(MerchantInfoBean merchantInfoBean,List<Map<String, Object>> list) throws Exception ;
+
+	/**
+	 * 该设备是否为商户mid已解绑的激活终端
+	 * @param sn
+	 * @return
+	 */
+	boolean hasUnbundBeforeExistsAct(String mid,String sn);
+
+	List<Map<String, String>> saveMerchantTermialInfoByPhone(MerchantInfoBean merchantInfoBean);
+	List<Map<String, String>> saveMerchantTermialInfoDGL(MerchantInfoBean merchantInfoBean);
+	/**
+	 * 增机推送hyb
+	 */
+	public void merchantTermialInfotoHyb(MerchantInfoBean merchantInfoBean,List<Map<String,String>> list);
+	List<Map<String, String>> saveAggPayMerchantTermialInfo(MerchantInfoBean merchantInfoBean);
+	List<Map<String, String>> saveAggPayMerchantKJInfo(MerchantInfoBean merchantInfoBean);
+
+	/**
+	 * 查询商户编号
+	 * @param mid
+	 * @return  boolean
+	 */
+	boolean findMidInfo(String mid);
+	/**
+	 * 根据mid 查询并更新押金
+	 * @param mid
+	 * @return
+	 */
+	Integer updateDeposit(String mid,String tid);
+	Map serachMerchantinfoDepositBySn(String sn);
+
+	List<Map<String, Object>> findMidStatusInfo(String mid);
+
+	MerchantInfoModel queryMicroMerchantInfo(String mid);
+	MerchantInfoModel queryMerchantInfoDGL(String phone);
+
+	void updateMicroMerchantInfoZWK(MerchantInfoModel m, MerchantInfoBean merchantInfoBean);
+	void updateMicroMerchantInfoDGL(MerchantInfoModel m, MerchantInfoBean merchantInfoBean);
+
+	/**
+	 * 查询是否在黑名单中
+	 * @param merchantInfoBean
+	 * @return boolean
+	 */
+	boolean queryIsHotMerch(MerchantInfoBean merchantInfoBean);
+	
+	Map<String, Object> addQKPayCard(String mid,String accno, String phone);
+	Map<String, Object> queryQKPayCard(String mid,String page, String size);
+	Map<String, Object> unBQKPayCard(String mid,String qpcid);
+	Map<String, Object> isIntegral(String accno,String type);
+	boolean queryManyTimes(MerchantInfoBean merchantInfoBean);
+	boolean findHrtAppIsNew(MerchantInfoBean merchantInfoBean);
+	boolean updateUnnoForTer(String sn,String unno,boolean flag);
+
+	/**
+	 * 绑定设备判定规则
+	 * @param merchantInfoBean
+	 * @return 不符合的信息描述
+	 */
+	String queryAgainSaveTer(MerchantInfoBean merchantInfoBean);
+	List<Object> listAgentMccid();
+	JsonBean updateSelectSn(MerchantInfoBean merchantInfoBean);
+	JsonBean findReturnRecord(MerchantInfoBean merchantInfoBean);
+
+	/**
+	 * sn交易量查询
+	 * @param merchantInfoBean
+	 * @return
+	 */
+	JsonBean querySnSumsamt(MerchantInfoBean merchantInfoBean);
+
+	/**
+	 * 限额判断
+	 * @param txnType 1:扫码 2:刷卡
+	 * @param prod 产品类型 10000秒到 10002联刷 10005收银台 10006PLUS
+	 * @return
+	 */
+	String limitForTerms(Integer txnType, String prod);
+
+	/**
+	 * 花呗分期
+	 * @return
+	 */
+	Map<String,Object> huaBeiParam() throws Exception;
+
+	/**
+	 * 按产品类型查询花呗分期
+	 * @param productType
+	 * @return
+	 * @throws Exception
+	 */
+	Map<String, Object> huaBeiParamInfo(String productType) throws Exception;
+
+	/**
+	 * 更新终端信息签收日期
+	 * @param sn sn号
+	 * @param acceptDate 签收日期
+	 * @return
+	 */
+	String updateTermAcceptDate(String sn, Date acceptDate) ;
+	/**
+	 * 限制e11002\421003下小蓝牙设备禁止使用
+	 */
+	String queryIsSpecialUnno(MerchantInfoBean merchantInfoBean);
+}

@@ -1,0 +1,42 @@
+package com.hrt.frame.listener;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hrt.frame.service.sysadmin.IEnumService;
+import com.hrt.frame.utility.ConfigureCache;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import java.util.Map;
+
+/**
+ * 类功能：自定义Listener
+ * 创建人：wwy
+ * 创建日期：2012-12-18
+ */
+public class SystemContextLoadListener implements ServletContextListener {
+
+	@Override
+	public void contextDestroyed(ServletContextEvent arg0) {
+		
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent arg0) {
+		ServletContext servletContext = arg0.getServletContext();
+		servletContext.setAttribute("ctx", servletContext.getContextPath());
+		servletContext.setAttribute("title", ConfigureCache.getTitle());
+		servletContext.setAttribute("titleEnglish", ConfigureCache.getTitleEnglish());
+
+		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
+		IEnumService enumService=(IEnumService)context.getBean("enumService");
+        // TODO @author:lxg-20200117 可能存在新增修改数据,待重新处理数据需要重新查询
+		Map map = enumService.getEnumNameList();
+		servletContext.setAttribute("enumMap", JSONObject.toJSONString(map));
+		servletContext.setAttribute("enumMapSize", map.size());
+	}
+
+}

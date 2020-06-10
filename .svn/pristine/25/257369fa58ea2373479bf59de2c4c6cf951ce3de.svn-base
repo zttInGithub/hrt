@@ -1,0 +1,145 @@
+############################################ test url config start #######################################
+admAppIp=http://10.52.11.216:8080
+#HYB_URL=http://10.52.11.216:8888
+#HYB_URL=http://10.51.132.150:8191
+#HYB_URL=https://hrttest.hrtpayment.com
+HYB_URL=http://10.51.132.150:8191
+
+xpayPath=https://hrttest.hrtpayment.com/xpay
+signEnd=&key=12345678
+
+#https://hrttest.hrtpayment.com/CubeMPOSConsole
+#http://10.51.132.150:8191/CubeMPOSConsole/;  # 测试环境
+############################################ test url config end  #######################################
+
+#admAppIp=http://10.51.132.121:8080
+# test
+#admAppIp=http://10.52.11.214:8080
+#admAppIp=http://10.52.11.216:8080
+# nginx
+#admAppIp=http://10.51.132.121:8080/
+# zhanghongqiang
+#admAppIp=http://10.51.130.169:10087
+# shilin
+#admAppIp=http://10.51.130.147:8080
+
+#\u3000\u6D4B\u8BD5\u73AF\u5883
+#admAppIp=http://10.51.132.121:8080
+
+#xiaodai
+loanUrl=http://10.52.11.81:9100
+
+#hyb url
+hybUrl=${HYB_URL}/CubeMPOSConsole/mpos/insertPosTemp.do
+hybUnbindUrl=${HYB_URL}/CubeMPOSConsole/mpos/removeMpos.do
+loginMposPhone=${HYB_URL}/CubeMPOSConsole/merchant/merlogin.do
+hybCube=${HYB_URL}/CubeMPOSConsole
+#minsheng_auth shengchan
+#msUrl=http://10.51.27.32:9876
+#ceshi
+msUrl=http://10.51.82.215:9876
+#ceshi
+hybMerAuthUrl=${HYB_URL}/CubeMPOSConsole/mpos/setIdentityVerify.do
+
+#RiskLoginOrOUTUrl=http://114.247.60.83:8080/ries_interface/loginServlet
+RiskLoginOrOUTUrl=http://114.247.60.82:7080/ries/loginServlet
+
+#RiskElseUrl=http://114.247.60.83:8080/ries_interface/httpServlet
+RiskElseUrl=http://114.247.60.82:7080/ries/httpServlet
+
+#RiskXSD=/u01/sign/riskinfo/xsd/
+RiskXSD=C:/Users/wangjiang/Desktop/risks/
+
+#RiskPKCertificate=/u01/sign/riskinfo/xhgyzs.cer
+RiskPKCertificate=C:/Users/wangjiang/Desktop/risks/xhgyzs.cer
+
+#MemberUnitsPFX=/u01/sign/riskinfo/hydw.pfx
+MemberUnitsPFX=C:/Users/wangjiang/Desktop/risks/hydw.pfx
+
+signPWD=11111111
+DecryptPWD=11111111
+
+
+loginHybUrl=${HYB_URL}/CubeMPOSConsole/mpos/newInsertTerminal.do
+mesHybUrl=http://10.51.132.121:7001/CubeSMSConsole/SMS/sendHYBMessage.do
+#nonConnection=http://10.51.87.34:80/CubeCoreConsole/quickpay/updateQuickPay.do
+connectionHybUrl=http://10.51.130.156:8080/CubeCoreConsole/quickpay/updateQuickPay.do
+#getOpenidUrl=https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc427f61bd6079427&secret=e2efdc239f1b52a74d3579811eb1b191&code=
+# \u6536\u94F6\u53F0
+
+
+# \u6536\u94F6\u53F0
+getHrtOpenidUrl=https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxb3302cdea15bc315&secret=10758749b323b0853e32902629af60b1&code=
+getOpenidUrl=https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxb3302cdea15bc315&secret=10758749b323b0853e32902629af60b1&code=
+getSytOpenidUrl=https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxb3302cdea15bc315&secret=10758749b323b0853e32902629af60b1&code=
+#credit
+#creditUrl=http://loan.hyb.com.cn/credit
+creditUrl=http://10.51.29.125:9080/creditsys
+#aggPay
+AggPayMerHybUrl=http\://10.51.132.121\:7001/HYBAgentAdminConsole/jhmerchant/updateMerchantInfo.do
+AggPayTerHybUrl=http\://10.51.132.121\:7001/HYBAgentAdminConsole/jhmerchant/insertTerminal.do
+#reFund
+hybReFundUrl=http://10.51.132.121:7001/HYBComboPayment/refund/notify.do
+#chexiao
+#GateWayUrl=http://124.172.237.75:8021/GateWay.aspx
+GateWayUrl=http://testapi.51fen.net:8021/gateway.aspx
+GateWayVision=1.0
+GateWayKeyVision=testbjhrapi
+GateWayAesKey=F880213F-AA1B-4288-9EBC-1C217AF348C2
+webSiteId=109024
+loginName=testbjhrapi
+userPWD=123456
+#
+registerCodeUrl=${HYB_URL}/CubeMPOSConsole/merchant/getRegisterCodeToDES.do
+registerUrl=${HYB_URL}/CubeMPOSConsole/merchant/register.do
+#
+#jhTaskHybUrl=http://10.51.67.32:8877/HYBAgentAdminConsole/jhmerchant/upMerName.do
+jhTaskHybUrl=http\://10.51.132.121\:7001/HYBAgentAdminConsole/jhmerchant/upMerName.do
+#agent
+hrtAppUrl=http://10.51.130.181:8080
+
+## 生产环境
+#jxUrl=http://api.jixintech.net/jxdata/api/auth/execute.do
+#JXmiyao=xp74nk2SjISxOcUIzhPrOxy1RqqMGop9
+#JXmerchno=0000000000000327
+## 测试环境
+jxUrl=http://121.8.160.34:9003/jxdata/api/auth/execute.do
+JXmiyao=rlvkAu05uNTw9mDzjgN5YGxX14Oqrrc7
+JXmerchno=0000000000000003
+#账号=0000000000000003
+#密钥=rlvkAu05uNTw9mDzjgN5YGxX14Oqrrc7
+#地址=http://121.8.160.34:9003/jxdata/api/auth/execute.do
+
+#zhuowang
+#serverAddress = https\://prmcap.eveus.com
+#keyStorePath =D\:/certs1/
+serverAddress =https://prdcap.eveus.com
+keyStorePath =/u01/sign/riskinfo/zhuowang/
+
+#kaola
+kaolaAddress=https://access.kaolazhengxin.com:8453/authentication.do?_t=json
+customerId=201804230000000001
+#kaolaAddress=http://123.124.162.36:9080/as/authentication.do?_t=json
+#customerId=201703150000000001
+
+################## \u6613\u9053\u8BA4\u8BC1-\u6D4B\u8BD5 #################
+yidaoAddress=https://id.exocr.com:8080/bankcard
+yidaoAppId=97470178052276225
+yidaoAppKey=6dafe90c0f544bb4aa64cf85c6272dce
+
+################## \u805A\u5408\u8BA4\u8BC1\u8BA4\u8BC1-\u6D4B\u8BD5 #################
+#AppKey\uFF1A3fdb5b08f6788828e9f76545076a7f95
+#OpenId\uFF1AJH1a2f6bd0482c0dd26423fe4b3af69c23
+juheAddress=http://v.juhe.cn/verifybankcard3/verify
+juheAppKey=3fdb5b08f6788828e9f76545076a7f95
+juheOpenId=JH1a2f6bd0482c0dd26423fe4b3af69c23
+
+#jedis propetis
+redis.host=10.52.11.216
+redis.port=6379
+redis.passwd=lpay
+jedis.maxactive=50
+jedis.maxidle=20
+jedis.maxwait=10
+jedis.timeout=60000
+jedis.test_no_borrow=true

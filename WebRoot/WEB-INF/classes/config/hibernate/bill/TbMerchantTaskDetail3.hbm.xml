@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantTaskDetail3Model" table="BILL_MERCHANTTASKDETAIL3">
+        <id name="bt3id" column="BT3ID">
+            <generator class="sequence"> 
+				<param name="sequence">S_BILL_MERCHANTTASKDETAIL3</param>
+			</generator>
+        </id>
+        <property name="bmtkid" column="BMTKID"/>
+        <property name="bankFeeRate" column="BankFeeRate"/>
+        <property name="creditBankRate" column="creditBankRate"/>
+        <property name="feeAmt" column="FeeAmt"/>
+         <property name="dealAmt" column="DealAmt"/>
+        <property name="isForeign" column="isForeign"></property>
+        <property name="feeRateV" column="FeeRate_V"></property>
+        <property name="feeRateM" column="FeeRate_M"></property>
+        <property name="feeRateJ" column="FeeRate_J"></property>
+        <property name="feeRateA" column="FeeRate_A"></property> 
+        <property name="feeRateD" column="FeeRate_D"></property>
+        <property name="feeUpLoad" column="FeeUpLoad"></property>
+        <property name="scanRate" column="SCANRATE"></property>
+        <property name="scanRate1" column="SCANRATE1"></property>
+        <property name="scanRate2" column="SCANRATE2"></property>
+        <property name="secondRate" column="SECONDRATE"></property>
+    </class>
+</hibernate-mapping>

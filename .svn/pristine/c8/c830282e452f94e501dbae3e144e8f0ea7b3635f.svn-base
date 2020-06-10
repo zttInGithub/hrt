@@ -1,0 +1,40 @@
+package com.hrt.frame.service.sysadmin;
+
+import com.hrt.frame.entity.model.MenuModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.TodoBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface ITodoService {
+
+	/**
+	 * 方法功能：分页查询待办
+	 */
+	DataGridBean queryTodos(TodoBean todo, UserBean userBean) throws Exception;
+	
+	/**
+	 * 方法功能：添加待办任务
+	 */
+	void saveTodo(TodoBean todo, UserBean user) throws Exception;
+	
+	/**
+	 * 查询业务类别
+	 */
+	DataGridBean searchBizType() throws Exception;
+	
+	/**
+	 * 删除待办任务
+	 */
+	void deleteTodo(String ids) throws Exception;
+	
+	/**
+	 * 根据tranCode得到MenuModel
+	 */
+	MenuModel updateStruts(Integer todoID) throws Exception;
+	
+	/**
+	 * 查询有多少未办的待办队列
+	 */
+	long todoCount(Integer status,String unNo) throws Exception;
+	
+}

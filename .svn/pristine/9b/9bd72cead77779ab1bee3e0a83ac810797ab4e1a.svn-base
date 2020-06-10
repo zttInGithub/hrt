@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckUnitDealDataModel" table="check_UnitDealData">
+        <id name="cuid" column="CUID">
+            <generator class="native"></generator>
+        </id>
+        <property name="txnDay" column="TXNDAY" />
+        <property name="unno" column="UNNO" />
+        <property name="mid" column="MID" />
+        <property name="tid" column="TID" />
+        <property name="txnAmount" column="TXNAMOUNT" />
+        <property name="mnamt" column="MNAMT" />
+        <property name="TxnCount" column="TXNCOUNT" />
+        <property name="RefundAmt" column="REFUNDAMT" />
+        <property name="RefundCount" column="REFUNDCOUNT" />
+        <property name="profit" column="PROFIT" />
+        <property name="maintainUID" column="MAINTAINUID" />
+        <property name="maintainDate" column="MAINTAINDATE" />
+        <property name="maintainType" column="MAINTAINTYPE" />
+        <property name="MDA" column="MDA" />
+        <property name="REFUNDMDA" column="REFUNDMDA" />
+    </class>
+</hibernate-mapping>

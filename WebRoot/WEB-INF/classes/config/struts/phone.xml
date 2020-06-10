@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="phone" namespace="/phone" extends="struts-default">
+	<!-- 手机端 -->
+		<action name="phoneUser_*" method="{1}" class="phoneUserAction">
+		</action>
+		
+		<action name="phoneNotice_*" method="{1}" class="phoneNoticeAction">
+		</action>
+		
+		<action name="phoneCheckUnitDealData_*" method="{1}" class="phoneCheckUnitDealDataAction">
+		</action>
+		
+		<action name="phoneReceiptsUpload_*" method="{1}" class="phoneReceiptsUploadAction">
+		</action>
+		
+		<action name="phoneMicroMerchantInfo_*" method="{1}" class="phoneMicroMerchantInfoAction">
+		</action>
+		
+		<action name="phoneMerchantInfo_*" method="{1}" class="phoneMerchantInfoAction">
+		</action>
+		
+		<action name="phoneMerchantTerminalInfo_*" method="{1}" class="phoneMerchantTerminalInfoAction">
+		</action>
+		
+		<action name="phoneMerchantWallet_*" method="{1}" class="phoneMerchantWalletAction">
+		</action>
+		
+		<action name="phoneAgentCredit_*" method="{1}" class="phoneAgentCreditAction">
+		</action>
+		
+		<action name="gateCar_*" method="{1}" class="gateCarAction">
+		</action>
+		
+		<action name="gateOrder_*" method="{1}" class="gateCarOrderAction">
+		</action>
+		
+		<action name="gateViolation_*" method="{1}" class="gateViolationAction">
+		</action>
+		
+		<action name="phoneWechatPublicAcc_*" method="{1}" class="phoneWechatPublicAccAction">
+			<result name="success" type="redirect">/WeiXinLoginSuccess.jsp</result>
+			<result name="success2" type="redirect">/WeiXinLoginSuccess2.jsp</result>
+			<result name="error" >/WeChatLogin.jsp</result>
+			<result name="error2" >/HrtWeChatLogin.jsp</result> 
+			<!-- <result name="mimaerror" >/WeChatLogin.jsp</result> -->
+			<result name="mimaerror" >/WeiXinLoginErr.html</result>
+			<result name="errorForOpenid" >/WeiXinLoginErrForOpenid.html</result> 
+			<result name="bound">/WeiXinBound.jsp</result> 
+			<result name="bound2">/hrtWeiXinBound.jsp</result> 
+			<result name="promoteinfo">/promoteinfo.jsp</result>
+
+			<!-- 微信公众号合并页面 -->
+			<result name="WeChatPublicLogin" >/WeChatPublicLogin.jsp</result>
+			<result name="WeChatPublicBound">/WeChatPublicBound.jsp</result>
+			<result name="WeChatPublicTrade1" type="redirect">/WeChatPublicTrade1.jsp</result>
+			<result name="WeChatPublicTrade2" type="redirect">/WeChatPublicTrade2.jsp</result>
+		</action>
+	</package>
+</struts>

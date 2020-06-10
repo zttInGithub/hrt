@@ -1,0 +1,255 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+	//导出EXCEL
+	function sysAdmin_20590_export() {
+		var txnDay = $('#txnDay_20590').datebox('getValue');
+		var txnDay1 = $('#txnDay1_20590').datebox('getValue');
+		// var start=new Date(txnDay.replace("-", "/").replace("-", "/"));
+		// var end=new Date(txnDay1.replace("-", "/").replace("-", "/"));
+		if (txnDay != null && txnDay != '' && txnDay1 != null && txnDay1 != '') {
+			if (txnDay.substring(0, 6) == txnDay1.substring(0, 6)) {
+				$("#sysAdmin_20590_searchForm").form('submit', {
+					url : '${ctx}/sysAdmin/checkUnitDealData_exportUnitDealData.action'
+				});
+			} else {
+				$.messager.alert('提示', '交易日期必须在同一自然月');
+			}
+		} else {
+			$.messager.alert('提示', '请选择交易日期');
+		}
+	}
+	
+	$(function() {
+		$('#unno_20590').combogrid({
+			url : '${ctx}/sysAdmin/CheckUnitProfitMicro_getProfitUnitGodesForSales.action',
+			idField : 'UNNO',
+			textField : 'UNNO',
+			mode : 'remote',
+			fitColumns : true,
+			collapsible : false,
+			fit : false,
+			columns : [ [ {
+				field : 'UNNO',
+				title : '机构号',
+				width : 100
+			}, {
+				field : 'UN_NAME',
+				title : '机构名称',
+				width : 100
+			} ] ]
+		});
+	});
+
+	//查询提交
+	function sysAdmin_20590_searchFun() {
+		var txnDay = $('#txnDay_20590').datebox('getValue');
+		var txnDay1 = $('#txnDay1_20590').datebox('getValue');
+		// var start=new Date(txnDay.replace("-", "/").replace("-", "/"));
+		// var end=new Date(txnDay1.replace("-", "/").replace("-", "/"));
+		txnDay = txnDay.replace(/\-/gi, "");
+		txnDay1 = txnDay1.replace(/\-/gi, "");
+		if (txnDay != null && txnDay != '' && txnDay1 != null && txnDay1 != '') {
+			if (txnDay.substring(0, 6) == txnDay1.substring(0, 6)) {
+				$('#sysAdmin_20590_datagrid').datagrid('load',
+						serializeObject($('#sysAdmin_20590_searchForm')));
+				sysAdmin_20590_listUnitDealDataTotal();
+			} else {
+				$.messager.alert('提示', '交易日期必须在同一自然月');
+			}
+		} else {
+			$.messager.alert('提示', '请选择交易日期');
+		}
+	}
+	//清除表单内容
+	function sysAdmin_20590_cleanFun() {
+		$('#sysAdmin_20590_searchForm input').val('');
+	}
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_20590_datagrid').datagrid({
+			url : '${ctx}/sysAdmin/checkUnitDealData_listUnitDealData.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			pageSize : 10,
+			toolbar:'#sysAdmin_20590_toolbar',
+			pageList : [ 10, 15 ],
+			idField : 'CUID',
+			columns : [ [ {
+				title : 'ID',
+				field : 'CUID',
+				width : 100,
+				hidden : true
+			}, {
+				title : '机构号',
+				field : 'UNNO',
+				width : 100
+			}, {
+				title : '商户编号',
+				field : 'MID',
+				width : 100
+			}, {
+				title : '商户名称',
+				field : 'RNAME',
+				width : 100
+			}, {
+				title : '交易渠道',
+				field : 'ISMPOS',
+				width : 100,
+				formatter : function(value, row, index) {
+					if (value == '1') {
+						return '传统POS';
+					} else if (value == '0') {
+						return 'MPOS';
+					} else if (value == '2') {
+						return '会员宝收银台';
+					} else if (value == '3'){
+						return '会员宝PLUS';
+					}
+				}
+			}, {
+				title : '交易方式',
+				field : 'TYPE',
+				width : 90,
+				formatter : function(value, row, index) {
+					if (value == '0') {
+						return '银行卡';
+					} else if (value == '1') {
+						return '微信';
+					} else if (value == '2') {
+						return '支付宝';
+					} else if (value == '3') {
+						return '银联二维码';
+					} else if (value == '4') {
+						return '快捷支付';
+					} else if (value == '5') {
+						return '手机Pay';
+					} else if (value == '6') {
+						return '信用卡还款';
+					} else {
+						return '所有';
+					}
+				}
+			}, {
+				title : '交易笔数',
+				field : 'TXNCOUNT',
+				width : 100
+			}, {
+				title : '交易金额',
+				field : 'TXNAMOUNT',
+				width : 100
+			}, {
+				title : '交易手续费',
+				field : 'MDA',
+				width : 100
+			}, {
+				title : '退款笔数',
+				field : 'REFUNDCOUNT',
+				width : 100
+			}, {
+				title : '退款金额',
+				field : 'REFUNDAMT',
+				width : 100
+			}, {
+				title : '退款手续费',
+				field : 'REFUNDMDA',
+				width : 100
+			}, {
+				title : '结算金额',
+				field : 'MNAMT',
+				width : 100
+			} ] ]
+		});
+		sysAdmin_20590_listUnitDealDataTotal();
+	});
+	
+	function sysAdmin_20590_listUnitDealDataTotal(){
+		$.ajax({
+			url : '${ctx}/sysAdmin/checkUnitDealData_listUnitDealDataTotal.action',
+			type:'post',
+			data:serializeObject($('#sysAdmin_20590_searchForm')),
+			dataType:'json',
+			success:function(data, textStatus, jqXHR) {
+				if (data[1].msg!=''||data[1].msg!=null) {
+					$('#sysAdmin_20590_showTotal').html(data[1].msg)
+				}
+			}
+		});
+	}
+</script>
+
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div id="sysAdmin_20590_toolbar">
+		<a href="javascript:;" onclick="sysAdmin_20590_export()" class="easyui-linkbutton" data-options="iconCls:'icon-query-export',plain:true">导出Excel</a>
+		<a id="sysAdmin_20590_showTotal" href="javascript:;"class="easyui-linkbutton"  data-options="plain:true"></a>
+	</div>
+	<div data-options="region:'north',border:false"
+		style="height: 100px; overflow: hidden; padding-top: 20px;">
+		<form id="sysAdmin_20590_searchForm" style="padding-left: 3%">
+			<table class="tableForm">
+				<tr>
+					<th>商户编号：</th>
+					<td><input class="easyui-validatebox" name="mid"
+						style="width: 156px;" /></td>
+					<th>商户名称：</th>
+					<td><input class="easyui-validatebox" name="rname"
+						style="width: 156px;" /></td>
+					<th>机构号：</th>
+					<td><select name="unno" id="unno_20590"
+						class="easyui-combogrid" style="width: 158px;"></select></td>
+					<th>交易渠道：</th>
+					<td><select name="isMpos" class="easyui-combobox"
+						data-options="panelHeight:'auto',editable:false"
+						style="width: 158px;">
+							<option value="" selected="selected">所有</option>
+							<option value="1">传统POS</option>
+							<option value="0">MPOS</option>
+							<option value="2">会员宝收银台</option>
+							<option value="3">会员宝PLUS</option>
+					</select></td>
+				</tr>
+				<tr>
+					<th>交易方式：</th>
+					<td><select name="type" class="easyui-combobox"
+						data-options="panelHeight:'auto',editable:false"
+						style="width: 158px;">
+							<option value="" selected="selected">所有</option>
+							<option value="0">银行卡</option>
+							<option value="1">微信</option>
+							<option value="2">支付宝</option>
+							<option value="3">银联二维码</option>
+							<option value="4">快捷支付</option>
+							<option value="5">手机Pay</option>
+							<option value="6">信用卡还款</option>
+					</select></td>
+					<th>交易日期</th>
+					<td><input class="easyui-datebox" id="txnDay_20590"
+						name="txnDay" style="width: 158px;" /></td>
+					<th>&nbsp;&nbsp;-&nbsp;&nbsp;</th>
+					<td>
+						<input class="easyui-datebox" id="txnDay1_20590" name="txnDay1"
+						style="width: 158px;" /></td>
+					<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a
+						href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-search',plain:true"
+						onclick="sysAdmin_20590_searchFun();">查询</a> &nbsp; <a
+						href="javascript:void(0);" class="easyui-linkbutton"
+						data-options="iconCls:'icon-cancel',plain:true"
+						onclick="sysAdmin_20590_cleanFun();">清空</a>
+					</td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
+
+	<div data-options="region:'center', border:false"
+		style="overflow: hidden;">
+		<table id="sysAdmin_20590_datagrid" style="overflow: hidden;"></table>
+	</div>
+</div>

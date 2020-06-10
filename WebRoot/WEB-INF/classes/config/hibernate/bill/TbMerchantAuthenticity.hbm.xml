@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MerchantAuthenticityModel" table="BILL_MERAUTHINFO">
+		<id name="bmatid" column="BMATID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_MERAUTHINFO</param>
+			</generator>
+		</id>
+		<property name="username" column="USERNAME"/>
+		<property name="mid" column="MID"/>
+		<property name="legalNum" column="LEGALNUM"/>
+		<property name="bankAccName" column="BANKACCNAME"/>
+		<property name="bankAccNo"  column="BANKACCNO"/>
+		<property name="accnoExpdate"  column="ACCNOEXPDATE"/>
+		<property name="status"  column="STATUS"/>
+		<property name="respcd"  column="RESPCD"/>
+		<property name="cdate" type="timestamp"  column="CDATE"/>
+		<property name="respinfo"  column="RESPINFO"/>
+		<property name="sysseqnb" column="SYSSEQNB"/>
+		<property name="cardName" column="CARDNAME"/>
+		<property name="authType" column="AUTHTYPE"/>
+		<property name="approveNote" column="APPROVENOTE"/>
+		<property name="authUpload" column="AUTHUPLOAD"/>
+		<property name="unno" column="UNNO"/>
+		<property name="sendType" column="SENDTYPE"/>
+		<property name="cardholderName" column="CARDHOLDERNAME"/>
+    </class>
+</hibernate-mapping>

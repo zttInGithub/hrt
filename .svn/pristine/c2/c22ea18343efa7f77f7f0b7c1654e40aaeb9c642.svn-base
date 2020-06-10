@@ -1,0 +1,210 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<script type="text/javascript">
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_10921_datagrid').datagrid({
+			url :'${ctx}/phone/gateOrder_queryGateOrders.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			ctrlSelect:true,
+			checkOnSelect:true,
+			pageSize : 10,
+			pageList : [ 10, 15 ],
+			sortName: 'PLACEORDERTIME',
+			sortOrder: 'desc',
+			idField : 'mid',
+			columns : [[{
+				title : '商户mid',
+				field : 'MID',
+				width : 180
+			},{
+				title :'和融通号',
+				field :'HRTORDERID',
+				width : 200
+			},{
+				title :'三方订单号',
+				field :'ORDERDERID',
+				width : 200,
+			},{
+				title :'付款单号',
+				field :'PAYORDERID',
+				width : 200
+			},{
+				title :'订单批次id',
+				field :'BATCHID',
+				width : 100
+			},{
+				title :'唯一编号',
+				field :'UNIQUECODE',
+				width : 200
+			},{
+				title :'是否快速办理',
+				field :'IDQUICK',
+				width : 50
+			},{
+				title :'是否本人下单',
+				field :'ISUSPRICE',
+				width : 50
+			},{
+				title :'总计下单金额',
+				field :'TOTALFEE',
+				width : 100
+			},{
+				title :'是否是私家车',
+				field :'PRIVATEFLAG',
+				width : 100
+			},{
+				title :'订单状态',
+				field :'STATE',
+				width : 100
+			},{
+			    title :'下单时间',
+				field :'PLACEORDERTIME',
+				width : 100
+			}
+			,
+			{
+			    title :'补款金额',
+				field :'AMOUNT',
+				width : 100
+			}
+			]],
+			toolbar:[{
+				id:'btn_run',
+				text:'资料导出',
+				iconCls:'icon-query-export',
+				handler:function(){
+					sysAdmin_gateOrders_exportFun();
+				}
+			}]
+		});
+	});
+	
+	function sysAdmin_gateOrders_exportFun() {
+		var txnDay = $('#createDateStart_10921').datebox('getValue');
+    	var txnDay1= $('#createDateEnd_10921').datebox('getValue');
+        var start=new Date(txnDay.replace("-", "/").replace("-", "/"));  
+        var end=new Date(txnDay1.replace("-", "/").replace("-", "/")); 
+        if(txnDay!=null&&txnDay1!=null&&((end-start)/(24*60*60*1000))>=31){
+	 		$.messager.alert('提示', "开始日期 和 截止日期 之差不能超过31天！");
+	    }
+	    else{
+			$('#sysAdmin_10921_searchForm').form('submit',{
+			    		url:'${ctx}/phone/gateOrder_exportGateOrders.action'
+			});
+	    }
+	}
+	
+	//表单查询
+	function sysAdmin_10921_searchFun80() {
+		var txnDay = $('#createDateStart_10921').datebox('getValue');
+    	var txnDay1= $('#createDateEnd_10921').datebox('getValue');
+        var start=new Date(txnDay.replace("-", "/").replace("-", "/"));  
+        var end=new Date(txnDay1.replace("-", "/").replace("-", "/")); 
+        if(txnDay!=null&&txnDay1!=null&&((end-start)/(24*60*60*1000))>=31){
+	 		$.messager.alert('提示', "开始日期 和 截止日期 之差不能超过31天！");
+	    }
+	    else{
+			$('#sysAdmin_10921_datagrid').datagrid('load', serializeObject($('#sysAdmin_10921_searchForm')));
+	    } 
+	}
+
+	//清除表单内容
+	function sysAdmin_10921_cleanFun80() {
+		$('#sysAdmin_10921_searchForm input').val('');
+	}
+	
+	//查看终端
+	function sysAdmin_10921_queryFun(mid){
+		$('<div id="sysAdmin_10921_run"/>').dialog({
+			title: '查看终端',
+			width: 850,   
+		    height: 400, 
+		    closed: false,
+		    href:'${ctx}/biz/bill/merchant/10487.jsp?mid='+mid,  
+		    modal: true,
+			onClose : function() {
+				$(this).dialog('destroy');
+			}  
+		});
+	}
+	function sysAdmin_erweima_queryImage(mid) { 
+		var qrurl="";
+		//var timestamp= (new Date()).valueOf();
+		//var img='${ctx}/sysAdmin/checkReceiptsOpreation_queryQrCodeImageShow.action?mid='+mid+'&timestamp='+timestamp;
+		var url = '${ctx}/sysAdmin/merchant_queryMerchanWithQRUrl.action?mid='+mid;
+		$.ajax({
+			type: 'GET',
+			//async: false, //是否异步
+			url: url,
+			dataType: 'json',
+			success:function(data) {
+				qrurl=data.msg;
+				showBigImg(qrurl);
+			}
+		});
+	}
+
+</script>
+
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:100px; overflow: hidden; padding-top:20px;">
+		<form id="sysAdmin_10921_searchForm" style="padding-left:3%" method="post">
+		<input type="hidden" id="bmids_480" name="bmids" />
+			<table class="tableForm" >
+				<tr>
+					<th>HRT订单号:</th>
+					<td><input name="hrtOrderId" style="width:150px;"/></td>
+					<th>&nbsp;&nbsp;付款订单号:</th>
+					<td><input name="payOrderId" style="width:150px;"/></td>
+					<th>&nbsp;&nbsp;订单批次号:</th>
+					<td><input name="batchId" style="width:150px;"/></td>
+					<th>&nbsp;&nbsp;三方订单号:</th>
+					<td><input name="orderId" style="width:150px;"/></td>
+				</tr> 
+				<tr>
+					<th>&nbsp;&nbsp;商户编号:</th>
+					<td><input name="mid" style="width: 150px;" /></td>
+					<th>&nbsp;&nbsp;下单时间:</th>
+					<td colspan="3"><input name="placeOrderTimeBegin" id="createDateStart_10921" class="easyui-datebox" data-options="editable:false" style="width: 200px;"/>&nbsp;至&nbsp;
+						<input name="placeOrderTimeEnd" id="createDateEnd_10921" class="easyui-datebox" data-options="editable:false" style="width: 200px;"/>
+					</td>
+					<th>&nbsp;&nbsp;订单状态:</th>
+					<td>
+						<select name="state" class="easyui-combobox" data-options="panelHeight:'auto',editable:false"  style="width:155px;">
+		    				<option value="" selected="selected">查询所有</option>
+		    				<option value="0">待支付</option>
+		    				<option value="1">已到账</option>
+		    				<option value="3">待补款</option>
+		    				<option value="4">待补资料</option>
+		    				<option value="5">待补款/补资料</option>
+		    				<option value="6">退款中</option>
+		    				<option value="7">订单处理失败</option>
+		    				<option value="8">订单处理成功</option>
+		    				<option value="9">办理中</option>
+		    			</select>
+					</td>
+					<td colspan="2" style="text-align: center;">
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" 
+						onclick="sysAdmin_10921_searchFun80();">查询</a> &nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="sysAdmin_10921_cleanFun80();">清空</a>	
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>  
+	
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+      <table id="sysAdmin_10921_datagrid" style="overflow: hidden;"></table>
+    </div> 
+</div>
+
+

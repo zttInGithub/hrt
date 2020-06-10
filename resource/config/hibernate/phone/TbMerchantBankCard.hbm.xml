@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.phone.entity.model">
+	<class name="MerchantBankCardModel" table="BILL_MERCHANTBANKCARDINFO">
+		<id name="mbcid" column="MBCID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTBANKCARDINFO</param>
+			</generator>
+		</id>
+		<property name="mid" column="MID"/>
+		<property name="bankAccNo" column="BANKACCNO"/>
+		<property name="bankAccName" column="BANKACCNAME"/>
+		<property name="createDate" type="timestamp" column="CREATEDATE"/>
+		<property name="matainDate" type="timestamp" column="MATAINDATE" />
+		<property name="status" column="STATUS"/>
+		<property name="merCardType" column="MERCARDTYPE"/>
+		<property name="payBankId" column="PAYBANKID"/>
+		<property name="bankBranch" column="BANKBRANCH"/>
+    </class>
+</hibernate-mapping>

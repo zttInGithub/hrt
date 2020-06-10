@@ -1,0 +1,188 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<head>
+  <script type="text/javascript">
+      var type = <%=request.getParameter("type")%>;
+      $(function () {
+          $('#pointType1').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'pointType'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '规则类型', width: 150}
+              ]]
+          });
+          $('#txnWay1').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'txnWay'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '交易类型', width: 150}
+              ]]
+          });
+          $('#timeType1').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'timeType'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '开始时间类型', width: 150}
+              ]]
+          });
+          $('#cycle1').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'cycle'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '统计周期', width: 150}
+              ]]
+          });
+          $('#txnType1').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'txnType'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '交易类型', width: 150}
+              ]]
+          });
+          $('#backType11').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'backType1'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '返现对象1', width: 150}
+              ]]
+          });
+          $('#backType21').combogrid({
+              url: '${ctx}/sysAdmin/enumAction_getEnumInfoList.action',
+              idField: 'enumValue',
+              textField: 'enumName',
+              mode: 'remote',
+              fitColumns: true,
+              queryParams: {
+                  enumTable: 'bill_rebate_rule',
+                  enumColumn: 'backType2'
+              },
+              columns: [[
+                  {field: 'enumValue', title: '值', width: 50, checkbox: true},
+                  {field: 'enumName', title: '返现对象2', width: 150}
+              ]]
+          });
+
+          if(type==1){
+              $('#ruleNameTr').hide();
+          }
+      })
+
+  </script>
+</head>
+<form id="s_rebate_rule_add_addForm" style="padding-left:20px;" method="post">
+  <fieldset style="width: 800px;">
+    <legend>活动规则触发条件</legend>
+    <table class="table1">
+      <tr id="ruleNameTr">
+        <th>规则名称：</th>
+        <td colspan="3"><input type="text" id="brrName" name="brrName" style="width: 150px;"><font color="red">&nbsp;不能存在重复名称*</font></td>
+      </tr>
+      <tr>
+        <th>规则类型：</th>
+        <td><input type="text" id="pointType1" name="pointType" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+        <th>交易类型：</th>
+        <td><input type="text" id="txnWay1" name="txnWay" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+      <tr>
+        <th>开始时间类型：</th>
+        <td><input type="text" id="timeType1" name="timeType" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+        <th>统计周期：</th>
+        <td><input type="text" id="cycle1" name="cycle" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+      <tr>
+        <th>开始时间：</th>
+        <td><input type="text" name="startTime" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+
+        <th>结束时间：</th>
+        <td><input type="text" name="endTime" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+      <tr>
+        <th>交易金额类型：</th>
+        <td><input type="text" id="txnType1" name="txnType"><font color="red">&nbsp;*</font></td>
+
+        <th>交易金额-刷卡：</th>
+        <td><input type="text" name="txnAmount" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <fieldset style="width: 800px;">
+    <legend>活动规则返利详情</legend>
+    <table class="table1">
+      <tr>
+        <th>返现对象1：</th>
+        <td><input type="text" id="backType11" name="backType1" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+        <th>返利金额1：</th>
+        <td><input type="text" name="backAmount1" style="width: 150px;" ><font color="red">&nbsp;*</font></td>
+      </tr>
+      <tr>
+        <th>返现对象2：</th>
+        <td><input type="text" id="backType21" name="backType2" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+        <th>返利金额2：</th>
+        <td><input type="text" name="backAmount2" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+      <tr>
+        <th>交易月-销售月开始：</th>
+        <td><input type="text" name="startMonth" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+
+        <th>交易月-销售月结束：</th>
+        <td><input type="text" name="endMonth" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+      <tr>
+        <th>扣款成功金额：</th>
+        <td><input type="text" name="paymentAmount" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+        <th>描述：</th>
+        <td><input type="text" name="remark1" style="width: 150px;"><font color="red">&nbsp;*</font></td>
+      </tr>
+    </table>
+  </fieldset>
+  <input type="hidden" name="brrId" id="brrId">
+</form>

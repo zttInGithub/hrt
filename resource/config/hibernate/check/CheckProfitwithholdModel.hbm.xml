@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckProfitwithholdModel" table="check_profitWithhold">
+        <id name="id" column="id">
+           <generator class="sequence">
+				<param name="sequence">S_check_profitWithhold</param>
+			</generator>
+        </id>
+      <property name="applicantUnno" column="APPLICANTUNNO" ></property>
+      <property name="executingUnno" column="EXECUTINGUNNO" ></property>
+      <property name="withholdingAmount" column="WITHHOLDINGAMOUNT" ></property>
+      <property name="deductionSource" column="DEDUCTIONSOURCE" ></property>
+      <property name="effectiveDate" column="EFFECTIVEDATE" ></property>
+      <property name="cby" column="CBY" ></property>
+      <property name="agreePerson" column="AGREEPERSON" ></property>
+      <property name="agreeDate" column="AGREEDATE" type="timestamp"></property>
+      <property name="approveStatus" column="APPROVESTATUS" ></property>
+      <property name="maintainType" column="MAINTAINTYPE" ></property>
+      <property name="maintainDate" column="MAINTAINDATE" type="timestamp"></property>
+      <property name="minfo1" column="MINFO1" ></property>
+      <property name="minfo2" column="MINFO2" ></property>
+      <property name="remark" column="REMARK" ></property>
+    </class>
+</hibernate-mapping>

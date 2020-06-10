@@ -1,0 +1,253 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<script type="text/javascript">
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_merchantBocomList_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/merchantInfoComm_listBocomInfo.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			ctrlSelect:true,
+			checkOnSelect:true,
+			singleSelect:true,
+			pageSize : 10,
+			pageList : [ 10, 15 ],
+			sortName: 'MID',
+			sortOrder: 'desc',
+			idField : 'MAID',
+			columns : [[{
+				title : 'ID',
+				field : 'MAID',
+				checkbox:true
+			},{
+				title : 'MID',
+				field : 'MID',
+				width : 100,
+				sortable :true
+			},{
+				title :'商户名称',
+				field :'MERCHNAME',
+				sortable:true,
+				width : 100
+			},{
+				title :'法人',
+				field :'LEGALPERSON',
+				sortable:true,
+				width : 100
+			},{
+				title :'经营地址',
+				field :'RADDR',
+				sortable:true,
+				width : 100
+			},{
+			    title :'受理状态',
+				field :'STATUS',
+				width : 100	,			
+				sortable:true,
+				formatter:function(value,row,index){
+				if(value==1){ 
+					return '正常';
+				}else{
+					return '非正常'; 
+				}
+				} 
+			},{
+				title :'操作',
+				field :'operation',
+				width : 100,
+				align : 'center',
+				formatter : function(value,row,index) {
+					return '<img src="${ctx}/images/query_search.png" title="查看明细" style="cursor:pointer;" onclick="sysAdmin_merchantList_queryFun('+index+')"/>&nbsp;&nbsp'+
+					'<img src="${ctx}/images/frame_pencil.png" title="查看终端" style="cursor:pointer;" onclick="sysAdmin_selectMaid('+row.MAID+')"/>';
+				}
+			}]],
+			toolbar:[{
+					id:'btn_add_comm',
+					text:'交行商户录入',
+					iconCls:'icon-add',//del
+					handler:function(){
+						sysAdmin_10600_addFun();
+					}
+				}]		  
+		});
+	});
+	//交行商户信息录入
+	function sysAdmin_10600_addFun() {
+		$('<div id="sysAdmin_10600_addDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">交行商户录入</span>',
+			width: 900,
+		    height:550, 
+		    closed: false,
+		    href: '${ctx}/biz/bill/merchant/10600.jsp',
+		    modal: true,
+		    buttons:[{	
+		    	text:'确认',
+		    	iconCls:'icon-ok',
+		    	handler:function() {
+		    	
+		    		var inputs = document.getElementById("sysAdmin_10600_saveForm").getElementsByTagName("input");
+		    		for(var i=0;i<inputs.length;i++){
+		    	    	if(inputs[i].type=="file"){continue;}
+		    			inputs[i].value = $.trim(inputs[i].value);
+		    		}
+		    	
+		    		var validator = $('#sysAdmin_10600_saveForm').form('validate');
+		    		if(validator){
+		    			$.messager.progress();
+		    		}
+		    		
+		    		$('#sysAdmin_10600_saveForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/merchantInfoComm_addMerchantInfo.action',
+		    			success:function(data) {
+		    				$.messager.progress('close'); 
+		    				var result = $.parseJSON(data);
+			    			if (result.sessionExpire) {
+			    				window.location.href = getProjectLocation();
+				    		} else {
+				    			if (result.success) {
+				    				$('#sysAdmin_merchantBocomList_datagrid').datagrid('reload');//重新加载
+					    			$('#sysAdmin_10600_addDialog').dialog('destroy');//销毁页面
+					    			$.messager.show({
+										title : '提示',
+										msg : result.msg
+									});
+					    		} else {
+					    			$.messager.alert('提示', result.msg);
+						    	}
+					    	}
+			    		}
+			    	});
+		    	}			    
+			},{
+				text:'取消',
+				iconCls:'icon-cancel',
+				handler:function() {
+					$('#sysAdmin_10600_addDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+			}
+		});
+	}
+	
+	//查看明细
+	function sysAdmin_merchantList_queryFun(index){
+		$('<div id="sysAdmin_merchantBocomList_queryDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">查看商户明细</span>',
+			width: 900,
+		    height:550, 
+		    closed: false,
+		    modal: true,
+		    href: '${ctx}/biz/bill/merchant/10521.jsp',
+		    onLoad:function() {
+		    	var rows = $('#sysAdmin_merchantBocomList_datagrid').datagrid('getRows');
+				var row = rows[index];
+                if(row.contactPhone!=""&&row.contactPhone!=null && row.contactPhone.length==11){
+                    row.contactPhone=row.contactPhone.substring(0,3)+'****'+row.contactPhone.substring(row.contactPhone.length-4,row.contactPhone.length);
+                }
+		    	$('#sysAdmin_merchantBocomInfo_queryForm').form('load', row);
+			},
+			buttons:[{
+				text:'关闭', 
+				iconCls:'icon-ok',
+				handler:function() { 
+					$('#sysAdmin_merchantBocomList_queryDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+				$('#sysAdmin_merchantBocomList_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+	
+	//表单查询
+	function sysAdmin_merchant_searchFun2() {
+		$('#sysAdmin_merchantBocomList_datagrid').datagrid('load', serializeObject($('#sysAdmin_merchant_searchForm2'))); 
+	}
+
+	//清除表单内容
+	function sysAdmin_merchant_cleanFun() {
+		$('#sysAdmin_merchant_searchForm2 input').val('');
+	}
+
+	function sysAdmin_selectMaid(maid){ 
+			$('<div id="sysAdmin_Maid_queryDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">查看商户终端</span>',
+			width: 900,
+		    height:300, 
+		    closed: false,
+		    modal: true,
+		    href: '${ctx}/biz/bill/merchant/10523.jsp?maid='+maid,
+			buttons:[{
+				text:'关闭', 
+				iconCls:'icon-ok',
+				handler:function() { 
+					$('#sysAdmin_Maid_queryDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+				$('#sysAdmin_merchantBocomList_datagrid').datagrid('unselectAll');
+			}
+		});
+
+		}
+</script>
+
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:160px; overflow: hidden; padding-top:10px;">
+		<form id="sysAdmin_merchant_searchForm2" style="padding-left:10%">
+			<table class="tableForm" >
+				<tr>
+					<th><font size="1">商户编号</font></th>
+					<td><font size="1"><input name="MID" style="width: 216px;"></font></td>
+				    
+					<th><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商户名称</font></th>
+					<td><font size="1"><input name="MERCHNAME" style="width: 316px;"></font></td>
+					<th><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;终端编号</font></th>
+					<td><font size="1"><input name="TID" style="width: 100px;"></font></td>
+				</tr> 
+			    <tr>
+					<th><font size="1">装机地址</font></th>
+					<td><font size="1"><input name="installedAddress" style="width: 216px;"></font></td>
+				   	<th><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开户账号</font></th>
+					<td><font size="1"><input name="AccNo" style="width: 316px;"></font></td>
+					<th><font size="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系人</font></th>
+					<td><font size="1"><input name="ContactPerson" style="width: 100px;"></font></td>
+				</tr> 
+				<tr>
+					<th><font size="1">联系人电话</font></th>
+					<td><font size="1"><input name="ContactPhone" style="width: 216px;"></font></td>
+				</tr> 
+				
+				
+				
+				
+				
+				
+				
+				
+				<tr>
+					<td colspan="5" style="text-align: center;">
+						<font size="1"><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="sysAdmin_merchant_searchFun2();">查询</a> &nbsp; 
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="sysAdmin_merchant_cleanFun();">清空</a></font>	
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>  
+	
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+      <table id="sysAdmin_merchantBocomList_datagrid" style="overflow: hidden;"></table>
+    </div> 
+</div>
+
+

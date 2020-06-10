@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckCashModel" table="CHECK_CASH">
+        <id name="pcid" column="PCID">
+            <generator class="sequence">
+				<param name="sequence">S_CHECK_CASH</param>
+			</generator>
+        </id>
+      <property name="mid" column="MID" ></property>
+      <property name="cashDay" column="CASHDAY" ></property>
+      <property name="cashMode" column="CASHMODE" ></property>
+      <property name="cashAmt" column="CASHAMT" ></property>
+      <property name="cashFee" column="CASHFEE" ></property>
+      <property name="cashStatus" column="CASHSTATUS" ></property>
+      <property name="cashDate" column="CASHDATE" type="timestamp"></property>
+      <property name="profit" column="PROFIT"></property>
+    </class>
+</hibernate-mapping>

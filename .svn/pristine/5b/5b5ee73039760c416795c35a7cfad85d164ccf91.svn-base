@@ -1,0 +1,205 @@
+package com.hrt.biz.check.action;
+
+import java.io.File;
+import java.io.OutputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.biz.check.entity.pagebean.CheckSettleReturnBean;
+import com.hrt.biz.check.service.CheckSettleReturnService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class CheckSettleReturnAction extends BaseAction implements ModelDriven<CheckSettleReturnBean> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final Log log = LogFactory.getLog(CheckSettleReturnAction.class);
+	
+	private CheckSettleReturnService  checkSettleReturnService;
+	private File upload;
+	private String cfpids;
+	private CheckSettleReturnBean checkSettleReturnBean = new CheckSettleReturnBean();
+	
+	@Override
+	public CheckSettleReturnBean getModel() {
+		return checkSettleReturnBean;
+	}
+	
+	
+	public File getUpload() {
+		return upload;
+	}
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public String getCfpids() {
+		return cfpids;
+	}
+	public void setCfpids(String cfpids) {
+		this.cfpids = cfpids;
+	}
+
+	public CheckSettleReturnService getCheckSettleReturnService() {
+		return checkSettleReturnService;
+	}
+
+	public void setCheckSettleReturnService(
+			CheckSettleReturnService checkSettleReturnService) {
+		this.checkSettleReturnService = checkSettleReturnService;
+	}
+
+
+	/**
+	 * 查询补付信息
+	 */
+	public void queryFillPayInfo(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		UserBean user=(UserBean)userSession;
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb=checkSettleReturnService.queryFillPayListData(checkSettleReturnBean,user);
+			json.setMsg("查询成功！");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMsg("查询失败!");
+			json.setSuccess(false);
+		}
+		super.writeJson(dgb);
+	}
+	
+	
+	/**
+	 * 查询补付信息(未补付)
+	 */
+	public void queryFillPayInfoByStatus(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		UserBean user=(UserBean)userSession;
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb=checkSettleReturnService.queryFillPayListDataByStatus(checkSettleReturnBean,user);
+			json.setMsg("查询成功！");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMsg("查询失败!");
+			json.setSuccess(false);
+		}
+		super.writeJson(dgb);
+	}
+	
+	
+	/*
+	 * 确认补付
+	 */
+	public void updateAgainFillPay(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try {
+			checkSettleReturnService.updateFillPayInfoStatus(cfpids);
+			json.setMsg("修改成功!");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMsg("修改失败!");
+			json.setSuccess(false);
+		}
+		super.writeJson(json);
+	}
+	
+	/*
+	 * Excel 导入待补付的文件
+	 */
+	public void  addMoreFillPayInfoFromExcel(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		UserBean user=(UserBean)userSession;
+		if(user == null){
+			json.setSessionExpire(true);
+		}
+		//把文件保存到服务器目录下
+		String fileName = ServletActionContext.getRequest().getParameter("importFillPayFile");
+		String basePath = ServletActionContext.getRequest().getRealPath("/upload");
+		File dir = new File(basePath);
+		dir.mkdir();		
+		// 使用UUID做为文件名，以解决重名的问题
+		String path = basePath +"/"+fileName;
+		File destFile = new File(path);
+		upload.renameTo(destFile);
+		String folderPath = ServletActionContext.getRequest().getRealPath("/upload");
+		String xlsfile = folderPath +"/"+fileName;
+		try {
+			if(xlsfile.length() > 0 && xlsfile != null){
+			    boolean a=checkSettleReturnService.saveMoreFillPayInfo(xlsfile,user,fileName);
+				if(a==true){
+					json.setSuccess(true);
+					json.setMsg("文件导入成功!");
+					super.writeJson(json);
+				}else{
+					json.setSuccess(false);
+					json.setMsg("文件导入失败！");
+					super.writeJson(json);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setSuccess(false);
+			json.setMsg("文件导入失败！");
+			super.writeJson(json);
+		}
+		File file = new File(folderPath);
+		String[] tempList = file.list();
+		File temp = null;
+		for (int i = 0; i < tempList.length; i++) {
+			if (path.endsWith(File.separator)) {
+				temp = new File(folderPath + tempList[i]);
+			} else {
+				temp = new File(folderPath + File.separator + tempList[i]);
+			}
+			if (temp.exists() && temp.isFile()) {
+				boolean flag = temp.delete(); // 删除上传到服务器的文件
+				int j = i + 1;
+				log.error("成功删除文件:第" + j + "个文件删除是否成功？" + flag);
+			} else {
+				log.error("文件不存在");
+			}
+		}
+	}
+	
+	/**
+	 * 导出补付失败记录（Excell）
+	 */
+	public void exportFillPayInfo(){
+		HttpServletResponse response=getResponse();
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		UserBean user=(UserBean)userSession;
+		try{
+			HSSFWorkbook wb=checkSettleReturnService.exportFillPayInfo(checkSettleReturnBean,user);
+			response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+			response.setHeader("Content-Disposition", "attachment; filename=" + new String("补付记录导出".getBytes("GBK"), "ISO-8859-1") + ".xls");  
+	        OutputStream ouputStream= response.getOutputStream();
+	        wb.write(ouputStream);  
+	        ouputStream.flush();  
+	        ouputStream.close();
+			json.setSuccess(true);
+			json.setMsg("导出补付记录Excel成功");
+		} catch (Exception e) {
+			log.error("导出补付记录Excel异常：" + e);
+			json.setMsg("导出补付记录Excel失败");
+			json.setSuccess(false);
+		}
+	}
+
+}

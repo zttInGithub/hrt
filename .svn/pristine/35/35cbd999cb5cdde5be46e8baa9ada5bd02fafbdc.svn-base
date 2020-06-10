@@ -1,0 +1,98 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!-- 不要对账开通了，跟审批通过换到了一起 -->    
+<script type="text/javascript">
+
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_merchantcheck_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/merchant_listMerchantInfoYCheck.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			pageSize : 10,
+			pageList : [ 10, 15 ],
+			sortName: 'bmid',
+			sortOrder: 'desc',
+			idField : 'bmid',
+			columns : [[{
+				title : '商户ID',
+				field : 'bmid',
+				width : 100,
+				hidden : true
+			},{
+				title : '商户全称',
+				field : 'rname',
+				width : 100
+			},{
+				title :'商户简称',
+				field :'shortName',
+				width : 100
+			},{
+				title :'凭条打印名称',
+				field :'printName',
+				width : 100
+			},{
+				title :'经营范围',
+				field :'businessScope',
+				width : 100
+			},{
+				title :'电子邮箱',
+				field :'email',
+				width : 100
+			},{
+				title :'商户所在地区',
+				field :'provinceCode',
+				width : 100
+			},{
+				title :'操作',
+				field :'operation',
+				width : 100,
+				align : 'center',
+				formatter : function(value,row,index) {
+					//return '<img src="${ctx}/images/frame_pencil.png" title="入网开通" style="cursor:pointer;" onclick="sysAdmin_merchantZK_editFun('+index+')"/>&nbsp;&nbsp'+
+					//'<img src="${ctx}/images/frame_remove.png" title="对账开通" style="cursor:pointer;" onclick="sysAdmin_merchantZK_delFun('+row.buid+')"/>';
+					return '<input type="button" value="对账开通" onclick="sysAdmin_merchantcheck_editFun('+row.bmid+')"/>';
+				}
+			}]]
+		});
+	});
+	
+	function sysAdmin_merchantcheck_editFun(bmid){
+		$.messager.confirm('确认','您确认要为该商户开通对账吗?',function(result) {
+			if (result) {
+				$.ajax({
+					url:"${ctx}/sysAdmin/merchant_updateMerchantInfoCheck.action",
+					type:'post',
+					data:{"bmid":bmid},
+					dataType:'json',
+					success:function(data, textStatus, jqXHR) {
+						if (data.success) {
+							$.messager.show({
+								title : '提示',
+								msg : data.msg
+							});
+							$('#sysAdmin_merchantcheck_datagrid').datagrid('reload');
+						} else {
+							$.messager.alert('提示', data.msg);
+							$('#sysAdmin_merchantcheck_datagrid').datagrid('unselectAll');
+						}
+					},
+					error:function() {
+						$.messager.alert('提示', '开通对账出错！');
+						$('#sysAdmin_merchantcheck_datagrid').datagrid('unselectAll');
+					}
+				});
+			} else {
+				$('#sysAdmin_merchantcheck_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+	
+</script>
+
+<table id="sysAdmin_merchantcheck_datagrid" style="overflow: hidden;"></table>
+

@@ -1,0 +1,333 @@
+package com.hrt.biz.bill.entity.pagebean;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class TerminalInfoBean implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	private Integer page;			// 当前页数
+	private Integer rows;			// 总记录数
+	private String sort;			// 排序字段
+	private String order;			// 排序规则 ASC DESC
+	private Integer btID;			//唯一主键
+	private String unNO;			//机构编号
+	private String unNO1;			//机构编号
+	private String termID;				//终端编号
+	private String keyType;			//密钥类型
+	private String keyContext;		//密钥明文
+	private Date keyConfirmDate;	//合成时间起
+	private Date keyConfirmDateEnd;	//合成时间止
+	private Date allotConfirmDate;	//分配时间
+	private Date usedConfirmDate;	//使用时间
+	private Integer status;			//状态
+	private Integer maintainUID;	//操作人员  
+	private Date maintainDate;		//操作日期
+	private String maintainType;	//操作类型
+	private String sn;				//SN号
+	private Integer isM35;
+	
+	private String termIDStart;
+	private String termIDEnd;
+	private String snStart;
+	private String snEnd;
+	
+	private String unitName;		//机构名称
+	private Double rate;		    //费率
+	private Double scanRate;		    //扫码费率
+	private Double secondRate;		//秒到手续费
+	private Integer rebateType;		//返利类型 1循环送；2返款； 空/0无返利
+	private Integer depositAmt;	//押金
+	private Integer snType;	//三级分销设备类型：1小蓝牙，2大蓝牙
+	private String terOrderID; //导出批次号
+	private Integer pdlid; //发货单号	
+	private String machineModel; //机型名称
+	private String batchID; //导入批次号
+	private String storage; //库位
+	private Date outDate;//出库时间
+	private Date outDateEnd;
+	
+	private String deliverNum;//数量
+	
+	private String type;//版本类型：0-秒到版，1-极速版     
+	
+	private String isdepositamt;//特殊费率sn调整中,判断是否修改押金
+	private String ishuabei;//特殊费率sn调整中，判断是否修改花呗费率
+	private String ratetype;//特殊费率sn调整中，判断修改的是扫码2/刷卡1/扫码+刷卡3/都不null
+	private BigDecimal scanRateUp;//扫码1000以上费率
+	private BigDecimal huabeiRate;//花呗费率
+	
+	public String getIsdepositamt() {
+		return isdepositamt;
+	}
+	public void setIsdepositamt(String isdepositamt) {
+		this.isdepositamt = isdepositamt;
+	}
+	public String getIshuabei() {
+		return ishuabei;
+	}
+	public void setIshuabei(String ishuabei) {
+		this.ishuabei = ishuabei;
+	}
+	public String getRatetype() {
+		return ratetype;
+	}
+	public void setRatetype(String ratetype) {
+		this.ratetype = ratetype;
+	}
+	public BigDecimal getScanRateUp() {
+		return scanRateUp;
+	}
+	public void setScanRateUp(BigDecimal scanRateUp) {
+		this.scanRateUp = scanRateUp;
+	}
+	public BigDecimal getHuabeiRate() {
+		return huabeiRate;
+	}
+	public void setHuabeiRate(BigDecimal huabeiRate) {
+		this.huabeiRate = huabeiRate;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public Date getOutDateEnd() {
+		return outDateEnd;
+	}
+	public void setOutDateEnd(Date outDateEnd) {
+		this.outDateEnd = outDateEnd;
+	}
+	public Date getOutDate() {
+		return outDate;
+	}
+	public void setOutDate(Date outDate) {
+		this.outDate = outDate;
+	}
+	public String getDeliverNum() {
+		return deliverNum;
+	}
+	public void setDeliverNum(String deliverNum) {
+		this.deliverNum = deliverNum;
+	}
+	public String getStorage() {
+		return storage;
+	}
+	public void setStorage(String storage) {
+		this.storage = storage;
+	}
+	public String getBatchID() {
+		return batchID;
+	}
+	public void setBatchID(String batchID) {
+		this.batchID = batchID;
+	}
+	public String getTerOrderID() {
+		return terOrderID;
+	}
+	public void setTerOrderID(String terOrderID) {
+		this.terOrderID = terOrderID;
+	}
+	public Integer getPdlid() {
+		return pdlid;
+	}
+	public void setPdlid(Integer pdlid) {
+		this.pdlid = pdlid;
+	}
+	public String getMachineModel() {
+		return machineModel;
+	}
+	public void setMachineModel(String machineModel) {
+		this.machineModel = machineModel;
+	}
+	public Integer getSnType() {
+		return snType;
+	}
+	public void setSnType(Integer snType) {
+		this.snType = snType;
+	}
+	public String getUnNO1() {
+		return unNO1;
+	}
+	public void setUnNO1(String unNO1) {
+		this.unNO1 = unNO1;
+	}
+	public Date getKeyConfirmDateEnd() {
+		return keyConfirmDateEnd;
+	}
+	public void setKeyConfirmDateEnd(Date keyConfirmDateEnd) {
+		this.keyConfirmDateEnd = keyConfirmDateEnd;
+	}
+	public Integer getDepositAmt() {
+		return depositAmt;
+	}
+	public void setDepositAmt(Integer depositAmt) {
+		this.depositAmt = depositAmt;
+	}
+	public Double getScanRate() {
+		return scanRate;
+	}
+	public void setScanRate(Double scanRate) {
+		this.scanRate = scanRate;
+	}
+	public Integer getRebateType() {
+		return rebateType;
+	}
+	public void setRebateType(Integer rebateType) {
+		this.rebateType = rebateType;
+	}
+	public Double getSecondRate() {
+		return secondRate;
+	}
+	public void setSecondRate(Double secondRate) {
+		this.secondRate = secondRate;
+	}
+	public Double getRate() {
+		return rate;
+	}
+	public void setRate(Double rate) {
+		this.rate = rate;
+	}
+	public String getUnitName() {
+		return unitName;
+	}
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+	public Integer getPage() {
+		return page;
+	}
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	public Integer getRows() {
+		return rows;
+	}
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public Integer getBtID() {
+		return btID;
+	}
+	public void setBtID(Integer btID) {
+		this.btID = btID;
+	}
+	public String getUnNO() {
+		return unNO;
+	}
+	public void setUnNO(String unNO) {
+		this.unNO = unNO;
+	}
+	public String getTermID() {
+		return termID;
+	}
+	public void setTermID(String termID) {
+		this.termID = termID;
+	}
+	public String getKeyType() {
+		return keyType;
+	}
+	public void setKeyType(String keyType) {
+		this.keyType = keyType;
+	}
+	public String getKeyContext() {
+		return keyContext;
+	}
+	public void setKeyContext(String keyContext) {
+		this.keyContext = keyContext;
+	}
+	public Date getKeyConfirmDate() {
+		return keyConfirmDate;
+	}
+	public void setKeyConfirmDate(Date keyConfirmDate) {
+		this.keyConfirmDate = keyConfirmDate;
+	}
+	public Date getAllotConfirmDate() {
+		return allotConfirmDate;
+	}
+	public void setAllotConfirmDate(Date allotConfirmDate) {
+		this.allotConfirmDate = allotConfirmDate;
+	}
+	public Date getUsedConfirmDate() {
+		return usedConfirmDate;
+	}
+	public void setUsedConfirmDate(Date usedConfirmDate) {
+		this.usedConfirmDate = usedConfirmDate;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public Integer getMaintainUID() {
+		return maintainUID;
+	}
+	public void setMaintainUID(Integer maintainUID) {
+		this.maintainUID = maintainUID;
+	}
+	public Date getMaintainDate() {
+		return maintainDate;
+	}
+	public void setMaintainDate(Date maintainDate) {
+		this.maintainDate = maintainDate;
+	}
+	public String getMaintainType() {
+		return maintainType;
+	}
+	public void setMaintainType(String maintainType) {
+		this.maintainType = maintainType;
+	}
+	public String getTermIDStart() {
+		return termIDStart;
+	}
+	public void setTermIDStart(String termIDStart) {
+		this.termIDStart = termIDStart;
+	}
+	public String getTermIDEnd() {
+		return termIDEnd;
+	}
+	public void setTermIDEnd(String termIDEnd) {
+		this.termIDEnd = termIDEnd;
+	}
+	public String getSn() {
+		return sn;
+	}
+	public void setSn(String sn) {
+		this.sn = sn;
+	}
+	public Integer getIsM35() {
+		return isM35;
+	}
+	public void setIsM35(Integer isM35) {
+		this.isM35 = isM35;
+	}
+	public String getSnStart() {
+		return snStart;
+	}
+	public void setSnStart(String snStart) {
+		this.snStart = snStart;
+	}
+	public String getSnEnd() {
+		return snEnd;
+	}
+	public void setSnEnd(String snEnd) {
+		this.snEnd = snEnd;
+	}
+	
+	
+}

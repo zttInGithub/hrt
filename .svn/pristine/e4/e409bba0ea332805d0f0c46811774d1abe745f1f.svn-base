@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PurchaseOrderModel" table="bill_PurchaseOrder">
+        <id name="poid" column="POID">
+            <generator class="sequence">
+				<param name="sequence">S_bill_PurchaseOrder</param>
+			</generator>
+        </id>
+        <property name="orderID" column="ORDERID" />
+        <property name="orderDay" column="ORDERDAY" />
+        <property name="orderMethod" column="ORDERMETHOD" />
+        <property name="vendorName" column="VENDORNAME" />
+        <property name="purchaserName" column="PURCHASERNAME"/>
+        <property name="unno" column="UNNO" />
+        <property name="contacts" column="CONTACTS" />
+        <property name="contactPhone" column="CONTACTPHONE" />
+        <property name="contactMail" column="CONTACTMAIL" />
+        <property name="orderNum" column="ORDERNUM"/>
+        <property name="orderAmt" column="ORDERAMT" />
+        <property name="orderpayAmt" column="ORDERPAYAMT" />
+        <property name="writeoffStatus" column="WRITEOFFSTATUS" />
+        <property name="writeoffAmt" column="WRITEOFFAMT" />
+        <property name="writeoffNum" column="WRITEOFFNUM" />
+        <property name="shippedStatus" column="SHIPPEDSTATUS" />
+        <property name="purchaser" column="PURCHASER" />
+        <property name="remarks" column="REMARKS" />
+        <property name="minfo1" column="MINFO1" />
+        <property name="minfo2" column="MINFO2"/>
+        <property name="status" column="STATUS" />
+        <property name="cdate" column="CDATE" type="timestamp" />
+        <property name="cby" column="CBY" />
+        <property name="approveDate" column="APPROVEDATE" type="timestamp" />
+        <property name="approver" column="APPROVER" />
+        <property name="approveStatus" column="APPROVESTATUS" />
+        <property name="approveNote" column="APPROVENOTE" />
+        <property name="lmdate" column="LMDATE" type="timestamp" />
+        <property name="lmby" column="LMBY" />
+        <property name="purchaserGroup" column="PURCHASERGROUP" />
+        <property name="busDate" column="BUSDATE" type="timestamp" />
+        <property name="cancelDate" column="CANCELDATE" type="timestamp" />
+        <property name="cancelNum" column="CANCELNUM" />
+        <property name="editStatus" column="EDITSTATUS" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PurchaseAccountModel" table="bill_PurchaseAccount">
+        <id name="paid" column="PAID">
+            <generator class="sequence">
+				<param name="sequence">S_bill_PurchaseAccount</param>
+			</generator>
+        </id>
+        <property name="poid" column="POID" />
+        <property name="accountOrderID" column="ACCOUNTORDERID" />
+        <property name="accountType" column="ACCOUNTTYPE" />
+        <property name="accountAmt" column="ACCOUNTAMT" />
+        <property name="payType" column="PAYTYPE" />
+        <property name="accountStatus" column="ACCOUNTSTATUS"/>
+        <property name="accountRemark" column="ACCOUNTREMARK" />
+        <property name="accountCdate" column="ACCOUNTCDATE" type="timestamp" />
+        <property name="accountCby" column="ACCOUNTCBY" />
+        <property name="accountApproveDate" column="ACCOUNTAPPROVEDATE" type="timestamp" />
+        <property name="accountApprover" column="ACCOUNTAPPROVER"/>
+        <property name="accountApproveNote" column="ACCOUNTAPPROVENOTE"/>
+        <property name="accountApproveStatus" column="ACCOUNTAPPROVESTATUS" />
+    </class>
+</hibernate-mapping>

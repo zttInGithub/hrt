@@ -1,0 +1,286 @@
+package com.hrt.biz.bill.entity.model;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * RebateInfoModel
+ * <p>
+ * This is description
+ * </p>
+ *
+ * @author xuegangliu 2020/01/15
+ * @since 1.8
+ **/
+public class RebateInfoModel {
+    private Integer brId;
+    private String rebateType;
+    private String rebateName;
+    private Date startDate;
+    private Date endDate;
+    private BigDecimal settlement;
+    private Integer status;
+    private Integer cardBack;
+    private Integer merDefine;
+    private String createUser;
+    private Date createDate;
+    private String updateUser;
+    private Date updateDate;
+    private String remark1;
+    private String remark2;
+    private  Integer auditStatus;
+    private String rejectReason;
+    private Date   auditDate;
+    private String auditUser;
+    private BigDecimal defaultTxnRate;
+    private Integer defaultTxnCashfee;
+    private BigDecimal defaultScanRate;
+    private BigDecimal defaultScanRateUp;
+    private Integer defaultScanCashfee;
+    private Integer defaultScanCashfeeUp;
+    private BigDecimal defaultScanhbRate;
+    private Integer defaultScanhbCashfee;
+    private Integer sumMonth;
+    private Integer flag;
+    private Integer operateType;
+
+    public BigDecimal getDefaultTxnRate() {
+        return defaultTxnRate;
+    }
+
+    public void setDefaultTxnRate(BigDecimal defaultTxnRate) {
+        this.defaultTxnRate = defaultTxnRate;
+    }
+
+    public Integer getDefaultTxnCashfee() {
+        return defaultTxnCashfee;
+    }
+
+    public void setDefaultTxnCashfee(Integer defaultTxnCashfee) {
+        this.defaultTxnCashfee = defaultTxnCashfee;
+    }
+
+    public BigDecimal getDefaultScanRate() {
+        return defaultScanRate;
+    }
+
+    public void setDefaultScanRate(BigDecimal defaultScanRate) {
+        this.defaultScanRate = defaultScanRate;
+    }
+
+    public BigDecimal getDefaultScanRateUp() {
+        return defaultScanRateUp;
+    }
+
+    public void setDefaultScanRateUp(BigDecimal defaultScanRateUp) {
+        this.defaultScanRateUp = defaultScanRateUp;
+    }
+
+    public Integer getDefaultScanCashfee() {
+        return defaultScanCashfee;
+    }
+
+    public void setDefaultScanCashfee(Integer defaultScanCashfee) {
+        this.defaultScanCashfee = defaultScanCashfee;
+    }
+
+    public Integer getDefaultScanCashfeeUp() {
+        return defaultScanCashfeeUp;
+    }
+
+    public void setDefaultScanCashfeeUp(Integer defaultScanCashfeeUp) {
+        this.defaultScanCashfeeUp = defaultScanCashfeeUp;
+    }
+
+    public BigDecimal getDefaultScanhbRate() {
+        return defaultScanhbRate;
+    }
+
+    public void setDefaultScanhbRate(BigDecimal defaultScanhbRate) {
+        this.defaultScanhbRate = defaultScanhbRate;
+    }
+
+    public Integer getDefaultScanhbCashfee() {
+        return defaultScanhbCashfee;
+    }
+
+    public void setDefaultScanhbCashfee(Integer defaultScanhbCashfee) {
+        this.defaultScanhbCashfee = defaultScanhbCashfee;
+    }
+
+    public Integer getSumMonth() {
+        return sumMonth;
+    }
+
+    public void setSumMonth(Integer sumMonth) {
+        this.sumMonth = sumMonth;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
+    public Integer getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(Integer operateType) {
+        this.operateType = operateType;
+    }
+
+    public Date getAuditDate() {
+		return auditDate;
+	}
+
+	public void setAuditDate(Date auditDate) {
+		this.auditDate = auditDate;
+	}
+
+	public String getAuditUser() {
+		return auditUser;
+	}
+
+	public void setAuditUser(String auditUser) {
+		this.auditUser = auditUser;
+	}
+
+	public Integer getBrId() {
+        return brId;
+    }
+
+    public Integer getAuditStatus() {
+		return auditStatus;
+	}
+
+	public void setAuditStatus(Integer auditStatus) {
+		this.auditStatus = auditStatus;
+	}
+
+	public String getRejectReason() {
+		return rejectReason;
+	}
+
+	public void setRejectReason(String rejectReason) {
+		this.rejectReason = rejectReason;
+	}
+
+	public void setBrId(Integer brId) {
+        this.brId = brId;
+    }
+
+    public String getRebateType() {
+        return rebateType;
+    }
+
+    public void setRebateType(String rebateType) {
+        this.rebateType = rebateType;
+    }
+
+    public String getRebateName() {
+        return rebateName;
+    }
+
+    public void setRebateName(String rebateName) {
+        this.rebateName = rebateName;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public BigDecimal getSettlement() {
+        return settlement;
+    }
+
+    public void setSettlement(BigDecimal settlement) {
+        this.settlement = settlement;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getCardBack() {
+        return cardBack;
+    }
+
+    public void setCardBack(Integer cardBack) {
+        this.cardBack = cardBack;
+    }
+
+    public Integer getMerDefine() {
+        return merDefine;
+    }
+
+    public void setMerDefine(Integer merDefine) {
+        this.merDefine = merDefine;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getRemark1() {
+        return remark1;
+    }
+
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1;
+    }
+
+    public String getRemark2() {
+        return remark2;
+    }
+
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2;
+    }
+}

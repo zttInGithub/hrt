@@ -1,0 +1,482 @@
+package com.hrt.biz.bill.service.impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.argorse.security.core.hash.MD5Wrapper;
+import com.hrt.biz.bill.dao.IAggPayTerminfoDao;
+import com.hrt.biz.bill.dao.IMerchantInfoDao;
+import com.hrt.biz.bill.entity.model.AggPayTerminfoModel;
+import com.hrt.biz.bill.entity.pagebean.AggPayTerminfoBean;
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoBean;
+import com.hrt.biz.bill.service.IAggPayTerminfoService;
+import com.hrt.biz.bill.service.IMerchantInfoService;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.utility.ExcelUtil;
+import com.hrt.gmms.webservice.AggPayTerm;
+import com.hrt.gmms.webservice.IGmmsService;
+import com.hrt.phone.service.IPhoneMicroMerchantInfoService;
+
+public class AggPayTerminfoServiceImpl implements IAggPayTerminfoService {
+	
+	private IAggPayTerminfoDao aggPayTerminfoDao;
+	private IMerchantInfoDao merchantInfoDao;
+	private IUnitDao unitDao;
+	private IGmmsService gsClient;
+	private IPhoneMicroMerchantInfoService microMerchantInfoService;
+	private IMerchantInfoService merchantInfoService;
+	private static final Log log = LogFactory.getLog(AggPayTerminfoServiceImpl.class);
+
+	public IMerchantInfoService getMerchantInfoService() {
+		return merchantInfoService;
+	}
+
+	public void setMerchantInfoService(IMerchantInfoService merchantInfoService) {
+		this.merchantInfoService = merchantInfoService;
+	}
+
+	public IPhoneMicroMerchantInfoService getMicroMerchantInfoService() {
+		return microMerchantInfoService;
+	}
+
+	public void setMicroMerchantInfoService(
+			IPhoneMicroMerchantInfoService microMerchantInfoService) {
+		this.microMerchantInfoService = microMerchantInfoService;
+	}
+
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+
+	public IGmmsService getGsClient() {
+		return gsClient;
+	}
+
+	public void setGsClient(IGmmsService gsClient) {
+		this.gsClient = gsClient;
+	}
+
+	public IMerchantInfoDao getMerchantInfoDao() {
+		return merchantInfoDao;
+	}
+
+	public void setMerchantInfoDao(IMerchantInfoDao merchantInfoDao) {
+		this.merchantInfoDao = merchantInfoDao;
+	}
+	
+	public IAggPayTerminfoDao getAggPayTerminfoDao() {
+		return aggPayTerminfoDao;
+	}
+
+	public void setAggPayTerminfoDao(IAggPayTerminfoDao aggPayTerminfoDao) {
+		this.aggPayTerminfoDao = aggPayTerminfoDao;
+	}
+	
+	public void updateAggPayTerminalinfosY (AggPayTerminfoBean infoBean,UserBean user,String [] ids)throws Exception{
+		for(int i = 0; i < ids.length; i++){
+			AggPayTerminfoModel term =aggPayTerminfoDao.queryObjectByHql("from AggPayTerminfoModel t where t.bapid="+ids[i], new Object[]{});
+			String yidai = merchantInfoService.getProvince(term.getUnno());
+			AggPayTerm payTermAcc = new AggPayTerm();
+			payTermAcc.setUnno(yidai);
+			payTermAcc.setCby("SYS");
+			payTermAcc.setMid(term.getMid());
+			payTermAcc.setQrtid(term.getQrtid());
+			payTermAcc.setBapid(term.getBapid());
+			payTermAcc.setShopname(term.getShopname());
+			
+			term.setApproveDate(new Date());
+			term.setStatus(2);
+			term.setApproveId(544924);
+
+			Boolean falg2 = false ;
+			try{
+				log.info("聚合终端审批(业务):mid="+payTermAcc.getMid()+";Qrtid="+payTermAcc.getQrtid()+";typeflag="+payTermAcc.getTypeflag());
+				falg2=gsClient.saveAggPayTermSub(payTermAcc,"hrtREX1234.Java");
+			}catch(Exception e ){
+				log.error("聚合商户推送终端调用webservice失败：" + e);
+			}
+			if(!falg2){
+				term.setStatus(1);
+				log.error("调用webservice失败：");
+				//throw new IllegalAccessError("调用webservice失败");
+			}
+		}
+	}
+
+	public synchronized Integer addAggPayTerminfoStatus (AggPayTerminfoBean infoBean,UserBean user)throws Exception{
+		Integer qrnum = infoBean.getAggnum();
+		Date date = new Date();
+		Integer userid = user.getUserID();
+		String sql = "select max(qrtid) as code from BILL_aggpayterminfo ";
+		List<Map<String, String>> map = aggPayTerminfoDao.queryObjectsBySqlListMap(sql, null);
+		String qrtid = map.get(0).get("CODE");
+		List<Object> listQRM = new ArrayList<Object>();
+		if(qrtid==null||"".equals(qrtid)){
+			qrtid="1000000000";
+		}
+			for(int j=0;j<qrnum;j++){
+				AggPayTerminfoModel qrm = new AggPayTerminfoModel();
+				String icPassword="";
+				for(int i=0;i<4;i++){
+					icPassword=icPassword+String.valueOf((int)(Math.random()*10));
+				}
+//				qrm.setUnno(unno);
+				qrm.setOrderid(infoBean.getOrderid());
+				qrm.setQrPwd(icPassword);
+				qrm.setQrtid((Long.parseLong(qrtid)+1l)+"");
+//				qrm.setScanRate(scanRate);
+				qrm.setMaintainDate(date);
+				qrm.setMaintainUserId(userid);
+				qrm.setStatus(7);
+				//测试
+//				qrm.setQrUrl("https://testtrade.hybunion.cn/HYBComboPayment/qr/"+qrm.getQrtid()+".do?sign="+MD5Wrapper.encryptMD5ToString(icPassword).replace("+", ""));
+				//生产
+				qrm.setQrUrl("https://dopay.hybunion.cn/qr/"+qrm.getQrtid()+".do?sign="+MD5Wrapper.encryptMD5ToString(icPassword).replace("+", ""));
+				listQRM.add(qrm);
+				qrtid=qrm.getQrtid();
+			}
+			aggPayTerminfoDao.batchSaveObject(listQRM);
+		return qrnum;
+	}
+	
+	public synchronized Integer updateAggPayTerminfoHeCh (AggPayTerminfoBean infoBean,UserBean user)throws Exception{
+		Integer qrnum =	aggPayTerminfoDao.executeSqlUpdate(" update BILL_aggpayterminfo f set f.status = 8  where f.orderid='"+infoBean.getOrderid()+"' and f.status = 7 ", null);
+		return qrnum;
+	}
+	
+	
+	/**
+	 * 查询聚合终端不分页
+	 */
+	@Override
+	public List<Map<String,String>> queryAggPayTerminalInfoBmidPhone(AggPayTerminfoBean aggPayTerminfoBean)throws Exception {
+		String sql = " select f.*,m.rname from BILL_aggpayterminfo f,bill_merchantinfo m where m.mid=f.mid and f.mid=:mid ";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("mid", aggPayTerminfoBean.getMid());
+		
+		if(aggPayTerminfoBean.getQrtid() != null && !"".equals(aggPayTerminfoBean.getQrtid())){
+			sql += "  and tid = :tid ";
+			map.put("tid", aggPayTerminfoBean.getQrtid());
+		}
+		
+		List<Map<String,String>> result = aggPayTerminfoDao.queryObjectsBySqlListMap(sql, map);
+		return result;
+	}
+	
+	public DataGridBean queryAggPayTerminfo (AggPayTerminfoBean infoBean,UserBean user)throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		DataGridBean dgb = new DataGridBean();
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, user.getUnNo());
+		String sql =" select f.* from BILL_aggpayterminfo f where 1=1 ";
+		if("110000".equals(user.getUnNo())){
+			
+		}else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){		//如果为部门机构并且级别为总公司
+			UnitModel parent = unitModel.getParent();
+			if("110000".equals(parent.getUnNo())){
+			}
+		}else{
+			sql+=" and f.unno in ("+merchantInfoService.queryUnitUnnoUtil(user.getUnNo())+") ";
+		}
+		
+		if(infoBean.getUnno()!=null&&!"".equals(infoBean.getUnno())){
+			sql+=" and f.unno in ("+merchantInfoService.queryUnitUnnoUtil(infoBean.getUnno())+") ";
+		}
+		if(infoBean.getUnno1()!=null&&!"".equals(infoBean.getUnno1())){
+			sql+=" and f.unno ='"+infoBean.getUnno1()+"' ";
+		}
+		if(infoBean.getMid()!=null&&!"".equals(infoBean.getMid())){
+			sql+=" and f.mid =:mid ";
+			map.put("mid", infoBean.getMid());
+		}
+		if(infoBean.getOrderid()!=null&&!"".equals(infoBean.getOrderid())){
+			sql+=" and f.orderid =:orderid ";
+			map.put("orderid", infoBean.getOrderid());
+		}
+		if(infoBean.getQrtid()!=null&&!"".equals(infoBean.getQrtid())){
+			sql+=" and f.qrtid >= '"+infoBean.getQrtid()+"'";
+		}
+		if(infoBean.getQrtid1()!=null&&!"".equals(infoBean.getQrtid1())){
+			sql+=" and f.qrtid <= '"+infoBean.getQrtid1()+"'";
+		}
+		if(infoBean.getShopname()!=null&&!"".equals(infoBean.getShopname())){
+			sql+=" and f.Shopname  like :Shopname ";
+			map.put("Shopname", "%"+infoBean.getShopname()+"%");
+		}
+		if(infoBean.getStatus()!=null&&!"".equals(infoBean.getStatus())){
+			sql+=" and f.status in ("+infoBean.getStatus()+") ";
+		}
+		if(infoBean.getStatus1()!=null&&!"".equals(infoBean.getStatus1())){
+			sql+=" and f.status in ("+infoBean.getStatus1()+") ";
+		}
+		if(infoBean.getMaintainDate()!=null&&!"".equals(infoBean.getMaintainDate())){
+			sql+=" and trunc(f.maintainDate) >=trunc(:createDateStart) ";
+			map.put("createDateStart", infoBean.getMaintainDate());
+		}
+		if(infoBean.getMaintainDate2()!=null&&!"".equals(infoBean.getMaintainDate2())){
+			sql+=" and trunc(f.maintainDate) <=trunc(:createDateEnd) ";
+			map.put("createDateEnd", infoBean.getMaintainDate2());
+		}
+		sql+=" order by f.qrtid asc ";
+		List<Map<String, String>> qrList = aggPayTerminfoDao.queryObjectsBySqlList(sql, map, infoBean.getPage(), infoBean.getRows());
+		String sqlCount = " select count(1) from ("+sql+")";
+		BigDecimal counts = aggPayTerminfoDao.querysqlCounts(sqlCount, map);
+		dgb.setRows(qrList);
+		dgb.setTotal(counts.intValue());
+		return dgb;
+	}
+	
+	public DataGridBean queryAggPayTerminfoZ (AggPayTerminfoBean infoBean,UserBean user)throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		DataGridBean dgb = new DataGridBean();
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, user.getUnNo());
+		String sql =" select f.* from BILL_aggpayterminfo f,bill_merchantinfo m  where 1=1 and m.mid = f.mid and m.approvestatus in ('C','Y') and m.maintaintype !='D' ";
+		if("110000".equals(user.getUnNo())){
+			
+		}else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){		//如果为部门机构并且级别为总公司
+			UnitModel parent = unitModel.getParent();
+			if("110000".equals(parent.getUnNo())){
+			}
+		}else{
+			sql+=" and f.unno ="+user.getUnNo();
+		}
+		if(infoBean.getUnno()!=null&&!"".equals(infoBean.getUnno())){
+			sql+=" and f.unno =:unno ";
+			map.put("unno", infoBean.getUnno());
+		}
+		if(infoBean.getMid()!=null&&!"".equals(infoBean.getMid())){
+			sql+=" and f.mid =:mid ";
+			map.put("mid", infoBean.getMid());
+		}
+		if(infoBean.getOrderid()!=null&&!"".equals(infoBean.getOrderid())){
+			sql+=" and f.orderid =:orderid ";
+			map.put("orderid", infoBean.getOrderid());
+		}
+		if(infoBean.getQrtid()!=null&&!"".equals(infoBean.getQrtid())){
+			sql+=" and f.qrtid >= '"+infoBean.getQrtid()+"'";
+		}
+		if(infoBean.getQrtid1()!=null&&!"".equals(infoBean.getQrtid1())){
+			sql+=" and f.qrtid <= '"+infoBean.getQrtid1()+"'";
+		}
+		if(infoBean.getStatus()!=null&&!"".equals(infoBean.getStatus())){
+			sql+=" and f.status in ("+infoBean.getStatus()+") ";
+		}
+		if(infoBean.getStatus1()!=null&&!"".equals(infoBean.getStatus1())){
+			sql+=" and f.status in ("+infoBean.getStatus1()+") ";
+		}
+		if(infoBean.getMaintainDate()!=null&&!"".equals(infoBean.getMaintainDate())){
+			sql+=" and trunc(f.maintainDate) >=trunc(:createDateStart) ";
+			map.put("createDateStart", infoBean.getMaintainDate());
+		}
+		if(infoBean.getMaintainDate2()!=null&&!"".equals(infoBean.getMaintainDate2())){
+			sql+=" and trunc(f.maintainDate) <=trunc(:createDateEnd) ";
+			map.put("createDateEnd", infoBean.getMaintainDate2());
+		}
+		sql+=" order by f.qrtid asc ";
+		List<Map<String, String>> qrList = aggPayTerminfoDao.queryObjectsBySqlList(sql, map, infoBean.getPage(), infoBean.getRows());
+		String sqlCount = " select count(1) from ("+sql+")";
+		BigDecimal counts = aggPayTerminfoDao.querysqlCounts(sqlCount, map);
+		dgb.setRows(qrList);
+		dgb.setTotal(counts.intValue());
+		return dgb;
+	}
+	
+	public HSSFWorkbook exportAggPayTerminfoAll(AggPayTerminfoBean infoBean,UserBean user){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, user.getUnNo());
+		String sql =" select f.* from BILL_aggpayterminfo f  where 1=1 ";
+		if("110000".equals(user.getUnNo())){
+			
+		}else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){		//如果为部门机构并且级别为总公司
+			UnitModel parent = unitModel.getParent();
+			if("110000".equals(parent.getUnNo())){
+			}
+		}else{
+			sql+=" and f.unno in ("+merchantInfoService.queryUnitUnnoUtil(user.getUnNo())+") ";
+		}
+		
+		if(infoBean.getUnno()!=null&&!"".equals(infoBean.getUnno())){
+			sql+=" and f.unno in ("+merchantInfoService.queryUnitUnnoUtil(infoBean.getUnno())+") ";
+		}
+		if(infoBean.getUnno1()!=null&&!"".equals(infoBean.getUnno1())){
+			sql+=" and f.unno ='"+infoBean.getUnno1()+"' ";
+		}
+		if(infoBean.getOrderid()!=null&&!"".equals(infoBean.getOrderid())){
+			sql+=" and f.orderid =:orderid ";
+			map.put("orderid", infoBean.getOrderid());
+		}
+		if(infoBean.getQrtid()!=null&&!"".equals(infoBean.getQrtid())){
+			sql+=" and f.qrtid >= '"+infoBean.getQrtid()+"'";
+		}
+		if(infoBean.getQrtid1()!=null&&!"".equals(infoBean.getQrtid1())){
+			sql+=" and f.qrtid <= '"+infoBean.getQrtid1()+"'";
+		}
+		if(infoBean.getMid()!=null&&!"".equals(infoBean.getMid())){
+			sql+=" and f.mid =:mid ";
+			map.put("mid", infoBean.getMid());
+		}
+		if(infoBean.getStatus()!=null&&!"".equals(infoBean.getStatus())){
+			sql+=" and f.status in ("+infoBean.getStatus()+") ";
+		}
+		if(infoBean.getStatus1()!=null&&!"".equals(infoBean.getStatus1())){
+			sql+=" and f.status in ("+infoBean.getStatus1()+") ";
+		}
+		if(infoBean.getMaintainDate()!=null&&!"".equals(infoBean.getMaintainDate())){
+			sql+=" and trunc(f.maintainDate) >=trunc(:createDateStart) ";
+			map.put("createDateStart", infoBean.getMaintainDate());
+		}
+		if(infoBean.getMaintainDate2()!=null&&!"".equals(infoBean.getMaintainDate2())){
+			sql+=" and trunc(f.maintainDate) <=trunc(:createDateEnd) ";
+			map.put("createDateEnd", infoBean.getMaintainDate2());
+		}
+		sql+=" order by f.qrtid asc ";
+		List<Map<String, Object>> data = aggPayTerminfoDao.queryObjectsBySqlListMap2(sql, map);
+		List<String> excelHeader = new ArrayList<String>();
+		Map<String, Object> headMap = new HashMap<String, Object>();
+		
+		excelHeader.add("UNNO");
+		excelHeader.add("MID");
+		excelHeader.add("QRTID");
+		excelHeader.add("QRPWD");
+		excelHeader.add("SCANRATE");
+		excelHeader.add("STATUS");
+		excelHeader.add("USEDCONFIRMDATE");
+		excelHeader.add("MAINTAINDATE");
+		
+		headMap.put("UNNO", "机构号");
+		headMap.put("MID", "绑定商户编号");
+		headMap.put("QRTID", "聚合商户终端号");
+		headMap.put("QRPWD", "邀请码");
+		headMap.put("SCANRATE", "扫码费率");
+		headMap.put("STATUS", "使用状态(0未使用;1待审核;2审核通过;3退回;4停用)");
+		headMap.put("USEDCONFIRMDATE", "使用时间");
+		headMap.put("MAINTAINDATE", "生产时间");
+		
+		if(user!=null&&user.getUnitLvl()<1){
+			excelHeader.add("QRURL");
+			headMap.put("QRURL", "二维码链接");
+		}
+		
+		return ExcelUtil.export("聚合商户终端号资料", data, excelHeader, headMap);
+	}
+
+	@Override
+	public Integer updateAggPayTerminfoUnno(AggPayTerminfoBean infoBean, String bapid,UserBean user) throws Exception {
+		Integer result = 0;
+		if("0".equals(infoBean.getType())){
+			String sql1 = "select count(1)||'' as num from sys_unit where unno ='"+infoBean.getUnno()+"' and un_lvl in (1,2) ";
+			List<Map<String, String>> map1 = aggPayTerminfoDao.queryObjectsBySqlListMap(sql1, null);
+			String unitFlag = map1.get(0).get("NUM");
+			if(!"0".equals(unitFlag)){
+				String sql ="update BILL_aggpayterminfo f set f.status=0, settlement='" +infoBean.getSettlement()+"' ,scanRate="+infoBean.getScanRate()+
+				",secondRate='"+infoBean.getSecondRate()+"', f.unno='"+infoBean.getUnno()+"',f.maintainDate=sysdate,f.maintainUserId="+user.getUserID()+" " +
+				" where f.status=8 and f.bapid in ("+bapid+")";
+				result = aggPayTerminfoDao.executeSqlUpdate(sql, null);
+			}
+		}else{
+			String sql1 = "select count(1)||'' as num from sys_unit where unno ='"+infoBean.getUnno()+"' and upper_unit = '"+user.getUnNo()+"'";
+			List<Map<String, String>> map1 = aggPayTerminfoDao.queryObjectsBySqlListMap(sql1, null);
+			String unitFlag = map1.get(0).get("NUM");
+			if(!"0".equals(unitFlag)){
+				String sql ="update BILL_aggpayterminfo f set f.settlement='" +infoBean.getSettlement()+
+				"',secondRate='"+infoBean.getSecondRate()+"',f.unno='"+infoBean.getUnno()+"',f.maintainDate=sysdate,f.maintainUserId="+user.getUserID()+",f.scanRate="+infoBean.getScanRate()+
+				" where f.status=0 and f.bapid in ("+bapid+")";
+				result = aggPayTerminfoDao.executeSqlUpdate(sql, null);
+			}
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public Integer updateAggPayTerminfoUnno1(AggPayTerminfoBean infoBean,UserBean user) throws Exception {
+		Integer result = 0;
+		if("0".equals(infoBean.getType())){
+			String sql1 = "select count(1)||'' as num from sys_unit where unno ='"+infoBean.getUnno()+"' and un_lvl in (1,2) ";
+			List<Map<String, String>> map1 = aggPayTerminfoDao.queryObjectsBySqlListMap(sql1, null);
+			String unitFlag = map1.get(0).get("NUM");
+			if(!"0".equals(unitFlag)){
+				String sql ="update BILL_aggpayterminfo f set f.status=0,settlement='" +infoBean.getSettlement()+"' ,scanRate="+infoBean.getScanRate()+
+				",secondRate='"+infoBean.getSecondRate()+"', f.unno='"+infoBean.getUnno()+"',f.maintainDate=sysdate,f.maintainUserId="+user.getUserID()+" " +
+				" where f.status=8 and f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' ";
+				result = aggPayTerminfoDao.executeSqlUpdate(sql, null);
+			}
+		}else{
+			String sql2 = "select count(1)||'' as num from BILL_aggpayterminfo f where f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' and f.status!=0";
+			List<Map<String, String>> map = aggPayTerminfoDao.queryObjectsBySqlListMap(sql2, null);
+			String statusFlag = map.get(0).get("NUM");
+			if(!"0".equals(statusFlag)){
+				return -1;
+			}
+			String sql1 = "select count(1)||'' as num from sys_unit where unno ='"+infoBean.getUnno()+"' and upper_unit = '"+user.getUnNo()+"'";
+			List<Map<String, String>> map1 = aggPayTerminfoDao.queryObjectsBySqlListMap(sql1, null);
+			String unitFlag = map1.get(0).get("NUM");
+			if(!"0".equals(unitFlag)){
+				String sql ="update BILL_aggpayterminfo f set f.settlement='" +infoBean.getSettlement()+
+				"',secondRate='"+infoBean.getSecondRate()+"',f.unno='"+infoBean.getUnno()+"',f.maintainDate=sysdate,f.maintainUserId="+user.getUserID()+",f.scanRate="+infoBean.getScanRate()+
+				" where f.status=0 and f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' ";
+				result = aggPayTerminfoDao.executeSqlUpdate(sql, null);
+			}
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public Integer updateAggPayTerminfoRate(AggPayTerminfoBean infoBean,UserBean user) throws Exception {
+		Integer result = 0;
+		String sql2 = "select count(1)||'' as num from BILL_aggpayterminfo f where f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' and ( f.status!=0 or f.unno!='"+user.getUnNo()+"')";
+		List<Map<String, String>> map = aggPayTerminfoDao.queryObjectsBySqlListMap(sql2, null);
+		String statusFlag = map.get(0).get("NUM");
+		if(!"0".equals(statusFlag)){
+			return -1;
+		}
+		String sql ="update BILL_aggpayterminfo f set f.settlement='" +infoBean.getSettlement()+
+		"', secondRate='"+infoBean.getSecondRate()+"', f.maintainDate=sysdate,f.maintainUserId="+user.getUserID()+",f.scanRate="+infoBean.getScanRate()+
+		" where f.status=0 and f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' and f.unno='"+user.getUnNo()+"'";
+		result = aggPayTerminfoDao.executeSqlUpdate(sql, null);
+		
+		return result;
+	}
+	
+	@Override
+	public Integer updateAggPayTerminfoUnno2(AggPayTerminfoBean infoBean,UserBean user) throws Exception {
+		Integer result = 0;
+		String sql2 = "select count(1)||'' as num from BILL_aggpayterminfo f where f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' and f.status!=0";
+		List<Map<String, String>> map = aggPayTerminfoDao.queryObjectsBySqlListMap(sql2, null);
+		String statusFlag = map.get(0).get("NUM");
+		if(!"0".equals(statusFlag)){
+			return -1;
+		}
+		String sql3 = "select count(1)||'' as num from BILL_aggpayterminfo f,sys_unit u where f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' and f.unno=u.unno and u.upper_unit!='"+user.getUnNo()+"'";
+		List<Map<String, String>> map3 = aggPayTerminfoDao.queryObjectsBySqlListMap(sql3, null);
+		String statusFlag3 = map3.get(0).get("NUM");
+		if(!"0".equals(statusFlag3)){
+			return -2;
+		}
+		String sql ="update BILL_aggpayterminfo f set" +
+		" f.unno='"+user.getUnNo()+"',f.maintainDate=sysdate,f.maintainUserId="+user.getUserID()+" " +
+		" where f.status=0 and f.qrtid between '"+infoBean.getQrtid()+"' and '"+infoBean.getQrtid1()+"' ";
+		result = aggPayTerminfoDao.executeSqlUpdate(sql, null);
+		
+		return result;
+	}
+	
+}

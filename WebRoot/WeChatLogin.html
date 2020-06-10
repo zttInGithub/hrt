@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../jquery/jquery-easyui-1.3.1/jquery-1.8.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/weui.min.css" />
+   <!--  <script type="text/javascript" src="../layer_mobile/layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="../layer_mobile/need/layer.css" /> -->
+    <style type="text/css">
+    .popuo-login{
+    font-size:18px;
+    }
+    </style>
+    <script type="text/javascript">
+    	/** **/
+    	<!-- 全局变量 -->
+		var urlStr = String(window.document.location.href); //获取请求url
+		var code=getParam("code"); //code
+		//var openid=getParam("openid"); //openid
+		//var qrNumber = getParam("qrNumber"); //二维码编号
+
+  		<!-- 获取 url 后参数 value -->
+		function getParam(paramKey) 
+		{	
+			//alert("url="+urlStr);
+			var rs = new RegExp("(^|)" + paramKey + "=([^&]*)(&|$)", "gi").exec(urlStr), tmp;
+			if (rs) 
+			{
+				//alert("rs[2]="+rs[2]);
+				return rs[2];
+			}
+			else 
+			{
+				//alert("rs="+rs);
+				return rs;
+			}
+		}
+    	
+    	$(function() {
+    		document.getElementById("code").value=code;
+    	});
+    	
+    	function error_dialog() {
+            $('#dialog2').show().on('click', '.weui_btn_dialog', function () {
+                $('#dialog2').off('click').hide();
+            });
+        }
+        //获取服务器时间戳
+        var ts="<%=System.currentTimeMillis()%>";
+        function checkLoginBtn(){
+            if($("#loginName").val()!=''&&$("#password").val()!=''){
+                $("#login").attr("class","weui_btn weui_btn_primary");
+            }else{
+                $("#login").attr("class","weui_btn weui_btn_disabled weui_btn_primary");
+            }
+        }
+		
+        function checkLogin(){
+            var flag = false;
+            if($("#loginName").val()!=''&&$("#password").val()!=''){
+                flag = true;
+            }
+            if(flag){
+                
+                /* var loginName = $("#loginName").val();
+                var password = $("#password").val();
+                var state=$("#password").val();
+              */
+                //alert("p="+$("#password").val());
+                
+                //logonForm.action="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc427f61bd6079427&redirect_uri=http://test.hybunion.com/HrtApp/phone/phoneWechatPublicAcc_login.action?loginName="+$("#loginName").val()+"&password="+$("#password").val()+"&response_type=code&scope=snsapi_base&state="+$("#password").val()+"#wechat_redirect"
+               	var logonForm = document.getElementById("loginFrom");
+               //	var url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe2f3635bde10c3f9&redirect_uri=http://test.hybunion.com/HrtApp/phone/phoneWechatPublicAcc_login.action?loginName="+$("#loginName").val()+"&password="+$("#password").val()+"&response_type=code&scope=snsapi_base&state="+$("#password").val()+"#wechat_redirect";
+                //https://merch.hrtpayment.com
+                var url="http://test.hybunion.com/HrtApp/phone/phoneWechatPublicAcc_login.action";
+                alert(code);
+                logonForm.action=url;
+                //提交
+                logonForm.submit();
+              
+        }  
+    }  
+    
+    
+        			//验证码
+			function changeValidateCode(obj) {   
+				var timenow = new Date().getTime();   
+				obj.src="${ctx}/sysAdmin/rand_randImage.action?d="+timenow;
+			}
+    </script>
+</head>
+<body style="text-align: center">
+<div id="loginBlock">
+	<div style="width: 100%;height:30%">
+		<h1 style="padding-top: 20%;padding-bottom: 20%;font-size: 80px">商户支付业务管理平台</h1>
+	</div>
+     <form id="loginFrom" method="post"   style="width: 80%;margin-left: auto;margin-right: auto;">
+    <!--<form id="loginFrom" method="post" action="http://10.51.29.214:8080/HrtApp/phone/phoneWechatPublicAcc_login.action"  style="width: 80%;margin-left: auto;margin-right: auto;">--> 
+    <!-- action="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc427f61bd6079427&redirect_uri=http://test.hybunion.com/HrtApp/phone/phoneWechatPublicAcc_login.action&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect" -->
+        <div class="weui_cell" >
+            <div class="weui_cell_hd">
+                <label class="weui_label">登录帐户</label>
+            </div>
+            <div class="weui_cell_bd">
+                <input class="weui_input"  id="loginName" name="loginName" placeholder="账号" onchange="checkLoginBtn()"/>
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label">登录密码</label>
+            </div>
+            <div class="weui_cell_bd">
+                <input type="password" class="weui_input"  id="password" name="password" placeholder="密码" onchange="checkLoginBtn()"/>
+                <input type="text" id="code" name="code" style="display: none"/>
+            </div>
+        </div>
+                
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label">验证码</label>
+            </div>
+            <div class="weui_cell_bd">
+                <input  class="weui_input"  placeholder="验证码" name="rand" id="rand" />
+    				<!-- <input type="text" name="rand" id="rand" size="5" class="rand" />style="display: none" -->
+    				&nbsp;&nbsp;
+    				<img  src="HrtApp/sysAdmin/rand_randImage.action" onclick="changeValidateCode(this)" title="ç¹å»å¾çå·æ°éªè¯ç " class="rand" />
+            </div>
+        </div>
+        <div class="weui_btn_area">
+            <a class="weui_btn weui_btn_disabled weui_btn_primary"  href="javascript:" id="login" onclick="checkLogin()" style="font-size:50px">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+        </div>
+    </form>
+</div>
+</body>
+ 
+</html>

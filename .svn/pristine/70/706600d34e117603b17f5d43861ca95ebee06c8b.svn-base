@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MertiedCardModel" table="bill_MERTIEDCARD">
+        <id name="mtcid" column="MTCID">
+            <generator class="sequence">
+				<param name="sequence">S_bill_MERTIEDCARD</param>
+			</generator>
+        </id>
+        <property name="mid" column="MID" />
+        <property name="name" column="NAME" />
+        <property name="phone" column="PHONE" />
+        <property name="idnum" column="IDNUM" />
+        <property name="cardnum" column="CARDNUM" />
+        <property name="cardtoken" column="cardtoken" />
+        <property name="status" column="STATUS" />
+        <property name="cdate" column="CDATE" />
+        <property name="lmdate" column="LMDATE" />
+        <property name="lmby" column="LMBY" />
+        <property name="paymentBank" column="paymentBank" />
+        <property name="cardType" column="cardType" />
+        <property name="paymentBankImg" column="paymentBankImg" />
+        <property name="paymentLine" column="paymentLine" />
+        <property name="orderId" column="ORDERID"></property>
+        <property name="maintaintype" column="MAINTAINTYPE" />
+    </class>
+</hibernate-mapping>

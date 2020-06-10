@@ -1,0 +1,491 @@
+package com.hrt.biz.util;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.security.PrivateKey;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.ServletContext;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.struts2.ServletActionContext;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.xml.sax.SAXException;
+
+import cfca.sadk.algorithm.common.Mechanism;
+import cfca.sadk.lib.crypto.JCrypto;
+import cfca.sadk.lib.crypto.Session;
+import cfca.sadk.util.Base64;
+import cfca.sadk.util.EncryptUtil;
+import cfca.sadk.util.KeyUtil;
+import cfca.sadk.util.Signature;
+import cfca.sadk.x509.certificate.X509Cert;
+
+public class PaymentRiskUtil {
+
+	public static String xmlByMap(Map<String, String> map) {
+		StringBuffer rbsb = new StringBuffer();
+		// rbsb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><xmlMobile>");
+		// 重组Map值
+		Iterator it = map.keySet().iterator();
+		while (it.hasNext()) {
+			String key;
+			String value;
+			key = it.next().toString();
+			value = map.get(key);
+			rbsb.append("<");
+			rbsb.append(key);
+			rbsb.append(">");
+			rbsb.append(value);
+			rbsb.append("</");
+			rbsb.append(key);
+			rbsb.append(">");
+		}
+		// rbsb.append("</xmlMobile>");
+		return rbsb.toString();
+	}
+	
+	public static boolean checkXDS(String xmlPath,String xsdPath) throws SAXException {
+		InputStream inputStream = new ByteArrayInputStream(xmlPath.getBytes());
+		try {
+			if (validateXml(xsdPath, inputStream)) {
+				//System.out.println("校验通过");
+				return true;
+			}
+		}catch (IOException e) {
+			//System.out.println("校验失败");
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+	
+	public static boolean validateXml(String xsdPath, InputStream inputStream)
+			throws SAXException, IOException {
+
+		// 建立schema工厂
+		SchemaFactory schemaFactory = SchemaFactory
+				.newInstance("http://www.w3.org/2001/XMLSchema");
+		// 建立验证文档文件对象，利用此文件对象所封装的文件进行schema验证
+		File schemaFile = new File(xsdPath);
+		// 利用schema工厂，接收验证文档文件对象生成Schema对象
+		Schema schema = schemaFactory.newSchema(schemaFile);
+		// 通过Schema产生针对于此Schema的验证器，利用schenaFile进行验证
+		Validator validator = schema.newValidator();
+		// 得到验证的数据源
+		Source source = new StreamSource(inputStream);
+		// 开始验证，成功输出success!!!，失败输出fail
+		validator.validate(source);
+
+		return true;
+	}
+	
+	//加签
+	public static String AddQian(String srcData,String pfxFilePath,String signPWD) throws Exception {
+		ServletContext application = ServletActionContext.getRequest().getSession().getServletContext();
+		String ctx = (String) application.getAttribute("ctx");
+		String encodedSignature = null;
+		// 初始化加密会话
+		try {
+			JCrypto.getInstance().initialize(JCrypto.JSOFT_LIB, null);
+			Session session = JCrypto.getInstance().openSession(
+					JCrypto.JSOFT_LIB);
+			// 获取私钥
+			PrivateKey priKey = KeyUtil.getPrivateKeyFromPFX(pfxFilePath,signPWD);
+			Signature sigUtil = new Signature();
+			byte[] signature = sigUtil.p1SignMessage(Mechanism.SHA1_RSA,srcData.getBytes("UTF8"), priKey, session);
+			/******** 注意 ***********/
+			// 签名结果已经做过Base64编码
+			encodedSignature = new String(signature);
+			// System.out.println("发送方经过编码后的签名数据:\r\n" + encodedSignature);
+			// checkXDS(encodedSignature);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return encodedSignature;
+	}
+
+	
+	public static Map getAEStoString(Map map,String cer) {
+		// 发送方加密示例
+		String encryptedKey = null;
+		String encrytedData = null;
+		Map resultMap = new HashMap();
+		try {
+			// 初始化加密会话
+			JCrypto.getInstance().initialize(JCrypto.JSOFT_LIB, null);
+			Session session = JCrypto.getInstance().openSession(JCrypto.JSOFT_LIB);
+			// 生成对称AES密钥
+			KeyGenerator kgen = KeyGenerator.getInstance("AES");
+			kgen.init(128, new SecureRandom());
+			SecretKey secretKey = kgen.generateKey();
+			byte[] symmetricKeyEncoded = secretKey.getEncoded();
+			SecretKeySpec key = new SecretKeySpec(symmetricKeyEncoded, "AES");
+			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+			
+			Set<Map.Entry<String, String>> entryseSet = map.entrySet();
+			for (Map.Entry<String, String> entry : entryseSet) {
+				// 对称加密
+				String toBeEncData = entry.getValue();
+				byte[] byteContent = toBeEncData.getBytes("UTF-8");
+				cipher.init(Cipher.ENCRYPT_MODE, key);
+				byte[] result = cipher.doFinal(byteContent);
+				encrytedData = new String(Base64.encode(result));
+				//System.out.println("使用AES对称密钥加密后的密文（经Base64编码）\r\n"+ entry.getKey() + encrytedData);
+				resultMap.put(entry.getKey(), encrytedData);
+			}
+			// 获取接收方公钥
+			FileInputStream fin = new FileInputStream(cer);
+			X509Cert cert = new X509Cert(fin);
+			// 去掉外层Base64编码，在方法体内部已经做过Base64编码
+			encryptedKey = new String(EncryptUtil.encryptMessageByRSA(symmetricKeyEncoded, cert, session));
+			//System.out.println("使用对方公钥加密后的会话密钥密文（经Base64编码）\r\n" + encryptedKey);
+			resultMap.put("encryptedKey", encryptedKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return resultMap;
+	}
+
+	
+	
+	
+	 public static String callCmd(String[] cmd) { 
+	     String result = ""; 
+	     String line = ""; 
+	     try { 
+	       Process proc = Runtime.getRuntime().exec(cmd); 
+	       InputStreamReader is = new InputStreamReader(proc.getInputStream()); 
+	       BufferedReader br = new BufferedReader (is); 
+	       while ((line = br.readLine ()) != null) { 
+	       result += line; 
+	       } 
+	     } 
+	     catch(Exception e) { 
+	       e.printStackTrace(); 
+	     } 
+	     return result; 
+	   }
+	    
+	   /** 
+	   * 
+	   * @param cmd 第一个命令 
+	   * @param another 第二个命令 
+	   * @return  第二个命令的执行结果 
+	   */
+	   public static String callCmd(String[] cmd,String[] another) { 
+	     String result = ""; 
+	     String line = ""; 
+	     try { 
+	       Runtime rt = Runtime.getRuntime(); 
+	       Process proc = rt.exec(cmd); 
+	       proc.waitFor(); //已经执行完第一个命令，准备执行第二个命令 
+	       proc = rt.exec(another); 
+	       InputStreamReader is = new InputStreamReader(proc.getInputStream()); 
+	       BufferedReader br = new BufferedReader (is); 
+	       while ((line = br.readLine ()) != null) { 
+	         result += line; 
+	       } 
+	     } 
+	     catch(Exception e) { 
+	       e.printStackTrace(); 
+	     } 
+	     return result; 
+	   }
+	    
+	    
+	    
+	   /** 
+	   * 
+	   * @param ip 目标ip,一般在局域网内 
+	   * @param sourceString 命令处理的结果字符串 
+	   * @param macSeparator mac分隔符号 
+	   * @return mac地址，用上面的分隔符号表示 
+	   */
+	   public static String filterMacAddress(final String ip, final String sourceString,final String macSeparator) { 
+	     String result = ""; 
+	     String regExp = "((([0-9,A-F,a-f]{1,2}" + macSeparator + "){1,5})[0-9,A-F,a-f]{1,2})"; 
+	     Pattern pattern = Pattern.compile(regExp); 
+	     Matcher matcher = pattern.matcher(sourceString); 
+	     while(matcher.find()){ 
+	       result = matcher.group(1); 
+	       if(sourceString.indexOf(ip) <= sourceString.lastIndexOf(matcher.group(1))) { 
+	         break; //如果有多个IP,只匹配本IP对应的Mac. 
+	       } 
+	     }
+	   
+	     return result; 
+	   }
+	    
+	    
+	    
+	   /** 
+	   * 
+	   * @param ip 目标ip 
+	   * @return  Mac Address 
+	   * 
+	   */
+	   public static String getMacInWindows(final String ip){ 
+	     String result = ""; 
+	     String[] cmd = { 
+	         "cmd", 
+	         "/c", 
+	         "ping " + ip 
+	         }; 
+	     String[] another = { 
+	         "cmd", 
+	         "/c", 
+	         "arp -a"
+	         }; 
+	   
+	     String cmdResult = callCmd(cmd,another); 
+	     result = filterMacAddress(ip,cmdResult,"-"); 
+	   
+	     return result; 
+	   } 
+	 
+	   /** 
+	   * @param ip 目标ip 
+	   * @return  Mac Address 
+	   * 
+	   */
+	   public static String getMacInLinux(final String ip){ 
+	     String result = ""; 
+	     String[] cmd = { 
+	         "/bin/sh", 
+	         "-c", 
+	         "ping " + ip + " -c 2 && arp -a"
+	         }; 
+	     String cmdResult = callCmd(cmd); 
+	     result = filterMacAddress(ip,cmdResult,":"); 
+	   
+	     return result; 
+	   } 
+	    
+	   /**
+	   * 获取MAC地址 
+	   * @return 返回MAC地址
+	   */
+	   public static String getMacAddress(String ip){
+	     String macAddress = "";
+	     macAddress = getMacInWindows(ip).trim();
+	     if(macAddress==null||"".equals(macAddress)){
+	       macAddress = getMacInLinux(ip).trim();
+	     }
+	     return macAddress;
+	   }
+	   
+	   /**
+	    * 响应XML解析
+	    * */
+	   public static Map requestXml(String xml,Map maps) {
+			List resultlist=new ArrayList();
+			Document doc = null;
+			try {
+				doc = DocumentHelper.parseText(xml);//字符串转变为document对象
+				
+				Element rootElt = doc.getRootElement(); // 获取根节点
+				
+				Element Respone = rootElt.element("Respone"); // 获取根节点下的子节点Respone
+				Element Head =null;
+				if(Respone==null){
+					 Respone = rootElt.element("Request");
+				}
+				Head = Respone.element("Head");
+				List<Element> HeadList = Head.elements();
+				for (Element element : HeadList) {
+					maps.put(element.getName(), element.getText());
+				}
+				Element Body = Respone.element("Body");
+					if(Body.element("RespInfo")!=null){
+						Element RespInfo = Body.element("RespInfo");
+						List<Element> childRespInfo = RespInfo.elements();
+						for (Element element2 : childRespInfo) {
+							maps.put(element2.getName(), element2.getText());
+						}
+					}
+					if(Body.element("QueryInfo")!=null){
+						Element QueryInfo = Body.element("QueryInfo");
+						List<Element> childQueryInfo = QueryInfo.elements();
+						for (Element element2 : childQueryInfo) {
+							maps.put(element2.getName(), element2.getText());
+						}
+					}
+					if(Body.element("PcacList")!=null){
+						Element PcacList = Body.element("PcacList");
+						String Count = PcacList.elementTextTrim("Count");
+						Element UpDate = PcacList.element("UpDate");
+						maps.put("Count", Count);
+						maps.put(UpDate.getName(), UpDate.getText());
+							if(Integer.valueOf(Count)<1){
+								//无返回数据
+							}else{
+								List<Element> childPcacList = PcacList.elements();
+								int size = childPcacList.size();
+								for (Element element3 : childPcacList) {
+									String name = element3.getName();
+									if(name!="Count"&&name!="UpDate"){
+										List<Element> childelement3 = element3.elements();
+										Map map=new HashMap();
+										for (Element element4 : childelement3) {
+											map.put(element4.getName(), element4.getText());
+										}
+										
+										resultlist.add(map);
+									}
+									
+								}
+							}
+					}
+					if(Body.element("RishInfo")!=null){
+						Element PcacList = Body.element("RishInfo");
+						String Count = PcacList.elementTextTrim("Count");
+						Element UpDate = PcacList.element("UpDate");
+						maps.put("Count", Count);
+						maps.put(UpDate.getName(), UpDate.getText());
+							if(Integer.valueOf(Count)<1){
+								//无返回数据
+							}else{
+								List<Element> childPcacList = PcacList.elements();
+								for (Element element3 : childPcacList) {
+									String name = element3.getName();
+									if(name!="Count"&&name!="UpDate"){
+										List<Element> childelement3 = element3.elements();
+										Map map=new HashMap();
+										for (Element element4 : childelement3) {
+											map.put(element4.getName(), element4.getText());
+										}
+										
+										resultlist.add(map);
+									}
+									
+								}
+							}
+					}
+					maps.put("resultlist", resultlist);
+				maps.put("Signature", rootElt.elementTextTrim("Signature"));
+			}catch (Exception e) {
+					e.printStackTrace();
+			}
+			return maps;
+	 }	
+	   
+	   
+	// 解密
+		public static Map decrypt(String resultKey, Map Result,String pfx,String DecryptPWD) throws Exception {
+			if(Result.size()<1){
+				return null;
+			}
+			Map resultMap = new HashMap();
+			// 初始化加密会话
+			JCrypto.getInstance().initialize(JCrypto.JSOFT_LIB, null);
+			Session session = JCrypto.getInstance().openSession(JCrypto.JSOFT_LIB);
+			
+			// 解密对称密钥
+			PrivateKey priKey = KeyUtil.getPrivateKeyFromPFX(pfx, DecryptPWD);
+			
+			/*********************************************/
+			// 去掉外层Base64解码，在方法体内部已经做过Base64解码
+			byte[] keyData = EncryptUtil.decryptMessageByRSA(resultKey.getBytes(),priKey, session);
+			SecretKeySpec symmetricKey = new SecretKeySpec(keyData, "AES");
+
+			// 解密被加密的项，可使用对称密钥对多个加密项进行解密
+			Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+			cipher.init(Cipher.DECRYPT_MODE, symmetricKey);
+			Set<Map.Entry<String, String>> entryseSet = Result.entrySet();
+			for (Map.Entry<String, String> entry : entryseSet) {
+				String ResultOne = entry.getValue();
+				byte[] result1 = cipher.doFinal(Base64.decode(ResultOne));
+				String decryptedData = new String(result1, "UTF-8");
+				//System.out.println("解密后的原文数据\r\n" + decryptedData);
+				resultMap.put(entry.getKey(), decryptedData);
+			}
+			return resultMap;
+		}
+		
+	     public static String doGet(String uri,String param) throws Exception  
+	        {  
+	            String result= "";  
+	    //      创建HttpGet或HttpPost对象，将要请求的URL通过构造方法传入HttpGet或HttpPost对象。  
+	           // HttpGet httpRequst = new HttpGet(uri);
+	            HttpGet httpRequst = new HttpGet(uri+URLEncoder.encode(param,"UTF-8"));
+	    //      new DefaultHttpClient().execute(HttpUriRequst requst);  
+	            try {  
+	       //使用DefaultHttpClient类的execute方法发送HTTP GET请求，并返回HttpResponse对象。  
+	                HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequst);//其中HttpGet是HttpUriRequst的子类  
+	                if(httpResponse.getStatusLine().getStatusCode() == 200)  
+	                {  
+	                    HttpEntity httpEntity = httpResponse.getEntity();  
+	                    result = EntityUtils.toString(httpEntity);//取出应答字符串  
+	                // 一般来说都要删除多余的字符   
+	                    result.replaceAll("\r", "");//去掉返回结果中的"\r"字符，否则会在结果字符串后面显示一个小方格    
+	                }  
+	                       else   
+	                            httpRequst.abort();  
+	               } catch (ClientProtocolException e) {  
+	                // TODO Auto-generated catch block  
+	                e.printStackTrace();  
+	                result = e.getMessage().toString();  
+	            } catch (IOException e) {  
+	                // TODO Auto-generated catch block  
+	                e.printStackTrace();  
+	                result = e.getMessage().toString();  
+	            }  
+	            return result;  
+	        }  		
+	     
+	     public static String doPost(String uri,String param) throws Exception  
+	     {  
+	         String result = "";  
+	         HttpPost httpRequst = new HttpPost(uri);//创建HttpPost对象  
+	           
+	         List <NameValuePair> params = new ArrayList<NameValuePair>();  
+	         params.add(new BasicNameValuePair("xml", param));  
+	      
+	             httpRequst.setEntity(new UrlEncodedFormEntity(params,"UTF-8"));  
+	             HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequst);  
+	             if(httpResponse.getStatusLine().getStatusCode() == 200)  
+	             {  
+	                 HttpEntity httpEntity = httpResponse.getEntity();  
+	                 result = EntityUtils.toString(httpEntity);//取出应答字符串  
+	             }  
+	  
+	         return result;  
+	     }
+}

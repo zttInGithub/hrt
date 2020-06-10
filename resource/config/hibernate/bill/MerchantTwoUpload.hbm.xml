@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MerchantTwoUploadModel" table="BILL_MERCHANTTWOUPLOAD">
+		<id name="bmtuid" column="BMTUID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTTWOUPLOAD</param>
+			</generator>
+        </id>
+		<property name="mid" column="MID" />
+		<property name="legalName" column="LEGALNAME" />
+		
+		<property name="legalName2" column="LEGALNAME2" />
+		<property name="bupLoad" column="BUPLOAD" />
+		<property name="bigdealUpLoad" column="BIGDEALUPLOAD" />
+		<property name="laborContractImg" column="LABORCONTRACTIMG" />
+		
+		<property name="maintaindate" column="MAINTAINDATE" type="timestamp"/>
+		<property name="maintaintype" column="MAINTAINTYPE" />
+		<property name="approveDate" column="APPROVEDATE" type="timestamp"/>
+		<property name="approveStatus" column="APPROVESTATUS" />
+		<property name="approveNote" column="APPROVENOTE" />
+	</class>
+</hibernate-mapping>

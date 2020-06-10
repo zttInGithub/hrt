@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerAdjustRateModel" table="BILL_MERADJUSTRATE">
+        <id name="mjrid" column="MJRID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_MERADJUSTRATE</param>
+			</generator>
+        </id>
+        <property name="mid" column="MID" />
+        <property name="settleCycle" column="SETTLECYCLE" />
+        <property name="settMethod" column="SETTMETHOD" />
+        <property name="secondRate" column="SECONDRATE" />
+        <!-- <property name="scanRate" column="SCANRATE" /> -->
+        <property name="preSetTime" column="PRESETTIME" />
+        <property name="quotaAmt" column="QUOTAAMT" />
+        <property name="status" column="STATUS" />
+        <property name="cdate" column="CDATE" type="timestamp"/>
+        <property name="lmdate" column="LMDATE" type="timestamp"/>
+        <property name="cby" column="CBY" />
+        <property name="lmby" column="LMBY" />
+    </class>
+</hibernate-mapping>

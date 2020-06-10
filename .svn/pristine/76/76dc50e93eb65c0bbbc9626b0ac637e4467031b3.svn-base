@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckReOrderModel" table="CHECK_REORDER">
+        <id name="roid" column="ROID">
+            <!-- <generator class="sequence">
+				<param name="sequence">S_check_reOrder</param>
+			</generator>
+			 -->
+        </id>
+      <property name="oripkId" column="ORIPKID" ></property>
+      <property name="mid" column="MID" ></property>
+      <property name="tid" column="TID" ></property>
+      <property name="rrn" column="RRN" ></property>
+      <property name="cardPan" column="CARDPAN" ></property>
+      <property name="samt" column="SAMT" ></property>
+      <property name="ramt" column="RAMT" ></property>
+      <property name="txnDayStr" column="TXNDAY" ></property>
+      <property name="refundType" column="REFUNDTYPE" ></property>
+      <property name="remarks" column="REMARKS" ></property>
+      <property name="refundCode" column="REFUNDCODE" ></property>
+      <property name="minfo" column="MINFO" ></property>
+      <property name="minfo2" column="MINFO2" ></property>
+      <property name="reOrderUpload" column="REORDERUPLOAD" ></property>
+      <property name="maintainUid" column="MAINTAINUID" ></property>
+      <property name="status" column="STATUS" ></property>
+      <property name="maintainDate" column="MAINTAINDATE" type="timestamp"></property>
+      <property name="refundDate" column="REFUNDDATE"></property>
+      <property name="reOrderUpload1" column="REORDERUPLOAD1"></property>
+      <property name="reOrderUpload2" column="REORDERUPLOAD2"></property>
+      <property name="reOrderUpload3" column="REORDERUPLOAD3"></property>
+      <property name="reOrderUpload4" column="REORDERUPLOAD4"></property>
+      <property name="reOrderUpload5" column="REORDERUPLOAD5"></property>
+      <property name="processContext" column="PROCESSCONTEXT"></property>
+      <property name="commentContext" column="COMMENTCONTEXT"></property>
+      <property name="unno" column="UNNO"></property>
+    </class>
+</hibernate-mapping>

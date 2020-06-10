@@ -1,0 +1,192 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+</script>
+<form id="sysAdmin_merchantMaid_queryForm" method="post" enctype="multipart/form-data" >
+	<fieldset>
+		<legend>商户终端信息</legend>
+		<table class="table">
+		   	<tr>
+		   		<th>商户编号：</th>
+		   		<td><input type="text" readonly="readonly" name="MID" style="width:200px;"/></td>
+	   			<th>TID：</th>
+	   			<td>
+	   				<input type="text" readonly="readonly" name="TID" style="width:200px;" />
+	   			</td>
+	   		</tr>
+	   		<tr>
+	   			<th>大额MID：</th>
+	   			<td><input type="text" readonly="readonly" name="LARGEMID" style="width:200px;"/></td>
+		   	
+		   		<th>大额TID：</th>
+	   			<td><input type="text" readonly="readonly" name="LARGETID" style="width:200px;"/></td>
+	   		</tr>
+		   	<tr>	
+		   		<th>外卡MID：</th>
+	   			<td>
+	   				<input type="text" readonly="readonly" name="WILDMID" style="width:200px;" />
+	   			</td>
+	   			
+	   			<th>外卡TID：</th>
+	   			<td>
+	   				<input type="text" readonly="readonly" name="WILDTID" style="width:200px;" />
+	   			</td>
+	   		</tr>
+
+			<tr>
+		   		<th>储联卡MID：</th>
+		   		<td><input type="text" readonly="readonly" name="RESERVEMID" style="width:200px;" /></td>
+		   		
+		   		<th>储联卡TID：</th>
+		   		<td><input type="text" readonly="readonly" name="RESERVETID" style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th>储值卡MID：</th>
+		   		<td><input type="text" readonly="readonly" name="STOREDMID" style="width:200px;" /></td>
+		   		<th>储值卡TID：</th>
+		   		<td><input type="text" readonly="readonly" name="STOREDTID" style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th>机型：</th>
+		   		<td><input type="text" name="MODELTYPE" style="width:200px;"/></td>
+		   		
+		   		<th>SN号：</th>
+		   		<td><input type="text" name="SN"  style="width:200px;"/></td>
+		   	</tr>
+		   	 	<tr>
+		   		<th>pos连接方式：</th>
+		   		<td><input type="text" name="ATTENDEDMODEL"  style="width:200px;" /></td>		
+		   		<th>设备归属：</th>
+		   		<td><input type="text" name="BELONG"  style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th >商户店铺名称：</th>
+		   		<td><input type="text" name="SHOPNAME"  style="width:200px;" /></td>
+		   		
+		   		<th >实际经营内容：</th>
+		   		<td><input type="text" name="BUSINESSSCOPE"   style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th>装机名称：</th>
+		   		<td><input type="text" name="INSTALLEDNAME" style="width:200px;" /></td>
+		   		
+		   		<th>SIM卡：</th>
+		   		<td><input type="text" name="INSTALLEDSIM" style="width:200px;" /></td>
+		   	</tr>
+		   	 	<tr>
+		   		<th>联系人：</th>
+		   		<td><input type="text" name="CONTACTPERSON"  style="width:200px;" /></td>
+		   		
+		   		<th>联系人电话 ：</th>
+		   		<td><input type="text" name="CONTACTTEL"  style="width:200px;" /></td>
+		   	</tr>
+		   	 	<tr>
+		   		<th >联系人手机：</th>
+		   		<td><input type="text" name="CONTACTPHONE"   style="width:200px;" /></td>
+		   		
+		   		<th >卡种：</th>
+		   		<td><input type="text" name="CARDID"  style="width:200px;" /></td>	
+		   	</tr>
+		   	 	<tr>
+		   		<th >第二联系人：</th>
+		   		<td><input type="text" name="LINKMAN2" style="width:200px;" /></td>  		
+		   		<th >联系电话2：</th>
+		   		<td><input type="text" name="PHONE2"   style="width:200px;" /></td>
+		   	</tr>
+		   	 	<tr>
+		   		<th >请求日期：</th>
+		   		<td><input type="text" name="REPORTDATE"  style="width:200px;" /></td>
+		   		<th >批准日期：</th>
+		   		<td><input type="text" name="APPROVALDATE"  style="width:200px;" /></td>
+		   	</tr>
+		   	 	<tr>
+		   		<th >安装日期：</th>
+		   		<td><input type="text" name="SETUP_DATE"  style="width:200px;" /></td>
+		   		
+		   		<th >储联卡安装日期：</th>
+		   		<td><input type="text" name="CLSETUPDATE"   style="width:200px;" /></td>
+		   	</tr>
+		   	 	<tr>
+		   		<th >储值卡安装日期：</th>
+		   		<td><input type="text" name="CZSETUPDATE"  style="width:200px;" /></td>
+		   		
+		   		<th >设备状态：</th>
+		   		<td>
+		   		<select name="STATUS" style="width:200px;">
+		   				<option value="0">未激活</option>
+		   				<option value="1">正常</option>
+		   				<option value="2">注册</option>
+		   				<option value="3">撤机中</option>
+		   				<option value="4">撤机</option>
+		   				<option value="5">取消安装</option>
+		   				<option value="6">遗失</option>
+		   				<option value="7">欠费</option>
+		   			</select>
+		   		</td>
+		   	</tr>
+		   	 	<tr>
+		   		<th >押金：</th>
+		   		<td><input type="text" name="DEPOSIT"  style="width:200px;" /></td>
+		   		
+		   		<th >服务费：</th>
+		   		<td><input type="text" name="SERVICE_VALUE"   style="width:200px;" /></td>
+		   	</tr>
+		   		<tr>
+		   		<th >装机路线：</th>
+		   		<td><input type="text" name="SETUPLINE"   style="width:200px;" /></td>
+		   		
+		   		<th>装机地址：</th>
+		   		<td><input type="text" name="INSTALLEDADDRESS" style="width:200px;" /></td>
+		   		
+		   	</tr>
+		   	<tr>
+		   		<th> 是否三联：</th>
+		   		<td>
+		   			<select name="IFTRIGEMINY" style="width:200px;">
+		   				<option value="1">是</option>
+		   				<option value="0">否</option>
+		   			</select>
+		   		</td>
+		   		<th>商户限额：</th>
+		   		<td><input type="text" name="LIMIT"  style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th>绑定电话：</th>
+		   		<td><input type="text" name="BINGNUM"  style="width:200px;" /></td>
+		   		<th>MAID：</th>
+		   		<td><input type="text" name="MAID"  readonly="readonly" style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th>BMTID：</th>
+		   		<td><input type="text" name="BMTID" readonly="readonly"  style="width:200px;" /></td>
+		   		<th>开户行：</th>
+		   		<td><input type="text" name="BANKNAME"  style="width:200px;" /></td>
+		   	</tr>
+		   		<th>EMAIL：</th>
+		   		<td><input type="text" name="EMAIL"  style="width:200px;" /></td>
+		   		
+		   		<th>账号：</th>
+		   		<td><input type="text" name="ACCNO"  style="width:200px;" /></td>
+		   	</tr>
+		</table>
+	</fieldset>
+	
+	<fieldset>
+		<legend>备注</legend>
+		<table class='table'>
+			<tr>
+				<th>备注1</th>
+				<td>
+					<textarea rows="6" cols="38" style="resize:none;" name="MINFO1"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>备注2</th>
+				<td>
+					<textarea rows="6" cols="38" style="resize:none;" name="REMARKS"></textarea>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</form>

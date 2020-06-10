@@ -1,0 +1,168 @@
+package com.hrt.biz.bill.service.impl;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.BeanUtils;
+
+import com.hrt.biz.bill.dao.IAgentSalesDao;
+import com.hrt.biz.bill.dao.IMerchantTerminalInfoCommDao;
+import com.hrt.biz.bill.dao.MerchantInfoCommDao;
+import com.hrt.biz.bill.entity.model.MerchantinfoCommModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoCommBean;
+import com.hrt.biz.bill.service.IMerchantInfoCommService;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+
+public class MerchantInfoCommServiceImpl implements IMerchantInfoCommService {
+
+	private MerchantInfoCommDao merchantInfoCommDao;
+	private IAgentSalesDao agentSalesDao;
+	private IMerchantTerminalInfoCommDao merchantTerminalInfoCommDao;
+
+	
+	public MerchantInfoCommDao getMerchantInfoCommDao() {
+		return merchantInfoCommDao;
+	}
+	public void setMerchantInfoCommDao(MerchantInfoCommDao merchantInfoCommDao) {
+		this.merchantInfoCommDao = merchantInfoCommDao;
+	}
+	public IAgentSalesDao getAgentSalesDao() {
+		return agentSalesDao;
+	}
+	public void setAgentSalesDao(IAgentSalesDao agentSalesDao) {
+		this.agentSalesDao = agentSalesDao;
+	}
+	public IMerchantTerminalInfoCommDao getMerchantTerminalInfoCommDao() {
+		return merchantTerminalInfoCommDao;
+	}
+	public void setMerchantTerminalInfoCommDao(
+			IMerchantTerminalInfoCommDao merchantTerminalInfoCommDao) {
+		this.merchantTerminalInfoCommDao = merchantTerminalInfoCommDao;
+	}
+	
+	
+	@Override
+	public DataGridBean queryMerchantInfoComm(MerchantInfoCommBean merchantInfoCommBean) {
+			String sql = "select MAID,MID,MERCHNAME,BNO,nvl(LEGALPERSON,'') LEGALPERSON,LEGALNUM,BUSINESSSCOPE,BADDR,nvl(RADDR,'') RADDR,SHOPPINGNAME,REPORTDATE,APPROVALDATE,RECEIPTDATE,INSTALLDATE,DEPOSIT,SERVICECHARGE,CARDTYPE,INSTALLCARD,BANKNAME,ACCNO,BANKACCNAME,BANKFEERATE,WILDFEERATE,STORAGEFEERATE,FEERATE,PAYBANKID,EXCHANGE,CONTACTPERSON,CONTACTPHONE,CONTACTTEL,EMAIL,SECONDCONTACTPERSON,SECONDCONTACTPHONE,SECONDCONTACTTEL,MCCID,SIGNUSERID,MAINTAINUSERID,STATUS,MINFO1,MINFO2,REMARKS,SOURCENAME  FROM ( SELECT t.* FROM BILL_MERCHANTINFO_COMM t,BILL_MERCHANTTERMINALINFO_COMM h WHERE h.MAID=t.MAID AND 1=1  ";
+			//数据 map
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(merchantInfoCommBean != null){
+				if(merchantInfoCommBean.getMID() !=null && !"".equals(merchantInfoCommBean.getMID().trim())){
+					sql += "  AND t.MID=:MID  ";
+					map.put("MID", merchantInfoCommBean.getMID());
+				}
+				if(merchantInfoCommBean.getMERCHNAME() !=null && !"".equals(merchantInfoCommBean.getMERCHNAME().trim())){
+					sql += "  AND  T.MERCHNAME LIKE '%"+merchantInfoCommBean.getMERCHNAME()+"%' ";
+				}
+				if(merchantInfoCommBean.getInstalledAddress() !=null && !"".equals(merchantInfoCommBean.getInstalledAddress().trim())){
+					sql += "  AND  h.InstalledAddress  LIKE '%"+merchantInfoCommBean.getInstalledAddress()+"%' ";
+				}
+				
+				if(merchantInfoCommBean.getAccNo() !=null && !"".equals(merchantInfoCommBean.getAccNo().trim())){
+					sql += "  AND t.ACCNO=:ACCNO  ";
+					map.put("ACCNO", merchantInfoCommBean.getAccNo().trim());
+				}
+				if(merchantInfoCommBean.getContactPerson() !=null && !"".equals(merchantInfoCommBean.getContactPerson().trim())){
+					sql += "  AND  h.CONTACTPERSON  LIKE '%"+merchantInfoCommBean.getContactPerson()+"%' ";
+				}
+				if(merchantInfoCommBean.getContactPhone() !=null && !"".equals(merchantInfoCommBean.getContactPhone().trim())){
+					sql += "  AND h.CONTACTPHONE=:CONTACTPHONE  ";
+					map.put("CONTACTPHONE", merchantInfoCommBean.getContactPhone().trim());
+				}
+
+				if(merchantInfoCommBean.getTID() !=null && !"".equals(merchantInfoCommBean.getTID().trim()) ){
+					
+					sql += " AND T.MAID IN( select s.MAID from BILL_MERCHANTTERMINALINFO_COMM s where (s.TID ='"+merchantInfoCommBean.getTID().trim()+"' or s.LARGETID ='"+merchantInfoCommBean.getTID().trim()+"' or s.WILDTID='"+merchantInfoCommBean.getTID().trim()+"' or s.RESERVETID='"+merchantInfoCommBean.getTID().trim()+"' or s.STOREDTID='"+merchantInfoCommBean.getTID().trim()+"'))";
+				}
+				if (merchantInfoCommBean.getSort()!=null&&merchantInfoCommBean.getOrder()!=null) {
+					sql += " order by t." + merchantInfoCommBean.getSort() + " "+merchantInfoCommBean.getOrder();
+				}
+				
+			}
+			
+			
+			sql +=" )GROUP BY  MAID,MID,MERCHNAME,BNO,LEGALPERSON,LEGALNUM,BUSINESSSCOPE,BADDR,RADDR,SHOPPINGNAME,REPORTDATE,APPROVALDATE,RECEIPTDATE,INSTALLDATE,DEPOSIT,SERVICECHARGE,CARDTYPE,INSTALLCARD,BANKNAME,ACCNO,BANKACCNAME,BANKFEERATE,WILDFEERATE,STORAGEFEERATE,FEERATE,PAYBANKID,EXCHANGE,CONTACTPERSON,CONTACTPHONE,CONTACTTEL,EMAIL,SECONDCONTACTPERSON,SECONDCONTACTPHONE,SECONDCONTACTTEL,MCCID,SIGNUSERID,MAINTAINUSERID,STATUS,MINFO1,MINFO2,REMARKS,SOURCENAME ";
+			String sqlCount="select count(*) from ("+sql+") ";
+					
+			BigDecimal counts = merchantInfoCommDao.querysqlCounts(sqlCount, map);
+			List<Map<String,Object>> merchantInfoCommList = merchantInfoCommDao.queryObjectsBySqlList2(sql, map, merchantInfoCommBean.getPage(), merchantInfoCommBean.getRows());
+			for(int i=0; i<merchantInfoCommList.size();i++){
+				Map<String, Object> map1=merchantInfoCommList.get(i);
+				int a =Integer.parseInt(map1.get("SIGNUSERID").toString());
+				String SIGNUSERID =agentSalesDao.queryObjectByHql("from AgentSalesModel a where a.busid=?", new Object[]{a}).getSaleName();
+				map1.put("SIGNUSERID", SIGNUSERID);
+				int b =Integer.parseInt(map1.get("MAINTAINUSERID").toString());
+				String MAINTAINUSERID =agentSalesDao.queryObjectByHql("from AgentSalesModel a where a.busid=?", new Object[]{b}).getSaleName();
+				map1.put("MAINTAINUSERID", MAINTAINUSERID);
+				SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					if(map1.get("REPORTDATE")!=null){
+						map1.put("REPORTDATE", sf.format(sf.parse(map1.get("REPORTDATE").toString())));
+					}
+					if(map1.get("INSTALLDATE")!=null){
+						map1.put("INSTALLDATE", sf.format(sf.parse( map1.get("INSTALLDATE").toString())));
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			DataGridBean dgb = new DataGridBean();
+			dgb.setTotal(counts.intValue());
+			dgb.setRows(merchantInfoCommList);
+			return dgb;
+	}
+	@Override
+	public DataGridBean queryMaid(String maid) {
+		String sql = "SELECT to_char(t.APPROVALDATE,'YYYY-MM-DD') APPROVALDATE ,t.ATTENDEDMODEL,t.BELONG,t.BINGNUM,t.BMTID,t.CARDID,to_char(t.CLSETUPDATE,'YYYY-MM-DD') CLSETUPDATE,t.CONTACTPERSON,t.CONTACTPHONE,t.CONTACTTEL,to_char(t.CZSETUPDATE,'YYYY-MM-DD') CZSETUPDATE," +
+				"t.DEPOSIT,t.IFTRIGEMINY,t.INSTALLEDADDRESS,t.INSTALLEDNAME,t.INSTALLEDSIM,t.LARGEMID,t.LARGETID,t.LIMIT,t.LINKMAN2,t.MAID,t.MID,t.MINFO1,t.MINFO2," +
+				"	t.MODELTYPE,t.PHONE2,t.REMARKS,to_char(t.REPORTDATE,'YYYY-MM-DD') REPORTDATE,t.RESERVEMID,t.RESERVETID,t.SERVICE_VALUE,to_char(t.SETUP_DATE,'YYYY-MM-DD') SETUP_DATE,t.SETUPLINE,t.SHOPNAME,t.SN,t.STATUS,t.STOREDMID," +
+				"	t.STOREDTID,t.TID,t.WILDMID,t.WILDTID ,h.BANKNAME BANKNAME,h.ACCNO ACCNO,h.BUSINESSSCOPE BUSINESSSCOPE,h.EMAIL FROM BILL_MERCHANTTERMINALINFO_COMM t,BILL_MERCHANTINFO_COMM h  where h.MAID='"+maid+"' AND t.MAID='"+maid+"' ";
+		//String sql = "SELECT t.* FROM BILL_MERCHANTTERMINALINFO_COMM t where t.MAID='"+maid+"'";
+		
+		String sqlCount = "FROM MerchantTerminalInfoCommModel t where t.MAID=:MAID";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("MAID", Integer.parseInt(maid));
+		int counts = merchantTerminalInfoCommDao.queryObjectsByHqlList(sqlCount, map).size();
+		List maidList = merchantTerminalInfoCommDao.queryObjectsBySqlObject(sql);
+		
+		DataGridBean dgb = new DataGridBean();
+		dgb.setTotal(counts);
+		dgb.setRows(maidList);
+		return dgb;
+	}
+	
+	/**
+	 * service
+	 * 
+	 */
+	@Override
+	public void addMerchantInfo(MerchantInfoCommBean merchantInfoComm) {
+		//数据插入数据库
+		MerchantinfoCommModel merchantC = new MerchantinfoCommModel();
+		BeanUtils.copyProperties(merchantInfoComm, merchantC);
+		merchantC.setStatus(1);
+		merchantC.setReportDate(new Date());
+		merchantC.setApprovalDate(new Date());
+		merchantC.setReceiptDate(new Date());
+		merchantC.setMaintainUserID(merchantInfoComm.getSignUserID());
+		merchantInfoCommDao.saveObject(merchantC);
+	}
+	
+	
+	//写查询语句：如果条数>0则存在
+	@Override
+	public int queryMid(String mid) {
+		String sqlCount = " select count(1) from bill_merchantinfo_comm where mid=:MID";
+		//map
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("MID", mid);
+		//从数据库中读取记录条数
+		int counts = merchantTerminalInfoCommDao.querysqlCounts2(sqlCount, map);
+		return counts;
+	}
+}

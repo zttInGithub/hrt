@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MerchantTerminalInfoCommModel" table="BILL_MERCHANTTERMINALINFO_COMM">
+		<id name="BMTID" column="BMTID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_TERMINALINFO_COMM</param>
+			</generator>
+		</id>
+		<property name="MAID" column="MAID"/>
+		<property name="MID" column="MID"/>
+		<property name="TID" column="TID"/>
+		<property name="LargeMID" column="LARGEMID"/>
+		<property name="LargeTID"  column="LARGETID"/>
+		<property name="WILDMID" column="WILDMID"/>
+		<property name="WILDTID" column="WILDTID"/>
+		<property name="ReserveMID" column="RESERVEMID"/>
+		<property name="ReserveTID" column="RESERVETID"/>
+		<property name="StoredMID" column="STOREDMID"/>
+		<property name="StoredTID" column="STOREDTID"/>
+		<property name="MODELTYPE"  column="MODELTYPE"/>
+		
+		<property name="SN"  column="SN"/>
+		<property name="ATTENDEDMODEL"  column="ATTENDEDMODEL"/>
+		<property name="BELONG"  column="BELONG"/>
+		<property name="BINGNUM"  column="BINGNUM"/>
+		<property name="InstalledAddress"  column="INSTALLEDADDRESS"/>
+		<property name="InstalledName"  column="INSTALLEDNAME"/>
+		<property name="InstalledSIM"  column="INSTALLEDSIM"/>
+		<property name="ContactPerson"  column="CONTACTPERSON"/>
+		<property name="ContactTel"  column="CONTACTTEL"/>
+		<property name="ContactPhone"  column="CONTACTPHONE"/>
+		<property name="IFtrigeminy"  column="IFTRIGEMINY"/>
+		<property name="limit"  column="LIMIT"/> 
+  		<property name="setupLine"  column="SETUPLINE"/>
+		<property name="cardID"  column="CARDID"/>
+		<property name="service_value"  column="SERVICE_VALUE"/>
+		<property name="deposit"  column="DEPOSIT"/>
+		<property name="linkman2"  column="LINKMAN2"/>
+		<property name="phone2"  column="PHONE2"/>
+		<property name="shopName"  column="SHOPNAME"/>
+		<property name="ReportDate"  column="REPORTDATE"/>
+  
+  	    <property name="ApprovalDate"  column="APPROVALDATE"/>
+		<property name="setup_date"  column="SETUP_DATE"/>
+		<property name="clSetupDate"  column="CLSETUPDATE"/>
+       <property name="czSetupDate"  column="CZSETUPDATE"/>
+  
+		<property name="Status"  column="STATUS"/>
+		<property name="MINFO1"  column="MINFO1"/>
+		<property name="MINFO2"  column="MINFO2"/>
+		<property name="Remarks"  column="REMARKS"/>
+    </class>
+</hibernate-mapping>

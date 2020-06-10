@@ -1,0 +1,216 @@
+package com.hrt.biz.bill.service;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.entity.model.MerchantAuthenticityModel;
+import com.hrt.biz.bill.entity.pagebean.AgentUnitBean;
+import com.hrt.biz.bill.entity.pagebean.MerchantAuthenticityBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IMerchantAuthenticityService {
+
+	
+	/**
+	 * 添加认证信息
+	 */
+	Map<String, String> saveMerchantAuthInfo(MerchantAuthenticityBean matb) throws Exception;
+	
+	/**
+	 * 银行卡商户实名认证请求
+	 * @param matb
+	 * @return map
+	 * @throws Exception 
+	 */
+	Map<String, String> addMerchantAuthInfo(MerchantAuthenticityBean matb) throws Exception;
+	/**
+	 * 银行卡交易实名认证请求
+	 * @param matb
+	 * @return map
+	 * @throws Exception 
+	 */
+	Map<String, String> addTxnAuthInfo(MerchantAuthenticityBean matb) throws Exception;
+
+	/**
+	 * 商户认证成功推送到综合
+	 * @param matm
+	 * @param phoneNumber
+	 */
+	void pushADMreceiveRepayBD(MerchantAuthenticityModel matm,String phoneNumber);
+	/**
+	 * 银行卡交易实名认证请求(对外)
+	 * @param matb
+	 * @return map
+	 * @throws Exception 
+	 */
+	Map<String, String> addTxnAuthInfoForYBF(MerchantAuthenticityBean matb) throws Exception;
+	
+	/**
+	 * 查询商户认证信息（未/已认证）
+	 */
+	DataGridBean queryMerchantAuthenticity(MerchantAuthenticityBean  matb,UserBean user) throws Exception;
+	
+	/**
+	 * 查询交易认证信息
+	 */
+	DataGridBean queryTxnAuthenticity(MerchantAuthenticityBean  matb,UserBean user) throws Exception;
+	
+	/**
+	 * 重新认证
+	 */
+	boolean updatemMerchantAuthenticity(MerchantAuthenticityBean merchantAuthenticity, UserBean user) throws Exception;
+
+	/**
+	 * 异常重发返回认证成功,自动审批信息
+	 * @param bmtid
+	 * @throws Exception
+	 */
+	void updatemAutoMerchantApproveNote(Integer bmtid) throws Exception;
+
+	/**
+	 * 修改交易认证信息
+	 */
+	public boolean updateTxnAuthenticityGo(MerchantAuthenticityBean merchantAuthenticity, UserBean user)throws Exception ;
+	/**
+	 * 修改交易认证信息
+	 */
+	public boolean updateTxnAuthenticityBack(MerchantAuthenticityBean merchantAuthenticity, UserBean user)throws Exception ;
+	
+	/**
+	 * 向hyb发送认证结果
+	 * @param map
+	 * @param matb
+	 */
+	void sendResultToHyb(Map<String, String> map, MerchantAuthenticityBean matb);
+	/**
+	 * 查看明细(查看 认证失败后 上传的照片)
+	 * @param map
+	 * @param matb
+	 */
+	MerchantAuthenticityBean queryTxnAuthenticityById(Integer id);
+
+	/**
+	 * 查询该商户认证次数（每个商户只有三次认证机会）
+	 * @param matb
+	 * @return count
+	 */
+	Integer queryMerchantAuthCount(MerchantAuthenticityBean matb);
+
+	/**
+	 * 查询当天如果交易认证通过，直接返回成功，不走三方
+	 * @param matb
+	 * @return count
+	 */
+	Integer queryTxnAuthCountYes(MerchantAuthenticityBean matb);
+	/**
+	 * 查询当天如果交易认证(mid)通过，直接返回成功，不走三方
+	 * @param matb
+	 * @return count
+	 */
+	Integer queryTxnAuthCountYesWithMid(MerchantAuthenticityBean matb);
+	
+	Integer queryAuthInfoByMid(MerchantAuthenticityBean matb);
+	/**
+	 * 查询如果交易认证失败，直接返回失败，不走三方
+	 * @param matb
+	 * @return count
+	 */
+	Integer queryTxnAuthCountNo(MerchantAuthenticityBean matb);
+	/**
+	 * 查询当天如果交易认证失败，直接返回失败，不走三方
+	 * @param matb
+	 * @return count
+	 */
+	Integer queryTxnAuthCountNoToDay(MerchantAuthenticityBean matb);
+	/**
+	 * 第一次失败上传照片/当天失败多次，照片付给旧记录，（只记录一次）
+	 * @param matb
+	 * @return count
+	 */
+	Integer updateTxnAuthWithPic(MerchantAuthenticityBean matb) ;
+	/**
+	 * 查询当天此商户交易验证失败次数
+	 * @param matb
+	 * @return count
+	 */
+	Integer queryTxnAuthCount(MerchantAuthenticityBean matb);
+	/**
+	 * 检测银行卡是否符合实名认证规则
+	 * @param matb
+	 * @return
+	 */
+	Integer queryCardRule(MerchantAuthenticityBean matb);
+	/**
+	 * sign验证
+	 * @param matb
+	 * @return
+	 */
+	Integer querySignAuth(MerchantAuthenticityBean matb);
+
+	/**
+	 * 查询该商户是否已经通过认证
+	 * @param matb
+	 * @return
+	 */
+	Integer queryMerAuthYes(MerchantAuthenticityBean matb);
+	/**
+	 * 查询相同卡号，身份证号，入账人名称 且认证失败
+	 * @param matb
+	 * @return
+	 */
+	Integer queryHasFailMerCount(MerchantAuthenticityBean matb);
+	/**
+	 * 查询相同卡号，身份证号，入账人名称 且认证失败的商户mid
+	 * @param matb
+	 * @return
+	 */
+	String queryHasFailMerMid(MerchantAuthenticityBean matb);
+	/**
+	 * 认证
+	 * @param sysseqnb
+	 * @param bmatid
+	 * @return
+	 * @throws Exception
+	 * @throws NoSuchAlgorithmException
+	 */
+	Map<String, String> bulidSendReqResultData(String sysseqnb,Integer bmatid) throws Exception, NoSuchAlgorithmException;
+	/**
+	 * 通过mid查询
+	 */
+	MerchantAuthenticityModel queryMerchantAuthenticityByMid(String mid)throws Exception;
+
+	/**
+	 * 查询认证成功的数据
+	 * @param merchantAuthenticityBean
+	 * @return
+	 * @throws Exception
+	 */
+	MerchantAuthenticityModel queryMerchantAuthenticitySuccess(MerchantAuthenticityBean merchantAuthenticityBean)throws Exception;
+	/**
+	 * 查询商户下所有交易认证记录
+	 */
+	List<MerchantAuthenticityModel> queryTxnAuthInfoByMid(String mid);
+	/**
+	 * 查看明细(查看 认证失败后 上传的照片)
+	 */
+	MerchantAuthenticityBean queryMerAuthenticityById(Integer id);
+	/**
+	 * 查询通道商认证信息
+	 */
+	DataGridBean queryHrtAuthenticity(MerchantAuthenticityBean  matb,UserBean user) throws Exception;
+	List<Map<String, Object>> exportHrtAuthenticity(MerchantAuthenticityBean  matb,UserBean user);
+	boolean isTrue(MerchantAuthenticityBean  matb);
+
+	/**
+	 * TODO @author:lxg-20190809 获取手机号已存在的商户信息及信用卡认证信息
+	 * 获取商户mid认证成功的一条信用卡信息
+	 * @param mid
+	 * @param legalPerson
+	 * @return
+	 */
+	MerchantAuthenticityModel getSuccessInfoMerTypeByMid(String mid,String legalPerson);
+
+	MerchantAuthenticityModel getSuccessInfoMerTypeByYsbMid(String mid,String legalNum);
+}

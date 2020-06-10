@@ -1,0 +1,107 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+	<div>
+		<form method="post" enctype="multipart/form-data" id="import_merchant_info2" onsubmit="subbutton.disabled=1">
+			<input type="hidden" name="importMerchantFile2" id="import_merchant_Name2">
+			<br/>
+				<table align="center">
+					<tr>
+						<td height="10px">  </td>
+					</tr>
+					<tr>
+						<th>商户类别：</th>
+						<td>
+							<select id='merType' name='merType' style="color: red">
+								<option selected="selected" value="1">商户批量导入-传统</option>
+								<option value="2">商户批量导入-手刷</option>
+								<option value="3">商户批量导入-传统实码</option>
+								<option value="4">商户批量导入-指定32域-传统</option>
+								<option value="5">商户批量导入-指定32域-手刷</option>
+							</select>&nbsp;&nbsp;<font color="red">*</font>
+						</td>
+					</tr>
+					<tr>
+						<td height="5px"></td>
+					</tr>
+					<tr>
+						<th>文件类型：</th>
+						<td >
+				   			<input type="radio" name="type"  value="0" checked="checked"/>Excell格式导入
+							<input type="radio" name="type"  value="1" />Csv格式导入
+						</td>
+					</tr>
+					<tr>
+						<th>文&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：</th>
+						<td><input type="file" name="upload" id="upload_merchant_File2"/></td>
+					</tr>
+				</table>
+				<div style="padding-left:34%;vertical-align:middle;">
+				<br/>
+				 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				 	<a href="javascript:void(0)" id="hidenButton" class="easyui-linkbutton" onclick="insert_merchantInfo2();">上传</a>	
+				 	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="insert_clean_merchantInfo2();">取消</a>
+				</div>
+		</form>
+	</div>
+	<script>
+		function insert_clean_merchantInfo2(){
+			$('#import_merchant_info2').form('clear');
+		}
+		//商户批量导入-传统
+		function insert_merchantInfo2(){
+			var merType = $('#merType').val();
+			var url='${ctx}/sysAdmin/merchant_addMoreMerchant2FromExcel.action';
+			if(merType!=null){
+				url+='?merType='+merType;
+			}
+			$('#import_merchant_info2').form('submit',{
+				url:url,
+				onSubmit:function(){
+					var contact = document.getElementById('upload_merchant_File2').value;
+					if(contact == "" || contact == null){
+						$.messager.show({
+							title:'提示',
+							msg:'请选择要上传的文件',
+							timeout:5000,
+							showType:'slide'
+						});
+						return false;
+					}
+					if(contact != "" && contact != null){
+						var l = contact.split(".");
+						if(l[1] == "xls" || l[1]=="csv"){
+							document.getElementById('import_merchant_Name2').value = contact.replace(/.{0,}\\/, "");
+							$('#hidenButton').linkbutton({disabled:true});
+							return true;
+						}else{
+							$.messager.show({
+								title:'提示',
+								msg:'请选择后缀名为.xls/.csv文件',
+								timeout:5000,
+								showType:'slide'
+							});
+							return false;
+							}
+					}
+				},
+				//成功返回数据
+				success:function(data){
+					var resault = $.parseJSON(data);
+					if(resault.sessionExpire){
+						window.location.href = getProjectLocation();
+					}else{
+						if(resault.success){
+							$.messager.show({
+								title:'提示',
+								msg  :resault.msg
+							});
+						}else{
+							$.messager.show({
+								title:'提示',
+								msg  :resault.msg
+							});
+						}
+					}
+				}
+			});
+		}
+	</script>

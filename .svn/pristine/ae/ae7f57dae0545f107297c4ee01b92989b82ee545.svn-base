@@ -1,0 +1,123 @@
+package com.hrt.biz.check.service;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.check.entity.model.CheckProfitTempTraditModel;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.hrt.biz.check.entity.pagebean.CheckProfitTempTraditBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface CheckUnitProfitTraditService {
+	/**
+	 * 查询分润模版
+	 */
+	DataGridBean queryPROFITTEMPLATE(CheckProfitTempTraditBean cptt,UserBean userBean);
+
+	/**
+	 * 传统分润模板明细
+	 * @param cptt
+	 * @param userBean
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	DataGridBean queryprofittemplateAll(CheckProfitTempTraditBean cptt,UserBean userBean) throws UnsupportedEncodingException;
+	/**
+	 * 查询模版是否重复添加
+	 * @throws UnsupportedEncodingException 
+	 */
+	List<Map<String, String>> queryTempName(CheckProfitTempTraditBean cptt,UserBean user) throws UnsupportedEncodingException;
+
+	/**
+	 * 校验传统分润模板
+	 * @param cptt
+	 * @param user
+	 * @return
+	 */
+	String validateProfitTradit(CheckProfitTempTraditBean cptt, UserBean user);
+	/**
+	 * 添加分润模版
+	 */
+	void addProfitTradit (CheckProfitTempTraditBean cptt,UserBean user);
+	/**
+	 * 删除分润模版
+	 * @throws UnsupportedEncodingException 
+	 */
+	void Delprofittradit(String TEMPNAME,UserBean user) throws UnsupportedEncodingException;
+	/**
+	 * 手刷模版修改查询
+	 */
+	CheckProfitTempTraditBean queryupdateProfitTradit(CheckProfitTempTraditBean cptt,UserBean user) throws Exception;
+
+	/**
+	 * 传统分润实时生效/下月生效获取
+	 * @param type 1:实时生效 2:下月生效
+	 * @param cptt
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	CheckProfitTempTraditBean getTraditCheckProfitTempTraditBeanInfo(int type,CheckProfitTempTraditBean cptt) throws UnsupportedEncodingException;
+
+	/**
+	 * 传统下月生效分润模板
+	 * @param cptt
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	CheckProfitTempTraditBean queryProfitTraditNext(CheckProfitTempTraditBean cptt,UserBean user) throws Exception;
+	/**
+	 * 修改模版
+	 * @throws Exception 
+	 */
+	void updateProfitTradit(CheckProfitTempTraditBean cptt, UserBean user) throws Exception;
+	
+	DataGridBean queryUnitProfitTraditSumData(CheckProfitTempTraditBean cptt);
+	
+	DataGridBean queryUnitProfitTraditSumDataScan(CheckProfitTempTraditBean cptt);
+
+	DataGridBean queryUnitProfitTraditDetailData(CheckProfitTempTraditBean cptt);
+	
+	DataGridBean queryUnitProfitTraditDetailDataScan(CheckProfitTempTraditBean cptt);
+
+	HSSFWorkbook exportUnitProfitTraditDetailData(
+			CheckProfitTempTraditBean cptt, UserBean userBean);
+	
+	HSSFWorkbook exportUnitProfitTraditDetailDataScan(
+			CheckProfitTempTraditBean cptt, UserBean userBean);
+
+	Map<String, CheckProfitTempTraditModel> getTraditProfitTemplateMap(int type, String unno, Integer unLvl);
+
+	/**
+	 * 传统分润月度成本查询
+	 * @param cptt
+	 * @param userBean
+	 * @return
+	 */
+	DataGridBean getTraditProfitLog(CheckProfitTempTraditBean cptt,UserBean userBean);
+
+	/**
+	 * 传统分润月度成本详情
+	 * @param cptt
+	 * @return
+	 */
+	CheckProfitTempTraditBean queryProfitTraditLogDetail(CheckProfitTempTraditBean cptt);
+
+    /**
+     * 传统分润月度成本导出
+     * @param cptt
+     * @return
+     */
+    List<CheckProfitTempTraditBean> exportProfitTraditLog(CheckProfitTempTraditBean cptt,UserBean userBean);
+
+    /**
+     * 传统提现汇总
+     * @param cptt
+     * @return
+     */
+	DataGridBean queryTraditionCashTransferSum(CheckProfitTempTraditBean cptt);
+
+}

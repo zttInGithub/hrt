@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.phone.entity.model">
+    <class name="GateViolationModel" table="bill_gateviolation">
+        <id name="gvId" column="GVID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_GATEVIOLATION</param>
+			</generator>
+        </id>
+      <property name="carId" column="CARID"></property>  
+      <property name="count" column="COUNT" ></property>
+      <property name="deGree" column="DEGREE" ></property>
+      <property name="lateFine" column="LATEFINE" ></property>
+      <property name="canProcess" column="CANPROCESS" ></property>
+      <property name="poundage" column="POUNDAGE" ></property>
+      <property name="time" column="TIME" ></property>
+      <property name="uniqueCode" column="UNIQUECODE" ></property>
+      <property name="location" column="LOCATION" ></property>
+      <property name="reason" column="REASON" ></property>
+      <property name="excuteDepartment" column="EXCUTEDEPARTMENT" ></property>
+      <property name="archive" column="ARCHIVE" ></property>
+      <property name="status" column="STATUS" ></property>
+       <property name="department" column="DEPARTMENT" ></property>
+      <property name="priceId" column="PRICEID" ></property>
+      <property name="queryTime" column="QUERYTIME" ></property>
+      <property name="provinceId" column="PROVINCEID" ></property>
+      <property name="mainTainType" column="MAINTAINTYPE"></property>
+      <property name="mainTainUid" column="MAINTAINUID"></property>
+      <property name="punishmentAccording" column="punishmentAccording" ></property>
+      <property name="locationName" column="locationName" ></property>
+      <property name="wflx" column="wflx" ></property>
+      <property name="poundage1" column="poundage1" ></property>
+      <property name="poundage2" column="poundage2" ></property>
+       <property name="fsblje" column="fsblje" ></property>
+      <property name="priceSource" column="priceSource" ></property>
+      <property name="difference" column="difference" ></property>
+      <property name="canProcessUsOrder" column="CANPROCESSUSORDER" ></property>
+      <property name="usPriceFirst" column="usPriceFirst"></property>
+      <property name="isChoose" column="isChoose"></property>
+      <property name="receivePoundage" column="RECEIVEPOUNDAGE"></property>
+      <property name="total" column="TOTAL"></property>
+      <property name="canprocessMsg" column="CanprocessMsg"></property>
+    </class>
+</hibernate-mapping>

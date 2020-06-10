@@ -1,0 +1,300 @@
+package com.hrt.frame.action.sysadmin;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.model.RoleModel;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.TreeNodeBean;
+import com.hrt.frame.entity.pagebean.UnitBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.service.sysadmin.IUnitService;
+import com.opensymphony.xwork2.ModelDriven;
+
+/**
+ * 机构
+ */
+public class UnitAction extends BaseAction implements ModelDriven<UnitBean> {
+
+	private static final long serialVersionUID = 1L;
+
+	private IUnitService unitService;
+	
+	private UnitBean unit = new UnitBean();
+	
+	private static final Log log = LogFactory.getLog(UnitAction.class);
+	
+	private String unitUnno;
+	
+	@Override
+	public UnitBean getModel() {
+		return unit;
+	}
+
+	public IUnitService getUnitService() {
+		return unitService;
+	}
+
+	public void setUnitService(IUnitService unitService) {
+		this.unitService = unitService;
+	}
+	
+	public String getUnitUnno() {
+		return unitUnno;
+	}
+
+	public void setUnitUnno(String unitUnno) {
+		this.unitUnno = unitUnno;
+	}
+
+	/**
+	 * 查询表格机构
+	 */
+	public void listUnits(){
+		List<UnitBean> unitList = null;
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			unitList = unitService.queryUnits(unit,((UserBean)userSession));
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("查询菜单表格树异常：" + e);
+		}
+		
+		super.writeJson(unitList);
+	}
+	
+	/**
+	 * 添加机构
+	 */
+	public void addUnit(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				int falg=unitService.queryUnitCounts(unit.getUnitCode());
+				if(falg>0){
+					json.setSuccess(false);
+					json.setMsg("机构简码已存在");
+				}else{
+					unitService.saveUnit(unit, ((UserBean)userSession).getLoginName());
+					json.setSuccess(true);
+					json.setMsg("添加机构成功");
+				}
+			} catch (Exception e) {
+				log.error("添加机构异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 修改机构
+	 */
+	public void editUnit(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				unitService.updateUnit(unit, ((UserBean)userSession).getLoginName());
+				json.setSuccess(true);
+				json.setMsg("修改用户成功");
+			} catch (Exception e) {
+				log.error("修改用户异常：" + e);
+				json.setMsg(e.getMessage());
+			}
+		}
+	
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 删除机构
+	 */
+	public void deleteUnit(){
+		JsonBean json = new JsonBean();
+		try {
+			boolean result = unitService.deleteUser(unit);
+			if(result){
+				json.setSuccess(true);
+				json.setMsg("删除机构成功");
+			} else {
+				json.setMsg("此机构已使用，不可以删除!");
+			}
+		} catch (Exception e) {
+			log.error("删除机构异常：" + e);
+			json.setMsg(e.getMessage());
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 查询菜单机构
+	 */
+	public void listTreeUnits(){
+		List<TreeNodeBean> nodeList = null;
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try {
+			nodeList = unitService.queryTreeUnits(unit,(UserBean)userSession);
+		} catch (Exception e) {
+			log.error("查询菜单树异常：" + e);
+		}
+		
+		super.writeJson(nodeList);
+	}
+	
+	/**
+	 * 查询所有角色信息
+	 */
+	public void listUnitCombogrid() {
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb = unitService.queryUnitsCombogrid(unit);
+		} catch (Exception e) {
+			log.error("查询所有角色信息异常：" + e);
+		}
+		
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 查询省市信息
+	 */
+	public void searchProvince(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			dgd=unitService.searchProvince();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	super.writeJson(dgd);
+	}
+	
+	/**
+	 * 根据机构选择省市
+	 */
+	public void searchUnitProvince(){
+		Map<String, String> map = new HashMap<String, String>();
+		try {
+			UnitModel unitModel = unitService.getUnitModel(unitUnno);
+			map.put("provinceCode", unitModel.getProvinceCode());
+			map.put("unNo", unitModel.getUnNo());
+		} catch (Exception e) {
+			log.error("根据机构查询区域编号异常：" + e);
+		}
+		super.writeJson(map);
+	}
+	
+	/**
+	 * 查询机构下的用户
+	 */
+	public void searchUnitUser(){
+		List<UserBean> userList = null;
+		try {
+			userList = unitService.searchUnitUser(unitUnno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	super.writeJson(userList);
+	}
+	
+	/**
+	 * 启用机构
+	 */
+	public void startUnit(){
+		JsonBean json = new JsonBean();
+		try {
+			unitService.updateStartUnit(unit);
+			json.setSuccess(true);
+			json.setMsg("启用机构成功");
+		} catch (Exception e) {
+			log.error("启用机构异常：" + e);
+			json.setMsg(e.getMessage());
+		}
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 停用机构
+	 */
+	public void closeUnit(){
+		JsonBean json = new JsonBean();
+		try {
+			unitService.updateCloseUnit(unit);
+			json.setSuccess(true);
+			json.setMsg("停用机构成功");
+		} catch (Exception e) {
+			log.error("停用机构异常：" + e);
+			json.setMsg(e.getMessage());
+		}
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 方法功能：查询所有机构信息
+	 * 参数：
+	 * 返回值：dgb
+	 * 异常：
+	 */
+	public void listUnitsCombogrid() {
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgb = unitService.queryUnitsCombogrid(unit,((UserBean)userSession));
+		} catch (Exception e) {
+			log.error("查询所有机构信息异常：" + e);
+		}
+		
+		super.writeJson(dgb);
+	}
+
+    /**
+     * 活动分配的机构号列表
+     */
+    public void listRebateUnitsCombogrid() {
+        DataGridBean dgb = new DataGridBean();
+        try {
+            Object userSession = super.getRequest().getSession().getAttribute("user");
+            dgb = unitService.queryRebateUnitsCombogrid(unit,((UserBean)userSession));
+        } catch (Exception e) {
+            log.error("查询运营中心机构信息异常：" + e);
+        }
+        super.writeJson(dgb);
+    }
+
+
+	/**
+	 * 方法功能：根据用户查询机构信息
+	 * 参数：
+	 * 返回值：dgb
+	 * 异常：
+	 */
+	public void listUnitsUserCombogrid() {
+		DataGridBean dgb = new DataGridBean();
+		try {
+			String userID = getRequest().getParameter("userID");
+			dgb = unitService.queryUnitsCombogrid(Integer.parseInt(userID));
+		} catch (Exception e) {
+			log.error("查询所有机构信息异常：" + e);
+		}
+		
+		super.writeJson(dgb);
+	}
+	
+}

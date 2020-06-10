@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckWechatTxnDetailModel" table="check_wechattxndetail">
+        <id name="pwid" column="PWID">
+            <generator class="native"></generator>
+        </id>
+      <property name="oriPwid" column="ORIPWID" ></property>
+      <property name="fiid" column="FIID" ></property>
+      <property name="txnType" column="TXNTYPE" ></property>
+      <property name="mid" column="MID" ></property>
+      <property name="mer_orderId" column="MER_ORDERID" ></property>
+      <property name="bk_orderId" column="BK_ORDERID" ></property>
+      <property name="detail" column="DETAIL" ></property>
+      <property name="txnAmt" column="TXNAMT" ></property>
+      <property name="mda" column="MDA" ></property>
+      <property name="respCode" column="RESPCODE" ></property>
+      <property name="respMsg" column="RESPMSG" ></property>
+      <property name="status" column="STATUS" ></property>
+      <property name="cdate" column="CDATE" type="timestamp"></property>
+      <property name="lmdate" column="LMDATE"  type="timestamp"></property>
+      <property name="profit" column="PROFIT"></property>
+      <property name="trantype" column="TRANTYPE"></property>
+      <property name="accno" column="ACCNO"></property>
+    </class>
+</hibernate-mapping>

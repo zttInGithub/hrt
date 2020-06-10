@@ -1,0 +1,769 @@
+package com.hrt.biz.check.service.impl;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.cxf.common.i18n.Exception;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.beans.BeanUtils;
+import com.alibaba.fastjson.JSON;
+import com.hrt.biz.bill.dao.IAgentSalesDao;
+import com.hrt.biz.bill.entity.model.AgentSalesModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoBean;
+import com.hrt.biz.bill.service.IMerchantInfoService;
+import com.hrt.biz.check.dao.CheckReOrderDao;
+import com.hrt.biz.check.entity.model.CheckMisTakeModel;
+import com.hrt.biz.check.entity.model.CheckReOrderModel;
+import com.hrt.biz.check.entity.pagebean.CheckMisTakeBean;
+import com.hrt.biz.check.entity.pagebean.CheckReOrderBean;
+import com.hrt.biz.check.service.CheckReOrderService;
+import com.hrt.biz.util.JSONObject;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.utility.ExcelUtil;
+import com.hrt.util.HttpXmlClient;
+
+public class CheckReOrderServiceImpl implements CheckReOrderService {
+
+	private CheckReOrderDao checkReOrderDao;
+	private IUnitDao unitDao;
+	private IMerchantInfoService merchantInfoService; 
+	private IAgentSalesDao agentSalesDao;
+	private String admAppIp;
+	
+	private static final Log log = LogFactory.getLog(CheckReOrderServiceImpl.class);
+	
+	public String getAdmAppIp() {
+		return admAppIp;
+	}
+
+	public void setAdmAppIp(String admAppIp) {
+		this.admAppIp = admAppIp;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
+
+	public IAgentSalesDao getAgentSalesDao() {
+		return agentSalesDao;
+	}
+
+	public void setAgentSalesDao(IAgentSalesDao agentSalesDao) {
+		this.agentSalesDao = agentSalesDao;
+	}
+
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+
+	public IMerchantInfoService getMerchantInfoService() {
+		return merchantInfoService;
+	}
+
+	public void setMerchantInfoService(IMerchantInfoService merchantInfoService) {
+		this.merchantInfoService = merchantInfoService;
+	}
+
+	public CheckReOrderDao getCheckReOrderDao() {
+		return checkReOrderDao;
+	}
+
+	public void setCheckReOrderDao(CheckReOrderDao checkReOrderDao) {
+		this.checkReOrderDao = checkReOrderDao;
+	}
+
+	/**
+	 * 查询退单记录
+	 */
+	public DataGridBean queryReOrderInfo(CheckReOrderBean checkReOrderBean, UserBean user){
+		
+		String sql="select w.* from check_reOrder w where 1=1 ";
+		String sqlCount="select count(1) from check_reOrder w where 1=1  ";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean date_flag = false ;
+		//权限
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, user.getUnNo());
+		if(user.getUseLvl()==3){
+				sql+=" and w.MID in (select MID from  bill_MerchantInfo where  " +
+				"PARENTMID= '"+user.getLoginName()+"' or MID ='"+user.getLoginName()+"')  ";
+				sqlCount+=" and w.MID in (select MID from  bill_MerchantInfo where  " +
+				"PARENTMID= '"+user.getLoginName()+"' or MID ='"+user.getLoginName()+"')  ";
+		}
+		else{
+			if("110000".equals(user.getUnNo())){
+			}
+			else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){
+				UnitModel parent = unitModel.getParent();
+				if("110000".equals(parent.getUnNo())){
+				}
+//			}else if(unitModel.getUnAttr() == 1 && unitModel.getUnLvl() ==1 ){
+//				sql+=" and m.unno ='"+user.getUnNo()+"' ";
+//				sqlCount+=" and m.unno ='"+user.getUnNo()+"' ";
+			}else{
+				String agHql ="select ag from AgentSalesModel ag where ag.maintainType!='D' and ag.userID="+user.getUserID();
+				List<AgentSalesModel> ifAgList = agentSalesDao.queryObjectsByHqlList(agHql);
+				if(ifAgList.size()>0){
+					//业务员 user.getUserID()
+					sql+=" and w.minfo="+ifAgList.get(0).getBusid();
+					sqlCount+=" and w.minfo="+ifAgList.get(0).getBusid();
+				}else{
+					//代理
+					String childUnno=merchantInfoService.queryUnitUnnoUtil(user.getUnNo());
+					sql+=" and w.unno IN ("+childUnno+" )";
+					sqlCount+=" and w.unno IN ("+childUnno+" )";
+				}
+			}
+		}
+//		if("0".equals(user.getIsM35Type())){
+//			sql +=" and m.isM35 !=1 ";
+//		}else if("1".equals(user.getIsM35Type())){
+//			sql +=" and m.isM35 = 1 ";
+//		}
+		if (checkReOrderBean.getRrn() != null&&!"".equals(checkReOrderBean.getRrn())) {
+			sql +=" and w.rrn =:rrn ";
+			sqlCount +=" and w.rrn =:rrn ";
+			map.put("rrn", checkReOrderBean.getRrn());
+			date_flag = true ;
+		}
+		if (checkReOrderBean.getMid() != null&&!"".equals(checkReOrderBean.getMid())) {
+			sql +=" and w.mid like :mid ";
+			sqlCount +=" and w.mid like :mid ";
+			map.put("mid", '%'+checkReOrderBean.getMid()+'%');
+			date_flag = true ;
+		}
+		if (checkReOrderBean.getCardPan() != null&&!"".equals(checkReOrderBean.getCardPan())) {
+			sql +=" and w.cardPan like :cardPan ";
+			sqlCount +=" and w.cardPan like :cardPan ";
+			map.put("cardPan", '%'+checkReOrderBean.getCardPan()+'%');
+			date_flag = true ;
+		}
+		if(checkReOrderBean.getStatus() !=null&&!"".equals(checkReOrderBean.getStatus())){
+			sql +=" and w.status =:status ";
+			sqlCount +=" and w.status =:status ";
+			map.put("status", checkReOrderBean.getStatus());
+			date_flag = true ;
+		}
+//		else if(checkReFundBean.getStatus() != null&&!"".equals(checkReFundBean.getStatus())) {
+//			sql +=" and w.status =:status ";
+//			sqlCount +=" and w.status =:status ";
+//			map.put("status", checkReFundBean.getStatus());
+//			date_flag = true ;
+//		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+		if(checkReOrderBean.getRefundDate1()== null && "".equals(checkReOrderBean.getRefundDate1())&&date_flag == true){
+			//当有其他条件且时间为空时 ，查寻 不考虑时间
+		}else if (checkReOrderBean.getRefundDate1()!=null&&checkReOrderBean.getRefundDate2()!=null) {
+			sql += " and w.refundDate between  '"+df.format(checkReOrderBean.getRefundDate1())+"' " + "and '"+df.format(checkReOrderBean.getRefundDate2())+"' ";
+			sqlCount += " and w.refundDate between  '"+df.format(checkReOrderBean.getRefundDate1())+"' " + "and '"+df.format(checkReOrderBean.getRefundDate2())+"' ";
+		}else if (checkReOrderBean.getRefundDate1()!= null && checkReOrderBean.getRefundDate2()==null) {
+			sql +=" and w.refundDate >=  '"+df.format(checkReOrderBean.getRefundDate1())+"' " ;
+			sqlCount +=" and w.refundDate >=  '"+df.format(checkReOrderBean.getRefundDate1())+"' " ;
+		}else if (checkReOrderBean.getRefundDate1()== null && checkReOrderBean.getRefundDate2()!=null) {
+			sql +=" and w.refundDate <=  '"+df.format(checkReOrderBean.getRefundDate2())+"' " ;
+			sqlCount +=" and w.refundDate <=  '"+df.format(checkReOrderBean.getRefundDate2())+"' " ;
+		}else if (date_flag == false ){
+			//查询当天 to_date('1987-09-18','yyyy-mm-dd')
+			//sql +=" and trunc(w.cdate) >=  to_date('"+df.format(new Date())+"','yyyy-mm-dd')" ;
+			//sqlCount +=" and trunc(w.cdate) >=  to_date('"+df.format(new Date())+"','yyyy-mm-dd')" ;
+		}
+		
+		if (checkReOrderBean.getReOrderUploadStat() != null) {
+			sql += " and w.reOrderUpload >= '" + df.format(checkReOrderBean.getReOrderUploadStat())+"'";
+			sqlCount +=" and w.reOrderUpload >=  '"+df.format(checkReOrderBean.getReOrderUploadStat())+"' " ;
+		}
+		
+		if (checkReOrderBean.getReOrderUploadEnd() != null) {
+			Integer end = Integer.parseInt(df.format(checkReOrderBean.getReOrderUploadEnd()))+1;
+			sql += " and w.reOrderUpload <= '" +end+"'";
+			sqlCount +=" and w.reOrderUpload <=  '"+end+"' " ;
+		}
+		
+		if (checkReOrderBean.getSort() != null) {
+			sql += " ORDER BY " + checkReOrderBean.getSort() + " " + checkReOrderBean.getOrder();
+		}
+		List<CheckReOrderModel> checkReFundList = checkReOrderDao.queryObjectsBySqlLists(sql, map, checkReOrderBean.getPage(), checkReOrderBean.getRows(), CheckReOrderModel.class);
+		BigDecimal count = checkReOrderDao.querysqlCounts(sqlCount, map);
+		
+		DataGridBean dataGridBean = formatToDataGrid(checkReFundList, count.intValue());
+		return dataGridBean;
+	}
+	
+		public DataGridBean queryReplyReOrderInfo(CheckReOrderBean checkReOrderBean, UserBean user){
+		
+		String sql="select w.* from check_reOrder w  where w.status='1'";
+		String sqlCount="select count(1) from check_reOrder w  where w.status='1' ";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean date_flag = false ;
+		//权限
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, user.getUnNo());
+		if(user.getUseLvl()==3){
+				sql+=" and w.MID in (select MID from  bill_MerchantInfo where  " +
+				"PARENTMID= '"+user.getLoginName()+"' or MID ='"+user.getLoginName()+"')  ";
+				sqlCount+=" and w.MID in (select MID from  bill_MerchantInfo where  " +
+				"PARENTMID= '"+user.getLoginName()+"' or MID ='"+user.getLoginName()+"')  ";
+		}
+		else{
+			if("110000".equals(user.getUnNo())){
+			}
+			else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){
+				UnitModel parent = unitModel.getParent();
+				if("110000".equals(parent.getUnNo())){
+				}
+//			}else if(unitModel.getUnAttr() == 1 && unitModel.getUnLvl() ==1 ){
+//				sql+=" and m.unno ='"+user.getUnNo()+"' ";
+//				sqlCount+=" and m.unno ='"+user.getUnNo()+"' ";
+			}else{
+				String agHql ="select ag from AgentSalesModel ag where ag.maintainType!='D' and ag.userID="+user.getUserID();
+				List<AgentSalesModel> ifAgList = agentSalesDao.queryObjectsByHqlList(agHql);
+				if(ifAgList.size()>0){
+					//业务员 user.getUserID()
+					sql+=" and w.minfo="+ifAgList.get(0).getBusid();
+					sqlCount+=" and w.minfo="+ifAgList.get(0).getBusid();
+				}else{
+					//代理
+					String childUnno=merchantInfoService.queryUnitUnnoUtil(user.getUnNo());
+					sql+=" and w.unno IN ("+childUnno+" )";
+					sqlCount+=" and w.unno IN ("+childUnno+" )";
+				}
+			}
+		}
+//		if("0".equals(user.getIsM35Type())){
+//			sql +=" and m.isM35 !=1 ";
+//		}else if("1".equals(user.getIsM35Type())){
+//			sql +=" and m.isM35 = 1 ";
+//		}
+		if (checkReOrderBean.getRrn() != null&&!"".equals(checkReOrderBean.getRrn())) {
+			sql +=" and w.rrn =:rrn ";
+			sqlCount +=" and w.rrn =:rrn ";
+			map.put("rrn", checkReOrderBean.getRrn());
+			date_flag = true ;
+		}
+		if (checkReOrderBean.getMid() != null&&!"".equals(checkReOrderBean.getMid())) {
+			sql +=" and w.mid like :mid ";
+			sqlCount +=" and w.mid like :mid ";
+			map.put("mid", '%'+checkReOrderBean.getMid()+'%');
+			date_flag = true ;
+		}
+		if (checkReOrderBean.getCardPan() != null&&!"".equals(checkReOrderBean.getCardPan())) {
+			sql +=" and w.cardPan like :cardPan ";
+			sqlCount +=" and w.cardPan like :cardPan ";
+			map.put("cardPan", '%'+checkReOrderBean.getCardPan()+'%');
+			date_flag = true ;
+		}
+		if(checkReOrderBean.getStatus() !=null&&!"".equals(checkReOrderBean.getStatus())){
+			sql +=" and w.status =:status ";
+			sqlCount +=" and w.status =:status ";
+			map.put("status", checkReOrderBean.getStatus());
+			date_flag = true ;
+		}
+//		else if(checkReFundBean.getStatus() != null&&!"".equals(checkReFundBean.getStatus())) {
+//			sql +=" and w.status =:status ";
+//			sqlCount +=" and w.status =:status ";
+//			map.put("status", checkReFundBean.getStatus());
+//			date_flag = true ;
+//		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+		if(checkReOrderBean.getRefundDate1()== null && "".equals(checkReOrderBean.getRefundDate1())&&date_flag == true){
+			//当有其他条件且时间为空时 ，查寻 不考虑时间
+		}else if (checkReOrderBean.getRefundDate1()!=null&&checkReOrderBean.getRefundDate2()!=null) {
+			sql += " and w.refundDate between  '"+df.format(checkReOrderBean.getRefundDate1())+"' " + "and '"+df.format(checkReOrderBean.getRefundDate2())+"' ";
+			sqlCount += " and w.refundDate between  '"+df.format(checkReOrderBean.getRefundDate1())+"' " + "and '"+df.format(checkReOrderBean.getRefundDate2())+"' ";
+		}else if (checkReOrderBean.getRefundDate1()!= null && checkReOrderBean.getRefundDate2()==null) {
+			sql +=" and w.refundDate >  '"+df.format(checkReOrderBean.getRefundDate1())+"' " ;
+			sqlCount +=" and w.refundDate >  '"+df.format(checkReOrderBean.getRefundDate1())+"' " ;
+		}else if (checkReOrderBean.getRefundDate1()== null && checkReOrderBean.getRefundDate2()!=null) {
+			sql +=" and w.refundDate <  '"+df.format(checkReOrderBean.getRefundDate2())+"' " ;
+			sqlCount +=" and w.refundDate <  '"+df.format(checkReOrderBean.getRefundDate2())+"' " ;
+		}else if (date_flag == false ){
+			//查询当天 to_date('1987-09-18','yyyy-mm-dd')
+			//sql +=" and trunc(w.cdate) >=  to_date('"+df.format(new Date())+"','yyyy-mm-dd')" ;
+			//sqlCount +=" and trunc(w.cdate) >=  to_date('"+df.format(new Date())+"','yyyy-mm-dd')" ;
+		}
+		if (checkReOrderBean.getSort() != null) {
+			sql += " ORDER BY " + checkReOrderBean.getSort() + " " + checkReOrderBean.getOrder();
+		}
+		List<CheckReOrderModel> checkReFundList = checkReOrderDao.queryObjectsBySqlLists(sql, map, checkReOrderBean.getPage(), checkReOrderBean.getRows(), CheckReOrderModel.class);
+		BigDecimal count = checkReOrderDao.querysqlCounts(sqlCount, map);
+		
+		DataGridBean dataGridBean = formatToDataGrid(checkReFundList, count.intValue());
+		return dataGridBean;
+	}
+	
+	/**
+	 * 导出所有
+	 */
+	public HSSFWorkbook queryReOrderExport(CheckReOrderBean checkReOrderBean,UserBean user){
+		String sql="select w.*,case when w.minfo2='1' then '手刷' else '非手刷' end ISM35 from check_reOrder w where 1=1  ";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean date_flag = false ;
+		//权限
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, user.getUnNo());
+		if(user.getUseLvl()==3){
+				sql+=" and w.MID in (select MID from  bill_MerchantInfo where  " +
+				"PARENTMID= '"+user.getLoginName()+"' or MID ='"+user.getLoginName()+"')  ";
+		}
+		else{
+			if("110000".equals(user.getUnNo())){
+			}
+			else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){
+				UnitModel parent = unitModel.getParent();
+				if("110000".equals(parent.getUnNo())){
+				}
+//			}else if(unitModel.getUnAttr() == 1 && unitModel.getUnLvl() ==1 ){
+//				sql+=" and m.unno ='"+user.getUnNo()+"' ";
+			}else{
+				String agHql ="select ag from AgentSalesModel ag where ag.maintainType!='D' and ag.userID="+user.getUserID();
+				List<AgentSalesModel> ifAgList = agentSalesDao.queryObjectsByHqlList(agHql);
+				if(ifAgList.size()>0){
+					//业务员 user.getUserID()
+					sql+=" and w.minfo="+ifAgList.get(0).getBusid();
+				}else{
+					//代理
+					String childUnno=merchantInfoService.queryUnitUnnoUtil(user.getUnNo());
+					sql+=" and w.unno IN ("+childUnno+" )";
+				}
+			}
+		}
+//		if("0".equals(user.getIsM35Type())){
+//			sql +=" and m.isM35 !=1 ";
+//		}else if("1".equals(user.getIsM35Type())){
+//			sql +=" and m.isM35 = 1 ";
+//		}
+		if (checkReOrderBean.getRrn() != null&&!"".equals(checkReOrderBean.getRrn())) {
+			sql +=" and w.rrn =:rrn ";
+			map.put("rrn", checkReOrderBean.getRrn());
+			date_flag = true ;
+		}
+		if (checkReOrderBean.getMid() != null&&!"".equals(checkReOrderBean.getMid())) {
+			sql +=" and w.mid like :mid ";
+			map.put("mid", '%'+checkReOrderBean.getMid()+'%');
+			date_flag = true ;
+		}
+		if (checkReOrderBean.getCardPan() != null&&!"".equals(checkReOrderBean.getCardPan())) {
+			sql +=" and w.cardPan like :cardPan ";
+			map.put("cardPan", '%'+checkReOrderBean.getCardPan()+'%');
+			date_flag = true ;
+		}
+		if(checkReOrderBean.getStatus() !=null&&!"".equals(checkReOrderBean.getStatus())){
+			sql +=" and w.status =:status ";
+			map.put("status", checkReOrderBean.getStatus());
+			date_flag = true ;
+		}
+//		else if(checkReFundBean.getStatus() != null&&!"".equals(checkReFundBean.getStatus())) {
+//			sql +=" and w.status =:status ";
+//			sqlCount +=" and w.status =:status ";
+//			map.put("status", checkReFundBean.getStatus());
+//			date_flag = true ;
+//		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+		if(checkReOrderBean.getRefundDate1()== null && "".equals(checkReOrderBean.getRefundDate1())&&date_flag == true){
+			//当有其他条件且时间为空时 ，查寻 不考虑时间
+		}else if (checkReOrderBean.getRefundDate1()!= null && !"".equals(checkReOrderBean.getRefundDate1())) {
+			sql +=" and w.refundDate =  '"+df.format(checkReOrderBean.getRefundDate1())+"' " ;
+		}else if (date_flag == false ){
+			//查询当天 to_date('1987-09-18','yyyy-mm-dd')
+			//sql +=" and trunc(w.cdate) >=  to_date('"+df.format(new Date())+"','yyyy-mm-dd')" ;
+			//sqlCount +=" and trunc(w.cdate) >=  to_date('"+df.format(new Date())+"','yyyy-mm-dd')" ;
+		}
+		if (checkReOrderBean.getSort() != null) {
+			sql += " ORDER BY " + checkReOrderBean.getSort() + " " + checkReOrderBean.getOrder();
+		}
+//		List<CheckReOrderModel> checkReFundList = checkReOrderDao.queryObjectsBySqlLists(sql, map, checkReOrderBean.getPage(), checkReOrderBean.getRows(), CheckReOrderModel.class);
+//		BigDecimal count = checkReOrderDao.querysqlCounts(sqlCount, map);
+		//List<Map<String, Object>> data = checkMisTakeDao.queryObjectsBySqlList(sql);
+		List<Map<String, Object>> data = checkReOrderDao.queryObjectsBySqlListMap2(sql, map);
+//		for (Map<String, Object> map2 : data) {
+//			if(map2.get("MINFO2")!=null&&!"".equals(map2.get("MINFO2"))){
+//				String i = ((BigDecimal) map2.get("MINFO2")).toString();
+//				if("1".equals(i)){
+//					map2.put("ISM35", "手刷");
+//				}else{
+//					map2.put("ISM35", "非手刷");
+//				}
+//			}
+//		}
+		List<String> excelHeader = new ArrayList<String>();
+		Map<String, Object> headMap = new HashMap<String, Object>();
+
+		excelHeader.add("MID");
+		excelHeader.add("TID");
+		excelHeader.add("CARDPAN");
+		excelHeader.add("TXNDAY");
+		excelHeader.add("SAMT");
+		excelHeader.add("RAMT");
+		excelHeader.add("REFUNDTYPE");
+		excelHeader.add("RRN");
+		excelHeader.add("REMARKS");
+		excelHeader.add("REFUNDCODE");
+		excelHeader.add("REFUNDDATE");
+		excelHeader.add("ISM35");
+		excelHeader.add("STATUS");
+		excelHeader.add("MINFO");
+		excelHeader.add("MINFO2");
+
+		headMap.put("MID", "商户编号");
+		headMap.put("TID", "终端编号");
+		headMap.put("CARDPAN", "交易卡号");
+		headMap.put("TXNDAY", "交易日期");
+		headMap.put("SAMT", "原交易金额");
+		headMap.put("RAMT", "退单金额");
+		headMap.put("REFUNDTYPE", "调账类型(1:一次退单.2：二次)");
+		headMap.put("RRN", "参考号");
+		headMap.put("REMARKS", "银联备注");
+		headMap.put("REFUNDCODE", "原因码");
+		headMap.put("REFUNDDATE", "退单时间");
+		headMap.put("ISM35", "商户类型");
+		headMap.put("STATUS", "回复状态(1:已回复)");
+		headMap.put("MINFO", "备用");
+		headMap.put("MINFO2", "备用2");
+		
+		return ExcelUtil.export("退单导出", data, excelHeader, headMap);
+	}
+	
+	/**
+	 *  接收退单
+	 * @return 
+	 */
+	@Override
+	public boolean saveReOrder(com.alibaba.fastjson.JSONObject reqJson){
+		
+		List jsonlist = (List) reqJson.get("data");
+		//Integer type =  (Integer) reqJson.get("type");
+		//JSONArray jsonArray = JSONArray.fromObject(jsonlist);
+		log.info("接收退单..开始解析..........");
+		for(int i=0;i<jsonlist.size();i++){
+			//JSONObject json = jsonlist.getJSONObject(i);
+			com.alibaba.fastjson.JSONObject json=com.alibaba.fastjson.JSONObject.parseObject(jsonlist.get(i).toString());
+			String roid = json.getString("RID")+"";
+			String pkId = json.getString("PKID")+"";
+			String mid = json.getString("BIT42_HRT");
+			String tid = json.getString("BIT41_HRT");
+			String rrn = json.getString("RRN");
+			String cardPan = json.getString("CARDPAN");
+			String txnDayStr = json.getString("TXNDAY");
+			String samt = json.getString("SAMT");
+			String ramt = json.getString("RAMT");
+			String accountType = json.getString("REFUNDTYPE")+"";
+			String refundDate = json.getString("ACCOUNTDAY");
+			String remarks = json.getString("ANNOTATION");
+			String reason = json.getString("REFUNDCODE");
+			String flag1 = json.getString("GROUPID");//20200521添加 HD190填写机构为b11031
+			String flag = json.getString("FLAG");//20200604添加 1填写机构为b11032
+			//查询报单商户表信息
+			//20190809 sl
+			String sq = "select m.unno,m.ism35,m.busid from bill_merchantinfo m where m.mid='"+mid+"' ";
+			List<Map<String,String>> list = checkReOrderDao.executeSql(sq);
+			String unno ="";
+			String isM35="";
+			String busId="";
+			if(list.size()>0){
+				unno = String.valueOf(list.get(0).get("UNNO"));
+				isM35 = String.valueOf(list.get(0).get("ISM35"));
+				busId = String.valueOf(list.get(0).get("BUSID"));
+			}
+			CheckReOrderModel m = new CheckReOrderModel();
+			if("差错-一次退单".equals(accountType)){
+				m.setRefundType(1);
+			}else if ("差错-一次退单".equals(accountType)){
+				m.setRefundType(2);
+			}
+			m.setProcessContext("");
+			m.setRoid(Integer.valueOf(roid));
+			m.setCardPan(cardPan);
+			m.setSamt(Double.valueOf(samt));
+			m.setRamt(Double.valueOf(ramt));
+			m.setRemarks(remarks);
+			m.setRefundCode(reason);
+			m.setMid(mid);
+			m.setTid(tid);
+			m.setRrn(rrn);
+			m.setTxnDayStr(txnDayStr);
+			m.setRefundDate(refundDate);
+			if(!"-1".equals(pkId)){
+				m.setOripkId(Integer.valueOf(pkId));
+			}
+			m.setMaintainDate(new Date());
+			m.setStatus("0");
+			m.setMinfo(busId);
+			m.setMinfo2(isM35);
+			m.setUnno("HD190".equals(flag1)?"b11031":"1".equals(flag)?"b11032":unno);
+			checkReOrderDao.saveObject(m);
+		}
+		return true;
+	}
+	
+	/**
+	 *  查询回复
+	 * @return 
+	 * @throws ParseException 
+	 */
+	public Map<String, String> updateReOrder(CheckReOrderBean checkReOrderBean,UserBean user) throws ParseException{
+		
+		Map<String, String>errorMap = new HashMap<String, String>();
+		
+		String hql ="select di from CheckReOrderModel di where di.roid="+checkReOrderBean.getRoid();
+		List<CheckReOrderModel> list = checkReOrderDao.queryObjectsByHqlList(hql);
+		//CheckMisTakeModel checkMisTakeModel = new CheckMisTakeModel();
+		//BeanUtils.copyProperties(checkMisTakeBean, checkMisTakeModel);
+		String imageDay=new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString();
+		if(list!=null&&list.size()!=0){
+			CheckReOrderModel checkReOrderModel = list.get(0);
+			
+			//计算当前时间和退单上传时间之差
+			String refundDate = checkReOrderModel.getRefundDate();
+			String reF1 = refundDate.substring(0, 4)+"-"+refundDate.substring(4,6)+"-"+refundDate.substring(6);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			long m = sdf.parse(imageDay).getTime()-sdf.parse(reF1).getTime();
+			checkReOrderModel.setCommentContext(checkReOrderBean.getCommentContext());
+			//25个工作日内才可以上传
+			if (m/(24*3600*1000) < 25) {
+				checkReOrderModel.setStatus("1");
+				checkReOrderModel.setMaintainDate(new Date());
+				checkReOrderModel.setMaintainUid(user.getUserID());
+				
+			
+				
+				//上传资料图片1
+				if(checkReOrderBean.getReOrderUploadFile()!= null && !"".equals(checkReOrderBean.getReOrderUpload())){
+					StringBuffer fName1 = new StringBuffer();
+					//fName1.append(imageDay+"\\");
+					fName1.append(checkReOrderModel.getRoid());
+					fName1.append(".");
+					fName1.append(checkReOrderBean.getRrn().trim());
+					fName1.append(".");
+					fName1.append(imageDay);
+					fName1.append(".reOrder");
+					fName1.append(checkReOrderBean.getReOrderUpload().substring(checkReOrderBean.getReOrderUpload().lastIndexOf(".")).toLowerCase());
+					uploadFile(checkReOrderBean.getReOrderUploadFile(),fName1.toString(),imageDay);
+					checkReOrderModel.setReOrderUpload(imageDay+File.separator+fName1.toString());
+				}
+				//上传资料图片2
+				if(checkReOrderBean.getReOrderUploadFile1()!= null && !"".equals(checkReOrderBean.getReOrderUpload1())){
+					StringBuffer fName1 = new StringBuffer();
+					//fName1.append(imageDay+"\\");
+					fName1.append(checkReOrderModel.getRoid());
+					fName1.append(".");
+					fName1.append(checkReOrderBean.getRrn().trim());
+					fName1.append(".");
+					fName1.append(imageDay);
+					fName1.append(".reOrder1");
+					fName1.append(checkReOrderBean.getReOrderUpload1().substring(checkReOrderBean.getReOrderUpload1().lastIndexOf(".")).toLowerCase());
+					uploadFile(checkReOrderBean.getReOrderUploadFile1(),fName1.toString(),imageDay);
+					checkReOrderModel.setReOrderUpload1(imageDay+File.separator+fName1.toString());
+				}
+				//上传资料图片3
+				if(checkReOrderBean.getReOrderUploadFile2()!= null && !"".equals(checkReOrderBean.getReOrderUpload2())){
+					StringBuffer fName1 = new StringBuffer();
+					//fName1.append(imageDay+"\\");
+					fName1.append(checkReOrderModel.getRoid());
+					fName1.append(".");
+					fName1.append(checkReOrderBean.getRrn().trim());
+					fName1.append(".");
+					fName1.append(imageDay);
+					fName1.append(".reOrder2");
+					fName1.append(checkReOrderBean.getReOrderUpload2().substring(checkReOrderBean.getReOrderUpload2().lastIndexOf(".")).toLowerCase());
+					uploadFile(checkReOrderBean.getReOrderUploadFile2(),fName1.toString(),imageDay);
+					checkReOrderModel.setReOrderUpload2(imageDay+File.separator+fName1.toString());
+				}
+				//20180831新增三张照片
+				//上传资料图片4
+				if(checkReOrderBean.getReOrderUploadFile3()!= null && !"".equals(checkReOrderBean.getReOrderUpload3())){
+					StringBuffer fName1 = new StringBuffer();
+					//fName1.append(imageDay+"\\");
+					fName1.append(checkReOrderModel.getRoid());
+					fName1.append(".");
+					fName1.append(checkReOrderBean.getRrn().trim());
+					fName1.append(".");
+					fName1.append(imageDay);
+					fName1.append(".reOrder3");
+					fName1.append(checkReOrderBean.getReOrderUpload3().substring(checkReOrderBean.getReOrderUpload3().lastIndexOf(".")).toLowerCase());
+					uploadFile(checkReOrderBean.getReOrderUploadFile3(),fName1.toString(),imageDay);
+					checkReOrderModel.setReOrderUpload3(imageDay+File.separator+fName1.toString());
+				}
+				//上传资料图片5
+				if(checkReOrderBean.getReOrderUploadFile4()!= null && !"".equals(checkReOrderBean.getReOrderUpload4())){
+					StringBuffer fName1 = new StringBuffer();
+					//fName1.append(imageDay+"\\");
+					fName1.append(checkReOrderModel.getRoid());
+					fName1.append(".");
+					fName1.append(checkReOrderBean.getRrn().trim());
+					fName1.append(".");
+					fName1.append(imageDay);
+					fName1.append(".reOrder4");
+					fName1.append(checkReOrderBean.getReOrderUpload4().substring(checkReOrderBean.getReOrderUpload4().lastIndexOf(".")).toLowerCase());
+					uploadFile(checkReOrderBean.getReOrderUploadFile4(),fName1.toString(),imageDay);
+					checkReOrderModel.setReOrderUpload4(imageDay+File.separator+fName1.toString());
+				}
+				//上传资料图片6
+				if(checkReOrderBean.getReOrderUploadFile5()!= null && !"".equals(checkReOrderBean.getReOrderUpload5())){
+					StringBuffer fName1 = new StringBuffer();
+					//fName1.append(imageDay+"\\");
+					fName1.append(checkReOrderModel.getRoid());
+					fName1.append(".");
+					fName1.append(checkReOrderBean.getRrn().trim());
+					fName1.append(".");
+					fName1.append(imageDay);
+					fName1.append(".reOrder5");
+					fName1.append(checkReOrderBean.getReOrderUpload5().substring(checkReOrderBean.getReOrderUpload5().lastIndexOf(".")).toLowerCase());
+					uploadFile(checkReOrderBean.getReOrderUploadFile5(),fName1.toString(),imageDay);
+					checkReOrderModel.setReOrderUpload5(imageDay+File.separator+fName1.toString());
+				}
+				
+				
+				checkReOrderDao.updateObject(checkReOrderModel);
+			}else {
+				errorMap.put("msg", "已逾期，不能上传");
+				return errorMap;
+			}
+			errorMap.put("msg", "上传成功");
+			return errorMap;
+		}
+		errorMap.put("msg", "上传失败");
+		return errorMap;
+	}
+	
+	/**
+	 * 查看明细
+	 */
+	public CheckReOrderBean queryReOrderById(Integer id){
+		//String title="HrtFrameWork";/u01/hrtwork/SignFailUpload/
+		//String path = merchantAuthenticityDao.querySavePath(title);
+		CheckReOrderModel mm=(CheckReOrderModel) checkReOrderDao.queryObjectByHql("from CheckReOrderModel m where  m.roid=?", new Object[]{id});
+		CheckReOrderBean mb = new CheckReOrderBean(); 
+		BeanUtils.copyProperties(mm, mb);
+		String path = queryUpLoadPath();
+		mb.setReOrderUpload(path+File.separator+mm.getReOrderUpload());
+		mb.setReOrderUpload1(path+File.separator+mm.getReOrderUpload1());
+		mb.setReOrderUpload2(path+File.separator+mm.getReOrderUpload2());
+		mb.setReOrderUpload3(path+File.separator+mm.getReOrderUpload3());
+		mb.setReOrderUpload4(path+File.separator+mm.getReOrderUpload4());
+		mb.setReOrderUpload5(path+File.separator+mm.getReOrderUpload5());
+		//mb.setAuthUpload("D:"+File.separator+mm.getAuthUpload());
+		return mb; 
+	}
+	
+	/**
+	 * 上传
+	 */
+	private void uploadFile(File upload, String fName, String imageDay) {
+		try {
+			String realPath = queryUpLoadPath() + File.separator + imageDay;
+			//String realPath = queryUpLoadPath();
+			File dir = new File(realPath);
+			dir.mkdirs();
+			String fPath = realPath + File.separator + fName;
+			File destFile = new File(fPath);
+			FileInputStream fis = new FileInputStream(upload);
+			FileOutputStream fos = new FileOutputStream(destFile);
+			byte [] buffer = new byte[1024];
+			int len = 0;
+			while((len = fis.read(buffer))>0){
+				fos.write(buffer,0,len);
+			} 
+			fos.close();
+		} catch (java.lang.Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 查询上传路径
+	 */
+	private String queryUpLoadPath() {
+		return checkReOrderDao.queryObjectsBySqlListMap("SELECT UPLOAD_PATH FROM SYS_PARAM WHERE TITLE='reOrderUpload'",null).get(0).get("UPLOAD_PATH");
+	}
+	
+	/**
+	 * 方法功能：格式化为datagrid数据格式
+	 * 参数：
+	 * 		total 总记录数
+	 */
+	private DataGridBean formatToDataGrid(List<CheckReOrderModel> checkReOrderList, long total) {
+		List<CheckReOrderBean> reOrderList = new ArrayList<CheckReOrderBean>();
+		for(CheckReOrderModel checkReOrderModel : checkReOrderList) {
+			CheckReOrderBean checkReOrderBean = new CheckReOrderBean();
+			BeanUtils.copyProperties(checkReOrderModel, checkReOrderBean);
+			//商户名
+			if(checkReOrderBean.getMid()!=null&&!"".equals(checkReOrderBean.getMid())){
+				DataGridBean dg = merchantInfoService.queryMerchantInfoMid(checkReOrderBean.getMid());
+				if(dg!=null&&dg.getRows().size()>0){
+					checkReOrderBean.setIsM35(((MerchantInfoBean)(dg.getRows().get(0))).getIsM35());
+				}
+			}
+			reOrderList.add(checkReOrderBean);
+		}
+		DataGridBean dgb = new DataGridBean();
+		dgb.setTotal(total);
+		dgb.setRows(reOrderList);
+		
+		return dgb;
+	}
+
+	@Override
+	public boolean updateRebackReOrder(CheckReOrderBean checkReOrderBean, UserBean userBean) {
+		String hql ="select di from CheckReOrderModel di where di.roid="+checkReOrderBean.getRoid();
+		List<CheckReOrderModel> list = checkReOrderDao.queryObjectsByHqlList(hql);
+		//CheckMisTakeModel checkMisTakeModel = new CheckMisTakeModel();
+		//BeanUtils.copyProperties(checkMisTakeBean, checkMisTakeModel);
+		if(list!=null&&list.size()!=0){
+			CheckReOrderModel checkReOrderModel = list.get(0);
+			checkReOrderModel.setStatus("2");
+			checkReOrderModel.setMaintainDate(new Date());
+			checkReOrderModel.setMaintainUid(userBean.getUserID());
+			String approveContext = checkReOrderBean.getProcessContext()+checkReOrderBean.getProcessContextCommon();
+			checkReOrderModel.setProcessContext(approveContext);
+			checkReOrderDao.updateObject(checkReOrderModel);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updatePassReOrder(CheckReOrderBean checkReOrderBean, UserBean userBean) {
+		String hql ="select di from CheckReOrderModel di where di.roid="+checkReOrderBean.getRoid();
+		List<CheckReOrderModel> list = checkReOrderDao.queryObjectsByHqlList(hql);
+		//CheckMisTakeModel checkMisTakeModel = new CheckMisTakeModel();
+		//BeanUtils.copyProperties(checkMisTakeBean, checkMisTakeModel);
+		if(list!=null&&list.size()!=0){
+			CheckReOrderModel checkReOrderModel = list.get(0);
+			checkReOrderModel.setStatus("3");
+			checkReOrderModel.setProcessContext("");
+			checkReOrderModel.setMaintainDate(new Date());
+			checkReOrderModel.setMaintainUid(userBean.getUserID());
+			checkReOrderModel.setProcessContext(checkReOrderBean.getProcessContextCommon());
+			checkReOrderDao.updateObject(checkReOrderModel);
+			return true;
+		}
+		return false;
+	}
+
+}

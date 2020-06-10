@@ -1,0 +1,20 @@
+package com.hrt.frame.service.sysadmin;
+
+import java.util.List;
+import java.util.Map;
+
+public interface IQuartzService {
+	
+	List queryQrtzTriggers() throws Exception;
+	
+	void insertQrtzTrigger(Map<String, Object> map) throws Exception;
+	
+	void pauseTrigger(String triggerName,String group) throws Exception;
+	
+	void resumeTrigger(String triggerName,String group) throws Exception;
+	
+	boolean removeTrigger(String triggerName,String group) throws Exception;
+	
+	//方法一号（调用存储过程）
+	void batchJob1() throws Exception;
+}

@@ -1,0 +1,141 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<head>
+<script src="js/uploadPreview.min.js" type="text/javascript"></script>
+<script type="text/javascript"> 
+	$(function(){
+		$('#add_rebate_cost_info').hide();
+		$('#rebateType_00324').combogrid({
+			url : '${ctx}/sysAdmin/agentunit_listRebateRate.action',
+			idField:'VALUEINTEGER',
+			textField:'NAME',
+			mode:'remote',
+			fitColumns:true,
+			columns:[[ 
+				{field:'NAME',title:'活动类型',width:70},
+				{field:'VALUEINTEGER',title:'id',width:70,hidden:true}
+			]],
+			// 可能存在,成本填写后,将活动类型修改
+			onChange:function(n,o){
+				$("#add_rebate_cost_info").hide();
+			}
+		});
+		$('#unno_00324').combogrid({
+			url : '${ctx}/sysAdmin/agentunit_listRebateRateForUnno.action',
+			idField:'UNNO',
+			textField:'UN_NAME',
+			mode:'remote',
+			fitColumns:true,
+			columns:[[ 
+				{field:'UNNO',title:'机构号',width:70},
+				{field:'UN_NAME',title:'机构名称',width:70}
+			]]
+		});
+	});
+	function hrtCostInfoShowAdd() {
+		var g = $('#rebateType_00324').combogrid('grid');
+		var r = g.datagrid('getSelected');
+		if(r && r.SUBTYPE==1){
+			$('.hb_hidden').hide();
+			$('.hb_show').show();
+		}else if(r && r.SUBTYPE==2){
+			$('.hb_hidden').show();
+			$('.hb_show').show();
+		}else{
+			$('.hb_hidden').show();
+			$('.hb_show').hide();
+		}
+		$("#add_rebate_cost_info").show();
+	}
+</script>
+</head>
+<form id="sysAdmin_00324_from" style="padding-left:2%;padding-top:1%" method="post">
+	<fieldset style="width: 350px;">
+		<legend>新增活动类型成本</legend>
+		<table class="table">
+			<tr>
+				<th>机构：</th>
+				<td><select id="unno_00324" name="unno" class="easyui-combogrid" data-options="required:true,validType:'spaceValidator'" style="width:135px;"></select></td>
+			</tr>
+			<tr>
+				<th>活动类型：</th>
+				<td><select id="rebateType_00324" name="txnDetail" class="easyui-combogrid" data-options="required:true,validType:'spaceValidator'" style="width:135px;"></select></td>
+			</tr>
+			<tr>
+				<th>操作</th>
+				<td><input type="button" value="成本信息设置" onclick="hrtCostInfoShowAdd()"></td>
+			</tr>
+		</table>
+	</fieldset>
+
+	<fieldset style="width: 300px;">
+		<legend>活动成本信息</legend>
+		<table class="table" id="add_rebate_cost_info">
+	    	<tr>
+	    		<th>扫码1000以下（终端0.38）费率(%)：</th>
+	    		<td><input type="text" id="rate_00324" name="rate" style="width:130px;" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'spaceValidator'"/></td>
+	    	</tr>
+	    	<tr>
+	    		<th>扫码1000以下（终端0.38）转账费：</th>
+	    		<td><input type="text" id="cashRate_00324" name="cashRate" style="width:130px;" maxlength="30" class="easyui-validatebox" data-options="required:true"/></td>
+	    	</tr>
+
+			<tr>
+				<th>扫码1000以上（终端0.38）费率(%)：</th>
+				<td><input type="text" id="wxUpRate_00324" name="wxUpRate" style="width:130px;" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'spaceValidator'"/></td>
+			</tr>
+			<tr>
+				<th>扫码1000以上（终端0.38）转账费：</th>
+				<td><input type="text" id="wxUpCash_00324" name="wxUpCash" style="width:130px;" maxlength="30" class="easyui-validatebox" data-options="required:true"/></td>
+			</tr>
+
+			<tr>
+				<th>扫码1000以上（终端0.45）费率(%)：</th>
+				<td><input type="text" id="wxUpRate1_00324" name="wxUpRate1" style="width:130px;" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'spaceValidator'"/></td>
+			</tr>
+			<tr>
+				<th>扫码1000以上（终端0.45）转账费：</th>
+				<td><input type="text" id="wxUpCash1_00324" name="wxUpCash1" style="width:130px;" maxlength="30" class="easyui-validatebox" data-options="required:true"/></td>
+			</tr>
+
+			<tr>
+				<th>扫码1000以下（终端0.45）费率(%)：</th>
+				<td><input type="text" id="zfbRate_00324" name="zfbRate" style="width:130px;" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'spaceValidator'"/></td>
+			</tr>
+			<tr>
+				<th>扫码1000以下（终端0.45）转账费：</th>
+				<td><input type="text" id="zfbCash_00324" name="zfbCash" style="width:130px;" maxlength="30" class="easyui-validatebox" data-options="required:true"/></td>
+			</tr>
+
+			<tr>
+				<th>银联二维码费率(%)：</th>
+				<td><input type="text" id="ewmRate_00324" name="ewmRate" style="width:130px;" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'spaceValidator'"/></td>
+			</tr>
+			<tr>
+				<th>银联二维码转账费：</th>
+				<td><input type="text" id="ewmCash_00324" name="ewmCash" style="width:130px;" maxlength="30" class="easyui-validatebox" data-options="required:true"/></td>
+			</tr>
+
+			<tr class="hb_hidden">
+				<th>云闪付费率(%)：</th>
+				<td><input type="text" id="ysfRate_00324" name="ysfRate" style="width:130px;" /></td>
+			</tr>
+
+			<tr class="hb_hidden">
+				<th>刷卡成本(%)：</th>
+				<td><input type="text" id="debitRate_00324" name="remarks" style="width:130px;" /></td>
+			</tr>
+			<tr class="hb_hidden">
+				<th>刷卡提现成本：</th>
+				<td><input type="text" id="debitFeeamt_00324" name="curAmt" style="width:130px;"/></td>
+			</tr>
+			<tr class="hb_show">
+				<th>花呗费率(%)：</th>
+				<td><input type="text" id="hbRate_00324" name="hbRate" style="width:130px;" /></td>
+			</tr>
+			<tr class="hb_show">
+				<th>花呗转账费：</th>
+				<td><input type="text" id="hbCash_00324" name="hbCash" style="width:130px;"/></td>
+			</tr>
+		</table>
+	</fieldset>
+</form>

@@ -1,0 +1,122 @@
+package com.hrt.biz.bill.action;
+
+import java.io.File;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoCommBean;
+import com.hrt.biz.bill.service.IMerchantTerminalInfoCommService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class MerchantTerminalInfoCommAction extends BaseAction implements ModelDriven<MerchantTerminalInfoCommBean>{
+
+	/**
+	 * xxx 交行数据信息信息更新
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private static final Log log = LogFactory.getLog(MerchantInfoAction.class);
+	
+	private File upload;
+	
+	MerchantTerminalInfoCommBean merchantTerminalInfoCommBean = new MerchantTerminalInfoCommBean();
+	
+	private IMerchantTerminalInfoCommService merchantTerminalInfoCommService ;
+	
+	public IMerchantTerminalInfoCommService getMerchantTerminalInfoCommService() {
+		return merchantTerminalInfoCommService;
+	}
+	public void setMerchantTerminalInfoCommService(
+			IMerchantTerminalInfoCommService merchantTerminalInfoCommService) {
+		this.merchantTerminalInfoCommService = merchantTerminalInfoCommService;
+	}
+	
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	@Override
+	public MerchantTerminalInfoCommBean getModel() {
+		// TODO Auto-generated method stub
+		return merchantTerminalInfoCommBean;
+	}
+
+	public void updateSingleData(){
+		JsonBean json = new JsonBean();
+		try {
+			merchantTerminalInfoCommService.updateSingleData(merchantTerminalInfoCommBean);
+			json.setMsg("更新成功！");
+			json.setSuccess(true);
+		} catch (Exception e) {
+			log.error("更新异常：" + e);
+			json.setMsg("更新失败");
+		}
+		super.writeJson(json);
+	}
+
+	public void saveMoreTerminalInfoComm(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		UserBean user=(UserBean)userSession;
+		if(user == null){
+			json.setSessionExpire(true);
+		}
+		//把文件保存到服务器目录下
+		String fileName = ServletActionContext.getRequest().getParameter("fileContact3");
+		String type=super.getRequest().getParameter("type");
+		String basePath = ServletActionContext.getRequest().getRealPath("/upload");
+		File dir = new File(basePath);
+		dir.mkdir();		
+		// 使用UUID做为文件名，以解决重名的问题
+		String path = basePath +"/"+fileName;
+		File destFile = new File(path);
+		upload.renameTo(destFile);
+		String folderPath = ServletActionContext.getRequest().getRealPath("/upload");
+		String xlsfile = folderPath +"/"+fileName;
+		try {
+			if(xlsfile.length() > 0 && xlsfile != null){
+				boolean flag=false;
+				flag=merchantTerminalInfoCommService.saveTermianlInfoCommFile(xlsfile,user);
+				if(flag){
+					json.setSuccess(true);
+					json.setMsg("终端导入成功!");
+				}else{
+					json.setSuccess(false);
+					json.setMsg("终端导入失败！");
+				}
+			}
+			super.writeJson(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setSuccess(false);
+			json.setMsg("文件导入失败！");
+			super.writeJson(json);
+		}
+		File file = new File(folderPath);
+		String[] tempList = file.list();
+		File temp = null;
+		for (int i = 0; i < tempList.length; i++) {
+			if (path.endsWith(File.separator)) {
+				temp = new File(folderPath + tempList[i]);
+			} else {
+				temp = new File(folderPath + File.separator + tempList[i]);
+			}
+			if (temp.exists() && temp.isFile()) {
+				boolean flag = temp.delete(); // 删除上传到服务器的文件
+				int j = i + 1;
+				log.error("成功删除文件:第" + j + "个文件删除是否成功？" + flag);
+			} else {
+				log.error("文件不存在");
+			}
+		}
+	}
+}

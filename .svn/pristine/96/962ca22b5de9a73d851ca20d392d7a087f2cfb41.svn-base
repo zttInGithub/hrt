@@ -1,0 +1,117 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+	var row = 1;
+	function addTr2() {
+		//$("#ninstalledAddress").val("0");
+		//$("#ninstalledSIM").val("机构自备");
+		$.messager.confirm('确认','您确认要导入终端吗？',function(){
+			$('#sysAdmin_merchantterminalinfo_addForm').form('submit',{
+				url:'${ctx}/sysAdmin/merchantterminalinfo_addMerchantTerminalInfoImport.action',
+				onSubmit:function(){
+					var contact = document.getElementById('upload_merchant_File2').value;
+					if(contact == "" || contact == null){
+						$.messager.show({
+							title:'提示',
+							msg:'请选择要上传的文件',
+							timeout:5000,
+							showType:'slide'
+						});
+						return false;
+					}
+					if(contact != "" && contact != null){
+						var l = contact.split(".");
+						if(l[1] == "xls" || l[1]=="csv"){
+							document.getElementById('import_merchant_Name2').value = contact.replace(/.{0,}\\/, "");
+							$('#hidenButton').linkbutton({disabled:true});
+							return true;
+						}else{
+							$.messager.show({
+								title:'提示',
+								msg:'请选择后缀名为.xls/.csv文件',
+								timeout:5000,
+								showType:'slide'
+							});
+							return false;
+							}
+					}
+				},
+				//成功返回数据
+				success:function(data){
+					var resault = $.parseJSON(data);
+					if(resault.sessionExpire){
+						window.location.href = getProjectLocation();
+					}else{
+						if(resault.success){
+							$.messager.show({
+								title:'提示',
+								msg  :resault.msg
+							});
+						}else{
+							$.messager.show({
+								title:'提示',
+								msg  :resault.msg
+							});
+						}
+					}
+				}
+			});
+		});  
+	}
+	function delTr(id) {
+		var tr=$("#"+id);
+		tr.remove();
+		row--;
+		if(row==1){
+			 $('#nmid').combobox('enable');
+		}
+	}
+	function closeTab(){
+		$('#sysAdmin_merchantterminalinfo_addForm input').val('');
+		$('#sysAdmin_merchantterminalinfo_addForm').form('clear');
+	}
+	function chickTid(tidV){
+		for(var i=0;i<row-1;i++){
+			var tr=$("#mtr"+(i+1));
+			var tid=tr.find("td").eq(0).text();
+			if(tidV==tid){
+				return false;
+			}
+		}
+		return true;
+	}
+</script>
+<div class="easyui-layout"  data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:500px;padding-top:70px;">
+	   	<form id="sysAdmin_merchantterminalinfo_addForm" style="padding-left:25%;" method="post" enctype="multipart/form-data">
+	   	<input type="hidden" name="importMerchantFile2" id="import_merchant_Name2">
+	   		<table class="table1">
+	   			<tr>
+	   				<td style="width: 100px">一清增机导入：</td>
+	   				<td  style="width: 300px"><input type="file" name="upload" id="upload_merchant_File2"/></td>
+	   			
+	   				<td  align="right" style="width: 170px">
+	   					<!--<a id="" onclick="addTr2()" class="l-btn" href="javascript:void(0)">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-add" style="padding-left: 20px;" id="hidenButton">导入</span>
+							</span>
+						</a>
+						<a id="" onclick="closeTab()" class="l-btn" href="javascript:void(0)">
+							<span class="l-btn-left">
+								<span class="l-btn-text icon-add" style="padding-left: 20px;" >取消</span>
+							</span>
+						</a>
+						-->
+						<a href="javascript:void(0)" id="hidenButton" class="easyui-linkbutton" onclick="addTr2()">上传</a>	
+					 	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeTab()">取消</a>
+	   				</td>
+	   			</tr>
+			</table>
+	   	</form>
+	</div>
+	<div data-options="region:'center', border:false"
+		style="overflow: hidden;">
+	<table id="sysAdmin_10490_datagrid"></table>
+</div>
+</div>
+

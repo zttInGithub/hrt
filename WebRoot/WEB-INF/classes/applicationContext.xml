@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"              
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx 
+       	   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+           
+   <!--  <bean id="dataSource"
+        class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	    <property name="jdbcUrl" value="jdbc:oracle:thin:@10.51.29.212:1521:hrtmdb"/>
+	    <property name="user" value="ppusr"/>
+	    <property name="password" value="ppusr"/>
+	    
+
+	    <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+	    -->
+	    <!-- 初始化、最小连接数、最大连接数、一次增长的个数、、最大缓存、最大空闲时间-->
+       <!--  <property name="minPoolSize" value="3"/> 
+        <property name="maxPoolSize" value="20"/> 
+        <property name="acquireIncrement" value="3"/> 
+        <property name="maxStatements" value="3"/> 
+        <property name="idleConnectionTestPeriod" value="60"/> 
+        <property name="maxStatementsPerConnection" value="5"/> 
+        <property name="maxIdleTime" value="60"/>
+	</bean>
+	
+	 -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+    <property name="jndiName" value="java:comp/env/jdbc/mserver"></property>  
+    </bean>  
+   
+    <!--  
+    
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+    <property name="jndiName" value="jdbc/hrtmdb">
+    </property>
+	必须配置jndiEnvironment，否者spring无法找到JNDI连接数据源
+    <property name="jndiEnvironment">
+	<props>
+		The value of Context.PROVIDER_URL 
+		<prop key="java.naming.provider.url">t3://10.51.31.176:7001</prop>
+		<prop key="java.naming.factory.initial">weblogic.jndi.WLInitialContextFactory</prop>
+		<prop key="java.naming.security.principal">weblogic</prop>
+            	<prop key="java.naming.security.credentials">weblogic12</prop>
+	 </props>
+     </property>
+</bean>
+-->
+	 <!--     <bean id="dataSource2"
+        class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        
+	    <property name="jdbcUrl" value="jdbc:sqlserver://10.51.29.202:1433;DatabaseName=CA-PG"/>
+	    <property name="user" value="root"/>
+	    <property name="password" value="root"/>
+	    <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+	    
+	</bean>
+	
+	 <bean id="dynamicDataSource" class="org.GA.datasource.DynamicDataSource">  --> 
+        <!-- 通过key-value的形式来关联数据源 -->  
+     <!--    <property name="targetDataSources">  
+            <map>  
+                <entry value-ref="dataSource" key="dataSource" />  
+                <entry value-ref="dataSource2" key="dataSource2" />  
+            </map>  
+        </property>  
+        <property name="defaultTargetDataSource" ref="dataSource" />  
+    </bean>  
+	-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    	 <property name="dataSource" ref="dataSource" />  
+    		<property name="mappingDirectoryLocations">
+		      <list>
+		        <value>classpath:config/hibernate</value>
+		      </list>
+		    </property>
+    	<property name="hibernateProperties">
+    		<props>
+    			<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+    			<prop key="hibernate.show_sql">true</prop>
+    			<!--  
+    			<prop key="hibernate.current_session_context_class">thread</prop>
+    			<prop key="hibernate.hbm2ddl.auto">update</prop>
+    			
+    			-->
+    		</props>
+    	</property>
+  	</bean> 
+  	 
+  	<bean id="transactionManager" 
+            class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+  	
+  	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+  		<tx:attributes>
+  			<tx:method name="add*" propagation="REQUIRED"/>
+  			<tx:method name="save*" propagation="REQUIRED"/>
+  			<tx:method name="update*" propagation="REQUIRED"/>
+  			<tx:method name="edit*" propagation="REQUIRED"/>
+  			<tx:method name="delete*" propagation="REQUIRED"/>
+  			<tx:method name="remove*" propagation="REQUIRED"/>
+  			
+		    <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+  		</tx:attributes>
+  	</tx:advice>
+  	   
+  	<aop:config>
+  		<aop:pointcut id="argorseServiceMethods" expression="execution(* com.hrt.frame.service..*.*(..)) or execution(* com.hrt.biz.check.service..*.*(..)) or execution(* com.hrt.biz.bill.service..*.*(..)) or execution(* com.hrt.biz.webservice..*.*(..))"/>
+  		<aop:advisor advice-ref="txAdvice" pointcut-ref="argorseServiceMethods"/>
+  	</aop:config>   
+	
+	<!-- import -->
+	<import resource="applicationContext-gsclient.xml"/>
+	<import resource="applicationContext-service.xml"/>
+	<import resource="config/spring/quartz.xml"/>
+	<import resource="config/spring/sysAdminContext.xml"/>
+	<import resource="config/spring/query.xml"/>
+
+</beans>

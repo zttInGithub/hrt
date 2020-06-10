@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PurchaseDetailModel" table="bill_PurchaseDetail">
+        <id name="pdid" column="PDID">
+            <generator class="sequence">
+				<param name="sequence">S_bill_PurchaseDetail</param>
+			</generator>
+        </id>
+        <property name="poid" column="POID" />
+        <property name="detailOrderID" column="DETAILORDERID" />
+        <property name="brandName" column="BRANDNAME" />
+        <property name="orderType" column="ORDERTYPE" />
+        <property name="machineModel" column="MACHINEMODEL" />
+        <property name="snType" column="SNTYPE" />
+        <property name="rebateType" column="REBATETYPE"/>
+        <property name="rate" column="RATE"/>
+        <property name="scanRate" column="SCANRATE"/>
+        <property name="secondRate" column="SECONDRATE"/>
+        <property name="machinePrice" column="MACHINEPRICE" />
+        <property name="machineNum" column="MACHINENUM" />
+        <property name="detailAmt" column="DETAILAMT" />
+        <property name="detailStatus" column="DETAILSTATUS" />
+        <property name="importNum" column="IMPORTNUM" />
+        <property name="importDate" column="IMPORTDATE" type="timestamp" />
+        <property name="importer" column="IMPORTER"/>
+        <property name="detailRemark" column="DETAILREMARK" />
+        <property name="detailCdate" column="DETAILCDATE" type="timestamp" />
+        <property name="detailCby" column="DETAILCBY" />
+        <property name="detailLmdate" column="DETAILLMDATE" type="timestamp" />
+        <property name="detailApproveStatus" column="DETAILAPPROVESTATUS"/>
+        <property name="detailLmby" column="DETAILLMBY" />
+        <property name="detailMinfo1" column="DETAILMINFO1" />
+        <property name="detailMinfo2" column="DETAILMINFO2"/>
+        <property name="detailApproveDate" column="DETAILAPPROVEDATE" type="timestamp" />
+        <property name="detailApprover" column="DETAILAPPROVER" />
+        <property name="detailApproveNote" column="DETAILAPPROVENOTE" />
+        <property name="scanRateUp" column="SCANRATEUP" />
+        <property name="huaBeiRate" column="HUABEIRATE" />
+        <property name="depositAmt" column="DEPOSITAMT" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckRealtimeDealDetailModel" table="check_RealtimeDealDetail">
+        <id name="pkid" column="PKID">
+        </id>
+        <property name="mid" column="MID" />
+        <property name="tid" column="TID" />
+        <property name="cardpan" column="CARDPAN" />
+        <property name="txnamount" column="TXNAMOUNT" />
+        <property name="txnday" column="TXNDAY" />
+        <property name="txndate" column="TXNDATE" />
+        <property name="txntype" column="TXNTYPE" />
+        <property name="authcode" column="AUTHCODE" />
+        <property name="stan" column="STAN" />
+        <property name="rrn" column="RRN" />
+        <property name="respcode" column="RESPCODE" />
+        <property name="proccode" column="PROCCODE" />
+         <property name="cardtype" column="CARDTYPE" />
+        <property name="sources" column="SOURCES" />
+    </class>
+</hibernate-mapping>

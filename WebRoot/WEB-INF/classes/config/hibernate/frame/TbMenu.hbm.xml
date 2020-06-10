@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="MenuModel" table="SYS_MENU">
+		<id name="menuID" column="MENU_ID">
+			<generator class="sequence">
+				<param name="sequence">S_SYS_MENU</param>
+			</generator>
+		</id>
+		<property name="text" column="TEXTS"/>
+		<property name="src" column="SRC"/>
+		<property name="seq" column="SEQ"/>
+		<property name="iconcls" column="ICONCLS"/>
+		<property name="createDate" type="timestamp" column="CREATE_DATE"/>
+		<property name="createUser" column="CREATE_USER"/>
+		<property name="updateDate" type="timestamp" column="UPDATE_DATE"/>
+		<property name="updateUser" column="UPDATE_USER"/>
+		<property name="tranCode" column="TRANCODE"/>
+		<property name="status" column="STATUS"/>
+		<many-to-one name="parent" column="PID" />
+		<set name="children" inverse="true" order-by="SEQ ASC">
+			<key column="PID"></key>
+			<one-to-many class="MenuModel"/>
+		</set>
+		<set name="roles" table="SYS_ROLE_MENU" lazy="extra" inverse="true">
+			<key column="MENU_ID"></key>
+			<many-to-many class="com.hrt.frame.entity.model.RoleModel" column="ROLE_ID"/>
+		</set>
+    </class>
+</hibernate-mapping>

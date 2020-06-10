@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckProfitTempTraditLogModel" table="check_tradit_profittemp_log">
+        <id name="wId" column="WID">
+            <generator class="sequence">
+				<param name="sequence">S_CHECK_TRADIT_PROFITTEMP_LOG</param>
+			</generator>
+        </id>
+        <property name="ctpId" column="CTPID" />
+        <property name="unno" column="UNNO" />
+        <property name="tempName" column="TEMPNAME" />
+        <property name="industryType" column="INDUSTRYTYPE" />
+        <property name="costRate" column="COSTRATE" />
+        <property name="feeAmt" column="FEEAMT"/>
+        <property name="dealAmt" column="DEALAMT"/>
+        <property name="creditBankRate" column="CREDITBANKRATE"/>
+        <property name="cashRate" column="CASHRATE"/>
+        <property name="cashAmt" column="CASHAMT"/>
+        <property name="scanRate" column="SCANRATE"/>
+        <property name="profitPercent" column="PROFITPERCENT" />
+        <property name="matainType" column="MATAINTYPE" />
+        <property name="matainDate" column="MATAINDATE" type="timestamp" />
+        <property name="endDate" column="ENDDATE" type="timestamp" />
+        <property name="matainUserId" column="MATAINUSERID" />
+        <property name="scanRateUp" column="SCANRATEUP"/>
+    </class>
+</hibernate-mapping>

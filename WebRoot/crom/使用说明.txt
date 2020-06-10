@@ -1,0 +1,25 @@
+cron表达式生成器 js版使用说明说 
+版本1.0
+
+1,网页嵌入
+<iframe name="cron" id="cron" width="610" height="230" frameborder="0" scrolling="no" src="index.htm"></iframe>
+
+
+2,调用函数
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	function getvalues(){
+	  alert(window.cron.getvalues());
+	}
+//-->
+</SCRIPT>
+
+
+3,返回格式
+  cron表达式;开始时间;结束时间
+  例如：0 0/1 * * * ?;2013-02-13 16:35:37;2013-02-27 16:35:40
+
+
+
+  hugejieltu@163.com
+  QQ:29499160

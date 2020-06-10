@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:sec="http://cxf.apache.org/configuration/security" 
+	xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/aop 
+	   http://www.springframework.org/schema/aop/spring-aop.xsd
+	   http://www.springframework.org/schema/tx 
+	   http://www.springframework.org/schema/tx/spring-tx.xsd
+	   http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://cxf.apache.org/configuration/security
+       http://cxf.apache.org/schemas/configuration/security.xsd
+       http://cxf.apache.org/transports/http/configuration
+       http://cxf.apache.org/schemas/configuration/http-conf.xsd
+       http://cxf.apache.org/jaxws 
+       http://cxf.apache.org/schemas/jaxws.xsd">
+      
+       <!--三方测试 -->
+       <!--
+		<jaxws:client id="uidApiService" serviceClass="com.xwf.cloudauth.api.uid.UserIdentityApiService"
+			address="https://prmcap.xwf-id.com/api/UidApiService">
+		</jaxws:client>
+		-->
+		
+		<!--三方生产 -->
+       
+		<jaxws:client id="uidApiService" serviceClass="com.xwf.cloudauth.api.uid.UserIdentityApiService"
+			address="https://prdcap.xwf-id.com/api/UidApiService">
+		</jaxws:client>
+		
+		<http-conf:conduit name="*.http-conduit">
+	 		<http-conf:tlsClientParameters disableCNCheck="true">
+	            <sec:keyManagers keyPassword="hrt1234">
+	                <sec:keyStore type="PKCS12" password="hrt1234" resource="www.hrtpayment.com.p12"/>
+	            </sec:keyManagers>
+				<sec:trustManagers>
+					<sec:keyStore type="JKS" password="changeit" resource="cacerts" />
+				</sec:trustManagers>
+			</http-conf:tlsClientParameters>
+			<http-conf:client ConnectionTimeout="80000" ReceiveTimeout="120000"/>
+		</http-conf:conduit>	
+
+</beans>

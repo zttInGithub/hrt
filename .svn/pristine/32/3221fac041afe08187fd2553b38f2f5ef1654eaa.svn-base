@@ -1,0 +1,197 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+</script>
+<form id="sysAdmin_merchantBocomInfo_queryForm" method="post" enctype="multipart/form-data" >
+	<fieldset>
+		<legend>商户信息</legend>
+		<table class="table">
+		   	<tr>
+		   		<th>商户编号：</th>
+		   		<td><input type="text" readonly="readonly" name="MID" style="width:200px;"/></td>
+		   	
+		   		<th>商户名称：</th>
+	   			<td><input type="text" readonly="readonly" name="MERCHNAME" style="width:200px;"/></td>
+		   	</tr>
+		   	<tr>
+			   	<th>法人：</th>
+	   			<td><input type="text" readonly="readonly" name="LEGALPERSON" style="width:200px;"/></td>
+	   			
+	   			<th>身份证号码：</th>
+	   			<td>
+	   				<input type="text" readonly="readonly" name="LEGALNUM" style="width:200px;" />
+	   			</td>
+	   		</tr>
+	   		<tr>
+	   			<th>经营范围：</th>
+	   			<td><input type="text" readonly="readonly" name="BUSINESSSCOPE" style="width:200px;"/></td>
+		   	
+		   		<th>经营地址：</th>
+	   			<td><input type="text" readonly="readonly" name="BADDR" style="width:200px;"/></td>
+	   		</tr>
+		   	<tr>	
+		   		<th>注册地址：</th>
+	   			<td>
+	   				<input type="text" readonly="readonly" name="RADDR" style="width:200px;" />
+	   			</td>
+	   			
+	   			<th>店铺名称：</th>
+	   			<td>
+	   				<input type="text" readonly="readonly" name="SHOPPINGNAME" style="width:200px;" />
+	   			</td>
+	   		</tr>
+
+			<tr>
+		   		<th>报审日期：</th>
+		   		<td><input type="text" readonly="readonly" name="REPORTDATE" style="width:200px;" /></td>
+		   		
+		   		<th>批准日期：</th>
+		   		<td><input type="text" readonly="readonly" name="APPROVALDATE" style="width:200px;" /></td>
+		   	</tr>
+		   	<tr>
+		   		<th>安装日期：</th>
+		   		<td><input type="text" readonly="readonly" name="INSTALLDATE" style="width:200px;" /></td>
+		   	    <th>商户来源：</th>
+		   	  	<td><input type="text" readonly="readonly" name="SOURCENAME" style="width:200px;" /></td>
+		   
+		   	
+		   	
+		   	</tr>
+		   	<tr>
+		   		<th>押金：</th>
+		   		<td><input type="text" name="DEPOSIT" style="width:200px;" class="easyui-validatebox" data-options="validType:'intOrFloat'" maxlength="100"/></td>
+		   		
+		   		<th>服务费：</th>
+		   		<td><input type="text" name="SERVICECHARGE" style="width:200px;" class="easyui-validatebox" data-options="validType:'intOrFloat'" maxlength="100"/></td>
+		   	</tr>
+		</table>
+	</fieldset>
+	
+	<fieldset>
+		<legend>卡类信息</legend>
+		<table class='table'>
+			<tr>
+				<th>卡种：</th>
+				<td>
+					<input type='text'  name='CARDTYPE'  style="width:200px;" readonly="readonly"/>
+				</td>
+			
+				<th> 安装卡种：</th>
+				<td>
+					<input type='text'  name='INSTALLCARD'  style="width:200px;" readonly="readonly"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>开户行：</th>
+				<td>
+					<input type='text' name='BANKNAME'  style="width:200px;" readonly="readonly"/>
+				</td>
+				
+				<th>账号：</th>
+				<td>
+					<input type='text' name='ACCNO'   style="width:200px;" readonly="readonly"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>开户账号名称：</th>
+				<td>
+					<input type='text' name='BANKACCNAME'  style="width:200px;" readonly="readonly"/>
+				</td>
+				<th>内卡费率：</th>
+				<td>
+					<input type='text' name='BANKFEERATE'  style="width:200px;" readonly="readonly"/>
+				</td>
+			</tr>
+			<tr>
+				<th>外卡费率：</th>
+				<td>
+					<input type='text' name='WILDFEERATE' style="width:200px;" readonly="readonly"/>
+				</td>
+				<th>储联卡费率：</th>
+				<td>
+					<input type='text' name='STORAGEFEERATE'  style="width:200px;" readonly="readonly"/>
+				</td>
+			</tr>
+			<tr>
+				<th>储值卡费率：</th>
+				<td>
+					<input type='text' name='FEERATE'  style="width:200px;" readonly="readonly"/>
+				</td>
+				<th>支付系统行号：</th>
+				<td>
+					<input type='text' name='PAYBANKID'  style="width:200px;" readonly="readonly"/>
+				</td>
+			</tr>
+			<tr>
+				<th>交换号：</th>
+				<td >
+					<input type='text' name='EXCHANGE'  style="width:200px;" readonly="readonly"/>
+			</tr>
+		</table>
+	</fieldset>
+		
+	<fieldset>
+		<legend>联系人信息</legend>
+		<table class="table">
+			<tr>
+				<th>联系人：</th>
+		   		<td><input type="text" readonly="readonly" name="CONTACTPERSON" style="width:200px;"/></td>
+		   		
+		   		<th>手机：</th>
+		   		<td><input type="text" readonly="readonly" name="CONTACTPHONE" style="width:200px;"/></td>
+			</tr>
+		   	<tr>
+		   		<th>固话：</th>
+		   		<td><input type="text" readonly="readonly" name="CONTACTTEL" style="width:200px;"/></td>
+				<th>邮箱：</th>
+		   		<td><input type="text" readonly="readonly" name="EMAIL" style="width:200px;"/></td>
+			</tr>
+			<tr>
+				<th>第二联系人：</th>
+		   		<td><input type="text" readonly="readonly" name="SECONDCONTACTPERSON" style="width:200px;"/></td>
+		   		
+		   		<th>第二手机：</th>
+		   		<td><input type="text" readonly="readonly" name="SECONDCONTACTPHONE" style="width:200px;"/></td>
+			</tr>
+		   	<tr>
+		   		<th>第二固话：</th>
+		   		<td><input type="text" readonly="readonly" name="SECONDCONTACTTEL" style="width:200px;"/></td>
+		   		<th>行业编码：</th>
+		   		<td><input type="text" readonly="readonly" name="MCCID" style="width:200px;"/></td>
+			</tr>
+			
+			<tr>
+				<th>销售：</th>
+		   		<td><input type="text" readonly="readonly" name="SIGNUSERID" style="width:200px;"/></td>
+		   		
+		   		<th>维护销售：</th>
+		   		<td><input type="text" readonly="readonly" name="MAINTAINUSERID" style="width:200px;"/></td>
+			</tr>
+		   	<tr>
+		   		<th>状态：</th>
+		   		<td><input type="text" readonly="readonly" name="STATUS" style="width:200px;"/></td>
+			</tr>
+		</table>
+	</fieldset>
+	
+	<fieldset>
+		<legend>备注</legend>
+		<table class='table'>
+			<tr>
+				<th>备注1</th>
+				<td>
+					<textarea rows="6" cols="38" style="resize:none;" name="MINFO1" readonly="readonly"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th>备注2</th>
+				<td>
+					<textarea rows="6" cols="38" style="resize:none;" name="REMARKS" readonly="readonly"></textarea>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</form>

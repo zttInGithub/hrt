@@ -1,0 +1,263 @@
+package com.hrt.biz.bill.service.impl;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.dao.IMerchantTaskDetailDao;
+import com.hrt.biz.bill.entity.model.MerchantInfoModel;
+import com.hrt.biz.bill.entity.model.MerchantTaskDataModel;
+import com.hrt.biz.bill.entity.model.MerchantTaskDetail3Model;
+import com.hrt.biz.bill.service.IMerchantTaskDetail3Service;
+import com.hrt.frame.dao.sysadmin.ITodoDao;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.entity.model.TodoModel;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public class MerchantTaskDetail3ServiceImpl implements IMerchantTaskDetail3Service{
+
+	private IMerchantTaskDetailDao merchantTaskDetailDao;
+	private IUnitDao unitDao;
+	private ITodoDao todoDao;
+	public IMerchantTaskDetailDao getMerchantTaskDetailDao() {
+		return merchantTaskDetailDao;
+	}
+	public void setMerchantTaskDetailDao(IMerchantTaskDetailDao merchantTaskDetailDao) {
+		this.merchantTaskDetailDao = merchantTaskDetailDao;
+	}
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+	public ITodoDao getTodoDao() {
+		return todoDao;
+	}
+	public void setTodoDao(ITodoDao todoDao) {
+		this.todoDao = todoDao;
+	}
+	
+	/**
+	 * 根据mid判断是否存在未审批的工单
+	 */
+	public boolean queryMerchantTaskDetailByMid(String mid){
+		boolean flag = false;
+		String hql ="select count(m) from MerchantTaskDataModel m where m.approveStatus='Z' and m.mid='"+mid+"'  and m.type in(1,2,3)";
+		long i = merchantTaskDetailDao.queryCounts(hql);
+		if(i>0){
+			flag = true;
+		}
+		return flag;
+	}
+	
+	public List<MerchantInfoModel> queryMerchantInfo(String mid,UserBean user) {
+		//能够查询所有
+		List<MerchantInfoModel> list=new ArrayList<MerchantInfoModel>();
+		list.add(merchantTaskDetailDao.queryMerchantInfo(mid,user));
+		return list;
+	}
+	
+	@Override
+	public Integer saveMerchantTaskDetail3(MerchantTaskDetail3Model merchantTaskDetail3,String unno,String mid,Double maxAmt,UserBean user) {
+//		DecimalFormat deFormat = new DecimalFormat("000000");
+//		String ll=merchantTaskDetailDao.findMaxId();
+//		System.out.println(ll+"sequence序列值*************************************");
+//		Integer utilBmkid=Integer.parseInt(ll);
+//		Integer bmtkid=0;
+//		if(utilBmkid==1){
+//			bmtkid=1;
+//		}else{
+//			bmtkid=utilBmkid+1;
+//		}
+
+		SimpleDateFormat sf=new SimpleDateFormat("yyyyMMdd");
+		MerchantTaskDataModel merchantTaskDataModel =new MerchantTaskDataModel();
+		StringBuffer sb=new StringBuffer();
+		sb.append(sf.format(new Date())).append("-").append(unno).append("-").append(System.currentTimeMillis());
+		merchantTaskDataModel.setTaskId(sb.toString());
+		merchantTaskDataModel.setUnno(unno);
+		merchantTaskDataModel.setMid(mid);
+		merchantTaskDataModel.setType("3");
+		merchantTaskDataModel.setApproveStatus("Z");
+		merchantTaskDataModel.setMainTainDate(new Date());
+		merchantTaskDataModel.setMainTainUId(user.getUserID());
+		 //--->首先保存商户银行信息工单申请关联的“待审”对象
+		merchantTaskDetailDao.saveObject(merchantTaskDataModel);    
+		System.out.println("机构编号"+unno+"****************************商户编号"+mid); 
+		merchantTaskDetail3.setBmtkid(merchantTaskDataModel.getBmtkid());
+		
+		//处理费率显示问题
+		if(merchantTaskDetail3.getBankFeeRate()!=null){
+			merchantTaskDetail3.setBankFeeRate(merchantTaskDetail3.getBankFeeRate()/100);
+		}else{
+			merchantTaskDetail3.setBankFeeRate(0.0);
+		}
+		//贷记卡费率
+		if(merchantTaskDetail3.getCreditBankRate()!=null){
+			merchantTaskDetail3.setCreditBankRate(merchantTaskDetail3.getCreditBankRate()/100);
+		}else{
+			merchantTaskDetail3.setCreditBankRate(0.0);
+		}
+		//微信费率
+		if(merchantTaskDetail3.getScanRate()!=null){
+			merchantTaskDetail3.setScanRate(merchantTaskDetail3.getScanRate()/100);
+		}else{
+			merchantTaskDetail3.setScanRate(0.0);
+		}
+		//银联二维码费率
+		if(merchantTaskDetail3.getScanRate1()!=null){
+			merchantTaskDetail3.setScanRate1(merchantTaskDetail3.getScanRate1()/100);
+		}else{
+			merchantTaskDetail3.setScanRate1(0.0);
+		}
+		// 支付宝费率
+		if(merchantTaskDetail3.getScanRate2()!=null){
+			merchantTaskDetail3.setScanRate2(merchantTaskDetail3.getScanRate2()/100);
+		}else{
+			merchantTaskDetail3.setScanRate2(0.0);
+		}
+		if(merchantTaskDetail3.getFeeRateV()!=null){
+			merchantTaskDetail3.setFeeRateV(merchantTaskDetail3.getFeeRateV()/100);
+		}else{
+			merchantTaskDetail3.setFeeRateV(0.0);
+		}
+		if(merchantTaskDetail3.getFeeRateM()!=null){
+			merchantTaskDetail3.setFeeRateM(merchantTaskDetail3.getFeeRateM()/100);
+		}else{
+			merchantTaskDetail3.setFeeRateM(0.0);
+		}
+		if(merchantTaskDetail3.getFeeRateJ()!=null){
+			merchantTaskDetail3.setFeeRateJ(merchantTaskDetail3.getFeeRateJ()/100);
+		}else{
+			merchantTaskDetail3.setFeeRateJ(0.0);
+		}
+		if(merchantTaskDetail3.getFeeRateA()!=null){
+			merchantTaskDetail3.setFeeRateA(merchantTaskDetail3.getFeeRateA()/100);
+		}else{
+			merchantTaskDetail3.setFeeRateA(0.0);
+		}
+		if(merchantTaskDetail3.getFeeRateD()!=null){
+			merchantTaskDetail3.setFeeRateD(merchantTaskDetail3.getFeeRateD()/100);
+		}else{
+			merchantTaskDetail3.setFeeRateD(0.0);
+		}
+		Double dealAmt = merchantTaskDetail3.getFeeAmt()/(merchantTaskDetail3.getBankFeeRate());
+		Double deal = Math.floor(dealAmt);
+		merchantTaskDetail3.setDealAmt(deal);
+		//Double dd=(maxAmt/100)/merchantTaskDetail3.getBankFeeRate();
+		//merchantTaskDetail3.setDealAmt(maxAmt);
+		merchantTaskDetailDao.saveObject(merchantTaskDetail3);
+		
+		//保存工单申请到todo
+		TodoModel todo=new TodoModel();
+		if(getFatherUnno(user.getUnNo()).equals("110000")){
+			todo.setUnNo("110003");
+		}else{
+			todo.setUnNo(getFatherUnno(user.getUnNo()));
+		}
+		todo.setMsgSender(user.getUserID());
+		todo.setBizType("bill_task");
+		todo.setMsgSendTime(new Date());
+		todo.setMsgSendUnit(user.getUnNo());
+		todo.setMsgTopic("待审核的商户工单申请");
+		todo.setBatchJobNo(merchantTaskDataModel.getBmtkid().toString());
+		todo.setStatus(0);
+		todo.setTranCode("10470");
+		if(!user.getLoginName().equals("superadmin")){
+			todoDao.saveObject(todo);
+		} 
+		return merchantTaskDataModel.getBmtkid();
+	}
+	
+	@Override
+	public String queryUpLoadPath() {
+		String title="HrtFrameWork"; 
+		return merchantTaskDetailDao.querySavePath(title);
+	}
+
+	private String getFatherUnno(String unNo) {
+		String fUnno="";
+		String sql="SELECT t.UPPER_UNIT FROM SYS_UNIT t WHERE t.UNNO='"+unNo+"' ORDER BY t.UPPER_UNIT ";
+		List<Map<String, Object>> list=unitDao.queryObjectsBySqlList(sql);
+		if(list.size()>0){
+			if(list.get(0).get("UPPER_UNIT")!=null){
+			fUnno=list.get(0).get("UPPER_UNIT").toString();
+			}
+		}
+		return fUnno;
+	}
+
+	@Override
+	public boolean midExistsTemp(String mid){
+		String sql="select t.mid1 from temp1 t where t.mid1=:mid";
+		Map t=new HashMap();
+		t.put("mid",mid);
+		List list = unitDao.queryObjectsBySqlListMap(sql,t);
+		return list.size()>0;
+	}
+	
+	@Override
+	public boolean judgeActiveIsMatching(String mid){
+//		String sql="select t.rebatetype from BILL_MERCHANTTERMINALINFO b,bill_terminalinfo t"+
+//				" where b.tid = t.termid"+
+//				" and b.mid =:mid and t.rebatetype = '90'";
+//		Map t=new HashMap();
+//		t.put("mid",mid);
+//		List list = unitDao.queryObjectsBySqlListMap(sql,t);
+//		if(list.size() > 0) {
+//			return true;
+//		}else {
+//			return false;
+//		}
+		
+		String title = "rateLimitActive";
+		String limitActiveSql = " SELECT UPLOAD_PATH FROM SYS_PARAM WHERE TITLE='"+title+"'";
+		List<Map<String,Object>> sqlObject = unitDao.queryObjectsBySqlObject(limitActiveSql);
+		if(sqlObject ==null || sqlObject.get(0) == null || sqlObject.get(0).get("UPLOAD_PATH") == null) {
+			return false;//说明没有限制活动设备
+		}
+		String[] activeArrays = ((String) sqlObject.get(0).get("UPLOAD_PATH")).split(",");
+		String	actives = "";
+		for (int i = 0; i < activeArrays.length; i++) {
+			if(i==0) {
+				actives += "'"+activeArrays[i]+"'";
+			}else {
+				actives += ",'"+activeArrays[i]+"'";
+			}
+		}
+		if("".equals(actives)) {//说明没有限制活动配置
+			return false;
+		}
+		
+		String sql="select t.rebatetype from BILL_MERCHANTTERMINALINFO b,bill_terminalinfo t"+
+				" where b.tid = t.termid"+
+				" and b.mid =:mid and t.rebatetype in ("+actives+")";
+		
+		Map t=new HashMap();
+		t.put("mid",mid);
+		List list = unitDao.queryObjectsBySqlListMap(sql,t);
+		if(list.size() > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean judgeLimitUnno(String mid,String unno){
+		String sql=" select count(*) from Bill_Merchantinfo b"+
+				" where b.mid = '"+mid+"'"+
+				" and b.unno in (select s.unno from sys_unit s start with unno in"+
+				" ('"+unno+"') connect by NOCYCLE  prior unno =  upper_unit)";
+		BigDecimal d = unitDao.querysqlCounts(sql, null);
+		if(d!=null&&d.intValue()>0){
+			return true;
+		}
+		return false;
+	}
+}

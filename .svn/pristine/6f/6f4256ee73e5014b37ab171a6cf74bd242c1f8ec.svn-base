@@ -1,0 +1,13 @@
+package com.hrt.biz.bill.dao.impl;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.dao.IProxyPurseDao;
+import com.hrt.frame.base.dao.impl.BaseHibernateDaoImpl;
+
+public class ProxyPurseDaoImpl extends BaseHibernateDaoImpl<Object> implements IProxyPurseDao {
+
+}

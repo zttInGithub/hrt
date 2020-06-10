@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="PgCashbackSpecialModel" table="PG_CASHBACK_SPECIAL">
+        <id name="pcsid" column="PCSID">
+            <generator class="sequence">
+				<param name="sequence">S_PG_CASHBACK_SPECIAL</param>
+			</generator>
+        </id>
+      <property name="mid" column="MID" ></property>
+      <property name="returnday" column="RETURNDAY" ></property>
+      <property name="summoney" column="SUMMONEY" ></property>
+      <property name="rebatetype" column="REBATETYPE" ></property>
+      <property name="returnmoney" column="RETURNMONEY" ></property>
+      <property name="returntime" column="RETURNTIME" ></property>
+      <property name="status" column="STATUS" ></property>
+      <property name="cdate" column="CDATE" ></property>
+      <property name="remarks1" column="REMARKS1" ></property>
+      <property name="remarks2" column="REMARKS2"></property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="AgentUnitTaskModel" table="BILL_AGENTUNITTASK">
+		<id name="bautid" column="BAUTID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_AGENTUNITTASK</param>
+			</generator>
+		</id>
+		<property name="unno" column="UNNO" />
+		<property name="bautdid" column="BAUTDID" />
+		<property name="taskType" column="TASKTYPE" />
+        
+        <property name="maintainDate" column="MAINTAINDATE" type="timestamp" />
+        <property name="maintainType" column="MAINTAINTYPE" />
+        <property name="approveDate" column="APPROVEDATE" type="timestamp" />
+		<property name="approveStatus" column="APPROVESTATUS" />
+		<property name="approveNote" column="APPROVENOTE" />
+	</class>
+</hibernate-mapping>

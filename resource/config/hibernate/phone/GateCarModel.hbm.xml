@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.phone.entity.model">
+    <class name="GateCarModel" table="BILL_GATECARINFO">
+        <id name="carId" column="CARID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_GATECARINFO</param>
+			</generator>
+        </id>
+      <property name="mid" column="MID" ></property>
+      <property name="carNumber" column="CARNUMBER" ></property>
+      <property name="carCode" column="CARCODE" ></property>
+      <property name="engineNumber" column="ENGINENUMBER" ></property>
+      <property name="carType" column="CARTYPE" ></property>
+      <property name="mainTainDate" column="MAINTAINDATE"></property>
+      <property name="mainTainType" column="MAINTAINTYPE"></property>
+      <property name="mainTainUid" column="MAINTAINUID"></property>
+      <property name="driverName" column="DRIVERNAME"></property>
+      <property name="driverNo" column="DRIVERNO"></property>
+      <property name="driverPhone" column="DRIVERPHONE"></property>
+      <property name="queryTime" column="QUERYTIME"></property>
+      
+      <property name="driliPic1" column="driliPic1"></property>
+      <property name="driliPic2" column="driliPic2"></property>
+      <property name="identityCardPic" column="identityCardPic"></property>
+      <property name="insurancePic" column="insurancePic"></property>
+      <property name="driliBackPic" column="driliBackPic"></property>
+    </class>
+</hibernate-mapping>

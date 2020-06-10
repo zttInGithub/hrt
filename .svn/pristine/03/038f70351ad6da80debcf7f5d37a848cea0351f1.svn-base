@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckUnitDealDetailModel" table="check_UnitDealDetail">
+        <id name="bdid" column="BDID">
+            <generator class="native"></generator>
+        </id>
+      <property name="mid" column="MID" ></property>
+      <property name="tid" column="TID" ></property>
+      <property name="cardPan" column="CARDPAN" ></property>
+      <property name="cbrand" column="CBRAND" ></property>
+      <property name="txnAmount" column="TXNAMOUNT" ></property>
+      <property name="txnDay" column="TXNDAY" ></property>
+      <property name="txnDate" column="TXNDATE" ></property>
+      <property name="txnType" column="TXNTYPE" ></property>
+      <property name="authCode" column="AUTHCODE" ></property>
+      <property name="stan" column="STAN" ></property>
+      <property name="rrn" column="RRN" ></property>
+      <property name="mda" column="MDA" ></property>
+      <property name="mnamt" column="MNAMT" ></property>
+      <property name="profit" column="PROFIT" ></property>
+      <property name="settleDate" column="SETTLEDATE" ></property>
+      <property name="maintainUid" column="MAINTAINUID" ></property>
+      <property name="maintainDate" column="MAINTAINDATE" ></property>
+      <property name="maintainType" column="MAINTAINTYPE" ></property>
+      <property name="schedulesettledate" column="SCHEDULESETTLEDATE" ></property>
+      <property name="actionsetttledate" column="ACTIONSETTTLEDATE" ></property>
+      <property name="ifcard" column="IFCARD" ></property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckWalletCashSwitchModel" table="CHECK_WALLETCASHSWITCH">
+        <id name="wId" column="WID">
+            <generator class="sequence">
+				<param name="sequence">S_check_walletCashSwitch</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="createDate" column="CREATEDATE" type="timestamp" />
+        <property name="walletStatus" column="WALLETSTATUS" />
+        <property name="rebateType" column="REBATETYPE" />
+        <property name="remark1" column="REMARK1" />
+        <property name="remark2" column="REMARK2" />
+    </class>
+</hibernate-mapping>

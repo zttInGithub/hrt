@@ -1,0 +1,381 @@
+package com.hrt.biz.bill.service;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.entity.model.HrtUnnoCostModel;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hrt.biz.bill.entity.model.AgentUnitModel;
+import com.hrt.biz.bill.entity.pagebean.AgentUnitBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IAgentUnitService {
+	
+	/**
+	 * 查询表格机构
+	 */
+	DataGridBean queryUnits(AgentUnitBean agentUnit,UserBean user) throws Exception;
+	/**
+	 * 查询代理商信息（未缴款）
+	 */
+	DataGridBean queryAgentUnit(AgentUnitBean agentUnit,UserBean user) throws Exception;
+	/**
+	 * 查询代理商信息（未缴款，运营中心角度）
+	 */
+	DataGridBean queryAgentUnit00410(AgentUnitBean agentUnit,UserBean user) throws Exception;
+	
+	/**
+	 * 查询代理商信息（不管开通、缴款状态）
+	 */
+	DataGridBean queryAgentUnitData(AgentUnitBean agentUnit,UserBean user) throws Exception;
+
+	/**
+	 * 查询代理商信息（修改页面）
+	 */
+	DataGridBean queryAgentUnitDataForUpdate(AgentUnitBean agentUnit,UserBean user) throws Exception;
+	DataGridBean queryAgentUnitDataBeiJing(AgentUnitBean agentUnit,UserBean user) throws Exception;
+
+	/**
+	 * 批量返现Excel导入
+	 * @param xlsfile 文件路径
+	 * @param name 文件名称
+	 * @param user 用户
+	 * @return
+	 */
+	Map importCashStatusByExcel(String xlsfile, String name, UserBean user);
+	
+	/**
+	 * 查询运营中心资料
+	 * @param agentUnit
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
+	DataGridBean queryAgentUnitData10142(AgentUnitBean agentUnit,UserBean user) throws Exception;
+	
+	/**
+	 * 添加代理商
+	 */
+	void saveAgentUnit(AgentUnitBean agentUnit, UserBean user) throws Exception;
+	/**
+	 * 添加代理商-运营中心
+	 */
+	void saveAgentUnit00410(AgentUnitBean agentUnit, UserBean user) throws Exception;
+	Map getYunYingHrtUnnoCost(String unno);
+	
+	/**
+	 * 修改代理商信息
+	 */
+	void updateAgentUnit(AgentUnitBean agentUnit, UserBean user) throws Exception;
+	
+	/**
+	 * 修改运营中心信息
+	 */
+	void updateAgentUnit00410(AgentUnitBean agentUnit, UserBean user) throws Exception;
+	
+	/**
+	 * 查询代理商信息（未缴款并且风险保障金大于0）
+	 */
+	DataGridBean queryAgentConfirm(AgentUnitBean agentUnit) throws Exception;
+	
+	/**
+	 * 确认代理商缴款
+	 */
+	void updateAgentConfirm(AgentUnitBean agentUnit, UserBean user) throws Exception;
+	
+	/**
+	 * 查询代理商信息（保障金大于0已缴款未开通）或（保障金等于0未开通）
+	 */
+	DataGridBean queryAgentOpen(AgentUnitBean agentUnit,boolean isClearing) throws Exception;
+	
+	/**
+	 * 确认代理商开通
+	 */
+	void updateAgentOpen(AgentUnitBean agentUnit, UserBean user) throws Exception;
+	
+	/**
+	 * 删除代理商信息
+	 */
+	void deleteAgentUnit(Integer id) throws Exception;
+	
+
+	/**
+	 * 导出代理商信息excel
+	 */
+	HSSFWorkbook export(String ids,UserBean user,AgentUnitBean agentUnit);
+	
+	/**
+	 * 查询简码是否存在
+	 */
+	Integer queryUnitCounts(String unitCode);
+	
+	/**
+	 * 根据id得到代理商
+	 */
+	AgentUnitModel getInfoModel(Integer id);
+	/**
+	 * 根据unno得到代理商
+	 */
+	AgentUnitModel getInfoModelByUnno(String unno);
+	/**
+	 * 导出所有代理商信息
+	 */
+	HSSFWorkbook exportAgent(AgentUnitBean agentUnit,UserBean user);
+
+	/**
+	 * 查看代理商图片明细
+	 * @param buid
+	 * @return
+	 */
+	List<Object> queryAgentInfoDetailed(Integer buid);
+	List<Object> queryAgentInfoDetailed2(UserBean userBean);
+	
+	void updateAgentToC(AgentUnitBean agentUnit, UserBean userBean);
+	void updateAgentToK(AgentUnitBean agentUnit, UserBean userBean);
+	
+	/**
+	 * 查询代理商名称是否存在
+	 * @param agentName
+	 */
+	Integer queryAgentUnitNameExits(String agentName,Integer buid);
+	/**
+	 * 查询代理商名称是否存在，新老平台名称一样
+	 */
+	Integer queryAgentUnitNameExits2(AgentUnitBean agentUnit);
+	/**
+	 * 查询代理商简称是否存在
+	 * @param showrtNm
+	 * @param buid
+	 * @return
+	 */
+	Integer queryShortNmNameExits(String shortNm,Integer buid);
+	/**
+	 * 查询代理商简称是否存在，新老平台名称一样
+	 */
+	Integer queryShortNmNameExits2(AgentUnitBean agentUnit);
+	List<Map<String, String>> exportAgentsAndSales(AgentUnitBean agentUnit, UserBean userSession);
+	List<Map<String, Object>> exportUnits(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * 查询代理商提&现余
+	 * @param userSession
+	 * @return
+	 */
+	Object queryPurse(UserBean userSession);
+	Object queryPurseRc(UserBean userSession);
+	Object takeCurAmt(UserBean userSession,String amount);
+	Object takeCurAmtRc(UserBean userSession,String amount);
+
+	/**
+	 * 查询提现历史记录
+	 * @param userSession
+	 * @param agentUnit
+	 * @return
+	 */
+	DataGridBean queryCash(UserBean userSession,AgentUnitBean agentUnit);
+	DataGridBean queryCashRc(UserBean userSession,AgentUnitBean agentUnit);
+	/**
+	 * 查询分润其他调整
+	 * @param userSession
+	 * @param agentUnit
+	 * @return
+	 */
+	DataGridBean queryAdjtxn(UserBean userSession, AgentUnitBean agentUnit);
+	DataGridBean queryAdjtxnRc(UserBean userSession, AgentUnitBean agentUnit);
+	DataGridBean queryAgentDlUnitList3();
+	boolean updatePublishToZH(AgentUnitBean agentUnit, UserBean userSession);
+	DataGridBean queryPusreFrozenRecord(UserBean userSession, AgentUnitBean agentUnit);
+
+	/**
+	 * 查询机构成本信息
+	 * @param agentUnit
+	 * @param userSession
+	 * @return
+	 */
+	JSONObject queryHrtUnnoCost(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * 查询机构活动成本信息
+	 * @param agentUnit
+	 * @param userSession
+	 * @return
+	 */
+	JsonBean queryHrtUnnoCostSingleRebate(AgentUnitBean agentUnit, UserBean user);
+
+
+	/**
+	 * 运营中心成本变更列表查询
+	 */
+	DataGridBean queryBillBpFile9(AgentUnitBean agentUnit, UserBean userBean);
+	/**
+	 * 成本上传-非活动
+	 * @return map:rtnCode 返回码；rtnMsg 返回原因。
+	 */
+	Map<String,Object> addUnnoCost(AgentUnitBean agentUnit, UserBean userBean) throws Exception;
+	/**
+	 * 成本上传-活动
+	 * @return map:rtnCode 返回码；rtnMsg 返回原因。
+	 */
+	Map<String,Object> addUnnoCost1(AgentUnitBean agentUnit, UserBean userBean) throws Exception;
+	/**
+	 * 查询分润zip文件路径
+	 */
+	String querySysParam(String title);
+	/**
+	 * 代理结算成本勾选导出
+	 */
+	List<Map<String, String>> listUnnoCost(String costType,String fid,UserBean userSession);
+	/**
+	 * 代理结算成本退回
+	 */
+	boolean updateUnnoCostTH(String fid,AgentUnitBean agentUnit,UserBean userSession)throws Exception;
+	/**
+	 * 代理成本变更通过
+	 * @param agentUnit
+	 * @param userSession
+	 * @return
+	 */
+	JsonBean updateUnnoCostTY(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * 校验文件机构
+	 * @param agentUnit
+	 * @param userBean
+	 * @param upload1 
+	 * @return
+	 */
+	JsonBean checkXLSFile(AgentUnitBean agentUnit, UserBean userBean, File upload1,String costType);
+	/**
+	 * 运营中心结算成本查询-非活动
+	 * @param userBean
+	 * @return
+	 */
+	DataGridBean query00319q(AgentUnitBean agentUnit,UserBean userBean);
+
+	/**
+	 * 查询人工成本设置
+	 * @param agentUnit
+	 * @param userBean
+	 * @return
+	 */
+	DataGridBean query00319h(AgentUnitBean agentUnit,UserBean userBean);
+
+	/**
+	 * 特殊活动设备数量列表查询
+	 * @param agentUnit
+	 * @param userBean
+	 * @return
+	 */
+	DataGridBean queryTotalTerminalGrid(AgentUnitBean agentUnit,UserBean userBean);
+
+    /**
+     * 导入人工成本设置
+     * @param xlsfile
+     * @param name
+     * @param user
+     * @return
+     */
+	Map saveImportRGSZHrtCost(String xlsfile, String name, UserBean user);
+
+    /**
+     * 导出人工成本设置
+     * @param agentUnit
+     * @param userBean
+     * @return
+     */
+	List<Map<String, Object>> export00319h(AgentUnitBean agentUnit,UserBean userBean);
+
+	/**
+	 * 删除人工成本设置
+	 * @param hucid
+	 * @param user
+	 */
+	Integer deleteRGSZHrtCost(Integer hucid, UserBean user);
+
+	/**
+	 * 运营中心结算成本导出-非活动
+	 * @param userBean
+	 * @return
+	 */
+	List<Map<String, String>> export00319q(AgentUnitBean agentUnit,UserBean userBean);
+	/**
+	 * 运营中心结算成本查询-活动
+	 * @param userBean
+	 * @return
+	 */
+	DataGridBean query00319w(AgentUnitBean agentUnit,UserBean userBean);
+	/**
+	 * 运营中心结算成本导出-活动
+	 * @param userBean
+	 * @return
+	 */
+	List<Map<String, Object>> export00319w(AgentUnitBean agentUnit,UserBean userBean);
+	/**
+	 * 结算成本(活动)查询-活动条件下拉
+	 * @return
+	 */
+	DataGridBean listRebateType();
+
+	/**
+	 * 机构unno的当前成本/上级成本/下级最小成本获取 (当前、上下级级别<=2)
+	 * @param type 1:当前成本 2:上级成本 3:下级最小成本
+	 * @param unno 机构号
+	 * @param unLvl 级别
+	 * @return
+	 */
+	Map<String, HrtUnnoCostModel> getAllHrtCostMap(int type,String unno, Integer unLvl);
+	/**
+	 * 代理成本查询
+	 * @param agentUnit
+	 * @param userSession
+	 * @return
+	 */
+	DataGridBean queryUnnoCostMult(AgentUnitBean agentUnit, UserBean userSession);
+	DataGridBean listRebateRate(AgentUnitBean agentUnit, UserBean userSession);
+	DataGridBean listRebateRateForUnno(AgentUnitBean agentUnit, UserBean user);
+	/**
+	 * @param agentUnit
+	 * @param user
+	 * @return 查询当前机构所有活动类型成本
+	 */
+	DataGridBean queryRebateRateList(AgentUnitBean agentUnit, UserBean user);
+	/**
+	 * @param agentUnit
+	 * @param user
+	 * @return 查询活动类型待审核成本
+	 */
+	DataGridBean listRebateRateForW(AgentUnitBean agentUnit, UserBean user);
+	String saveImportBatchRebateRate(String xlsfile, String name, UserBean user) ;
+	/**
+	 * @param agentUnit
+	 * @param userSession
+	 * @return 新增活动成本
+	 */
+	JsonBean addUnnoRebateRate(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * @param agentUnit
+	 * @param userSession
+	 * @return 修改活动成本
+	 */
+	JsonBean updateUnnoRebateRate(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * @param agentUnit
+	 * @param userSession
+	 * @return 审核活动成本通过
+	 */
+	JsonBean updateUnnoRebateRateGo(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * @param agentUnit
+	 * @param userSession
+	 * @return 审核活动成本退回
+	 */
+	JsonBean updateUnnoRebateRateBack(AgentUnitBean agentUnit, UserBean userSession);
+	/**
+	 * @param agentUnit
+	 * @param userSession
+	 * @return 删除已添加的活动成本
+	 */
+	JsonBean deleteRebateCost(AgentUnitBean agentUnit, UserBean user);
+}

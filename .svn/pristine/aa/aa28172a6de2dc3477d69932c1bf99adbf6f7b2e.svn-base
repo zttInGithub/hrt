@@ -1,0 +1,173 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<script>
+
+</script>
+<form id="check_20508_editForm" method="post">
+	<table style="padding-top: 5px;padding-left:20px">
+			<tr>
+				<th>唯一标识</th>
+				<td><input name="Id" style="width: 160px;" readonly="readonly" /></td>
+				<th>变更类型<font color="red">&nbsp;*</font></th><!-- 多选 -->
+				<td>
+				 <select name="UpdateType" class="easyui-combobox"  data-options="required:true" style="width:166px;">
+							<option value=""></option>
+							<option value="01">补录</option> 
+							<option value="02">失效</option>
+					   </select>
+				</td>
+			</tr>
+			<tr>
+				<th>上报机构</th>
+					<td>
+					<select name="CusType" class="easyui-combobox"  data-options="required:true" style="width:166px;">
+							<option value=""></option>
+							<option value="01">自然人</option> 
+							<option value="02">企业商户</option>
+							<option value="03">个体工商户</option>
+					   </select>
+					</td>
+					<td></td>
+				</tr>
+			<tr>
+				<th>客户属性<font color="red">&nbsp;*</font></th>
+				<td>
+				 	<select class="easyui-combobox" name="CusProperty" data-options="required:true" style="width:166px;">
+							<option value=""></option> 
+							<option value="01">个人</option> 
+							<option value="02">商户</option>
+					 </select>
+				</td>
+			
+				<th>风险类型<font color="red">&nbsp;*</font></th>
+				<td>
+					 <select class="easyui-combobox" name="RiskType"  data-options=" overflow:'auto',overflow:'80px',editable:false"  style="width:166px;">
+							<option value=""></option> 
+							<option value="01">虚假申请</option> 
+							<option value="02">套现、套积分</option>
+							<option value="03">违法经营</option>
+							<option value="04">销赃</option>
+							<option value="05">买卖或租借银行账户</option> 
+							<option value="06">侧录点</option>
+							<option value="07">伪卡集中使用点</option>
+							<option value="08">泄露账户及交易信息</option>
+							<option value="09">恶意倒闭</option> 
+							<option value="10">恶意分单</option>
+							<option value="11">移机</option>
+							<option value="12">高风险商户</option>
+							<option value="13">商户合谋欺诈</option> 
+							<option value="14">破产或停业商户</option>
+							<option value="15">强迫签单</option>
+							<option value="17">频繁变更服务机构</option> 
+							<option value="18">关联商户涉险</option>
+							<option value="19">买卖银行卡信息</option>
+							<option value="20">拒刷信用卡</option>
+							<option value="21">转嫁手续费</option>
+							<option value="99">其他</option>
+					   </select>
+				</tr>
+				<tr>
+					<th>商户属性</th>
+					<td> 
+						<select class="easyui-combobox" name="CusNature" data-options="panelHeight:'auto',editable:false" style="width:166px;">
+							<option value=""></option> 
+							<option value="01">实体商户</option> 
+							<option value="02">网络商户</option>
+						 </select>	
+					</td>					
+					<th>商户名称</th>
+					<td><input name="CusName" style="width: 160px;" /></td>	
+				</tr>
+				<tr>
+					<th>商户编码</th>
+					<td><input name="CusCode" style="width: 160px;" /></td>
+					<th>组织机构代码</th>
+					<td><input name="OrgCode" style="width: 160px;" /></td>
+				</tr>
+				<tr>
+					<th>营业执照编码</th>
+					<td><input name="BusLicCode" style="width: 160px;" /></td>
+					<th>社会信用代码</th>
+					<td><input name="SocialUnityCreditCode" style="width: 160px;" /></td>
+				</tr>
+				<tr>	
+					<th>税务登记证</th>
+					<td><input  name="TaxRegCer" style="width: 160px;"/></td>
+					<th>法定代表人姓名</th>
+					<td><input name="LegRepName" style="width: 160px;" /></td>
+				</tr>
+				<tr>
+					<th>法人身份证件号码</th>
+					<td><input name="LegDocCode" style="width: 160px;" /></td>
+					<th>银行账号</th>
+					<td><input name="BankNo" style="width: 160px;" /></td>
+				</tr>
+				<tr>	
+					<th>开户行</th>
+					<td><input id="OpenBank" name="OpenBank" class="easyui-datebox"style="width: 166px;"/></td>
+					<th>网址</th>
+					<td><input id="Url" name="Url" style="width: 160px;"/></td>
+				</tr>
+				<tr>	
+					<th>服务器IP</th>
+					<td><input id="ServerIp" name="ServerIp" style="width: 160px;"/></td>
+					<th>手机号</th>
+					<td><input id="MobileNo" name="MobileNo" style="width: 160px;"/></td>
+				</tr>
+				<tr>	
+					<th>地域</th>
+					<td><input name="Address" style="width: 160px;" /></td>
+					<th>ICP编号</th>
+					<td><input name="Icp" style="width: 160px;" /></td>
+				</tr>
+				<tr>	
+					<th>风险信息等级<font color="red">&nbsp;*</font></th>
+					<td> <select class="easyui-combobox" name="Level" data-options="required:true" style="width:166px;">
+							<option value=""></option> 
+							<option value="01">一级</option> 
+							<option value="02">二级</option>
+							<option value="03">三级</option>
+					   </select>
+					  </td>
+				
+					<th>风险事件时间</th>
+					<td><input id="Occurtimeb" name="Occurtimeb" class="easyui-datebox"style="width: 83px;"/>
+					<a>&nbsp;-&nbsp;&nbsp;</a><input id="Occurtimee" name="Occurtimee" class="easyui-datebox"style="width: 83px;"/>
+					</td>
+				</tr>
+				<tr>	
+					<th>风险事件发生渠道</th>
+					<td>
+						<select class="easyui-combobox" name="Occurchan" data-options="panelHeight:'auto',editable:false" style="width:166px;">
+							<option value=""></option> 
+							<option value="01">线上</option> 
+							<option value="02">线下</option>
+						 </select>
+					</td>
+					<th>风险事件发生地域</th>
+					<td>
+						<select class="easyui-combotree" id="Occurarea" name="Occurarea" multiple  style="width:166px;" 
+	    				data-options="
+		    				lines:true,
+		    				cascadeCheck:false,
+		    				url:'${ctx}/sysAdmin/paymentRisk_queryDictionary.action'
+	    				">
+	    				</select>
+    				</td>
+				</tr>
+				<tr>	
+					<th>备注</th>
+					<td><input name="Note" style="width: 160px;" /></td>
+					<th>有效期<font color="red">&nbsp;*</font></th>
+					<td><input  name="ValidDate"class="easyui-datebox"  data-options="required:true"  style="width: 166px;"/></td>
+				</tr>
+				<tr>
+					<th>上报机构</th>
+					<td><input name="OrgId" class="easyui-validatebox" data-options="required:true" style="width: 160px;" /></td>
+					<th>上传人</th>
+					<td><input name="RepPerson" class="easyui-validatebox" data-options="required:true"  style="width: 160px;" /></td>
+				</tr>
+
+	</table>
+</form>
+

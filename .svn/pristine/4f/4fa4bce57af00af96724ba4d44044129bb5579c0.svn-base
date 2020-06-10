@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.RebateInfoModel" table="BILL_REBATE_INFO">
+        <id name="brId" column="BRID">
+            <generator class="sequence">
+                <param name="sequence">S_bill_rebate_info</param>
+            </generator>
+        </id>
+        <property name="rebateType" column="REBATETYPE"/>
+        <property name="rebateName" column="REBATENAME"/>
+        <property name="startDate" column="STARTDATE"/>
+        <property name="endDate" column="ENDDATE"/>
+        <property name="settlement" column="SETTLEMENT"/>
+        <property name="status" column="STATUS"/>
+        <property name="cardBack" column="CARDBACK"/>
+        <property name="merDefine" column="MERDEFINE"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+        <property name="auditStatus" column="AUDITSTATUS"/>
+        <property name="rejectReason" column="REJECTREASON"/>
+        <property name="auditDate" column="AUDITDATE"/>
+        <property name="auditUser" column="AUDITUSER"/>
+        <property name="defaultTxnRate" column="DEFAULTTXNRATE"/>
+        <property name="defaultTxnCashfee" column="DEFAULTTXNCASHFEE"/>
+        <property name="defaultScanRate" column="DEFAULTSCANRATE"/>
+        <property name="defaultScanRateUp" column="DEFAULTSCANRATEUP"/>
+        <property name="defaultScanCashfee" column="DEFAULTSCANCASHFEE"/>
+        <property name="defaultScanCashfeeUp" column="DEFAULTSCANCASHFEEUP"/>
+        <property name="defaultScanhbRate" column="DEFAULTSCANHBRATE"/>
+        <property name="defaultScanhbCashfee" column="DEFAULTSCANHBCASHFEE"/>
+        <property name="sumMonth" column="SUMMONTH"/>
+        <property name="flag" column="FLAG"/>
+        <property name="operateType" column="OPERATE_TYPE"/>
+        <property name="unno" column="UNNO"/>
+        <property name="tradeAmt" column="TRADEAMT"/>
+        <property name="depositAmt" column="DEPOSITAMT"/>
+        <property name="txntype" column="TXNTYPE"/>
+        <property name="walletStatus" column="WALLETSTATUS"/>
+        <property name="prodInfo" column="PRODINFO"/>
+        <property name="configStatus" column="CONFIGSTATUS"/>
+        <property name="configAmt" column="CONFIGAMT"/>
+        <property name="specialType" column="SPECIALTYPE"/>
+        <property name="limitRate1" column="LIMITRATE1"/>
+        <property name="limitRate2" column="LIMITRATE2"/>
+        <property name="limitAmt1" column="LIMITAMT1"/>
+        <property name="limitAmt2" column="LIMITAMT2"/>
+        <property name="limitScanUpRate1" column="LIMITSCANUPRATE1"/>
+        <property name="limitScanUpRate2" column="LIMITSCANUPRATE2"/>
+        <property name="limitScanDownRate1" column="LIMITSCANDOWNRATE1"/>
+        <property name="limitScanDownRate2" column="LIMITSCANDOWNRATE2"/>
+        <property name="limitHbRate1" column="LIMITHBRATE1"/>
+        <property name="limitHbRate2" column="LIMITHBRATE2"/>
+        <property name="limitDeposit" column="LIMITDEPOSIT"/>
+        <property name="ifFirCashfee" column="IF_FIR_CASHFEE"/>
+        <property name="noCashfeeMonth" column="NO_CASHFEE_MONTH"/>
+        <property name="exeUnno" column="EXE_UNNO"/>
+        <property name="cycleMonth" column="CYCLE_MONTH"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"              
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx 
+       	   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+   
+   	<!-- 加载properties文件,读取param.properties等配置 -->
+ 	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!--<value>classpath:param.properties</value>-->
+				<value>classpath:param-test.properties</value>
+			</list>
+		</property>
+	</bean>
+	        
+   <bean id="dataSource"
+        class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	    <!-- 保单测试 -->
+	    <property name="jdbcUrl" value="jdbc:oracle:thin:@10.52.11.212:1521:hrtmdb"/>
+	    <property name="user" value="ppusr"/>
+	    <property name="password" value="ppusr"/>
+	    <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+	    <!-- 初始化、最小连接数、最大连接数、一次增长的个数、、最大缓存、最大空闲时间-->
+         <property name="minPoolSize" value="3"/> 
+        <property name="maxPoolSize" value="20"/> 
+        <property name="acquireIncrement" value="3"/> 
+        <property name="maxStatements" value="3"/> 
+        <property name="idleConnectionTestPeriod" value="60"/> 
+        <property name="maxStatementsPerConnection" value="5"/> 
+        <property name="maxIdleTime" value="60"/>
+	</bean>
+	 <!-- 
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+    <property name="jndiName" value="java:comp/env/jdbc/mserver"></property>  
+    </bean>  
+    -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    	 <property name="dataSource" ref="dataSource" />  
+    		<property name="mappingDirectoryLocations">
+		      <list>
+		        <value>classpath:config/hibernate</value>
+		      </list>
+		    </property>
+    	<property name="hibernateProperties">
+    		<props>
+    			<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+    			<prop key="hibernate.show_sql">true</prop>
+    			<prop key="hibernate.jdbc.batch_size">50</prop>
+<!--    			<prop key="hibernate.connection.release_mode">after_transaction</prop>-->
+<!--    			<prop key="hibernate.format_sql">true</prop>-->
+    			 
+<!--    			<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>-->
+    			<!-- 
+    			<prop key="hibernate.hbm2ddl.auto">update</prop>
+    			
+    			-->
+    		</props>
+    	</property>
+  	</bean> 
+  	 
+  	<bean id="transactionManager" 
+            class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+  	
+  	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+  		<tx:attributes>
+  			<tx:method name="add*" propagation="REQUIRED"/>
+  			<tx:method name="save*" propagation="REQUIRED"/>
+  			<tx:method name="update*" propagation="REQUIRED"/>
+  			<tx:method name="edit*" propagation="REQUIRED"/>
+  			<tx:method name="delete*" propagation="REQUIRED"/>
+  			<tx:method name="remove*" propagation="REQUIRED"/>
+  			
+		    <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+  		</tx:attributes>
+  	</tx:advice>
+  	<!-- <bean id="timeHandler" class="com.hrt.biz.util.TimeHandler" /> -->
+  	<aop:config>
+  		<aop:pointcut id="argorseServiceMethods" expression="execution(* com.hrt.frame.service..*.*(..)) or execution(* com.hrt.biz.check.service..*.*(..)) or execution(* com.hrt.biz.bill.service..*.*(..)) or execution(* com.hrt.biz.webservice..*.*(..)) or execution(* com.hrt.phone.service..*.*(..))"/>
+  		<aop:advisor advice-ref="txAdvice" pointcut-ref="argorseServiceMethods"/>
+  		<!--
+  		<aop:aspect id="time" ref="timeHandler">
+            <aop:around method="around" pointcut-ref="argorseServiceMethods"/>  
+         	<!- <aop:before method="begin" pointcut-ref="argorseServiceMethods"/>  
+          	<aop:after method="after" pointcut-ref="argorseServiceMethods"/>   ->
+      	</aop:aspect>-->
+  	</aop:config>   
+  	
+  	<bean id="cubeInitProcessor" class="com.hrt.biz.util.CubeInitProcessor" />
+	
+	<!-- import -->
+	<import resource="applicationContext-gsclient-dev.xml"/>
+	<import resource="applicationContext-gsclient2.xml"/>
+	<import resource="applicationContext-service.xml"/>
+	<import resource="config/spring/quartz.xml"/>
+	<import resource="config/spring/sysAdminContext.xml"/>
+	<import resource="config/spring/query.xml"/>
+	<import resource="applicationContext-hrtcxf.xml"/>
+
+</beans>

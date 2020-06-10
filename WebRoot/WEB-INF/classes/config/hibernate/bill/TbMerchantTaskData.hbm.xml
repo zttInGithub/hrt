@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantTaskDataModel" table="BILL_MERCHANTTASKDATA">
+        <id name="bmtkid" column="bmtkid">
+           <generator class="sequence"> 
+				<param name="sequence">S_BILL_MERCHANTTASKDATA</param>
+			</generator>
+        </id>
+        <property name="taskId" column="TaskID"/>
+        <property name="unno" column="UNNO"/>
+        <property name="mid" column="MID" />
+        <property name="type" column="Type" /> 
+        <property name="taskContext" column="TaskContext" />
+        <property name="processContext" column="ProcessContext" />
+        <property name="mainTainUId" column="MaintainUID"/>
+        <property name="mainTainDate" column="MaintainDate"/>
+        <property name="mainTainType" column="MaintainType"/>
+        <property name="approveUId" column="ApproveUID"/> 
+        <property name="approveDate" column="ApproveDate"/> 
+        <property name="approveStatus" column="ApproveStatus"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="ProducttypeInRebatetypeModel" table="bill_producttypeInRebatetype">
+		<id name="id" column="ID">
+			<generator class="sequence">
+				<param name="sequence">S_bill_producttypeInRebatetype</param>
+			</generator>
+		</id>
+        <property name="producttype" column="PRODUCTTYPE" />
+        <property name="rebatetype" column="REBATETYPE" />
+        <property name="activeterms" column="ACTIVETERMS" />
+        <property name="minfo1" column="MINFO1" />
+        <property name="minfo2" column="MINFO2" />
+        <property name="remark" column="REMARK" />
+        <property name="cby" column="CBY" />
+        <property name="status" column="status"></property>
+        <property name="maintaindate" column="MAINTAINDATE" type="timestamp" />
+	</class>
+</hibernate-mapping>

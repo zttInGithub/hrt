@@ -1,0 +1,129 @@
+package com.hrt.phone.action;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.biz.bill.entity.model.AgentUnitModel;
+import com.hrt.biz.bill.entity.pagebean.AgentSalesBean;
+import com.hrt.biz.bill.entity.pagebean.AgentUnitBean;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.phone.service.IPhoneUserService;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class PhoneAgentCreditAction extends BaseAction implements ModelDriven<AgentUnitBean> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final Log log =LogFactory.getLog(PhoneAgentCreditAction.class);
+	
+	private AgentUnitBean agentUnitBean = new AgentUnitBean();
+	private IPhoneUserService phoneUserService;
+	
+	@Override
+	public AgentUnitBean getModel() {
+		// TODO Auto-generated method stub
+		return agentUnitBean;
+	}
+	
+	public AgentUnitBean getAgentUnitBean() {
+		return agentUnitBean;
+	}
+
+	public void setAgentUnitBean(AgentUnitBean agentUnitBean) {
+		this.agentUnitBean = agentUnitBean;
+	}
+
+	public IPhoneUserService getPhoneUserService() {
+		return phoneUserService;
+	}
+
+	public void setPhoneUserService(IPhoneUserService phoneUserService) {
+		this.phoneUserService = phoneUserService;
+	}
+
+	public void login() {
+		JsonBean json = new JsonBean();
+		UserBean user = new UserBean();
+		UserBean userBean = null;
+		String loginName = super.getRequest().getParameter("loginName");
+		String password = super.getRequest().getParameter("password");
+		if(loginName!=null&&!"".equals(loginName)&&password!=null&&!"".equals(password)){
+			user.setLoginName(loginName);
+			user.setPassword(password);
+			try {	
+				Map<String ,Object> map =new HashMap<String, Object>();
+				userBean = phoneUserService.loginAgent(user);
+				if (userBean != null) {
+					if (userBean.getStatus() == 1) {
+						//super.getRequest().getSession(true).setAttribute("user",userBean);
+						AgentUnitModel ag = phoneUserService.getAgentByUnno(user);
+						if(userBean.getUseLvl()==0&&(userBean.getUnitLvl()==2||userBean.getUnitLvl()==1)&&ag!=null){
+							// 总公司（0），分公司（1），代理商（2）
+							map.put("lvl", userBean.getUnitLvl());
+							map.put("loginName", userBean.getLoginName());
+							map.put("userName",userBean.getUserName());
+							map.put("unNo",userBean.getUnNo());
+							map.put("unitName",userBean.getUnitName());
+							map.put("baddr",ag.getBaddr());
+							map.put("bankBranch",ag.getBankBranch());
+							map.put("bankAccNo",ag.getBankAccNo());
+							map.put("bankAccName",ag.getBankAccName());
+							map.put("accType",ag.getAccType());
+							json.setSuccess(true);
+							json.setObj(map);
+							json.setMsg("登陆成功！");
+						}else{
+							json.setMsg("请使用一级代理管理员账号登陆！");
+							json.setSuccess(false);
+						}
+					} else {
+						json.setMsg("该账户已被停用！");
+						json.setSuccess(false);
+					}
+				} else {
+					//super.getRequest().getSession(true).setAttribute("user",userBean);
+					json.setMsg("登陆失败！");
+					json.setSuccess(false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				json.setMsg("用户登录异常！");
+				json.setSuccess(false);
+			}
+		}else{
+			json.setMsg("请输入用户名和密码！");
+			json.setSuccess(false);
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 查询销售
+	 */
+	public void searchAgList(){
+		JsonBean json = new JsonBean();
+		DataGridBean dgd = new DataGridBean();
+		try {
+			String saleName = super.getRequest().getParameter("saleName");
+			AgentSalesBean agentSales= new AgentSalesBean();
+			agentSales.setSaleName(saleName);
+			agentSales.setPage(1);
+			agentSales.setRows(10);
+			//dgd = agentSalesService.queryAgentSales(agentSales, "110000");
+			json.setObj(dgd.getRows());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("app报单查询销售：" + e);
+		}
+    	super.writeJson(json);
+	}
+	
+}

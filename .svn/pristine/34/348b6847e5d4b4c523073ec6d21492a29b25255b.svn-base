@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="AgentDLUnitModel" table="AGENT_UNIT">
+		<id name="agentMid" column="AGENT_MID"></id>
+		<property name="unno" column="AGENT_UNNO" />
+		<property name="agentName" column="AGENT_NAME" />
+		
+		<property name="payBankId" column="PAYBANKID" />
+		<property name="bankBranch" column="BANKBRANCH" />
+		<property name="bankAccno" column="BANKACCNO" />
+		<property name="bankAccName" column="BANKACCNAME" />
+		
+		<property name="referralLink" column="REFERRALLINK" />
+		<property name="promoCode" column="PROMOCODE" />
+		<property name="status" column="STATUS" />
+		<property name="createDate" column="CREATE_DATE" type="timestamp"/>
+		<property name="createUser" column="CREATE_USER" />
+		<property name="updateDate" column="UPDATE_DATE" type="timestamp"/>
+		<property name="updateUser" column="UPDATE_USER" />
+	</class>
+</hibernate-mapping>

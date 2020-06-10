@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="BlockTradeDetailModel" table="check_blocktradedetail">
+        <id name="pkid" column="PKID">
+        </id>
+        <property name="ifUpload" column="IFUPLOAD" />
+        <property name="ifSettleFlag" column="IFSETTLEFLAG" />
+        <property name="txnday" column="TXNDAY"></property>
+        <property name="risktype" column="RISKTYPE"></property>
+        <property name="riskday" column="RISKDAY"></property>
+        <property name="minfo1" column="MINFO1" />
+        <property name="minfo2" column="MINFO2" />
+    </class>
+</hibernate-mapping>

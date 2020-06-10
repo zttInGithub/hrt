@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LISTPAGE>
+	<TITLE>多功能查询测试</TITLE><!--标题 -->
+	<TABLENAME>SYS_MENU</TABLENAME><!--表名 -->
+	<FILTER></FILTER>
+	<FILTERPAGE>/blank.htm</FILTERPAGE>
+	<PAGESIZE>10</PAGESIZE><!--页面大小-->
+	<ORDERBY></ORDERBY>
+	<OPERATIONS>
+		<OPERATION>
+		<TITLE>操作</TITLE><!-- -->
+		<ACTION>/920011.jsp?FromTranCode=920011</ACTION><!--详细页配置 -->
+		<CONTENT>查看</CONTENT><!-- -->
+		<WIDTH>118</WIDTH>
+		</OPERATION>
+	</OPERATIONS>
+	<COLUMNS>
+		<COLUMN ID="MENU_ID" SEARCHABLE="true" ISNUM="false" ISKEY="true" WIDTH="118" FORMATTER="" ALIGN="" HIDDEN="">菜单主键</COLUMN><!--id为字段名称 -->
+		<COLUMN ID="TEXTS" SEARCHABLE="true" ISNUM="false" ISKEY="false" WIDTH="114" FORMATTER="" ALIGN="" HIDDEN="">菜单名称</COLUMN><!-- -->
+		<COLUMN ID="SRC" SEARCHABLE="true" ISNUM="false" ISKEY="false" WIDTH="200" FORMATTER="" ALIGN="" HIDDEN="">菜单链接</COLUMN><!-- -->
+		<COLUMN ID="CREATE_USER" SEARCHABLE="true" ISNUM="false" ISKEY="false" WIDTH="115" FORMATTER="" ALIGN="" HIDDEN="">创建人</COLUMN> 
+	</COLUMNS>
+</LISTPAGE>

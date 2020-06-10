@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="com.hrt.biz.bill.entity.model">
+    <class name="RiskSharingModel" table="RISK_SHARING" schema="PPUSR">
+          <id name="Id" column="ID">
+            <generator class="native"></generator>
+        </id>
+        <property name="CusProperty" type="java.lang.String">
+            <column name="CUSPROPERTY" length="2" not-null="true">
+                <comment>客户属性;01个人 02商户</comment>
+            </column>
+        </property>
+        <property name="RiskType" type="java.lang.String">
+            <column name="RISKTYPE" length="2" not-null="true">
+                <comment>风险类型01：虚假申请（受害人信息）02：虚假申请（嫌疑人信息</comment>
+            </column>
+        </property>
+        <property name="MobileNo" type="java.lang.String">
+            <column name="MOBILENO" length="11">
+                <comment>手机号</comment>
+            </column>
+        </property>
+        <property name="Mac" type="java.lang.String">
+            <column name="MAC" length="17">
+                <comment>MAC地址</comment>
+            </column>
+        </property>
+        <property name="Imei" type="java.lang.String">
+            <column name="IMEI" length="32" />
+        </property>
+        <property name="BankNo" type="java.lang.String">
+            <column name="BANKNO" length="32">
+                <comment>银行帐/卡号</comment>
+            </column>
+        </property>
+        <property name="OpenBank" type="java.lang.String">
+            <column name="OPENBANK" length="64">
+                <comment>开户行</comment>
+            </column>
+        </property>
+        <property name="CusName" type="java.lang.String">
+            <column name="CUSNAME" length="64">
+                <comment>客户/商户姓名</comment>
+            </column>
+        </property>
+        <property name="RegName" type="java.lang.String">
+            <column name="REGNAME" length="64">
+                <comment>商户营业注册名称</comment>
+            </column>
+        </property>
+        <property name="CusCode" type="java.lang.String">
+            <column name="CUSCODE" length="32">
+                <comment>商户编码</comment>
+            </column>
+        </property>
+        <property name="OrgCode" type="java.lang.String">
+            <column name="ORGCODE" length="10">
+                <comment>组织机构代码</comment>
+            </column>
+        </property>
+        <property name="BusLicCode" type="java.lang.String">
+            <column name="BUSLICCODE" length="15">
+                <comment>营业执照编码</comment>
+            </column>
+        </property>
+        <property name="SocialUnityCreditCode" type="java.lang.String">
+            <column name="SOCIALUNITYCREDITCODE" length="18">
+                <comment>统一社会信用代码</comment>
+            </column>
+        </property>
+        <property name="TaxRegCer" type="java.lang.String">
+            <column name="TAXREGCER" length="20">
+                <comment>税务登记证</comment>
+            </column>
+        </property>
+        <property name="LegRepName" type="java.lang.String">
+            <column name="LEGREPNAME" length="64">
+                <comment>法定代表人姓名/负责人姓名</comment>
+            </column>
+        </property>
+        <property name="LegDocCode" type="java.lang.String">
+            <column name="LEGDOCCODE" length="18">
+                <comment>法定代表人（负责人）身份证件号码</comment>
+            </column>
+        </property>
+        <property name="DocCode" type="java.lang.String">
+            <column name="DOCCODE" length="18" not-null="true">
+                <comment>身份证件号码</comment>
+            </column>
+        </property>
+        <property name="Ip" type="java.lang.String">
+            <column name="IP" length="16">
+                <comment>IP地址</comment>
+            </column>
+        </property>
+        <property name="ServerIp" type="java.lang.String">
+            <column name="SERVERIP" length="16" not-null="true">
+                <comment>服务器IP</comment>
+            </column>
+        </property>
+        <property name="Url" type="java.lang.String">
+            <column name="URL" length="512" />
+        </property>
+        <property name="Address" type="java.lang.String">
+            <column name="ADDRESS" length="128">
+                <comment>收货地址/地址</comment>
+            </column>
+        </property>
+        <property name="Telephone" type="java.lang.String">
+            <column name="TELEPHONE" length="13">
+                <comment>固定电话</comment>
+            </column>
+        </property>
+        <property name="RecBankNo" type="java.lang.String">
+            <column name="RECBANKNO" length="32">
+                <comment>收款银行帐/卡号</comment>
+            </column>
+        </property>
+        <property name="RecOpenBank" type="java.lang.String">
+            <column name="RECOPENBANK" length="64">
+                <comment>收款账/卡号开户行</comment>
+            </column>
+        </property>
+        <property name="Email" type="java.lang.String">
+            <column name="EMAIL" length="64">
+                <comment>邮箱</comment>
+            </column>
+        </property>
+        <property name="ValidDate" type="java.lang.String">
+            <column name="VALIDDATE" length="7" not-null="true">
+                <comment>有效期 格式：yyyy-MM-DD</comment>
+            </column>
+        </property>
+        <property name="Level" type="java.lang.String">
+            <column name="INFOLEVEL" length="2" />
+        </property>
+        <property name="Occurtimeb" type="java.lang.String">
+            <column name="OCCURTIMEB" length="7">
+                <comment>风险事件发生时间yyyy-MM-DD</comment>
+            </column>
+        </property>
+        <property name="Occurtimee" type="java.lang.String">
+            <column name="OCCURTIMEE" length="7">
+                <comment>风险事件结束时间yyyy-MM-DD</comment>
+            </column>
+        </property>
+        <property name="Occurchan" type="java.lang.String">
+            <column name="OCCURCHAN" length="4">
+                <comment>风险事件发生渠道</comment>
+            </column>
+        </property>
+        <property name="Occurarea" type="java.lang.String">
+            <column name="OCCURAREA" length="100">
+                <comment>风险事件发生地域</comment>
+            </column>
+        </property>
+        <property name="Note" type="java.lang.String">
+            <column name="NOTE" length="1024">
+                <comment>风险事件描述</comment>
+            </column>
+        </property>
+        <property name="OrgId" type="java.lang.String">
+            <column name="ORGID" length="32" not-null="true">
+                <comment>上报机构（数字、下划线、字母）</comment>
+            </column>
+        </property>
+        <property name="RepDate" type="java.lang.String">
+            <column name="REPDATE" length="7" not-null="true">
+                <comment>上报日期 格式：yyyy-MM-DD HH:mm:ss</comment>
+            </column>
+        </property>
+        <property name="RepType" type="java.lang.String">
+            <column name="REPTYPE" length="2" not-null="true">
+                <comment>上传方式</comment>
+            </column>
+        </property>
+        <property name="RepPerson" type="java.lang.String">
+            <column name="REPPERSON" length="32" not-null="true">
+                <comment>上传人</comment>
+            </column>
+        </property>
+        <property name="CusNature" type="java.lang.String">
+            <column name="CUSNATURE" length="2">
+                <comment>商户属性</comment>
+            </column>
+        </property>
+        <property name="Icp" type="java.lang.String">
+            <column name="ICP" length="20" not-null="true">
+                <comment>icp编号</comment>
+            </column>
+        </property>
+       
+         <property name="TrnxCode" type="java.lang.String">
+            <column name="TRNXCODE" length="10" not-null="true">
+                <comment>上报类型</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,135 @@
+package com.hrt.biz.bill.entity.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class MertiedCardModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer mtcid;
+	private String mid;		//	MID   char(15) NOT NULL,--MID
+	private String name;		//	  name  varchar2(50),     --姓名
+	private String phone;	//	  phone varchar2(20),--手机号
+	private String idnum;	//	  IDNUM  varchar2(30),--身份证号
+	private String cardnum;	//	  cardnum varchar(30),--卡号
+	private String cardtoken;//	  cardtoken varchar(30),--卡号token值
+	private String status;	//	  STATUS	CHAR(1),			        --状态
+	private Date cdate;	//	  CDATE   DATE not null,  --创建时间	
+	private Date lmdate;	//	  LMDATE  date,	
+	private String lmby;	//	  LMBY	VARCHAR2(70)
+	private String cardType;	//卡类别（借记卡 贷记卡 准借记卡  预付费卡）
+	private String paymentBank;	//银行名称
+	private String paymentBankImg;//银行图片
+	private String paymentLine;	//银行编号
+	private String orderId;
+	private String maintaintype; //卡状态 A:添加   M:修改   D:删除
+	public String getMaintaintype() {
+		return maintaintype;
+	}
+	public void setMaintaintype(String maintaintype) {
+		this.maintaintype = maintaintype;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public Integer getMtcid() {
+		return mtcid;
+	}
+	public void setMtcid(Integer mtcid) {
+		this.mtcid = mtcid;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getIdnum() {
+		return idnum;
+	}
+	public void setIdnum(String idnum) {
+		this.idnum = idnum;
+	}
+	public String getCardnum() {
+		return cardnum;
+	}
+	public void setCardnum(String cardnum) {
+		this.cardnum = cardnum;
+	}
+	public String getCardtoken() {
+		return cardtoken;
+	}
+	public void setCardtoken(String cardtoken) {
+		this.cardtoken = cardtoken;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setCdate(Date cdate) {
+		this.cdate = cdate;
+	}
+	public Date getCdate() {
+		return cdate;
+	}
+	public void setLmdate(Date lmdate) {
+		this.lmdate = lmdate;
+	}
+	public Date getLmdate() {
+		return lmdate;
+	}
+	public void setLmby(String lmby) {
+		this.lmby = lmby;
+	}
+	public String getLmby() {
+		return lmby;
+	}
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	public String getCardType() {
+		return cardType;
+	}
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
+	}
+	public String getPaymentBank() {
+		return paymentBank;
+	}
+	public void setPaymentBank(String paymentBank) {
+		this.paymentBank = paymentBank;
+	}
+	public String getPaymentBankImg() {
+		return paymentBankImg;
+	}
+	public void setPaymentBankImg(String paymentBankImg) {
+		this.paymentBankImg = paymentBankImg;
+	}
+	public String getPaymentLine() {
+		return paymentLine;
+	}
+	public void setPaymentLine(String paymentLine) {
+		this.paymentLine = paymentLine;
+	}
+	
+}

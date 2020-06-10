@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 
+-->
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.PgUnnoPurseModel" table="pg_unno_purse">
+        <id name="pupid" column="pupid">
+            <generator class="sequence">
+				<param name="sequence">S_pg_unno_purse</param>
+			</generator>
+		</id>
+        <property name="unno" type="java.lang.String">
+            <column name="UNNO" />
+        </property>
+        <property name="curamt" type="java.lang.Double">
+            <column name="CURAMT" />
+        </property>
+        <property name="balance" type="java.lang.Double">
+            <column name="BALANCE" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="STATUS" />
+        </property>
+        <property name="remarks" type="java.lang.String">
+            <column name="REMARKS" />
+        </property>
+        <property name="minfo1" type="java.lang.String">
+            <column name="MINFO1" />
+        </property>
+        <property name="cdate" type="java.sql.Timestamp">
+            <column name="CDATE" />
+        </property>
+        <property name="balancetotal" type="java.lang.Double">
+            <column name="BALANCETOTAL" />
+        </property>
+        <property name="frozenamt" type="java.lang.Double">
+            <column name="FROZENAMT" />
+        </property>
+    </class>
+</hibernate-mapping>

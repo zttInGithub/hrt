@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="UserLoginLogModel" table="SYS_LOGIN_LOG">
+		<id name="slid" column="SLID">
+			<generator class="sequence">
+				<param name="sequence">SE_sys_login_log</param>
+			</generator>
+		</id>
+		<property name="login_type" column="LOGIN_TYPE"/>
+		<property name="user_ID" column="USER_ID"/>
+		<property name="login_name" column="LOGIN_NAME"/>
+		<property name="pwd" column="PWD"/>  
+		<property name="login_message" column="LOGIN_MESSAGE"/>
+		<property name="status" column="STATUS"/>
+		<property name="logintime" column="LOGINTIME"/>
+    </class>
+</hibernate-mapping>

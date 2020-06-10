@@ -1,0 +1,127 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<!-- 一级代理分润报表 -->
+<script type="text/javascript">
+
+		function exportExcel_firstAgentProfitReport(){
+	      $("#check_firstAgentProfitReport").form('submit',{
+			    		url:'${ctx}/sysAdmin/checkUnitDealDetail_exportFirstAgentProfitReport.action'
+			    	});
+	}
+	//查询提交
+	function check_search_data_first(){
+		 var txnDay = $('#txnDay_20290').datebox('getValue');
+	   		var txnDay1=$('#txnDay1_20290').datebox('getValue');
+		    var start=new Date(txnDay.replace("-", "/").replace("-", "/"));  
+		    var end=new Date(txnDay1.replace("-", "/").replace("-", "/")); 
+		 	if(((end-start)/(24*60*60*1000))>31){
+		 		$.messager.alert('提示', "开始日期  和   截止日期  之差不能超过    31  天！");
+		    }else{
+		    	$('#firstAgentProfitReport').datagrid('load', serializeObject($('#check_firstAgentProfitReport')));
+			}
+	 
+	}
+		//清除表单内容
+	function check_close_data_first() {
+		$('#check_firstAgentProfitReport input').val('');
+	}
+
+	//初始化datagrid
+	$(function() {
+		$('#firstAgentProfitReport').datagrid({
+			url :'${ctx}/sysAdmin/checkUnitDealDetail_queryFirstAgentProfitReport.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			pageSize : 10,
+			pageList : [ 10, 15 ],
+			sortName: 'MID',
+			sortOrder: 'MID',
+			idField : 'MID',
+			columns : [[{
+				title :'商户编号',
+				field :'MID',
+				width : 100
+			},{
+				title :'商户名称',
+				field :'RNAME',
+				width : 100
+			},{
+				title :'交易金额',
+				field :'TXNAMOUNT',
+				width : 100
+			},{
+				title :'分润金额',
+				field :'PROFIT',
+				width : 100
+			}]],
+			toolbar:[{
+					text:'导出Excel',
+					iconCls:'icon-query-export',
+					handler:function(){
+					exportExcel_firstAgentProfitReport();
+					                  }
+				}]			
+		});
+	});
+	
+	$("#UNNO1").combogrid({
+			url : '${ctx}/sysAdmin/terminalInfo_getUnitGodes.action?unLvl=1,2',
+			idField:'UNNO',
+			textField:'UNNO',
+			mode:'remote',
+			width:350,
+			fitColumns:true,
+			//pagination : true,
+            //rownumbers:true,  
+            collapsible:false,  
+            fit: false,  
+           // pageSize: 10,  
+            //pageList: [10,15],
+			columns:[[ 
+				{field:'UNNO',title:'机构号',width:50},
+				{field:'UN_NAME',title:'机构名称',width:200}
+			]]
+		});
+	
+</script>
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:100px; overflow: hidden; padding-top:5px;">
+		<form id="check_firstAgentProfitReport" style="padding-left:15%">
+				<table class="tableForm" >
+				<tr>
+						<th >机构号：</th>
+	   					<td colspan="3"><input type="text" name="unno" id="UNNO1" style="width:150px;" class="easyui-validatebox"  data-options="editable:false" maxlength="25"  /><font color="red">&nbsp;*</font></td>
+				</tr>
+				<tr>
+						<th>商户号：</th>
+						<td><input name="mid" style="width: 156px;"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					     <th>商户名称：</th>
+						<td><input name="rname" style="width: 156px;"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>     
+				</tr>
+				<tr>
+				<th>交易日期：</th>
+						<td><input name="txnDay" id="txnDay_20290" class="easyui-datebox" data-options="editable:false" style="width: 162px;"/>
+						</td>
+						<td>&nbsp;&nbsp;-&nbsp;&nbsp;</td>
+						<td><input name="txnDay1" id="txnDay1_20290" class="easyui-datebox" data-options="editable:false" style="width: 162px;"/>
+						</td>
+					<td>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" 
+						onclick="check_search_data_first();">查询</a> &nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="check_close_data_first();">清空</a>	
+					</td>
+				</tr>
+				
+			</table>
+		</form>
+	</div>  
+	
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+    <table id="firstAgentProfitReport" style="overflow: hidden;"></table>
+  </div> 
+</div>

@@ -1,0 +1,43 @@
+package com.hrt.phone.service;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.phone.entity.model.GateOrderModel;
+import com.hrt.phone.entity.pagebean.GateOrderBean;
+
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
+public interface GateCarOrderService {
+
+	List<Map<String, String>> queryOrdersDetailBySql(GateOrderBean gateOrderBean);
+	
+	Map<String, String> saveOrdersDetail(GateOrderBean gateOrderBean);
+
+	String saveAppOrdersDetail(GateOrderBean gateOrderBean);
+	
+	boolean updateOrdersNotification(JSONObject reqJson);
+	
+	DataGridBean queryOrders(GateOrderBean gateOrderBean);
+	
+	DataGridBean queryGateOrders(GateOrderBean gateOrderBean);
+
+	void exportGateOrders(GateOrderBean gateOrderBean,UserBean user,HttpServletResponse response)throws RowsExceededException, WriteException, IOException ;
+	
+	Integer updateGateCarInfo(String mid,String orderId,String imageId);
+	
+	String saveOrderAmount(GateOrderBean gateOrderBean);
+	
+	Map<String, String> updateOrderDetail(GateOrderBean gateOrderBean);
+	
+	Map<String, String> updateOrderCancel(GateOrderBean gateOrderBean);
+	
+}

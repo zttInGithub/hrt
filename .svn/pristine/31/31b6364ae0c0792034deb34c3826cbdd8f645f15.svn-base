@@ -1,0 +1,1487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<bean id="userDao" class="com.hrt.frame.dao.sysadmin.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="roleDao" class=" com.hrt.frame.dao.sysadmin.impl.RoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="userLoginLogDao" class="com.hrt.frame.dao.sysadmin.impl.UserLoginLogDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<bean id="userService" class="com.hrt.frame.service.sysadmin.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="userLoginLogDao" ref="userLoginLogDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="mesHybUrl" value="${mesHybUrl}"></property>
+	</bean>
+
+	<bean id="userAction" class="com.hrt.frame.action.sysadmin.UserAction"
+		scope="prototype">
+		<property name="userService" ref="userService"></property>
+		<property name="menuService" ref="menuService"></property>
+		<property name="paramUtil" ref="paramUtil"></property>
+	</bean>
+
+
+
+	<bean id="roleService" class="com.hrt.frame.service.sysadmin.impl.RoleServiceImpl">
+		<property name="roleDao" ref="roleDao"></property>
+		<property name="menuDao" ref="menuDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	</bean>
+
+	<bean id="roleAction" class="com.hrt.frame.action.sysadmin.RoleAction"
+		scope="prototype">
+		<property name="roleService" ref="roleService"></property>
+	</bean>
+
+
+
+	<bean id="menuDao" class="com.hrt.frame.dao.sysadmin.impl.MenuDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="menuService" class="com.hrt.frame.service.sysadmin.impl.MenuServiceImpl">
+		<property name="menuDao" ref="menuDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+	</bean>
+
+	<bean id="menuAction" class="com.hrt.frame.action.sysadmin.MenuAction"
+		scope="prototype">
+		<property name="menuService" ref="menuService"></property>
+	</bean>
+
+
+
+	<bean id="unitDao" class="com.hrt.frame.dao.sysadmin.impl.UnitDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="unitService" class="com.hrt.frame.service.sysadmin.impl.UnitServiceImpl">
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+	</bean>
+
+	<bean id="unitAction" class="com.hrt.frame.action.sysadmin.UnitAction"
+		scope="prototype">
+		<property name="unitService" ref="unitService"></property>
+	</bean>
+
+
+
+	<bean id="noticeDao" class="com.hrt.frame.dao.sysadmin.impl.NoticeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="noticeService" class="com.hrt.frame.service.sysadmin.impl.NoticeServiceImpl">
+		<property name="noticeDao" ref="noticeDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	</bean>
+
+	<bean id="noticeAction" class="com.hrt.frame.action.sysadmin.NoticeAction"
+		scope="prototype">
+		<property name="noticeService" ref="noticeService"></property>
+	</bean>
+
+
+
+	<bean id="todoDao" class="com.hrt.frame.dao.sysadmin.impl.TodoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="todoService" class="com.hrt.frame.service.sysadmin.impl.TodoServiceImpl">
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="menuDao" ref="menuDao"></property>
+	</bean>
+
+	<bean id="todoAction" class="com.hrt.frame.action.sysadmin.TodoAction"
+		scope="prototype">
+		<property name="todoService" ref="todoService"></property>
+	</bean>
+
+
+
+	<bean id="fileDao" class="com.hrt.frame.dao.sysadmin.impl.FileDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="fileService" class="com.hrt.frame.service.sysadmin.impl.FileServiceImpl">
+		<property name="fileDao" ref="fileDao"></property>
+	</bean>
+
+	<bean id="fileAction" class="com.hrt.frame.action.sysadmin.FileAction"
+		scope="prototype">
+		<property name="fileService" ref="fileService"></property>
+	</bean>
+
+
+
+	<bean id="machineInfoDao" class="com.hrt.biz.bill.dao.impl.MachineInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="machineInfoService" class="com.hrt.biz.bill.service.impl.MachineInfoServiceImpl">
+		<property name="machineInfoDao" ref="machineInfoDao"></property>
+	</bean>
+
+	<bean id="machineInfoAction" class="com.hrt.biz.bill.action.MachineInfoAction"
+		scope="prototype">
+		<property name="machineInfoService" ref="machineInfoService"></property>
+	</bean>
+
+
+
+	<bean id="machineOrderDataDao" class="com.hrt.biz.bill.dao.impl.MachineOrderDataDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="machineOrderDetailDao" class="com.hrt.biz.bill.dao.impl.MachineOrderDetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="machineOrderDataService"
+		class="com.hrt.biz.bill.service.impl.MachineOrderDataServiceImpl">
+		<property name="machineOrderDataDao" ref="machineOrderDataDao"></property>
+		<property name="machineOrderDetailDao" ref="machineOrderDetailDao"></property>
+		<property name="machineInfoDao" ref="machineInfoDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	</bean>
+
+	<bean id="machineOrderDataAction" class="com.hrt.biz.bill.action.MachineOrderDataAction"
+		scope="prototype">
+		<property name="machineOrderDataService" ref="machineOrderDataService"></property>
+	</bean>
+
+
+
+	<bean id="terminalInfoDao" class="com.hrt.biz.bill.dao.impl.TerminalInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="terminalInfoService" class="com.hrt.biz.bill.service.impl.TerminalInfoServiceImpl">
+		<property name="terminalInfoDao" ref="terminalInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentUnitService" ref="agentUnitService"></property>
+		<property name="checkUnitProfitMicroService" ref="checkUnitProfitMicroService"></property>
+	</bean>
+
+	<bean id="terminalInfoAction" class="com.hrt.biz.bill.action.TerminalInfoAction"
+		scope="prototype">
+		<property name="terminalInfoService" ref="terminalInfoService"></property>
+	</bean>
+
+
+	<bean id="agentUnitDao" class="com.hrt.biz.bill.dao.impl.AgentUnitDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="agentDlUnitDao" class="com.hrt.biz.bill.dao.impl.AgentDlunitDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="enumDao" class="com.hrt.frame.dao.sysadmin.impl.EnumDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="enumService" class="com.hrt.frame.service.sysadmin.impl.EnumServiceImpl">
+		<property name="enumDao" ref="enumDao"></property>
+	</bean>
+	<bean id="enumAction" class="com.hrt.frame.action.sysadmin.EnumAction"
+		  scope="prototype">
+		<property name="enumService" ref="enumService"></property>
+	</bean>
+
+	<bean id="rebateInfoDao" class="com.hrt.biz.bill.dao.impl.RebateInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="rebateInfoService" class="com.hrt.biz.bill.service.impl.RebateInfoServiceImpl">
+		<property name="rebateInfoDao" ref="rebateInfoDao"></property>
+		<property name="rebateRuleInfoDao" ref="rebateRuleInfoDao"></property>
+	</bean>
+	<bean id="rebateRuleDao" class="com.hrt.biz.bill.dao.impl.RebateRuleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="rebateRuleService" class="com.hrt.biz.bill.service.impl.RebateRuleServiceImpl">
+		<property name="rebateRuleDao" ref="rebateRuleDao" />
+	</bean>
+	<bean id="rebateRuleInfoDao" class="com.hrt.biz.bill.dao.impl.RebateRuleInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="rebateRuleInfoService" class="com.hrt.biz.bill.service.impl.RebateRuleInfoServiceImpl">
+		<property name="rebateRuleInfoDao" ref="rebateRuleInfoDao" />
+	</bean>
+
+	<bean id="rebateInfoAction" class="com.hrt.biz.bill.action.RebateInfoAction"
+		  scope="prototype">
+		<property name="rebateInfoService" ref="rebateInfoService"></property>
+		<property name="rebateRuleService" ref="rebateRuleService"></property>
+		<property name="rebateRuleInfoService" ref="rebateRuleInfoService"></property>
+	</bean>
+
+	<bean id="rebateRuleAction" class="com.hrt.biz.bill.action.RebateRuleAction"
+		  scope="prototype">
+		<property name="rebateInfoService" ref="rebateInfoService"></property>
+		<property name="rebateRuleService" ref="rebateRuleService"></property>
+		<property name="rebateRuleInfoService" ref="rebateRuleInfoService"></property>
+		<property name="enumService" ref="enumService"></property>
+	</bean>
+
+
+	<bean id="hrtUnnoCostDao" class="com.hrt.biz.bill.dao.impl.HrtUnnoCostDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="hrtUnnoCostNDao" class="com.hrt.biz.bill.dao.impl.HrtUnnoCostNDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="billBpFileDao" class="com.hrt.biz.bill.dao.impl.BillBpFileDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="billFileRecordDao" class="com.hrt.biz.bill.dao.impl.BillFileRecordDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="billSaleUnnoDao" class="com.hrt.biz.bill.dao.impl.BillSaleUnnoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="agentUnitService" class="com.hrt.biz.bill.service.impl.AgentUnitServiceImpl">
+		<property name="agentUnitDao" ref="agentUnitDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="creditAgentService" ref="creditAgentService"></property>
+		<property name="admAppIp" value="${admAppIp}" />
+		<property name="agentDlUnitDao" ref="agentDlUnitDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="hrtAppUrl" value="${hrtAppUrl}" />
+		<property name="hrtUnnoCostDao" ref="hrtUnnoCostDao" />
+		<property name="hrtUnnoCostNDao" ref="hrtUnnoCostNDao" />
+		<property name="billBpFileDao" ref="billBpFileDao" />
+		<property name="billFileRecordDao" ref="billFileRecordDao" />
+		<property name="checkUnitProfitMicroService" ref="checkUnitProfitMicroService" />
+		<property name="checkUnitProfitTraditService" ref="checkUnitProfitTraditService" />
+		<property name="billSaleUnnoDao" ref="billSaleUnnoDao" />
+	</bean>
+	
+	<bean id="agentUnitAction" class="com.hrt.biz.bill.action.AgentUnitAction"
+		scope="prototype">
+		<property name="agentUnitService" ref="agentUnitService"></property>
+	</bean>
+
+
+
+	<bean id="agentSalesDao" class="com.hrt.biz.bill.dao.impl.AgentSalesDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="agentSalesService" class="com.hrt.biz.bill.service.impl.AgentSalesServiceImpl">
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<bean id="agentSalesAction" class="com.hrt.biz.bill.action.AgentSalesAction"
+		scope="prototype">
+		<property name="agentSalesService" ref="agentSalesService"></property>
+	</bean>
+
+
+	<bean id="merchantInfoTempDao" class="com.hrt.biz.bill.dao.impl.MerchantInfoTempDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="merchantInfoDao" class="com.hrt.biz.bill.dao.impl.MerchantInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantInfoService" class="com.hrt.biz.bill.service.impl.MerchantInfoServiceImpl">
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="midSeqInfoDao" ref="midSeqInfoDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="merchantTerminalInfoDao" ref="merchantTerminalInfoDao"></property>
+		<property name="machineInfoDao" ref="machineInfoDao"></property>
+		<property name="machineTaskDataDao" ref="machineTaskDataDao"></property>
+		<property name="terminalInfoDao" ref="terminalInfoDao"></property>
+		<property name="merchantInfoTempDao" ref="merchantInfoTempDao"></property>
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+		<property name="hybUnbindUrl" value="${hybUnbindUrl}" />
+		<property name="aggPayTerminfoDao" ref="aggPayTerminfoDao"></property>
+		<property name="connectionHybUrl" value="${connectionHybUrl}"/>
+		<property name="hybCube" value="${hybCube}"/>
+		<property name="admAppIp" value="${admAppIp}"/>
+		<property name="merchantAuthenticityService" ref="merchantAuthenticityService"></property>
+		<property name="phoneMicroMerchantInfoDao" ref="phoneMicroMerchantInfoDao"></property>
+	</bean>
+
+
+	<bean id="merchantInfoAction" class="com.hrt.biz.bill.action.MerchantInfoAction"
+		scope="prototype">
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="merchantAuthenticityService" ref="merchantAuthenticityService"></property>
+	</bean>
+
+
+	<bean id="merchantTerminalInfoDao" class="com.hrt.biz.bill.dao.impl.MerchantTerminalInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantTerminalInfoService"
+		class="com.hrt.biz.bill.service.impl.MerchantTerminalInfoServiceImpl">
+		<property name="merchantTerminalInfoDao" ref="merchantTerminalInfoDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="machineInfoDao" ref="machineInfoDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="terminalInfoDao" ref="terminalInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="machineTaskDataDao" ref="machineTaskDataDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="hybUrl" value="${hybUrl}" />
+		<property name="admAppIp" value="${admAppIp}" />
+	</bean>
+
+	<bean id="merchantTerminalInfoAction" class="com.hrt.biz.bill.action.MerchantTerminalInfoAction"
+		scope="prototype">
+		<property name="merchantTerminalInfoService" ref="merchantTerminalInfoService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+
+
+
+	<bean id="midSeqInfoDao" class="com.hrt.biz.bill.dao.impl.MIDSeqInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="midSeqInfoService" class="com.hrt.biz.bill.service.impl.MIDSeqInfoServiceImpl">
+		<property name="midSeqInfoDao" ref="midSeqInfoDao"></property>
+	</bean>
+
+	<bean id="midSeqInfoAction" class="com.hrt.biz.bill.action.MIDSeqInfoAction"
+		scope="prototype">
+		<property name="midSeqInfoService" ref="midSeqInfoService"></property>
+	</bean>
+
+	<!-- 2014.4.26    check_UnitDealData -->
+
+	<bean id="checkUnitDealDataDao" class="com.hrt.biz.check.dao.impl.CheckUnitDealDataDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="checkUnitDealDataService"
+		class="com.hrt.biz.check.service.impl.CheckUnitDealDataServiceImpl">
+		<property name="checkUnitDealDataDao" ref="checkUnitDealDataDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+
+	<bean id="checkUnitDealDataAction" class="com.hrt.biz.check.action.CheckUnitDealDataAction"
+		scope="prototype">
+		<property name="checkUnitDealDataService" ref="checkUnitDealDataService"></property>
+	</bean>
+
+
+	<!-- 2014.4.26    check_UnitDealDetail -->
+
+	<bean id="checkUnitDealDetailDao" class="com.hrt.biz.check.dao.impl.CheckUnitDealDetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="checkUnitDealDetailService"
+		class="com.hrt.biz.check.service.impl.CheckUnitDealDetailServiceImpl">
+		<property name="checkUnitDealDetailDao" ref="checkUnitDealDetailDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+
+	<bean id="checkUnitDealDetailAction" class="com.hrt.biz.check.action.CheckUnitDealDetailAction"
+		scope="prototype">
+		<property name="checkUnitDealDetailService" ref="checkUnitDealDetailService"></property>
+	</bean>
+
+
+
+	<bean id="merchantTaskDetail2Service"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDetail2ServiceImpl">
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+	</bean>
+
+	<bean id="merchantTaskDetail2Action" class="com.hrt.biz.bill.action.MerchantTaskDetail2Action"
+		scope="prototype">
+		<property name="merchantTaskDetail2Service" ref="merchantTaskDetail2Service"></property>
+	</bean>
+
+
+
+	<bean id="merchantTaskDetailDao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantTaskDetail1Service"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDetail1ServiceImpl">
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+
+	</bean>
+
+	<bean id="merchantTaskDetail1Action" class="com.hrt.biz.bill.action.MerchantTaskDetail1Action"
+		scope="prototype">
+		<property name="merchantTaskDetail1Service" ref="merchantTaskDetail1Service"></property>
+	</bean>
+
+
+
+	<bean id="merchantTaskDetail3Service"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDetail3ServiceImpl">
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+	</bean>
+	<bean id="merchantTaskDetail3Action" class="com.hrt.biz.bill.action.MerchantTaskDetail3Action"
+		scope="prototype">
+		<property name="merchantTaskDetail3Service" ref="merchantTaskDetail3Service"></property>
+		<property name="merchantTaskDataService" ref="merchantTaskDataService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+
+
+	<bean id="merchantTaskDetail4Action" class="com.hrt.biz.bill.action.MerchantTaskDetail4Action"
+		scope="prototype">
+		<property name="merchantTaskDetail4Service" ref="merchantTaskDetail4Service"></property>
+	</bean>
+	<bean id="merchantTaskDetail4Service"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDetail4ServiceImpl">
+		<property name="merchantTaskDetail4Dao" ref="merchantTaskDetail4Dao"></property>
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	    <property name="todoDao" ref="todoDao"></property>
+	    <property name="merchantInfoDao" ref="merchantInfoDao"></property>
+	</bean>
+	<bean id="merchantTaskDetail4Dao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDetail4DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	
+	<bean id="merchantTaskDetail5Action" class="com.hrt.biz.bill.action.MerchantTaskDetail5Action"
+		scope="prototype">
+		<property name="merchantTaskDetail5Service" ref="merchantTaskDetail5Service"></property>
+	</bean>
+	<bean id="merchantTaskDetail5Service"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDetail5ServiceImpl">
+		<property name="merchantTaskDetail5Dao" ref="merchantTaskDetail5Dao"></property>
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	    <property name="todoDao" ref="todoDao"></property>
+	</bean>
+	<bean id="merchantTaskDetail5Dao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDetail5DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<bean id="merchantTaskOperateDao" class="com.hrt.biz.bill.dao.impl.MerchantTaskOperateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantTaskOperateService"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskOperateServiceImpl">
+		<property name="merchantTaskOperateDao" ref="merchantTaskOperateDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+	</bean>
+
+	<bean id="merchantTaskOperateAction" class="com.hrt.biz.bill.action.MerchantTaskOperateAction"
+		scope="prototype">
+		<property name="merchantTaskOperateService" ref="merchantTaskOperateService"></property>
+	</bean>
+
+	<bean id="merchantTaskDetail1Dao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDetail1DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantTaskDetail2Dao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDetail2DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantTaskDetail3Dao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDetail3DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantTaskDataDao" class="com.hrt.biz.bill.dao.impl.MerchantTaskDataDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantTaskDataAction" class="com.hrt.biz.bill.action.MerchantTaskDataAction"
+		scope="prototype">
+		<property name="merchantTaskDataService" ref="merchantTaskDataService"></property>
+	</bean>
+
+	<bean id="merchantTaskDataService"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDataServiceImpl">
+		<property name="merchantTaskDataDao" ref="merchantTaskDataDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantTaskDetail1Dao" ref="merchantTaskDetail1Dao"></property>
+		<property name="merchantTaskDetail2Dao" ref="merchantTaskDetail2Dao"></property>
+		<property name="merchantTaskDetail3Dao" ref="merchantTaskDetail3Dao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="jhTaskHybUrl" value="${jhTaskHybUrl}"></property>
+	</bean>
+
+
+	<bean id="merchantTaskDetailOtherDao"
+		class="com.hrt.biz.bill.dao.impl.MerchantTaskDetailOtherDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="merchantTaskDetailOtherService"
+		class="com.hrt.biz.bill.service.impl.MerchantTaskDetailOtherServiceImpl">
+		<property name="merchantTaskDetailOtherDao" ref="merchantTaskDetailOtherDao"></property>
+		<property name="merchantTaskDetailDao" ref="merchantTaskDetailDao"></property>
+	</bean>
+
+	<bean id="merchantTaskDetailOtherAction" class="com.hrt.biz.bill.action.MerchantTaskDetailOtherAction"
+		scope="prototype">
+		<property name="merchantTaskDetailOtherService" ref="merchantTaskDetailOtherService"></property>
+	</bean>
+
+
+
+	<bean id="machineTaskDataDao" class="com.hrt.biz.bill.dao.impl.MachineTaskDataDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="machineTaskDataService"
+		class="com.hrt.biz.bill.service.impl.MachineTaskDataServiceImpl">
+		<property name="machineTaskDataDao" ref="machineTaskDataDao"></property>
+		<property name="machineInfoDao" ref="machineInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="todoDao" ref="todoDao"></property>
+		<property name="merchantTerminalInfoDao" ref="merchantTerminalInfoDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="terminalInfoDao" ref="terminalInfoDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+
+	<bean id="machineTaskDataAction" class="com.hrt.biz.bill.action.MachineTaskDataAction"
+		scope="prototype">
+		<property name="machineTaskDataService" ref="machineTaskDataService"></property>
+		<property name="merchantTerminalInfoService" ref="merchantTerminalInfoService"></property>
+	</bean>
+
+
+
+	<!-- 2014.5.7    checRealtime -->
+	<bean id="checRealtimeDealDetailDao"
+		class="com.hrt.biz.check.dao.impl.ChecRealtimeDealDetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checRealtimeDealDetailService"
+		class="com.hrt.biz.check.service.impl.ChecRealtimeDealDetailServiceImpl">
+		<property name="checRealtimeDealDetailDao" ref="checRealtimeDealDetailDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="checkRealtimeAction" class="com.hrt.biz.check.action.ChecRealtimeDealDetailAction"
+		scope="prototype">
+		<property name="checRealtimeDealDetailService" ref="checRealtimeDealDetailService"></property>
+	</bean>
+
+
+	<bean id="trafficBankInsertDao" class="com.hrt.biz.bill.dao.impl.TrafficBankInsertDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="trafficBankInsertFCDao" class="com.hrt.biz.bill.dao.impl.TrafficBankInsertFCDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="trafficBankInsertService"
+		class="com.hrt.biz.bill.service.impl.TrafficBankInsertServiceImpl">
+		<property name="trafficBankInsertDao" ref="trafficBankInsertDao"></property>
+		<property name="trafficBankInsertFCDao" ref="trafficBankInsertFCDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+	</bean>
+	<bean id="trafficBankInsertAction" class="com.hrt.biz.bill.action.TrafficBankInsertAction"
+		scope="prototype">
+		<property name="trafficBankInsertService" ref="trafficBankInsertService"></property>
+	</bean>
+
+
+
+	<bean id="merchantInfoCommDao" class="com.hrt.biz.bill.dao.impl.MerchantInfoCommDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantInfoCommService"
+		class="com.hrt.biz.bill.service.impl.MerchantInfoCommServiceImpl">
+		<property name="merchantInfoCommDao" ref="merchantInfoCommDao"></property>
+		<property name="merchantTerminalInfoCommDao" ref="merchantTerminalInfoCommDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+	</bean>
+	<bean id="merchantInfoCommAction" class="com.hrt.biz.bill.action.MerchantInfoCommAction"
+		scope="prototype">
+		<property name="merchantInfoCommService" ref="merchantInfoCommService"></property>
+	</bean>
+	
+	
+	<bean id="merchantTerminalInfoCommAction" class="com.hrt.biz.bill.action.MerchantTerminalInfoCommAction"
+		scope="prototype">
+		<property name="merchantTerminalInfoCommService" ref="merchantTerminalInfoCommService"></property>
+	</bean>
+	<bean id="merchantTerminalInfoCommService" class="com.hrt.biz.bill.service.impl.MerchantTerminalInfoCommServiceImpl">
+		<property name="merchantInfoCommDao" ref="merchantInfoCommDao"></property>
+		<property name="merchantTerminalInfoCommDao" ref="merchantTerminalInfoCommDao"></property>
+	</bean>
+	<bean id="merchantTerminalInfoCommDao" class="com.hrt.biz.bill.dao.impl.MerchantTerminalInfoCommDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+
+	<!-- 2014 09 11 hl -->
+	<bean id="checkIncomeDao" class="com.hrt.biz.bill.dao.impl.CheckIncomeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkIncomeService"
+		class="com.hrt.biz.bill.service.impl.CheckIncomeServiceImpl">
+		<property name="checkIncomeDao" ref="checkIncomeDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+	</bean>
+	
+	<bean id="checkIncomeAction" class="com.hrt.biz.bill.action.CheckIncomeAction"
+		scope="prototype">
+		<property name="checkincomeservice" ref="checkIncomeService"></property>
+	</bean>
+	
+	<bean id="checkReceiptsOpreationAction" class="com.hrt.biz.check.action.CheckReceiptsOpreationAction" scope="prototype">
+		<property name="checkReceiptsOpreationService" ref="checkReceiptsOpreationService"></property>
+	</bean>
+	<bean id="checkReceiptsOpreationService" class="com.hrt.biz.check.service.impl.CheckReceiptsOpreationServiceImpl" >
+		<property name="checkReceiptsOpreationDao" ref="checkReceiptsOpreationDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="admAppIp" value="${admAppIp}" />
+	</bean>
+	<bean id="checkReceiptsOpreationDao" class="com.hrt.biz.check.dao.impl.CheckReceiptsOpreationDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="hotCardAction" class="com.hrt.biz.bill.action.HotCardAction" scope="prototype">
+		<property name="hotCardService" ref="hotCardService"></property>
+	</bean>
+	<bean id="hotCardService" class="com.hrt.biz.bill.service.impl.HotCardServicImpl">
+		<property name="hotCardDao" ref="hotCardDao"></property>
+	</bean>
+	<bean id="hotCardDao" class="com.hrt.biz.bill.dao.impl.HotCardDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	
+	<bean id="checkUnitProfitMicroAction" class="com.hrt.biz.check.action.CheckUnitProfitMicroAction" scope="prototype">
+		<property name="checkUnitProfitMicroService" ref="checkUnitProfitMicroService"></property>
+		<property name="unitService" ref="unitService"></property>
+	</bean>
+	<bean id="checkUnitProfitMicroService" class="com.hrt.biz.check.service.impl.CheckUnitProfitMicroServiceImpl">
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="checkUnitProfitMicroDao" ref="checkUnitProfitMicroDao"></property>
+		<property name="checkUnitProfitMicroWDao" ref="checkUnitProfitMicroWDao"></property>
+		<property name="checkUnitProfitMicroLogDao" ref="checkUnitProfitMicroLogDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentUnitService" ref="agentUnitService"></property>
+	</bean>
+	<bean id="checkUnitProfitMicroDao" class="com.hrt.biz.check.dao.impl.CheckUnitProfitMicroDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkUnitProfitMicroWDao" class="com.hrt.biz.check.dao.impl.CheckUnitProfitMicroWDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+    <bean id="checkUnitProfitMicroLogDao" class="com.hrt.biz.check.dao.impl.CheckUnitProfitMicroLogDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+	
+	<bean id="checkUnitProfitTraditAction" class="com.hrt.biz.check.action.CheckUnitProfitTraditAction" scope="prototype">
+		<property name="checkUnitProfitTraditService" ref="checkUnitProfitTraditService"></property>
+		<property name="unitService" ref="unitService"></property>
+	</bean>
+	<bean id="checkUnitProfitTraditService" class="com.hrt.biz.check.service.impl.CheckUnitProfitTraditServiceImpl">
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="checkUnitProfitTraditDao" ref="checkUnitProfitTraditDao"></property>
+		<property name="checkUnitProfitTraditWDao" ref="checkUnitProfitTraditWDao"></property>
+		<property name="checkUnitProfitTraditLogDao" ref="checkUnitProfitTraditLogDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentUnitService" ref="agentUnitService"></property>
+	</bean>
+	<bean id="checkUnitProfitTraditDao" class="com.hrt.biz.check.dao.impl.CheckUnitProfitTraditDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkUnitProfitTraditWDao" class="com.hrt.biz.check.dao.impl.CheckUnitProfitTraditWDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkUnitProfitTraditLogDao" class="com.hrt.biz.check.dao.impl.CheckUnitProfitTraditLogDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkSettleReturnAction" class="com.hrt.biz.check.action.CheckSettleReturnAction" scope="prototype">
+		<property name="checkSettleReturnService" ref="checkSettleReturnService"></property>
+	</bean>
+	<bean id="checkSettleReturnService" class="com.hrt.biz.check.service.impl.CheckSettleReturnServiceImpl">
+		<property name="checkSettleReturnDao" ref="checkSettleReturnDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	</bean>
+	<bean id="checkSettleReturnDao" class="com.hrt.biz.check.dao.impl.CheckSettleReturnDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkCashAction" class="com.hrt.biz.check.action.CheckCashAction" scope="prototype">
+		<property name="checkCashService" ref="checkCashService"></property>
+	</bean>
+	<bean id="checkCashService" class="com.hrt.biz.check.service.impl.CheckCashServiceImpl">
+		<property name="checkCashDao" ref="checkCashDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="checkCashDao" class="com.hrt.biz.check.dao.impl.CheckCashDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkRebateAction" class="com.hrt.biz.check.action.CheckRebateAction" scope="prototype">
+		<property name="checkRebateService" ref="checkRebateService"></property>
+	</bean>
+	<bean id="checkRebateService" class="com.hrt.biz.check.service.impl.CheckRebateServiceImpl">
+		<property name="checkRebateDao" ref="checkRebateDao"></property>
+	</bean>
+	<bean id="checkRebateDao" class="com.hrt.biz.check.dao.impl.CheckRebateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkWechatTxnDetailAction" class="com.hrt.biz.check.action.CheckWechatTxnDetailAction" scope="prototype">
+		<property name="checkWechantTxnDetailService" ref="checkWechantTxnDetailService"></property>
+	</bean>
+	<bean id="checkWechantTxnDetailService" class="com.hrt.biz.check.service.impl.CheckWechantTxnDetailServiceImpl">
+		<property name="checkWechantTxnDetailDao" ref="checkWechantTxnDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+	</bean>
+	<bean id="checkWechantTxnDetailDao" class="com.hrt.biz.check.dao.impl.CheckWechantTxnDetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkReFundAction" class="com.hrt.biz.check.action.CheckReFundAction" scope="prototype">
+		<property name="checkReFundService" ref="checkReFundService"></property>
+	</bean>
+	<bean id="checkReFundService" class="com.hrt.biz.check.service.impl.CheckRefundServiceImpl">
+		<property name="checkRefundDao" ref="checkRefundDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="admAppIp" value="${admAppIp}"></property>
+		<property name="hybReFundUrl" value="${hybReFundUrl}"></property>
+		<property name="gateCarOrderDao" ref="gateCarOrderDao"></property>
+	</bean>
+	<bean id="checkRefundDao" class="com.hrt.biz.check.dao.impl.CheckRefundDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkReOrderAction" class="com.hrt.biz.check.action.CheckReOrderAction" scope="prototype">
+		<property name="checkReOrderService" ref="checkReOrderService"></property>
+	</bean>
+	<bean id="checkReOrderService" class="com.hrt.biz.check.service.impl.CheckReOrderServiceImpl">
+		<property name="checkReOrderDao" ref="checkReOrderDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="admAppIp" value="${admAppIp}"></property>
+	</bean>
+	<bean id="checkReOrderDao" class="com.hrt.biz.check.dao.impl.CheckReOrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="checkMisTakeAction" class="com.hrt.biz.check.action.CheckMisTakeAction" scope="prototype">
+		<property name="checkMisTakeService" ref="checkMisTakeService"></property>
+	</bean>
+	<bean id="checkMisTakeService" class="com.hrt.biz.check.service.impl.CheckMisTakeServiceImpl">
+		<property name="checkMisTakeDao" ref="checkMisTakeDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+	</bean>
+	<bean id="checkMisTakeDao" class="com.hrt.biz.check.dao.impl.CheckMisTakeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="merchantAuthenticityAction" class="com.hrt.biz.bill.action.MerchantAuthenticityAction" scope="prototype">
+		<property name="merchantAuthenticityService" ref="merchantAuthenticityService"></property>
+		<property name="phoneWechatPublicAccService" ref="phoneWechatPublicAccService"></property>
+	</bean>
+	<bean id="merchantAuthenticityService" class="com.hrt.biz.bill.service.impl.MerchantAuthenticityServiceImpl">
+		<property name="merchantAuthenticityDao" ref="merchantAuthenticityDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="sfidAuthMain" ref="sfidAuthMain"></property>
+		<property name="msUrl" value="${msUrl}"></property>
+		<property name="hybMerAuthUrl" value="${hybMerAuthUrl}"></property>
+		<property name="jxUrl" value="${jxUrl}"></property>
+		<property name="JXmiyao" value="${JXmiyao}"></property>
+		<property name="JXmerchno" value="${JXmerchno}"></property>
+		<property name="paramUtil" ref="paramUtil"></property>
+		<property name="serverAddress" value="${serverAddress}"></property>
+		<property name="keyStorePath" value="${keyStorePath}"></property>
+		<property name="kaolaAddress" value="${kaolaAddress}"></property>
+		<property name="customerId" value="${customerId}"></property>
+		<property name="yidaoAddress" value="${yidaoAddress}"></property>
+		<property name="yidaoAppId" value="${yidaoAppId}"></property>
+		<property name="yidaoAppKey" value="${yidaoAppKey}"></property>
+		<property name="juheAddress" value="${juheAddress}"></property>
+		<property name="juheAppKey" value="${juheAppKey}"></property>
+		<property name="juheOpenId" value="${juheOpenId}"></property>
+		<property name="admAppIp" value="${admAppIp}"></property>
+	</bean>
+	
+	<bean id="sfidAuthMain" class="com.hrt.biz.util.auth.SfidAuthMain">
+		<property name="uidApiService" ref="uidApiService"></property>
+	</bean>
+	<bean id="merchantAuthenticityDao" class="com.hrt.biz.bill.dao.impl.MerchantAuthenticityDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="QRInvitationInfoAction" class="com.hrt.biz.bill.action.QRInvitationInfoAction" scope="prototype">
+		<property name="infoService" ref="qrInvitationInfoService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="qrInvitationInfoService" class="com.hrt.biz.bill.service.impl.QRInvitationInfoServiceImpl">
+		<property name="invitationInfoDao" ref="qrInvitationInfoDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="microMerchantInfoService" ref="phoneMicroMerchantInfoService"></property>
+	</bean>
+	<bean id="qrInvitationInfoDao" class="com.hrt.biz.bill.dao.impl.QRInvitationInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="aggPayTerminfoAction" class="com.hrt.biz.bill.action.AggPayTerminfoAction" scope="prototype">
+		<property name="infoService" ref="aggPayTerminfoService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="aggPayTerminfoService" class="com.hrt.biz.bill.service.impl.AggPayTerminfoServiceImpl">
+		<property name="aggPayTerminfoDao" ref="aggPayTerminfoDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="microMerchantInfoService" ref="phoneMicroMerchantInfoService"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="aggPayTerminfoDao" class="com.hrt.biz.bill.dao.impl.AggPayTerminfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merAdjustRateAction" class="com.hrt.biz.bill.action.MerAdjustRateAction" scope="prototype">
+		<property name="merAdjustRateService" ref="merAdjustRateService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="merAdjustRateService" class="com.hrt.biz.bill.service.impl.MerAdjustRateServiceImpl">
+		<property name="adjustRateDao" ref="adjustRateDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+	</bean>
+	<bean id="adjustRateDao" class="com.hrt.biz.bill.dao.impl.MerAdjustRateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 验证码 -->
+	<bean id="randomAction"
+		class="com.hrt.frame.action.sysadmin.RandomAction" scope="prototype">
+	</bean>
+	
+	<!-- 手机端 -->
+	<bean id="phoneUserDao" class="com.hrt.phone.dao.impl.PhoneUserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneUserService" class="com.hrt.phone.service.impl.PhoneUserServiceImpl">
+		<property name="phoneUserDao" ref="phoneUserDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentUnitDao" ref="agentUnitDao"></property>
+	</bean>
+	<bean id="phoneUserAction" class="com.hrt.phone.action.PhoneUserAction"
+		scope="prototype">
+		<property name="phoneUserService" ref="phoneUserService"></property>
+		<property name="phoneWechatPublicAccService" ref="phoneWechatPublicAccService"></property>
+	</bean>
+	
+	
+	
+	<bean id="phoneNoticeDao" class="com.hrt.phone.dao.impl.PhoneNoticeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneNoticeService" class="com.hrt.phone.service.impl.PhoneNoticeServiceImpl">
+		<property name="phoneNoticeDao" ref="phoneNoticeDao"></property>
+		<property name="noticeDao" ref="noticeDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	</bean>
+	<bean id="phoneNoticeAction" class="com.hrt.phone.action.PhoneNoticeAction"
+		scope="prototype">
+		<property name="phoneNoticeService" ref="phoneNoticeService"></property>
+	</bean>
+	
+	
+	<bean id="phoneCheckUnitDealDataDao" class="com.hrt.phone.dao.impl.PhoneCheckUnitDealDataDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneCheckUnitDealDataService" class="com.hrt.phone.service.impl.PhoneCheckUnitDealDataServiceImpl">
+		<property name="phoneCheckUnitDealDataDao" ref="phoneCheckUnitDealDataDao"></property>
+	</bean>
+	<bean id="phoneCheckUnitDealDataAction" class="com.hrt.phone.action.PhoneCheckUnitDealDataAction" scope="prototype">
+		<property name="phoneCheckUnitDealDataService" ref="phoneCheckUnitDealDataService"></property>
+		<property name="phoneWechatPublicAccService" ref="phoneWechatPublicAccService"></property>
+	</bean>
+	
+	
+	<bean id="phoneReceiptsUploadDao" class="com.hrt.phone.dao.impl.PhoneReceiptsUploadDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneReceiptsUploadService" class="com.hrt.phone.service.impl.PhoneReceiptsUploadServiceImpl">
+		<property name="phoneReceiptsUploadDao" ref="phoneReceiptsUploadDao"></property>
+	</bean>
+	<bean id="phoneReceiptsUploadAction" class="com.hrt.phone.action.PhoneReceiptsUploadAction" scope="prototype">
+		<property name="phoneReceiptsUploadService" ref="phoneReceiptsUploadService"></property>
+		<property name="merchantTaskDetail2Service" ref="merchantTaskDetail2Service"></property>
+		<property name="merchantTaskDataService" ref="merchantTaskDataService"></property>
+	</bean>	
+	
+	
+	<bean id="phoneMicroMerchantInfoDao" class="com.hrt.phone.dao.impl.PhoneMircoMerchantInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneMicroMerchantInfoService" class="com.hrt.phone.service.impl.PhoneMicroMerchantInfoServiceImpl">
+		<property name="phoneMicroMerchantInfoDao" ref="phoneMicroMerchantInfoDao"></property>
+		<property name="midSeqInfoDao" ref="midSeqInfoDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+		<property name="todoDao" ref="todoDao"></property> 
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="hybUrl" value="${hybUrl}" />
+		<property name="loginHybUrl" value="${loginHybUrl}" />
+		<property name="AggPayMerHybUrl" value="${AggPayMerHybUrl}" />
+		<property name="AggPayTerHybUrl" value="${AggPayTerHybUrl}" />
+		<property name="admAppIp" value="${admAppIp}" />
+		<property name="jhTaskHybUrl" value="${jhTaskHybUrl}" />
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="aggPayTerminfoDao" ref="aggPayTerminfoDao"></property>
+		<property name="terminalInfoDao" ref="terminalInfoDao"></property>
+	</bean>
+	<bean id="phoneMicroMerchantInfoAction" class="com.hrt.phone.action.PhoneMicroMerchantInfoAction" scope="prototype">
+		<property name="phoneMicroMerchantInfoService" ref="phoneMicroMerchantInfoService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentSalesService" ref="agentSalesService"></property>
+		<property name="merchantTerminalInfoService" ref="merchantTerminalInfoService"></property>
+		<property name="aggPayTerminfoService" ref="aggPayTerminfoService"></property>
+		<property name="phoneWechatPublicAccService" ref="phoneWechatPublicAccService"></property>
+		<property name="merchantAuthenticityService" ref="merchantAuthenticityService"></property>
+	</bean>
+	
+	<bean id="phoneMerchantInfoDao" class="com.hrt.phone.dao.impl.PhoneMerchantInfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneMerchantInfoService" class="com.hrt.phone.service.impl.PhoneMerchantInfoServiceImpl">
+		<property name="phoneMerchantInfoDao" ref="phoneMerchantInfoDao"></property>
+		<property name="midSeqInfoDao" ref="midSeqInfoDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="roleDao" ref="roleDao"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="merchantTerminalInfoDao" ref="merchantTerminalInfoDao"></property>
+		<property name="todoDao" ref="todoDao"></property> 
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="hybUrl" value="${hybUrl}" />
+		<property name="gsClient" ref="gsClient"></property>
+	</bean>
+	<bean id="phoneMerchantInfoAction" class="com.hrt.phone.action.PhoneMerchantInfoAction" scope="prototype">
+		<property name="phoneMerchantInfoService" ref="phoneMerchantInfoService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="unitService" ref="unitService"></property>
+		<property name="noticeService" ref="noticeService"></property>
+		<property name="terminalInfoService" ref="terminalInfoService"></property>
+		<property name="merchantTerminalInfoService" ref="merchantTerminalInfoService"></property>
+	</bean>	
+	<bean id="phoneMerchantTerminalInfoAction" class="com.hrt.phone.action.PhoneMerchantTerminalInfoAction" scope="prototype">
+		<property name="merchantTerminalInfoService" ref="merchantTerminalInfoService"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="machineInfoService" ref="machineInfoService"></property>
+	</bean>	
+	
+	<bean id="phoneMerchantWalletDao" class="com.hrt.phone.dao.impl.PhoneMerchantWalletDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneMerchantWalletService" class="com.hrt.phone.service.impl.PhoneMerchantWalletServiceImpl">
+		<property name="phoneMerchantWalletDao" ref="phoneMerchantWalletDao"></property>
+		<property name="admAppIp" value="${admAppIp}" />
+	</bean>
+	<bean id="phoneMerchantWalletAction" class="com.hrt.phone.action.PhoneMerchantWalletAction" scope="prototype">
+		<property name="phoneMerchantWalletService" ref="phoneMerchantWalletService"></property>
+		<property name="phoneWechatPublicAccService" ref="phoneWechatPublicAccService"></property>
+	</bean>	
+	
+	<bean id="phoneWechatPublicAccDao" class="com.hrt.phone.dao.impl.PhoneWechatPublicAccDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="phoneWechatPublicAccService" class="com.hrt.phone.service.impl.PhoneWechatPublicAccServiceImpl">
+		<property name="phoneWechatPublicAccDao" ref="phoneWechatPublicAccDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="userDao" ref="userDao"></property>
+		<property name="admAppIp" value="${admAppIp}"></property>
+	</bean>
+	<bean id="phoneWechatPublicAccAction" class="com.hrt.phone.action.PhoneWechatPublicAccAction" scope="prototype">
+		<property name="phoneWechatPublicAccService" ref="phoneWechatPublicAccService"></property>
+		<property name="checkUnitDealDetailService" ref="checkUnitDealDetailService"></property>
+		<property name="checkincomeService" ref="checkIncomeService"></property>
+		<property name="phoneCheckUnitDealDataService" ref="phoneCheckUnitDealDataService"></property>
+		<property name="problemFeedbackService" ref="problemFeedbackService"></property>
+		<property name="loginMposPhone" value="${loginMposPhone}" />
+	</bean>
+	<bean id="phoneAgentCreditAction" class="com.hrt.phone.action.PhoneAgentCreditAction" scope="prototype">
+		<property name="phoneUserService" ref="phoneUserService"></property>
+	</bean>
+	<bean id="gateCarDao" class="com.hrt.phone.dao.impl.GateCarDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="gateCarService" class="com.hrt.phone.service.impl.GateCarServiceImpl">
+		<property name="keyVersion" value="${GateWayKeyVision}"></property>
+		<property name="aesKey" value="${GateWayAesKey}"></property>
+		<property name="serviceHost" value="${GateWayUrl}"></property>
+		<property name="version" value="${GateWayVision}"></property>
+		<property name="webSiteId" value="${webSiteId}"></property>
+		<property name="loginName" value="${loginName}"></property>
+		<property name="userPWD" value="${userPWD}"></property>
+		<property name="gateCarDao" ref="gateCarDao"></property>
+	</bean>
+	<bean id="gateCarOrderDao" class="com.hrt.phone.dao.impl.GateCarOrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="gateCarOrderService" class="com.hrt.phone.service.impl.GateCarOrderServiceImpl">
+		<property name="keyVersion" value="${GateWayKeyVision}"></property>
+		<property name="aesKey" value="${GateWayAesKey}"></property>
+		<property name="serviceHost" value="${GateWayUrl}"></property>
+		<property name="version" value="${GateWayVision}"></property>
+		<property name="webSiteId" value="${webSiteId}"></property>
+		<property name="gateCarOrderDao" ref="gateCarOrderDao"></property>
+		<property name="paramUtil" ref="paramUtil"></property>
+		<property name="violationDao" ref="gateViolationDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="checkRefundDao" ref="checkRefundDao"></property>
+	</bean>
+	<bean id="gateViolationDao" class="com.hrt.phone.dao.impl.GateVionlationDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="gateViolationService" class="com.hrt.phone.service.impl.GateViolationServiceImpl">
+		<property name="keyVersion" value="${GateWayKeyVision}"></property>
+		<property name="aesKey" value="${GateWayAesKey}"></property>
+		<property name="serviceHost" value="${GateWayUrl}"></property>
+		<property name="version" value="${GateWayVision}"></property>
+		<property name="webSiteId" value="${webSiteId}"></property>
+		<property name="violationDao" ref="gateViolationDao"></property>
+		<property name="gateCarService" ref="gateCarService"></property>
+		<property name="paramUtil" ref="paramUtil"></property>
+	</bean>
+	<bean id="gateCarAction" class="com.hrt.phone.action.GateCarAction" scope="prototype">
+		<property name="gateCarService" ref="gateCarService"></property>
+		<property name="gateCarOrderService" ref="gateCarOrderService"></property>
+	</bean>
+	<bean id="gateCarOrderAction" class="com.hrt.phone.action.GateCarOrderAction" scope="prototype">
+		<property name="gateCarOrderService" ref="gateCarOrderService"></property>
+	</bean>
+	<bean id="gateViolationAction" class="com.hrt.phone.action.GateViolationAction" scope="prototype">
+		<property name="gateCarService" ref="gateCarService"></property>
+		<property name="gateViolationService" ref="gateViolationService"></property>
+	</bean>
+	
+	<!-- 
+	<bean id="paymentRiskService" class="com.hrt.biz.bill.service.impl.PaymentRiskServiceImpl">
+		<property name="paymentRiskDao" ref="paymentRiskDao"></property>
+		<property name="dictionaryDao" ref="dictionaryDao"></property>
+	</bean>
+	<bean id="paymentRiskAction" class="com.hrt.biz.bill.action.PaymentRiskAction" scope="prototype">
+		<property name="paymentRiskService" ref="paymentRiskService"></property>
+	</bean>	
+	<bean id="paymentRiskDao" class="com.hrt.biz.bill.dao.impl.PaymentRiskDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="dictionaryDao" class="com.hrt.biz.bill.dao.impl.DictionaryDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="riskSpecialMerchantAction" class="com.hrt.biz.bill.action.RiskSpecialMerchantAction" scope="prototype">
+		<property name="specialMerchantService" ref="specialMerchantService"></property>
+	</bean>
+	<bean id="specialMerchantService" class="com.hrt.biz.bill.service.impl.RiskSpecialMerchantServiceImpl">
+		<property name="specialMerchantDao" ref="specialMerchantDao"></property>
+		<property name="riskPushMsgDao" ref="riskPushMsgDao"></property>
+		<property name="riskPendingMerchantDao" ref="riskPendingMerchantDao"></property>
+	</bean>
+	<bean id="specialMerchantDao" class="com.hrt.biz.bill.dao.impl.RiskSpecialMerchantDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>		
+	<bean id="riskPushMsgDao" class="com.hrt.biz.bill.dao.impl.RiskPushMsgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	<bean id="riskPendingMerchantDao" class="com.hrt.biz.bill.dao.impl.RiskPendingMerchantDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	-->
+	<!-- 系统功能配置 -->
+	<bean id="paramUtil" class="com.hrt.biz.util.ParamUtil">
+		<property name="userService" ref="userService"></property>
+		<property name="carService" ref="gateCarService"></property>
+	</bean>
+	<bean id="cubeInitProcessor" class="com.hrt.biz.util.CubeInitProcessor">
+		<property name="util" ref="paramUtil"></property>
+	</bean>
+	<bean id="creditAgentAction" class="com.hrt.biz.credit.action.CreditAgentAction" scope="prototype">
+		<property name="creditAgentService" ref="creditAgentService"></property>
+		<property name="agentUnitService" ref="agentUnitService"></property>
+	</bean>
+	<bean id="creditAgentService" class="com.hrt.biz.credit.service.impl.CreditAgentServiceImpl">
+		<property name="creditAgentDao" ref="creditAgentDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantInfoService" ref="merchantInfoService"></property>
+		<property name="agentSalesDao" ref="agentSalesDao"></property>
+		<property name="creditUrl" value="${creditUrl}"></property>
+	</bean>
+	<bean id="creditAgentDao" class="com.hrt.biz.credit.dao.impl.CreditAgentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="loanAction" class="com.hrt.biz.credit.action.LoanAction" scope="prototype">
+		<property name="loanService" ref="loanService"></property>
+	</bean>
+	<bean id="loanService" class="com.hrt.biz.credit.service.impl.LoanServiceImpl">
+		<property name="loanDao" ref="loanDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="creditUrl" value="${creditUrl}"></property>
+	</bean>
+	<bean id="loanDao" class="com.hrt.biz.credit.dao.impl.LoanDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="loanRepayAction" class="com.hrt.biz.credit.action.LoanRepayAction" scope="prototype">
+		<property name="loanRepayService" ref="loanRepayService"></property>
+	</bean>
+	<bean id="loanRepayService" class="com.hrt.biz.credit.service.impl.LoanRepayServiceImpl">
+		<property name="loanRepayDao" ref="loanRepayDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="creditUrl" value="${creditUrl}"></property>
+	</bean>
+	<bean id="loanRepayDao" class="com.hrt.biz.credit.dao.impl.LoanRepayDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseOrderAction" class="com.hrt.biz.bill.action.PurchaseOrderAction" scope="prototype">
+		<property name="purchaseOrderService" ref="purchaseOrderService"></property>
+		<property name="purchaseDetailService" ref="purchaseDetailService"></property>
+	</bean>
+	<bean id="purchaseOrderService" class="com.hrt.biz.bill.service.impl.PurchaseOrderServiceImpl">
+		<property name="purchaseOrderDao" ref="purchaseOrderDao"></property>
+		<property name="purchaseDetailDao" ref="purchaseDetailDao"></property>
+		<property name="unitDao" ref="unitDao"></property>
+	</bean>
+	<bean id="purchaseOrderDao" class="com.hrt.biz.bill.dao.impl.PurchaseOrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseDetailAction" class="com.hrt.biz.bill.action.PurchaseDetailAction" scope="prototype">
+		<property name="purchaseDetailService" ref="purchaseDetailService"></property>
+		<property name="purchaseOrderService" ref="purchaseOrderService"></property>
+	</bean>
+	<bean id="purchaseDetailService" class="com.hrt.biz.bill.service.impl.PurchaseDetailServiceImpl">
+		<property name="purchaseDetailDao" ref="purchaseDetailDao"></property>
+		<property name="purchaseDeliverDao" ref="purchaseDeliverDao"></property>
+	</bean>
+	<bean id="purchaseDetailDao" class="com.hrt.biz.bill.dao.impl.PurchaseDetailDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseDeliverAction" class="com.hrt.biz.bill.action.PurchaseDeliverAction" scope="prototype">
+		<property name="purchaseDeliverService" ref="purchaseDeliverService"></property>
+	</bean>
+	<bean id="purchaseDeliverService" class="com.hrt.biz.bill.service.impl.PurchaseDeliverServiceImpl">
+		<property name="purchaseDeliverDao" ref="purchaseDeliverDao"></property>
+		<property name="purchaseDetailDao" ref="purchaseDetailDao"></property>
+		<property name="purchaseOrderDao" ref="purchaseOrderDao"></property>
+	</bean>
+	<bean id="purchaseDeliverDao" class="com.hrt.biz.bill.dao.impl.PurchaseDeliverDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseAccountAction" class="com.hrt.biz.bill.action.PurchaseAccountAction" scope="prototype">
+		<property name="purchaseAccountService" ref="purchaseAccountService"></property>
+	</bean>
+	<bean id="purchaseAccountService" class="com.hrt.biz.bill.service.impl.PurchaseAccountServiceImpl">
+		<property name="purchaseAccountDao" ref="purchaseAccountDao"></property>
+		<property name="purchaseOrderDao" ref="purchaseOrderDao"></property>
+	</bean>
+	<bean id="purchaseAccountDao" class="com.hrt.biz.bill.dao.impl.PurchaseAccountDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseInvoiceAction" class="com.hrt.biz.bill.action.PurchaseInvoiceAction" scope="prototype">
+		<property name="purchaseInvoiceService" ref="purchaseInvoiceService"></property>
+	</bean>
+	<bean id="purchaseInvoiceService" class="com.hrt.biz.bill.service.impl.PurchaseInvoiceServiceImpl">
+		<property name="purchaseInvoiceDao" ref="purchaseInvoiceDao"></property>
+		<property name="purchaseOrderDao" ref="purchaseOrderDao"></property>
+	</bean>
+	<bean id="purchaseInvoiceDao" class="com.hrt.biz.bill.dao.impl.PurchaseInvoiceDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseStorageAction" class="com.hrt.biz.bill.action.PurchaseStorageAction" scope="prototype">
+		<property name="purchaseStorageService" ref="purchaseStorageService"></property>
+	</bean>
+	<bean id="purchaseStorageService" class="com.hrt.biz.bill.service.impl.PurchaseStorageServiceImpl">
+		<property name="purchaseStorageDao" ref="purchaseStorageDao"></property>
+	</bean>
+	<bean id="purchaseStorageDao" class="com.hrt.biz.bill.dao.impl.PurchaseStorageDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="purchaseRecordAction" class="com.hrt.biz.bill.action.PurchaseRecordAction" scope="prototype">
+		<property name="purchaseRecordService" ref="purchaseRecordService"></property>
+	</bean>
+	<bean id="purchaseRecordService" class="com.hrt.biz.bill.service.impl.PurchaseRecordServiceImpl">
+		<property name="purchaseRecordDao" ref="purchaseRecordDao"></property>
+	</bean>
+	<bean id="purchaseRecordDao" class="com.hrt.biz.bill.dao.impl.PurchaseRecordDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="loanApplicationAction" class="com.hrt.biz.bill.action.LoanApplicationAction" scope="prototype">
+		<property name="loanApplicationService" ref="loanApplicationService"></property>
+	</bean>
+	<bean id="loanApplicationService" class="com.hrt.biz.bill.service.impl.LoanApplicationServiceImpl">
+		<property name="loanApplicationDao" ref="loanApplicationDao"></property>
+		<property name="loanUrl" value="${loanUrl}"></property>
+	</bean>
+	<bean id="loanApplicationDao" class="com.hrt.biz.bill.dao.impl.LoanApplicationDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantTwoUploadAction" class="com.hrt.biz.bill.action.MerchantTwoUploadAction" scope="prototype">
+		<property name="merchantTwoUploadService" ref="merchantTwoUploadService"></property>
+	</bean>
+	<bean id="merchantTwoUploadService" class="com.hrt.biz.bill.service.impl.MerchantTwoUploadServiceImpl">
+		<property name="merchantTwoUploadDao" ref="merchantTwoUploadDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+	</bean>
+	<bean id="merchantTwoUploadDao" class="com.hrt.biz.bill.dao.impl.MerchantTwoUploadDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="agentUnitTaskAction" class="com.hrt.biz.bill.action.AgentUnitTaskAction" scope="prototype">
+		<property name="agentUnitTaskService" ref="agentUnitTaskService"></property>
+	</bean>
+	<bean id="agentUnitTaskService" class="com.hrt.biz.bill.service.impl.AgentUnitTaskServiceImpl">
+		<property name="agentUnitTaskDao" ref="agentUnitTaskDao"></property>
+		<property name="gsClient" ref="gsClient"></property>
+		<property name="agentUnitTaskDetail1Service" ref="agentUnitTaskDetail1Service"></property>
+		<property name="agentUnitTaskDetail2Service" ref="agentUnitTaskDetail2Service"></property>
+		<property name="agentUnitTaskDetail3Service" ref="agentUnitTaskDetail3Service"></property>
+	</bean>
+	<bean id="agentUnitTaskDao" class="com.hrt.biz.bill.dao.impl.AgentUnitTaskDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="agentUnitTaskDetail1Service" class="com.hrt.biz.bill.service.impl.AgentUnitTaskDetail1ServiceImpl">
+		<property name="agentUnitTaskDetail1Dao" ref="agentUnitTaskDetail1Dao"></property>
+		<property name="agentUnitDao" ref="agentUnitDao"></property>
+	</bean>
+	<bean id="agentUnitTaskDetail1Dao" class="com.hrt.biz.bill.dao.impl.AgentUnitTaskDetail1DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="agentUnitTaskDetail2Service" class="com.hrt.biz.bill.service.impl.AgentUnitTaskDetail2ServiceImpl">
+		<property name="agentUnitTaskDetail2Dao" ref="agentUnitTaskDetail2Dao"></property>
+		<property name="agentUnitDao" ref="agentUnitDao"></property>
+	</bean>
+	<bean id="agentUnitTaskDetail2Dao" class="com.hrt.biz.bill.dao.impl.AgentUnitTaskDetail2DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="agentUnitTaskDetail3Service" class="com.hrt.biz.bill.service.impl.AgentUnitTaskDetail3ServiceImpl">
+		<property name="agentUnitTaskDetail3Dao" ref="agentUnitTaskDetail3Dao"></property>
+		<property name="agentUnitDao" ref="agentUnitDao"></property>
+	</bean>
+	<bean id="agentUnitTaskDetail3Dao" class="com.hrt.biz.bill.dao.impl.AgentUnitTaskDetail3DaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantUpdateTerAction" class="com.hrt.biz.bill.action.MerchantUpdateTerAction" scope="prototype">
+		<property name="merchantUpdateTerService" ref="merchantUpdateTerService"></property>
+	</bean>
+	<bean id="merchantUpdateTerService" class="com.hrt.biz.bill.service.impl.MerchantUpdateTerServiceImpl">
+		<property name="merchantUpdateTerDao" ref="merchantUpdateTerDao"></property>
+		<property name="merchantInfoDao" ref="merchantInfoDao"></property>
+		<property name="merchantTerminalInfoDao" ref="merchantTerminalInfoDao"></property>
+		<property name="terminalInfoDao" ref="terminalInfoDao"></property>
+		<property name="admAppIp" value="${admAppIp}"/>
+	</bean>
+	<bean id="merchantUpdateTerDao" class="com.hrt.biz.bill.dao.impl.MerchantUpdateTerDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="merchantThreeUploadAction" class="com.hrt.biz.bill.action.MerchantThreeUploadAction" scope="prototype">
+		<property name="merchantThreeUploadService" ref="merchantThreeUploadService"></property>
+	</bean>
+	<bean id="merchantThreeUploadService" class="com.hrt.biz.bill.service.impl.MerchantThreeUploadServiceImpl">
+		<property name="merchantThreeUploadDao" ref="merchantThreeUploadDao"></property>
+	</bean>
+	<bean id="merchantThreeUploadDao" class="com.hrt.biz.bill.dao.impl.MerchantThreeUploadDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkRealtxnAction" class="com.hrt.biz.check.action.CheckRealtxnAction" scope="prototype">
+		<property name="checkRealtxnService" ref="checkRealtxnService"></property>
+	</bean>
+	<bean id="checkRealtxnService" class="com.hrt.biz.check.service.impl.CheckRealtxnServiceImpl">
+		<property name="checkRealtxnDao" ref="checkRealtxnDao"></property>
+	</bean>
+	<bean id="checkRealtxnDao" class="com.hrt.biz.check.dao.impl.CheckRealtxnDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="changeTerRateAction" class="com.hrt.biz.bill.action.ChangeTerRateAction" scope="prototype">
+		<property name="changeTerRateService" ref="changeTerRateService"></property>
+	</bean>
+	<bean id="changeTerRateService" class="com.hrt.biz.bill.service.impl.ChangeTerRateServiceImpl">
+		<property name="changeTerRateDao" ref="changeTerRateDao"></property>
+	</bean>
+	<bean id="changeTerRateDao" class="com.hrt.biz.bill.dao.impl.ChangeTerRateDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 扣款 -->
+	<bean id="checkDeductionDao" class="com.hrt.biz.check.dao.impl.CheckDeductionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkDeductionService" class="com.hrt.biz.check.service.impl.CheckDeductionServiceImpl">
+		<property name="checkDeductionDao" ref="checkDeductionDao"/>
+	</bean>
+	<bean id="checkDeductionAction" class="com.hrt.biz.check.action.CheckDeductionAction" scope="prototype">
+		<property name="checkDeductionService" ref="checkDeductionService"/>
+	</bean>
+
+	<!-- 日返 -->
+	<bean id="checkCashbackDayDao" class="com.hrt.biz.check.dao.impl.CheckCashbackDayDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkCashbackDayService" class="com.hrt.biz.check.service.impl.CheckCashbackDayServiceImpl">
+		<property name="checkCashbackDayDao" ref="checkCashbackDayDao"/>
+	</bean>
+	<bean id="checkCashbackDayAction" class="com.hrt.biz.check.action.CheckCashbackDayAction" scope="prototype">
+		<property name="checkCashbackDayService" ref="checkCashbackDayService"/>
+	</bean>
+
+	<bean id="problemFeedbackDao" class="com.hrt.biz.bill.dao.impl.ProblemFeedbackDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="problemFeedbackService" class="com.hrt.biz.bill.service.impl.ProblemFeedbackServiceImpl">
+		<property name="problemFeedbackDao" ref="problemFeedbackDao"/>
+	</bean>
+	<bean id="problemFeedbackAction" class="com.hrt.biz.bill.action.ProblemFeedbackAction" scope="prototype">
+		<property name="problemFeedbackService" ref="problemFeedbackService"></property>
+	</bean>
+	
+	<bean id="jedisPropertis" class="com.hrt.redis.JedisSource" >
+		<property name="host" value="${redis.host}" />
+		<property name="port" value="${redis.port}" />
+		<property name="auth" value="${redis.passwd}" />
+		<property name="max_active" value="${jedis.maxactive}" />
+		<property name="max_idle" value="${jedis.maxidle}" />
+		<property name="max_wait" value="${jedis.maxwait}" />
+		<property name="timeOut" value="${jedis.timeout}" />
+		<property name="test_no_borrow" value="${jedis.test_no_borrow}" />
+	</bean>
+	
+	<!-- 分润调整 -->
+	<bean id="proxyPurseAction" class="com.hrt.biz.bill.action.ProxyPurseAction " scope="prototype">
+		<property name="proxyPurseService" ref="proxyPurseService"></property>
+	</bean>
+	<bean id="proxyPurseService" class="com.hrt.biz.bill.service.impl.ProxyPurseServiceImpl ">
+		<property name="proxyPurseDao" ref="proxyPurseDao"></property>
+	</bean>
+	<bean id="proxyPurseDao" class="com.hrt.biz.bill.dao.impl.ProxyPurseDaoImpl " >
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="checkWalletCashSwitchDao" class="com.hrt.biz.check.dao.impl.CheckWalletCashSwitchDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkWalletCashSwitchWDao" class="com.hrt.biz.check.dao.impl.CheckWalletCashSwitchWDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkWalletCashSwitchLogDao" class="com.hrt.biz.check.dao.impl.CheckWalletCashSwitchLogDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="checkWalletCashSwitchService" class="com.hrt.biz.check.service.impl.CheckWalletCashSwitchServiceImpl">
+		<property name="checkWalletCashSwitchDao" ref="checkWalletCashSwitchDao"></property>
+		<property name="checkWalletCashSwitchWDao" ref="checkWalletCashSwitchWDao"></property>
+		<property name="checkWalletCashSwitchLogDao" ref="checkWalletCashSwitchLogDao"></property>
+		<property name="checkUnitProfitMicroService" ref="checkUnitProfitMicroService"></property>
+		<property name="unitDao" ref="unitDao"></property>
+		<property name="agentUnitDao" ref="agentUnitDao"></property>
+	</bean>
+    <bean id="checkWalletCashSwitchAction" class="com.hrt.biz.check.action.CheckWalletCashSwitchAction" scope="prototype">
+        <property name="checkWalletCashSwitchService" ref="checkWalletCashSwitchService"></property>
+    </bean>
+    
+    <!-- 特殊活动返现 -->
+	<bean id="pgCashbackSpecialDao" class="com.hrt.biz.check.dao.impl.PgCashbackSpecialDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="pgCashbackSpecialService" class="com.hrt.biz.check.service.impl.PgCashbackSpecialServiceImpl">
+		<property name="pgCashbackSpecialDao" ref="pgCashbackSpecialDao"/>
+	</bean>
+	<bean id="pgCashbackSpecialAction" class="com.hrt.biz.check.action.PgCashbackSpecialAction" scope="prototype">
+		<property name="pgCashbackSpecialService" ref="pgCashbackSpecialService"/>
+	</bean>
+	<!-- 活动产品对应 -->
+	<bean id="producttypeInRebatetypeDao" class="com.hrt.biz.bill.dao.impl.ProducttypeInRebatetypeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="producttypeInRebatetypeService" class="com.hrt.biz.bill.service.impl.ProducttypeInRebatetypeServiceImpl">
+		<property name="producttypeInRebatetypeDao" ref="producttypeInRebatetypeDao"/>
+	</bean>
+	<bean id="producttypeInRebatetypeAction" class="com.hrt.biz.bill.action.ProducttypeInRebatetypeAction" scope="prototype">
+		<property name="producttypeInRebatetypeService" ref="producttypeInRebatetypeService"/>
+	</bean>
+	<!-- 中心代扣款 -->
+	<bean id="checkProfitwithholdDao" class="com.hrt.biz.check.dao.impl.CheckProfitwithholdDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="checkProfitwithholdService" class="com.hrt.biz.check.service.impl.CheckProfitwithholdServiceImpl">
+		<property name="checkProfitwithholdDao" ref="checkProfitwithholdDao"/>
+		<property name="unitDao" ref="unitDao"/>
+		<property name="merchantInfoService" ref="merchantInfoService"/>
+	</bean>
+	<bean id="checkProfitwithholdAction" class="com.hrt.biz.check.action.CheckProfitwithholdAction" scope="prototype">
+		<property name="checkProfitwithholdService" ref="checkProfitwithholdService"/>
+	</bean>
+</beans>

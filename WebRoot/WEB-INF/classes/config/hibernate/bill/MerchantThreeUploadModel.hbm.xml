@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MerchantThreeUploadModel" table="BILL_MERCHANTTHREEUPLOAD">
+		<id name="bmthid" column="BMTHID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTTHREEUPLOAD</param>
+			</generator>
+		</id>
+		<property name="mid" column="MID"/>
+		<property name="tid"  column="TID"/>
+		<property name="sn" column="SN"/>
+		<property name="license_name" column="LICENSE_NAME"/>
+		<property name="r_name" column="R_NAME"/>
+		<property name="r_addr" column="R_ADDR"/>
+		<property name="isConnect" column="ISCONNECT"/>
+		<property name="isImmunity" column="ISIMMUNITY"/>
+		<property name="isUnionPay" column="ISUNIONPAY"/>
+		<property name="merUpload1" column="MERUPLOAD1"/>
+		<property name="merUpload2" column="MERUPLOAD2"/>
+		<property name="merUpload3" column="MERUPLOAD3"/>
+		<property name="merUpload4" column="MERUPLOAD4"/>
+		<property name="merUpload5" column="MERUPLOAD5"/>
+		<property name="merUpload6" column="MERUPLOAD6"/>
+		<property name="merUpload7" column="MERUPLOAD7"/>
+		<property name="merUpload8" column="MERUPLOAD8"/>
+		<property name="maintainType"  column="MAINTAINTYPE"/>
+		<property name="maintainDate" column="MAINTAINDATE" type="timestamp"  />
+		<property name="approveStatus" column="APPROVESTATUS"/>
+		<property name="approveDate" type="timestamp"  column="APPROVEDATE"/>
+		<property name="approveNote" column="APPROVENOTE"/>
+    </class>
+</hibernate-mapping>

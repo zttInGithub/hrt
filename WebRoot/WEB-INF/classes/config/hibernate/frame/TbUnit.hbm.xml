@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="UnitModel" table="SYS_UNIT">
+		<id name="unNo" type="java.lang.String">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="unitName" column="UN_NAME"/>
+		<property name="unLvl" column="UN_LVL"/>
+		<property name="bizCode" column="BIZ_CODE"/>
+		<property name="seqNo"  column="SEQNO"/>
+		<property name="seqNo2"  column="SEQNO2"/>
+		<property name="status" column="STATUS"/>
+		<property name="provinceCode" column="PROVINCE_CODE"/>
+		<property name="createDate" column="CREATE_DATE" type="timestamp"/>
+		<property name="createUser" column="CREATE_USER"/>
+		<property name="updateDate" column="UPDATE_DATE" type="timestamp"/>
+		<property name="updateUser" column="UPDATE_USER"/>
+		<property name="unAttr" column="UN_ATTR"/>
+		<property name="unitCode" column="UNITCODE"/>
+		<property name="agentAttr" column="AGENT_ATTR"/>
+		<property name="upperUnit2" column="UPPER_UNIT2"/>
+		<property name="upperUnit3" column="UPPER_UNIT3"/>
+		<many-to-one name="parent" column="UPPER_UNIT" />
+		<set name="children" inverse="true">
+			<key column="UPPER_UNIT"></key>
+			<one-to-many class="UnitModel"/>
+		</set>
+		<set name="users" table="SYS_UNIT_USER" lazy="extra" inverse="true">
+			<key column="UNNO"></key>
+			<many-to-many class="com.hrt.frame.entity.model.UserModel" column="USER_ID" />
+		</set>
+    </class>
+</hibernate-mapping>

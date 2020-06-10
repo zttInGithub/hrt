@@ -1,0 +1,157 @@
+package com.hrt.biz.bill.service.impl;
+
+import com.hrt.biz.bill.dao.IBillTerminalSimDao;
+import com.hrt.biz.bill.entity.model.BillTerminalSimModel;
+import com.hrt.biz.bill.entity.pagebean.BillTerminalSimBean;
+import com.hrt.biz.bill.service.IBillTerminalSimService;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * BillTerminalSimServiceImpl
+ * <p>
+ * This is description
+ * </p>
+ *
+ * @author xuegangliu 2020/05/12
+ * @since 1.8
+ **/
+public class BillTerminalSimServiceImpl implements IBillTerminalSimService {
+    private Log log = LogFactory.getLog(BillTerminalSimServiceImpl.class);
+
+    @Override
+    public DataGridBean queryBillTerminalSimGrid(BillTerminalSimBean billTerminalSimBean, UserBean userBean) {
+        DataGridBean dgb = new DataGridBean();
+        StringBuilder sqlCount = new StringBuilder();
+        StringBuilder sql = new StringBuilder();
+        Map map = new HashMap();
+        getQueryBillTerminalSimGridSql(billTerminalSimBean, userBean, sql, map);
+        sqlCount.append("select count(*) from (").append(sql.toString()).append(")");
+        Integer counts = billTerminalSimDao.querysqlCounts2(sqlCount.toString(), map);
+        sql.append(" order by createdate desc");
+        List<Map<String, Object>> list = billTerminalSimDao.queryObjectsBySqlList2(sql.toString(), map, billTerminalSimBean.getPage(), billTerminalSimBean.getRows());
+        dgb.setRows(list);
+        dgb.setTotal(counts);
+        return dgb;
+    }
+
+    private void getQueryBillTerminalSimGridSql(BillTerminalSimBean billTerminalSimBean, UserBean userBean, StringBuilder sql, Map map) {
+        sql.append("select * from (select ")
+                .append(" (select k.mid from bill_merchantterminalinfo k where k.sn=t1.sn and k.maintaintype!='D' and rownum=1) mid,")
+                .append(" (select k1.status from bill_terminalinfo k1 where k1.sn=t1.sn) snstatus,")
+                .append(" (select k2.acceptday from bill_terminalinfo k2 where k2.sn=t1.sn) actdate,")
+                .append(" t1.btsid,t1.sn,t1.sim,t1.trydate,t1.initdate,t1.paydate,t1.deductdate,t1.status,t1.createdate")
+                .append(" from bill_terminal_sim t1 ) where 1=1 ");
+        if (userBean.getUnitLvl() == 0) {
+        } else {
+            sql.append(" and 1=0 ");
+        }
+        if (StringUtils.isNotEmpty(billTerminalSimBean.getSim())) {
+            sql.append(" and sim=:sim ");
+            map.put("sim", billTerminalSimBean.getSim());
+        }
+
+        if (StringUtils.isNotEmpty(billTerminalSimBean.getSn())) {
+            sql.append(" and sn=:sn ");
+            map.put("sn", billTerminalSimBean.getSn());
+        }
+
+        if(billTerminalSimBean.getStart()!=null && billTerminalSimBean.getEnd()!=null){
+            SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+            sql.append(" and paydate>=:paydate1 and paydate<=:paydate2 ");
+            map.put("paydate1",df.format(billTerminalSimBean.getStart()));
+            map.put("paydate2",df.format(billTerminalSimBean.getEnd()));
+        }
+
+        if (billTerminalSimBean.getStatus() != null) {
+            sql.append(" and status=:status ");
+            map.put("status", billTerminalSimBean.getStatus());
+        }
+
+        if (billTerminalSimBean.getSnStatus() != null) {
+            if (billTerminalSimBean.getSnStatus() == 2) {
+                sql.append(" and snstatus=:snstatus ");
+                map.put("snstatus", billTerminalSimBean.getSnStatus());
+            } else {
+                sql.append(" and snstatus!=2 ");
+            }
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> exportBillTerminalSimGrid(BillTerminalSimBean billTerminalSimBean, UserBean userBean){
+        StringBuilder sql=new StringBuilder();
+        Map map=new HashMap();
+        getQueryBillTerminalSimGridSql(billTerminalSimBean,userBean,sql,map);
+        List<Map<String, Object>> list = billTerminalSimDao.queryObjectsBySqlListMap2(sql.toString(),map);
+        return list;
+    }
+
+    @Override
+    public boolean updateBillTerminalSim(BillTerminalSimBean billTerminalSimBean, UserBean userBean) {
+        BillTerminalSimModel billTerminalSimModel = billTerminalSimDao.queryObjectByHql("from BillTerminalSimModel where btsId=?", new Object[]{billTerminalSimBean.getBtsId()});
+        if (billTerminalSimModel != null) {
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getMid())) {
+                billTerminalSimModel.setMid(billTerminalSimBean.getMid());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getSim())) {
+                billTerminalSimModel.setSim(billTerminalSimBean.getSim());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getSn())) {
+                billTerminalSimModel.setSn(billTerminalSimBean.getSn());
+            }
+            if (billTerminalSimBean.getStatus() != null) {
+                billTerminalSimModel.setStatus(billTerminalSimBean.getStatus());
+            }
+            if (billTerminalSimBean.getSnStatus() != null) {
+                billTerminalSimModel.setSnStatus(billTerminalSimBean.getSnStatus());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getInitDate())) {
+                billTerminalSimModel.setInitDate(billTerminalSimBean.getInitDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getTryDate())) {
+                billTerminalSimModel.setTryDate(billTerminalSimBean.getTryDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getPayDate())) {
+                billTerminalSimModel.setPayDate(billTerminalSimBean.getPayDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getDeductDate())) {
+                billTerminalSimModel.setDeductDate(billTerminalSimBean.getDeductDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getActDate())) {
+                billTerminalSimModel.setActDate(billTerminalSimBean.getActDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getRemark1())) {
+                billTerminalSimModel.setRemark1(billTerminalSimBean.getRemark1());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getRemark2())) {
+                billTerminalSimModel.setRemark2(billTerminalSimBean.getRemark2());
+            }
+            billTerminalSimModel.setUpdateDate(new Date());
+            billTerminalSimModel.setUpdateUser(userBean.getUserID() + "");
+            billTerminalSimDao.updateObject(billTerminalSimModel);
+            return true;
+        }
+        return false;
+    }
+
+
+    private IBillTerminalSimDao billTerminalSimDao;
+
+    public IBillTerminalSimDao getBillTerminalSimDao() {
+        return billTerminalSimDao;
+    }
+
+    public void setBillTerminalSimDao(IBillTerminalSimDao billTerminalSimDao) {
+        this.billTerminalSimDao = billTerminalSimDao;
+    }
+}

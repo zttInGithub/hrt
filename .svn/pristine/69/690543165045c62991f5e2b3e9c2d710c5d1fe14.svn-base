@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.hrt.frame.entity.model.EnumModel" table="SYS_ENUM">
+        <id name="enumId" column="ENUM_ID">
+            <generator class="sequence">
+                <param name="sequence">S_sys_enum</param>
+            </generator>
+        </id>
+        <property name="enumType" column="ENUM_TYPE"/>
+        <property name="enumTable" column="ENUM_TABLE"/>
+        <property name="enumColumn" column="ENUM_COLUMN"/>
+        <property name="enumStatus" column="ENUM_STATUS"/>
+        <property name="enumCode" column="ENUM_CODE"/>
+        <property name="enumName" column="ENUM_NAME"/>
+        <property name="enumDesc" column="ENUM_DESC"/>
+        <property name="enumValue" column="ENUM_VALUE"/>
+        <property name="enumInfo" column="ENUM_INFO"/>
+    </class>
+</hibernate-mapping>

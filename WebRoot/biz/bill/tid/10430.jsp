@@ -1,0 +1,514 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!-- 入库管理 -->
+<script type="text/javascript">
+	//初始化datagrid
+	$(function() {
+		$('#sysAdmin_10430_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/purchaseDetail_listPurchaseOrderAndDetail.action',
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			pageSize : 10,
+			pageList : [ 10, 15 ],
+			remoteSort:true,
+			idField : 'PDID',
+			columns : [[{
+				title : '采购ID',
+				field : 'PDID',
+				width : 100,
+				hidden : true
+			},{
+				title : '采购ID',
+				field : 'POID',
+				width : 125,
+				hidden : true
+			},{
+				title : '联系人',
+				field : 'CONTACTS',
+				width : 125,
+				hidden : true
+			},{
+				title : '联系电话',
+				field : 'CONTACTPHONE',
+				width : 125,
+				hidden : true
+			},{
+				title : '总数量',
+				field : 'ORDERNUM',
+				width : 125,
+				hidden : true
+			},{
+				title : '订单号',
+				field : 'ORDERID',
+				width : 125
+			},{
+				title : '采购单日期',
+				field : 'ORDERDAY',
+				width : 80
+			},{
+				title : '大类',
+				field : 'ORDERMETHOD',
+				width : 60,
+				formatter : function(value,row,index) {
+					if(value==1){
+						return "厂商单";
+					}else if(value==2){
+						return "代理单";
+					}else if(value==3){
+						return "代理商单";
+					}
+				}
+			},{
+				title : '供应商名称',
+				field : 'VENDORNAME',
+				width : 120
+			},{
+				title : '品牌',
+				field : 'BRANDNAME',
+				width : 60
+			},{
+				title : '订单类型',
+				field : 'ORDERTYPE',
+				width : 80,
+				formatter : function(value,row,index) {
+					if(value==1){
+						return "采购订单";
+					}else if((value==2)){
+						return "赠品订单";
+					}else if((value==3)){
+						return "回购订单";
+					}else if((value==4)){
+						return "退货";
+					}else if(value == 5){
+						return '换购订单';
+					}else if(value == 7){
+						return "自定义政策";
+					}
+				}
+			},{
+				title : '机型大类',
+				field : 'SNTYPE',
+				width : 80,
+				formatter : function(value,row,index) {
+					if(value==1){
+						return "小蓝牙";
+					}else if((value==2)){
+						return "大蓝牙";
+					}
+				}
+			},{
+				title :'机型',
+				field :'MACHINEMODEL',
+				width : 80,
+				sortable :true
+			},{
+				title :'金额',
+				field :'DETAILAMT',
+				align : 'right',
+				width : 80
+			},{
+				title :'数量',
+				field :'MACHINENUM',
+				align : 'right',
+				width : 70
+			},{
+				title :'已入数量',
+				field :'IMPORTNUM',
+				align : 'right',
+				width : 70
+			},{
+				title :'采购人',
+				field :'PURCHASER',
+				width : 80
+			},{
+				title :'状态',
+				field :'DETAILSTATUS',
+				width : 80,
+				formatter : function(value,row,index) {
+					if(value == 6){
+						return '未入库';
+					}else if(value == 7){
+						return '入库中';
+					}else if(value == 8){
+						return '已入库';
+					}
+				}
+			},{
+				title :'创建时间',
+				field :'DETAILCDATE',
+				width : 130
+			},{
+				title :'操作',
+				field :'operation',
+				width : 100,
+				align : 'center',
+				formatter : function(value,row,index) {
+					// @author:lxg-20200313 待确认采购订单中的代理商单是否需要做入库操作
+					if((row.DETAILSTATUS == 6||row.DETAILSTATUS ==7)&&(row.ORDERMETHOD==1 || row.ORDERMETHOD==3)){
+						return '<img src="${ctx}/images/query_search.png" title="查看订单" style="cursor:pointer;" onclick="sysAdmin_10430_detailFun('+index+')"/>&nbsp;&nbsp'+
+						'<img src="${ctx}/images/frame_pencil.png" title="明细入库" style="cursor:pointer;" onclick="sysAdmin_10430_updateFun('+index+')"/>&nbsp;&nbsp'+
+						'<img src="${ctx}/images/frame_pencil.png" title="分段入库" style="cursor:pointer;" onclick="sysAdmin_10430_updateFun2('+index+')"/>&nbsp;&nbsp';
+					}else if((row.DETAILSTATUS == 6||row.DETAILSTATUS ==7)&&(row.ORDERMETHOD==2&&row.ORDERTYPE==4)){
+						return '<img src="${ctx}/images/query_search.png" title="查看订单" style="cursor:pointer;" onclick="sysAdmin_10430_detailFun('+index+')"/>&nbsp;&nbsp'+
+						'<img src="${ctx}/images/frame_pencil.png" title="明细入库" style="cursor:pointer;" onclick="sysAdmin_10430_updateFun3('+index+')"/>&nbsp;&nbsp'+
+						'<img src="${ctx}/images/frame_pencil.png" title="分段入库" style="cursor:pointer;" onclick="sysAdmin_10430_updateFun4('+index+')"/>&nbsp;&nbsp';
+					}else if(row.DETAILSTATUS == 8){
+						return '<img src="${ctx}/images/query_search.png" title="查看订单" style="cursor:pointer;" onclick="sysAdmin_10430_detailFun('+index+')"/>&nbsp;&nbsp';
+					}
+				}
+			}]], 
+			toolbar:[{
+				text:'入库信息导出',
+				iconCls:'icon-query-export',
+				handler:function(){
+					sysAdmin_10430_exportFun();
+				}
+			}]		
+		});
+	});
+	//修改退货订单
+	function sysAdmin_10430_updateFun3(index){
+    	var rows = $('#sysAdmin_10430_datagrid').datagrid('getRows');
+		var row = rows[index];
+		$('<div id="sysAdmin_10430_updatePurchaseDetail1"/>').dialog({
+			title: '退货入库',
+			width: 670,   
+		    height: 216,   
+		    closed: false,
+		    href:'${ctx}/biz/bill/tid/10505.jsp',
+		    modal: true,
+		    onLoad:function() {
+		    	$('#frmBjjz10505').form('load', row);
+			},
+			buttons:[],
+			onClose : function() {
+				$(this).dialog('destroy');
+			}  
+		});
+	}
+	//修改退货订单
+	function sysAdmin_10430_updateFun4(index){
+    	var rows = $('#sysAdmin_10430_datagrid').datagrid('getRows');
+		var row = rows[index];
+		$('<div id="sysAdmin_10430_updatePurchaseDetail2"/>').dialog({
+			title: '退货入库',
+			width: 670,   
+		    height: 216,   
+		    closed: false,
+		    href:'${ctx}/biz/bill/tid/10506.jsp',
+		    modal: true,
+		    onLoad:function() {
+		    	$('#frmBjjz10506').form('load', row);
+			},
+			buttons:[],
+			onClose : function() {
+				$(this).dialog('destroy');
+			}  
+		});
+	}
+	//导出Excel
+	function sysAdmin_10430_exportFun() {
+		$('#sysAdmin_10430_searchForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/purchaseDetail_exportPurchase.action',
+			    	});
+	}
+	
+	//新增
+	function sysAdmin_10430_addPurchaseOrder() {
+		$('<div id="sysAdmin_10430_addDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">新增采购</span>',
+			width: 900,
+		    height:550, 
+		    closed: false,
+		    href: '${ctx}/biz/bill/tid/10411.jsp',
+		    modal: true,
+		    buttons:[{
+		    	text:'确认',
+		    	iconCls:'icon-ok',
+		    	handler:function() {
+		    	
+		    		var inputs = document.getElementById("sysAdmin_10411_addForm").getElementsByTagName("input");
+		    		for(var i=0;i<inputs.length;i++){
+		    	    	if(inputs[i].type=="file"){continue;}
+		    			inputs[i].value = $.trim(inputs[i].value);
+		    		}
+		    	
+		    		var validator = $('#sysAdmin_10411_addForm').form('validate');
+		    		
+		    		if(validator){
+		    			$.messager.progress();
+		    		}
+		    		
+		    		$('#sysAdmin_10411_addForm').form('submit',{
+			    		url:'${ctx}/sysAdmin/purchaseOrder_addPurchaseOrder.action',
+		    			success:function(data) {
+		    				$.messager.progress('close'); 
+		    				var result = $.parseJSON(data);
+			    			if (result.sessionExpire) {
+			    				window.location.href = getProjectLocation();
+				    		} else {
+				    			if (result.success) {
+				    				$('#sysAdmin_10430_datagrid').datagrid('reload');
+					    			$('#sysAdmin_10430_addDialog').dialog('destroy');
+					    			$.messager.show({
+										title : '提示',
+										msg : result.msg
+									});
+					    		} else {
+					    			$.messager.alert('提示', result.msg);
+						    	}
+					    	}
+			    		}
+			    	});
+		    	}			    
+			},{
+				text:'取消',
+				iconCls:'icon-cancel',
+				handler:function() {
+					$('#sysAdmin_10430_addDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+			}
+		});
+	}
+	//查看
+	function sysAdmin_10430_detailFun(index){
+		var rows = $('#sysAdmin_10430_datagrid').datagrid('getRows');
+		var row = rows[index];
+		$('<div id="sysAdmin_10430_searchDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">采购单信息</span>',
+			width: 900,
+		    height:550, 
+		    closed: false,
+		    href: '${ctx}/biz/bill/tid/10431.jsp?poid='+row.POID,
+		    modal: true,
+		    onLoad:function() {
+		    	$('#sysAdmin_10431_addForm').form('load', row);
+		    	if(row.ORDERMETHOD==1){
+		    		$('#orderMethod_10431').val("厂商单")
+		    	}else if(row.ORDERMETHOD==2){
+		    		$('#orderMethod_10431').val("代理单")
+		    	}else if(row.ORDERMETHOD==3){
+						$('#orderMethod_10431').val("代理商单")
+					}
+			},
+			buttons:[{
+				text:'关闭',
+				iconCls:'icon-cancel',
+				handler:function() {
+					$('#sysAdmin_10430_searchDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+			}
+		});
+	}
+	
+	//删除订单
+	function sysAdmin_10430_deleteFun(poid){
+		$.messager.confirm('确认','您确认要删除采购单吗?',function(result) {
+			if (result) {
+				$.ajax({
+					url:"${ctx}/sysAdmin/purchaseOrder_deletePurchaseOrder.action",
+					type:'post',
+					data:{"poid":poid},
+					dataType:'json',
+					success:function(data, textStatus, jqXHR) {
+						if (data.success) {
+							$.messager.show({
+								title : '提示',
+								msg : data.msg
+							});
+							$('#sysAdmin_10430_datagrid').datagrid('reload');
+						} else {
+							$.messager.alert('提示', data.msg);
+						}
+					},
+					error:function() {
+						$.messager.alert('提示', '删除采购单出错！');
+					}
+				});
+			}
+		});
+	}
+	
+	//修改采购订单
+	function sysAdmin_10430_updateFun(index){
+    	var rows = $('#sysAdmin_10430_datagrid').datagrid('getRows');
+		var row = rows[index];
+		$('<div id="sysAdmin_10430_updatePurchaseOrder"/>').dialog({
+			title: '采购入库',
+			width: 670,   
+		    height: 316,
+		    closed: false,
+		    href:'${ctx}/biz/bill/tid/10432.jsp',
+		    modal: true,
+		    onLoad:function() {
+		    	$('#frmBjjz10432').form('load', row);
+		    	$('#storage_10432').val(row.UNNO);
+			},
+			buttons:[],
+			onClose : function() {
+				$(this).dialog('destroy');
+			}  
+		});
+	}
+
+	//修改采购订单
+	function sysAdmin_10430_updateFun2(index){
+    	var rows = $('#sysAdmin_10430_datagrid').datagrid('getRows');
+		var row = rows[index];
+		$('<div id="sysAdmin_10430_updatePurchaseOrder"/>').dialog({
+			title: '采购入库',
+			width: 670,   
+		    height: 216,   
+		    closed: false,
+		    href:'${ctx}/biz/bill/tid/10436.jsp',
+		    modal: true,
+		    onLoad:function() {
+		    	$('#frmBjjz10436').form('load', row);
+	    		$('#storage_10436').val(row.UNNO);
+			},
+			buttons:[],
+			onClose : function() {
+				$(this).dialog('destroy');
+			}  
+		});
+	}
+	
+	//提交审核
+	function sysAdmin_10430_submitFun(poid){
+		$.messager.confirm('确认','您确认要提交审核该采购单吗?',function(result) {
+			if (result) {
+				$.ajax({
+					url:"${ctx}/sysAdmin/purchaseOrder_submitPurchaseOrder.action",
+					type:'post',
+					data:{"poid":poid},
+					dataType:'json',
+					success:function(data, textStatus, jqXHR) {
+						if (data.success) {
+							$.messager.show({
+								title : '提示',
+								msg : data.msg
+							});
+							$('#sysAdmin_10430_datagrid').datagrid('reload');
+						} else {
+							$.messager.alert('提示', data.msg);
+						}
+					},
+					error:function() {
+						$.messager.alert('提示', '提交审核采购单出错！');
+					}
+				});
+			}
+		});
+	}
+
+	//表单查询
+	function sysAdmin_10430_searchFun() {
+		var start = $("#10430_cdate").datebox('getValue');
+    	var end = $("#10430_cdateEnd").datebox('getValue');
+	   	if((!start&&end)||(!end&&start)){
+	   		$.messager.alert('提示', "查询时间必须为时间段");
+	   		return;
+	   	}
+	   	start = start.replace(/\-/gi, "/");
+	   	end = end.replace(/\-/gi, "/");
+	    var startTime = new Date(start).getTime();
+	    var endTime = new Date(end).getTime();
+	   	if ((endTime-startTime)>(1000*3600*24*30)){
+	   	   	$.messager.alert('提示', "查询最长时间为30天");
+	   	   	return;
+	   	}
+	   	if ((endTime-startTime)<0){
+	   	   	$.messager.alert('提示', "起始日期需小于截止日期");
+	   	   	return;
+	   	}
+		$('#sysAdmin_10430_datagrid').datagrid('load', serializeObject($('#sysAdmin_10430_searchForm'))); 
+	}
+
+	//清除表单内容
+	function sysAdmin_10430_cleanFun() {
+		$('#sysAdmin_10430_searchForm input').val('');
+	}
+	$(function(){
+		$('#machineModel_10430').combogrid({
+			url : '${ctx}/sysAdmin/purchaseDetail_listMachineModel.action',
+			idField:'MACHINEMODEL',
+			textField:'MACHINEMODEL',
+			mode:'remote',
+			fitColumns:true,
+			columns:[[ 
+				{field:'MACHINEMODEL',title:'机型名称',width:150},
+			]]
+		});
+	});
+</script>
+
+
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+	<div data-options="region:'north',border:false" style="height:80px; overflow: hidden; padding-top:15px;">
+		<form id="sysAdmin_10430_searchForm" style="padding-left:5%" method="post">
+			<table class="tableForm" >
+				<tr>
+					<th>订单号&nbsp;</th>
+					<td><input name="orderID" style="width: 138px;" /></td>
+				    
+					<th>&nbsp;&nbsp;供应商名称&nbsp;</th>
+					<td><input name="vendorName" style="width: 138px;" /></td>
+					
+					<th>&nbsp;&nbsp;机型&nbsp;</th>
+					<td><select id="machineModel_10430" name="machineModel"
+						class="easyui-combogrid"
+						data-options="editable:false" style="width: 155px;"></select></td>
+					
+					<th>&nbsp;&nbsp;创建时间&nbsp;</th>
+					<td><input name="detailCdate" id="10430_cdate" class="easyui-datebox" data-options="editable:false" style="width: 108px;"/>
+					&nbsp;至&nbsp;<input name="detailCdateEnd" id="10430_cdateEnd" class="easyui-datebox" data-options="editable:false" style="width: 108px;"/>
+					</td>
+				</tr> 
+			
+				<tr>
+					<th>&nbsp;&nbsp;订单类型&nbsp;</th>
+					<td>
+						<select name="orderType" class="easyui-combobox" data-options="panelHeight:'auto',editable:false"  style="width:105px;">
+		    				<option value="1" selected="selected">采购订单</option>
+		    				<option value="2">赠品订单</option>
+		    				<option value="3">回购订单</option>
+		    				<option value="4">退货</option>
+		    				<option value="5">换购订单</option>
+		    				<option value="7">自定义政策</option>
+		    			</select>
+					</td>
+					<th>&nbsp;&nbsp;状态&nbsp;</th>
+					<td>
+						<select name="detailStatus" class="easyui-combobox" data-options="panelHeight:'auto',editable:false"  style="width:105px;">
+						<option value="" selected="selected">全部</option>
+		    				<option value="6">未入库</option>
+		    				<option value="7">入库中</option>
+		    				<option value="8">已入库</option>
+		    			</select>
+					</td>
+					
+					<td colspan="10" style="text-align: center;">
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" 
+						onclick="sysAdmin_10430_searchFun();">查询</a> &nbsp;
+						<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" 
+						onclick="sysAdmin_10430_cleanFun();">清空</a>	
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>  
+ 
+ 	<div data-options="region:'center', border:false" style="overflow: hidden;">  
+		<table id="sysAdmin_10430_datagrid" style="overflow: hidden;"></table> 
+	</div>
+</div>

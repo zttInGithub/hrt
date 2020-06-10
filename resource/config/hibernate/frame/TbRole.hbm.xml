@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="RoleModel" table="SYS_ROLE">
+		<id name="roleID" column="ROLE_ID">
+			<generator class="sequence">
+				<param name="sequence">S_SYS_ROLE</param>
+			</generator>
+		</id>
+		<property name="roleName" column="ROLE_NAME"/>
+		<property name="description" column="DESCR"/>
+		<property name="createDate" type="timestamp" column="CREATE_DATE"/>
+		<property name="createUser" column="CREATE_USER"/>
+		<property name="updateDate" type="timestamp" column="UPDATE_DATE"/>
+		<property name="updateUser" column="UPDATE_USER"/>
+		<property name="roleLevel" column="ROLE_LEVEL"/>
+		<property name="roleAttr" column="ROLE_ATTR"/>
+		<property name="status" column="STATUS"/>
+		<property name="roleID2" column="ROLE_ID2"/>
+		<set name="menus" table="SYS_ROLE_MENU">
+			<key column="ROLE_ID"></key>
+			<many-to-many class="com.hrt.frame.entity.model.MenuModel" column="MENU_ID"/>
+		</set>
+		<set name="users" table="SYS_USER_ROLE" lazy="extra" inverse="true">
+			<key column="ROLE_ID"></key>
+			<many-to-many class="com.hrt.frame.entity.model.UserModel" column="USER_ID"/>
+		</set>
+    </class>
+</hibernate-mapping>

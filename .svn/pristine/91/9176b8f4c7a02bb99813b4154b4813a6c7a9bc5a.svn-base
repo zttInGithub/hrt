@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.hrt.biz.bill.entity.model.BillFileRecordModel" table="BILL_FILE_RECORD">
+        <id name="bfrId" column="BFRID">
+            <generator class="sequence">
+                <param name="sequence">S_bill_file_record</param>
+            </generator>
+        </id>
+        <property name="fId" column="FID"/>
+        <property name="type" column="TYPE"/>
+        <property name="subType" column="SUBTYPE"/>
+        <property name="status" column="STATUS"/>
+        <property name="flag" column="FLAG"/>
+        <property name="mainInfo" column="MAININFO"/>
+        <property name="excelInfo" column="EXCELINFO"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+    </class>
+</hibernate-mapping>

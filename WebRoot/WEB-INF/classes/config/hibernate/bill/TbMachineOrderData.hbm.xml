@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MachineOrderDataModel" table="BILL_MACHINEORDERDATA">
+		<id name="bmoID" column="BMOID">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="unNO" column="UNNO"/>
+		<property name="orderID" column="ORDERID"/>
+		<property name="txnDay"  column="TXNDAY"/>
+		<property name="orderAmount" column="ORDERAMOUNT"/>
+		<property name="amountConfirmDate" type="timestamp" column="AMOUNTCONFIRMDATE"/>
+		<property name="consigneeName"  column="CONSIGNEENAME"/>
+		<property name="consigneeAddress"  column="CONSIGNEEADDRESS"/>
+		<property name="consigneePhone" column="CONSIGNEEPHONE"/>
+		<property name="consigneeTel" column="CONSIGNEETEL"/>
+		<property name="expressBill" column="EXPRESSBILL"/>
+		<property name="minfo" column="MINFO"/>
+		<property name="postCode" column="POSTCODE"/>
+		<property name="sendConfirmDate" type="timestamp" column="SENDCONFIRMDATE"/>
+		<property name="recvConfirmDate" type="timestamp" column="RECVCONFIRMDATE"/>
+		<property name="status" column="STATUS"/>
+		<property name="processContext" column="PROCESSCONTEXT"/>
+		<property name="maintainUID" column="MAINTAINUID"/>
+		<property name="maintainDate" type="timestamp" column="MAINTAINDATE"/>
+		<property name="maintainType" column="MAINTAINTYPE"/>
+		<property name="approveUID" column="APPROVEUID"/>
+		<property name="approveDate" type="timestamp" column="APPROVEDATE"/>
+		<property name="approveStatus" column="APPROVESTATUS"/>
+		<property name="shipmeThod" column="SHIPMETHOD"/>
+    </class>
+</hibernate-mapping>
+

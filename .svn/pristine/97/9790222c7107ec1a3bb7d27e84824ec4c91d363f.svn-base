@@ -1,0 +1,137 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<script>
+	//初始化datagrid
+	$(function() {
+		var maid=$("#maid").val();
+		$('#sysAdmin_maidList_datagrid').datagrid({
+			url :'${ctx}/sysAdmin/merchantInfoComm_listMaid.action?maid='+maid,
+			fit : true,
+			fitColumns : true,
+			border : false,
+			pagination : true,
+			nowrap : true,
+			ctrlSelect:true,
+			checkOnSelect:true,
+			singleSelect:true,
+			pageSize : 10,
+			pageList : [ 10, 15 ],
+			sortName: 'BMTID',
+			sortOrder: 'desc',
+			idField : 'BMTID',
+			columns : [[{
+				title : 'BMTID',
+				field : 'BMTID',
+				hidden:true
+			},{
+				title : 'TID',
+				field : 'TID',
+				width : 100,
+				sortable :true
+			},{
+				title :'机型',
+				field :'MODELTYPE',
+				sortable:true,
+				width : 100
+			},{
+				title :'SN号',
+				field :'SN',
+				sortable:true,
+				width : 100
+			},{
+				title :'设备归属',
+				field :'BELONG',
+				sortable:true,
+				width : 100
+			},{
+				title :'装机地址',
+				field :'INSTALLEDADDRESS',
+				sortable:true,
+				width : 100
+			},{
+			    title :'状态',
+				field :'STATUS',
+				width : 100	,			
+				sortable:true,
+				formatter:function(value,row,index){
+				if(value==1){ 
+					return '正常';
+				}else{
+					return '非正常'; 
+				}
+				} 
+			},{
+				title :'操作',
+				field :'operation',
+				width : 100,
+				align : 'center',
+				formatter : function(value,row,index) {
+					return '<img src="${ctx}/images/query_search.png" title="查看明细" style="cursor:pointer;" onclick="sysAdmin_merchantMaid_queryFun('+index+','+row.bmid+','+row.mid+')"/>&nbsp;&nbsp';
+				}
+			}]]
+		});
+	});
+
+
+	//查看明细
+	function sysAdmin_merchantMaid_queryFun(index,bmid,mid){
+		$('<div id="sysAdmin_merchantMaid_queryDialog"/>').dialog({
+			title: '<span style="color:#157FCC;">查看商户终端明细</span>',
+			width: 900,
+		    height:550, 
+		    closed: false,
+		    modal: true,
+		    href: '${ctx}/biz/bill/merchant/10524.jsp',
+		    onLoad:function() {
+		    	var rows = $('#sysAdmin_maidList_datagrid').datagrid('getRows');
+				var row = rows[index];
+		    	$('#sysAdmin_merchantMaid_queryForm').form('load', row);
+			},
+			buttons:[{
+				text:'确认',
+				iconCls:'icon-ok',
+				handler:function() {
+					$('#sysAdmin_merchantMaid_queryForm').form('submit', {
+						url:'${ctx}/sysAdmin/merchantTerminalInfoComm_updateSingleData.action',
+						success:function(data) {
+						var obj = eval('('+data+')');
+						if (obj.success) {
+							$.messager.show({
+								title : '提示',
+								msg : obj.msg
+							});
+							$('#sysAdmin_merchantcheck_datagrid').datagrid('unselectAll');
+							$('#sysAdmin_merchantcheck_datagrid').datagrid('reload');
+							$('#sysAdmin_merchantMaid_queryDialog').dialog('destroy');
+						} else {
+							$.messager.alert('提示', obj.msg);
+							$('#sysAdmin_merchantcheck_datagrid').datagrid('unselectAll');
+							$('#sysAdmin_merchantMaid_queryDialog').dialog('destroy');
+						}
+						}
+					});
+				}
+			},{
+				text:'关闭', 
+				iconCls:'icon-ok',
+				handler:function() { 
+					$('#sysAdmin_merchantMaid_queryDialog').dialog('destroy');
+				}
+			}],
+			onClose:function() {
+				$(this).dialog('destroy');
+				$('#sysAdmin_maidList_datagrid').datagrid('unselectAll');
+			}
+		});
+	}
+	
+</script>
+<div>
+	
+</div>
+
+<div class="easyui-layout" data-options="fit:true, border:false">
+    <div data-options="region:'center', border:false" style="overflow: hidden;">  
+      <table id="sysAdmin_maidList_datagrid" style="overflow: hidden;"></table>
+      <input type="hidden" id="maid" value="<%=request.getParameter("maid")%>"/>
+    </div> 
+</div>

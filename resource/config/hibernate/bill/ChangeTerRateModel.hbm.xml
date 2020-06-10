@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="ChangeTerRateModel" table="BILL_CHANGETERRATE">
+		<id name="bctrid" column="bctrid">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_CHANGETERRATE</param>
+			</generator>
+		</id>
+		<property name="snStart" column="SNSTART"/>
+		<property name="snEnd" column="SNEND"/>
+		<property name="rate" column="RATE"/>
+		<property name="scanRate" column="SCANRATE"/>
+		<property name="secondRate" column="SECONDRATE"/>
+		<property name="totalNum" column="TOTALNUM"/>
+		<property name="maintainDate" type="timestamp"  column="MAINTAINDATE"/>
+		<property name="maintainUser" column="MAINTAINUSER"/>
+		<property name="approveStatus" column="APPROVESTATUS"/>
+		<property name="approvedate" type="timestamp"  column="APPROVEDATE"/>
+		<property name="approveUser" column="APPROVEUSER"/>
+    </class>
+</hibernate-mapping>

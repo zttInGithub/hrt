@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckProfitTemplateMicroWModel" table="CHECK_MICRO_PROFITTEMPLATE_W">
+        <id name="wId" column="WID">
+            <generator class="sequence">
+				<param name="sequence">S_CHECK_MICRO_PROFITTEMPLATE_W</param>
+			</generator>
+        </id>
+        <property name="aptId" column="APTID" />
+        <property name="unno" column="UNNO" />
+        <property name="tempName" column="TEMPNAME" />
+        <property name="merchantType" column="MERCHANTTYPE" />
+        <property name="profitType" column="PROFITTYPE" />
+        <property name="profitRule" column="PROFITRULE" />
+        <property name="startAmount" column="STARTAMOUNT" />
+        <property name="endAmount" column="ENDAMOUNT" />
+        <property name="ruleThreshold" column="RULETHRESHOLD" />
+        <property name="creditBankRate" column="CREDITBANKRATE"/>
+        <property name="cashRate" column="CASHRATE"/>
+        <property name="cashAmt" column="CASHAMT"/>
+        <property name="scanRate" column="SCANRATE"/>
+        <property name="profitPercent" column="PROFITPERCENT" />
+        <property name="profitPercent1" column="PROFITPERCENT1" />
+        <property name="matainType" column="MATAINTYPE" />
+        <property name="matainDate" column="MATAINDATE" type="timestamp" />
+        <property name="matainUserId" column="MATAINUSERID" />
+        <property name="settMethod" column="SETTMETHOD" />
+        <property name="cloudQuickRate" column="CLOUDQUICKRATE" />
+        <property name="subRate" column="SUBRATE" />
+        <property name="scanRate1" column="SCANRATE1"/>
+        <property name="scanRate2" column="SCANRATE2"/>
+        <property name="cashAmt1" column="CASHAMT1"/>
+        <property name="cashAmt2" column="CASHAMT2"/>
+    </class>
+</hibernate-mapping>

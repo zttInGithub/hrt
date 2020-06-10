@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="MachineOrderDetailModel" table="BILL_MACHINEORDERDETAIL">
+		<id name="bmdID" column="BMDID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_MACHINEORDERDETAIL</param>
+			</generator>
+		</id>
+		<property name="bmoID" column="BMOID"/>
+		<property name="bmaID" column="BMAID"/>
+		<property name="unNO" column="UNNO"/>
+		<property name="actionPrice" column="ACTIONPRICE"/>
+		<property name="orderNum" column="ORDERNUM"/>
+		<property name="orderAmount" column="ORDERAMOUNT"/>
+		<property name="status"  column="STATUS"/>
+		<property name="maintainUID"  column="MAINTAINUID"/>
+		<property name="maintainDate" type="timestamp" column="MAINTAINDATE"/>
+		<property name="maintainType" column="MAINTAINTYPE"/>
+    </class>
+</hibernate-mapping>

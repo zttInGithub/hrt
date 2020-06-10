@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.check.entity.model">
+    <class name="CheckReFundModel" table="CHECK_REFUND">
+        <id name="refId" column="REFID">
+            <generator class="sequence">
+				<param name="sequence">S_check_refund</param>
+			</generator>
+        </id>
+      <property name="pkId" column="PKID" ></property>
+      <property name="mid" column="MID" ></property>
+      <property name="rrn" column="RRN" ></property>
+      <property name="cardPan" column="CARDPAN" ></property>
+      <property name="samt" column="SAMT" ></property>
+      <property name="txnDayStr" column="TXNDAY" ></property>
+      <property name="ramt" column="RAMT" ></property>
+      <property name="settlement" column="SETTLEMENT" ></property>
+      <property name="remarks" column="REMARKS" ></property>
+      <property name="approveDate" column="APPROVEDATE" type="timestamp"></property>
+      <property name="approveUid" column="APPROVEUID" ></property>
+      <property name="maintainDate" column="MAINTAINDATE" type="timestamp"></property>
+      <property name="status" column="STATUS" ></property>
+      <property name="maintainUid" column="MAINTAINUID" ></property>
+      <property name="oriOrderId" column="ORIORDERID" ></property>
+      <property name="refundImgName" column="REFUNDIMGNAME" ></property>
+    </class>
+</hibernate-mapping>

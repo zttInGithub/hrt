@@ -1,0 +1,109 @@
+package com.hrt.phone.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.BeanUtils;
+
+import com.hrt.frame.dao.sysadmin.INoticeDao;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.dao.sysadmin.IUserDao;
+import com.hrt.frame.entity.model.NoticeModel;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.model.UserModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.NoticeBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.phone.dao.IPhoneNoticeDao;
+import com.hrt.phone.service.IPhoneNoticeService;
+
+public class PhoneNoticeServiceImpl implements IPhoneNoticeService {
+
+	private IPhoneNoticeDao phoneNoticeDao;
+	private INoticeDao noticeDao;
+	private IUserDao userDao;
+	private IUnitDao unitDao;
+
+	public IPhoneNoticeDao getPhoneNoticeDao() {
+		return phoneNoticeDao;
+	}
+	public void setPhoneNoticeDao(IPhoneNoticeDao phoneNoticeDao) {
+		this.phoneNoticeDao = phoneNoticeDao;
+	}
+	public INoticeDao getNoticeDao() {
+		return noticeDao;
+	}
+	public void setNoticeDao(INoticeDao noticeDao) {
+		this.noticeDao = noticeDao;
+	}
+	public IUserDao getUserDao() {
+		return userDao;
+	}
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+
+	@Override
+	public DataGridBean queryNoticeNew(NoticeBean noticeBean, UserBean userBean) {
+		// TODO Auto-generated method stub
+		String hql = "from NoticeModel n where (n.msgReceUnit = :msgReceUnit and n.msgReceUID = :msgReceUID) or (n.msgReceUnit = :msgReceUnit and n.msgReceUID = 0) or (n.msgReceUnit = '110000' and n.msgReceUID = 0)  ";
+		String hqlCount = "select count(*) from NoticeModel n where (n.msgReceUnit = :msgReceUnit and n.msgReceUID = :msgReceUID) or (n.msgReceUnit = :msgReceUnit and n.msgReceUID = 0) or (n.msgReceUnit = '110000' and n.msgReceUID = 0)";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msgReceUnit", userBean.getUnNo());
+		map.put("msgReceUID", userBean.getUserID());
+		hql += "  order by n.msgSendDate desc " ;
+		long counts = noticeDao.queryCounts(hqlCount, map);
+		List<NoticeModel> roleList = noticeDao.queryNotice(hql, map, noticeBean.getPage(), noticeBean.getRows());
+		
+		DataGridBean dataGridBean = formatToDataGrid(roleList, counts);
+		
+		return dataGridBean;
+	}
+	
+	/**
+	 * 方法功能：格式化RoleModel为datagrid数据格式
+	 */
+	private DataGridBean formatToDataGrid(List<NoticeModel> noticeList, long total) {
+		List<NoticeBean> noticeBeanList = new ArrayList<NoticeBean>();
+		for(NoticeModel noticeModel : noticeList) {
+			NoticeBean noticeBean = new NoticeBean();
+			BeanUtils.copyProperties(noticeModel, noticeBean);
+			
+			//消息状态
+			noticeBean.setStatusName(noticeModel.getStatus()==0?"未读":"已读");
+			
+			UserModel msgSendUID = userDao.getObjectByID(UserModel.class, noticeModel.getMsgSendUID());
+			noticeBean.setMsgSendName(msgSendUID.getUserName());
+			
+			if(0 != noticeModel.getMsgReceUID()){
+				UserModel msgReceUID = userDao.getObjectByID(UserModel.class, noticeModel.getMsgReceUID());
+				noticeBean.setMsgReceName(msgReceUID.getUserName());
+			}
+			
+			UnitModel msgSendUnit = unitDao.getObjectByID(UnitModel.class, noticeModel.getMsgSendUnit());
+			noticeBean.setMsgSendUnitName(msgSendUnit.getUnitName());
+			
+			if(noticeModel.getMsgReceUnit() != null){
+				UnitModel msgReceUnit = unitDao.getObjectByID(UnitModel.class, noticeModel.getMsgReceUnit());
+				noticeBean.setMsgReceUnitName(msgReceUnit.getUnitName());
+			}
+			noticeBeanList.add(noticeBean);
+		}
+		
+		DataGridBean dgb = new DataGridBean();
+		dgb.setTotal(total);
+		dgb.setRows(noticeBeanList);
+		
+		return dgb;
+	}
+	
+	
+}

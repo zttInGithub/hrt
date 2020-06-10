@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	
+	<bean id="quartzDao" class="com.hrt.frame.dao.sysadmin.impl.QuartzDaoImpl" >
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="quartzService" class="com.hrt.frame.service.sysadmin.impl.QuartzServiceImpl" >
+		<property name="quartzDao" ref="quartzDao"></property>
+		<property name="scheduler" ref="scheduler"></property>
+	</bean>
+	
+	<bean id="quartzAction" class="com.hrt.frame.action.sysadmin.QuartzAction" scope="prototype">
+		<property name="quartzService" ref="quartzService"></property>
+	</bean>
+	
+	 <bean id="toolSpring" class="quartz.ToolSpring"></bean> 
+	
+	<bean name="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="dataSource" ref ="dataSource" />       
+        <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+        <property name="configLocation" value="classpath:quartz.properties"/>
+    </bean>
+</beans>

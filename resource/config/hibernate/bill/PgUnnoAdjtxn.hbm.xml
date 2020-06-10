@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 
+-->
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.PgUnnoAdjtxnModel" table="pg_unno_adjtxn">
+        <id name="puaid" column="PUAID">
+            <generator class="sequence">
+				<param name="sequence">S_pg_unno_adjtxn</param>
+			</generator>
+		</id>
+        <property name="unno" type="java.lang.String">
+            <column name="UNNO" />
+        </property>
+        <property name="settleday" type="java.lang.String">
+            <column name="SETTLEDAY" />
+        </property>
+        <property name="feeamt" type="java.lang.Double">
+            <column name="FEEAMT" />
+        </property>
+        <property name="feenote" type="java.lang.String">
+            <column name="FEENOTE" />
+        </property>
+        <property name="remarks" type="java.lang.String">
+            <column name="REMARKS" />
+        </property>
+        <property name="cdate" type="java.sql.Timestamp">
+            <column name="CDATE" />
+        </property>
+        <property name="cby" type="java.lang.String">
+            <column name="CBY" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="STATUS" />
+        </property>
+        <property name="minfo1" type="java.lang.String">
+            <column name="MINFO1" />
+        </property>
+        <property name="walletType" type="java.lang.Integer">
+            <column name="WALLETTYPE" />
+        </property>
+    </class>
+</hibernate-mapping>

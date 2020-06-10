@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PgCashbackDetailModel" table="PG_CASHBACK_DETAIL">
+        <id name="pcdid" column="PCDID">
+            <generator class="sequence">
+				<param name="sequence">S_PG_CASHBACK_DETAIL</param>
+			</generator>
+        </id>
+        <property name="txnday" column="TXNDAY" />
+        <property name="uppUnno" column="UPP_UNNO" />
+        <property name="unno" column="UNNO" />
+        <property name="unName" column="UN_NAME" />
+        <property name="mid" column="MID" />
+        <property name="rebatetype" column="REBATETYPE" />
+        <property name="sn" column="SN" />
+        <property name="samt" column="SAMT" />
+        <property name="cashbackType" column="CASHBACK_TYPE"/>
+        <property name="cashbackAmt" column="CASHBACK_AMT"/>
+        <property name="cdate" column="CDATE"/>
+        <property name="cby" column="CBY"/>
+        <property name="minfo1" column="MINFO1"/>
+        <property name="minfo2" column="MINFO2"/>
+        <property name="pctid" column="PCTID"/>
+    </class>
+</hibernate-mapping>

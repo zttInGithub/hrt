@@ -1,0 +1,189 @@
+package com.hrt.frame.service.sysadmin.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.BeanUtils;
+
+import com.hrt.frame.dao.sysadmin.INoticeDao;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.dao.sysadmin.IUserDao;
+import com.hrt.frame.entity.model.NoticeModel;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.model.UserModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.NoticeBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.service.sysadmin.INoticeService;
+
+public class NoticeServiceImpl implements INoticeService {
+
+	private INoticeDao noticeDao;
+	
+	private IUserDao userDao;
+	
+	private IUnitDao unitDao;
+
+	public INoticeDao getNoticeDao() {
+		return noticeDao;
+	}
+
+	public void setNoticeDao(INoticeDao noticeDao) {
+		this.noticeDao = noticeDao;
+	}
+	
+	public IUserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
+	}
+	
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+	
+	/**
+	 * 方法功能：格式化RoleModel为datagrid数据格式
+	 */
+	private DataGridBean formatToDataGrid(List<NoticeModel> noticeList, long total) {
+		List<NoticeBean> noticeBeanList = new ArrayList<NoticeBean>();
+		for(NoticeModel noticeModel : noticeList) {
+			NoticeBean noticeBean = new NoticeBean();
+			BeanUtils.copyProperties(noticeModel, noticeBean);
+			
+			//消息状态
+			noticeBean.setStatusName(noticeModel.getStatus()==0?"未读":"已读");
+			
+			UserModel msgSendUID = userDao.getObjectByID(UserModel.class, noticeModel.getMsgSendUID());
+			noticeBean.setMsgSendName(msgSendUID.getUserName());
+			
+			if(0 != noticeModel.getMsgReceUID()){
+				UserModel msgReceUID = userDao.getObjectByID(UserModel.class, noticeModel.getMsgReceUID());
+				noticeBean.setMsgReceName(msgReceUID.getUserName());
+			}
+			
+			UnitModel msgSendUnit = unitDao.getObjectByID(UnitModel.class, noticeModel.getMsgSendUnit());
+			noticeBean.setMsgSendUnitName(msgSendUnit.getUnitName());
+			
+			if(noticeModel.getMsgReceUnit() != null){
+				UnitModel msgReceUnit = unitDao.getObjectByID(UnitModel.class, noticeModel.getMsgReceUnit());
+				noticeBean.setMsgReceUnitName(msgReceUnit.getUnitName());
+			}
+			//noticeBean.setMsgDesc("");
+			noticeBeanList.add(noticeBean);
+		}
+		DataGridBean dgb = new DataGridBean();
+		dgb.setTotal(total);
+		dgb.setRows(noticeBeanList);
+		return dgb;
+	}
+
+	@Override
+	public DataGridBean queryNoticeRelease(NoticeBean notice,UserBean userBean) throws Exception {
+		String hql = "from NoticeModel n where n.msgSendUnit = :msgSendUnit and n.msgSendUID = :msgSendUID";
+		String hqlCount = "select count(*) from NoticeModel n where n.msgSendUnit = :msgSendUnit and n.msgSendUID = :msgSendUID";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msgSendUnit", userBean.getUnNo());
+		map.put("msgSendUID", userBean.getUserID());
+		
+		if (notice.getSort() != null) {
+			hql += " order by " + notice.getSort() + " " + notice.getOrder();
+		}
+		
+		long counts = noticeDao.queryCounts(hqlCount, map);
+		List<NoticeModel> roleList = noticeDao.queryNotice(hql, map, notice.getPage(), notice.getRows());
+		DataGridBean dataGridBean = formatToDataGrid(roleList, counts);
+		return dataGridBean;
+	}
+	
+	@Override
+	public void saveNotice(NoticeBean notice, UserBean user) throws Exception {
+		NoticeModel noticeModel = new NoticeModel();
+		BeanUtils.copyProperties(notice, noticeModel);
+		noticeModel.setMsgSendTime(new Date());		//发送时间
+		noticeModel.setMsgSendDate(new SimpleDateFormat("yyyyMMdd").format(new Date()));	//发送日期
+		noticeModel.setMsgSendUID(user.getUserID());	//发送用户
+		noticeModel.setMsgSendUnit(user.getUnNo());	//发送机构
+		noticeModel.setStatus(0);	//默认未读
+		
+		//如果不选接收人则默认发给此部门所有人，0代表所有人
+		if(notice.getMsgReceUID() == null){
+			noticeModel.setMsgReceUID(0);
+		}
+		noticeDao.saveObject(noticeModel);
+	}
+
+	@Override
+	public boolean deleteNotice(Integer id) throws Exception {
+		NoticeModel notice = noticeDao.getObjectByID(NoticeModel.class, id);
+		noticeDao.deleteObject(notice);
+		return true;
+	}
+
+	@Override
+	public void updateStatus(NoticeBean notice) throws Exception {
+		NoticeModel noticeModel = noticeDao.getObjectByID(NoticeModel.class, notice.getNoticeID());
+		noticeModel.setStatus(1);	//接收状态
+		noticeModel.setMsgGetTime(new Date());	//接收时间
+		noticeDao.updateObject(noticeModel);
+	}
+
+	@Override
+	public DataGridBean queryNoticeNew(NoticeBean notice, UserBean userBean)
+			throws Exception {
+		String hql = "from NoticeModel n where (n.msgReceUnit = :msgReceUnit and n.msgReceUID = :msgReceUID) or (n.msgReceUnit = :msgReceUnit and n.msgReceUID = 0) or (n.msgReceUnit = '110000' and n.msgReceUID = 0)";
+		String hqlCount = "select count(*) from NoticeModel n where (n.msgReceUnit = :msgReceUnit and n.msgReceUID = :msgReceUID) or (n.msgReceUnit = :msgReceUnit and n.msgReceUID = 0) or (n.msgReceUnit = '110000' and n.msgReceUID = 0)";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("msgReceUnit", userBean.getUnNo());
+		map.put("msgReceUID", userBean.getUserID());
+		
+		if (notice.getSort() != null) {
+			hql += " order by " + notice.getSort() + " " + notice.getOrder();
+		}
+		
+		long counts = noticeDao.queryCounts(hqlCount, map);
+		List<NoticeModel> roleList = noticeDao.queryNotice(hql, map, notice.getPage(), notice.getRows());
+		DataGridBean dataGridBean = formatToDataGrid(roleList, counts);
+		return dataGridBean;
+	}
+
+	@Override
+	public List<NoticeModel> queryNoticeMsgById(Integer noticeID) {
+		String sql="select * from sys_noticeid n where n.noticeid=:noticeid ";
+		Map map=new HashMap();
+		map.put("noticeid",noticeID);
+		List<NoticeModel> list=noticeDao.queryObjectsBySqlList(sql, map, NoticeModel.class);
+		return list;
+	}
+
+	@Override
+	public long noticeCount(Integer status,String unno) throws Exception {
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, unno);
+		String hql = "";
+		Map<String, Object> map = new HashMap<String, Object>();
+		if("110000".equals(unno)){
+			return 0;
+		}else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){		//如果为部门机构并且级别为总公司
+			UnitModel parent = unitModel.getParent();
+			if("110000".equals(parent.getUnNo())){
+				return 0;
+			}
+		}else{
+			hql = "select count(*) from NoticeModel t where t.status=:status and t.msgReceUnit=:unNo";
+			map.put("status", 0 );
+			map.put("unNo", unno);
+		}
+		long counts = noticeDao.queryCounts(hql, map);
+		return counts;
+	}
+}

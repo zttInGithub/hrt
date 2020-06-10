@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="CheckIncomeModel" table="CHECK_INCOME">
+		<id name="ciid" column="CIID">
+			<generator class="sequence">
+				<param name="sequence">S_CHECK_INCOME</param>
+			</generator>
+		</id>
+		<property name="mid" column="MID"/>
+		<property name="settleday" column="SETTLEDAY"/>
+		<property name="txnday" column="TXNDAY"/>
+		<property name="totsamt" column="TOTSAMT"/>
+		<property name="totmfee"  column="TOTMFEE"/>
+		<property name="totramt" column="TOTRAMT"/>
+		<property name="totaamt" column="TOTAAMT"/>
+		<property name="totmnamt" column="TOTMNAMT"/>
+		<property name="baccno"  column="BACCNO"/>
+		<property name="status" column="STATUS"/>
+		<property name="minfo1" column="MINFO1"/>
+		<property name="minfo2" column="MINFO2"/>
+		<property name="remarks"  column="REMARKS"/>
+		<property name="txnday2" column="TXNDAY2"/>
+    </class>
+</hibernate-mapping>

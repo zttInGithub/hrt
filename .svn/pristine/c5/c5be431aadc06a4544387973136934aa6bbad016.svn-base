@@ -1,0 +1,391 @@
+package com.hrt.redis;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.frame.constant.PhoneProdConstant;
+import com.hrt.util.ParamPropUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.util.PropertiesUtil;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
+
+public class RedisUtil  extends AbstractRedisCheck {
+
+	private static Log log = LogFactory.getLog(RedisUtil.class);
+	
+	private static String redisHost =ParamPropUtils.props.getProperty("redis.host");
+	private static String redisPwd =ParamPropUtils.props.getProperty("redis.passwd");
+	private static String redisPort = ParamPropUtils.props.getProperty("redis.port");
+	private static JedisLock jedisLock = new JedisLock();
+	static ShardedJedisPool pool;
+
+	    static{
+	        JedisPoolConfig config =new JedisPoolConfig();//Jedis池配置
+	        config.setMaxTotal(200);//最大活动的对象个数
+	        config.setMaxIdle(100);//对象最大空闲
+	        config.setMaxWaitMillis(3000);//获取对象时最大等待时间
+	        config.setTestOnBorrow(true);
+	        List<JedisShardInfo> jdsInfoList =new ArrayList<JedisShardInfo>(2);
+	        JedisShardInfo infoA = new JedisShardInfo(redisHost, redisPort);
+	        infoA.setPassword(redisPwd);
+	        jdsInfoList.add(infoA);
+	        pool =new ShardedJedisPool(config, jdsInfoList);
+	     }
+	    
+		public static boolean getRedisFlag() throws Exception{
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(2);
+	    	}
+			boolean broken = false;
+			try {
+				boolean flag=shardedJedis.exists("redisFlag");
+				 if(flag){
+					 String redisFlagStr=shardedJedis.get("redisFlag");
+					 if("true".equals(redisFlagStr)){
+						 return true;
+					 }else{
+						 return false;
+					 }
+				 }
+			} catch (Exception e) {
+	            log.error(e.getMessage(), e);
+	            broken = true;
+			}finally {
+			    if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return false;
+		}
+		/**
+		 * 花呗分期开关数据查询
+		 * @param productType  
+		 * @return
+		 * @throws Exception
+		 */
+		public static Map<String,Object> queryHuaBeiInfo(String productType) throws Exception{
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+			Map<String,Object> map = new HashMap<String, Object>();
+			List<Map<String,Object>> li = new ArrayList<Map<String,Object>>();
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+			boolean broken = false;
+			// JedisLock jedisLock = new JedisLock();
+	        try {
+	        	String isOff=null;
+				String stagesRate=null;
+				String txnLimit=null;
+				if(PhoneProdConstant.PHONE_MD.equals(productType)) {
+					isOff=shardedJedis.hget("RebateInfo","isOff_MD");
+					stagesRate=shardedJedis.hget("RebateInfo","stagesRate_MD");
+					txnLimit = shardedJedis.hget("RebateInfo","txnLimit_MD");
+				}else if(PhoneProdConstant.PHONE_SYT.equals(productType)) {
+					isOff=shardedJedis.hget("RebateInfo","isOff_SYT");
+					stagesRate=shardedJedis.hget("RebateInfo","stagesRate_SYT");
+					txnLimit = shardedJedis.hget("RebateInfo","txnLimit_SYT");
+				}else if(PhoneProdConstant.PHONE_YMF.equals(productType)){
+					isOff=shardedJedis.hget("RebateInfo","isOff_YM");
+					stagesRate=shardedJedis.hget("RebateInfo","stagesRate_YM");
+					txnLimit = shardedJedis.hget("RebateInfo","txnLimit_YM");
+				}else if(PhoneProdConstant.PHONE_PLUS.equals(productType)){
+					isOff=shardedJedis.hget("RebateInfo","isOff");
+					stagesRate=shardedJedis.hget("RebateInfo","stagesRate");
+					txnLimit = shardedJedis.hget("RebateInfo","txnLimit");
+				}else if(PhoneProdConstant.PHONE_PRO.equals(productType)) {
+                    isOff=shardedJedis.hget("RebateInfo","isOff_HybPro");
+                    stagesRate=shardedJedis.hget("RebateInfo","stagesRate_HybPro");
+                    txnLimit = shardedJedis.hget("RebateInfo","txnLimit_HybPro");
+                }else if(PhoneProdConstant.PHONE_YSB.equals(productType)){
+                    isOff=shardedJedis.hget("RebateInfo","isOff_YSB");
+                    stagesRate=shardedJedis.hget("RebateInfo","stagesRate_YSB");
+                    txnLimit = shardedJedis.hget("RebateInfo","txnLimit_YSB");
+                }else {
+					return map;
+				}
+				log.info("新redis工具类请求参数：isOff["+isOff+"],stagesRate["+stagesRate+"],txnLimit["+txnLimit+"]");
+				map.put("isOff", isOff);
+				map.put("txnLimit", txnLimit);
+				String[] list = stagesRate.split(",");
+				for(String s:list){
+					Map<String,Object> obj = new HashMap<String, Object>();
+					String[] lis = s.split("-");
+					obj.put("stages", lis[0]);
+					obj.put("stagesRate", lis[1]);
+					// @author:lxg-20190805 花呗新填字段
+					obj.put("isDefaul", lis[2]);
+					li.add(obj);
+				}
+				map.put("slist", li);
+	        } catch (Exception e) {
+	            log.error(e.getMessage(), e);
+	            broken = true;
+	        } finally {
+			    if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+	        }
+	        return map;
+		}
+		
+		/**
+		 * 交易认证查询
+		 * @param authtype_flag  
+		 * @return
+		 * @throws Exception
+		 */
+		public static String getMagFlag(String authtype_flag) throws Exception {
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+			boolean broken = false;
+			String mag_flag = "";
+			try {
+				if ("MER".equals(authtype_flag)) {//商户认证
+					mag_flag = shardedJedis.hget("AuthInfoType", "Type1").trim();
+				} else if ("TXN".equals(authtype_flag)) {//交易认证
+					mag_flag = shardedJedis.hget("AuthInfoType", "Type2").trim();
+				} else if ("HRT".equals(authtype_flag)) {//交易认证（对外）
+					mag_flag = shardedJedis.hget("AuthInfoType", "Type3").trim();
+				}
+				log.info(authtype_flag + "认证，通道读取redis参数，读取结果为" + mag_flag);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+	            broken = true;
+			} finally {
+				if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return mag_flag;
+		}
+		/**
+		 * 获取sign验证
+		 * @param unno  
+		 * @return
+		 * @throws Exception
+		 */
+		public static String getsignAuthByRedis(String unno) throws Exception {
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+			boolean broken = false;
+			String signAuthByRedis = null;
+			try {
+				log.info("获取sign验证,传入的机构号unno:"+unno);
+				signAuthByRedis = shardedJedis.hget("HrtApp_HRT_SignAuth",unno);
+				if(StringUtils.isEmpty(signAuthByRedis)){
+	                // 获取默认
+					signAuthByRedis = shardedJedis.hget("HrtApp_HRT_SignAuth","OTHER");
+				}
+				log.info("获取redis中sign验证,传入的机构号unno:"+unno+",查询的sigin:"+signAuthByRedis);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+	            broken = true;
+			}finally{
+				if(StringUtils.isEmpty(signAuthByRedis)){
+					if("110000".equals(unno)){
+						signAuthByRedis = "hrt8888@20160713";
+					}else if("992107".equals(unno)){
+						signAuthByRedis = "ybf8888820160711";
+					}else{
+						signAuthByRedis = "wn8888@20170505";
+					}
+//					signAuthByRedis="wn8888@20170505";
+					log.info("设置默认sign:"+signAuthByRedis);
+				}
+				if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return signAuthByRedis;
+		}
+		
+		/**
+		 * 获取是否开启同步plus信息
+		 * @return
+		 * @throws Exception
+		 */
+		public static boolean getIsSyncPlus() throws Exception {
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+			boolean broken = false;
+			boolean isOpen=false;
+			try {
+				log.info("是否开启plus手机号同步商户信息,读取[isSyncPlus]结果为" + shardedJedis.hget("HrtAppConfig", "isSyncPlus"));
+				String isSyncPlus = shardedJedis.hget("HrtAppConfig", "isSyncPlus");
+				if("1".equals(isSyncPlus)){
+					isOpen=true;
+				}
+			} catch (Exception e) {
+				log.info("是否开启plus手机号同步商户信息,读取[isSyncPlus]异常:"+e.getMessage());
+	            broken = true;
+			} finally {
+				if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return isOpen;
+		}
+		/**
+		 * 获取是否开启极速秒到版手机号同步商户信息
+		 * @return
+		 * @throws Exception
+		 */
+		public static boolean getIsSyncJiSu() throws Exception {
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+			Collection<Jedis> collection=shardedJedis.getAllShards();
+			Iterator<Jedis> jedis = collection.iterator();
+			while(jedis.hasNext()){
+				jedis.next().select(0);
+			}
+			boolean broken = false;
+			boolean isOpen=false;
+			try {
+				log.info("是否开启极速秒到版手机号同步商户信息,读取[isSyncSpeedMd]结果为" + shardedJedis.hget("HrtAppConfig", "isSyncSpeedMd"));
+				String isSyncSpeedMd = shardedJedis.hget("HrtAppConfig", "isSyncSpeedMd");
+				if("1".equals(isSyncSpeedMd)){
+					isOpen=true;
+				}
+			} catch (Exception e) {
+				log.info("是否开启极速秒到版手机号同步商户信息,读取[isSyncSpeedMd]异常:"+e.getMessage());
+				broken = true;
+			} finally {
+				if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return isOpen;
+		}
+		
+		/**
+		 * 获取限制活动18请求信息
+		 * @return
+		 * @throws Exception
+		 */
+		public static String getRebateInfoByRedis() throws Exception {
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+			boolean broken = false;
+			String RebateInfoByRedis = null;
+			try {
+				log.info("活动限制开关读取redis参数，读取结果为" + shardedJedis.hget("RebateInfo", "info")+",放开区段："+shardedJedis.hget("RebateInfo", "info1"));
+				log.info("放开机构：" + shardedJedis.hget("RebateInfo", "unno")+",放开时段："+shardedJedis.hget("RebateInfo", "time"));
+				RebateInfoByRedis = shardedJedis.hget("RebateInfo", "info")+"&"
+						+shardedJedis.hget("RebateInfo", "info1")+"&"
+						+shardedJedis.hget("RebateInfo", "unno")+"&"
+						+shardedJedis.hget("RebateInfo", "time");
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+	            broken = true;
+			}finally{
+				if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return RebateInfoByRedis;
+		}
+		
+		/**
+		 * 获取jedis连接
+		 * @return
+		 * @throws Exception
+		 */
+		public static ShardedJedis getShardedJedis() throws Exception {
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+	    	return shardedJedis;
+		}
+		
+		public static void delShardedJedis(boolean broken,ShardedJedis shardedJedis) {
+			if(broken){
+	            pool.returnBrokenResource(shardedJedis);
+		    }else{
+	            pool.returnResource(shardedJedis);
+		    }
+		}
+		
+		
+		public static void main(String[] args) {
+			boolean flag;
+			try {
+				queryHuaBeiInfo(PhoneProdConstant.PHONE_MD);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+}

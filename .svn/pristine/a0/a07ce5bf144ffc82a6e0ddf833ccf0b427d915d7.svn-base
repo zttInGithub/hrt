@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="AgentUnitModel" table="BILL_AGENTUNITINFO">
+        <id name="buid" column="BUID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_AGENTUNITINFO</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="agentName" column="AGENTNAME" />
+        <property name="baddr" column="BADDR" />
+        <property name="legalPerson" column="LEGALPERSON" />
+        <property name="legalType" column="LEGALTYPE" />
+        <property name="legalNum" column="LEGALNUM" />
+        <property name="accType" column="ACCTYPE" />
+        <property name="bankBranch" column="BANKBRANCH" />
+        <property name="bankAccNo" column="BANKACCNO" />
+        <property name="bankAccName" column="BANKACCNAME" />
+        <property name="bankType" column="BANKTYPE" />
+        <property name="areaType" column="AREATYPE" />
+        <property name="bankArea" column="BANKAREA" />
+        <property name="riskAmount" column="RISKAMOUNT" type="java.lang.Double" />
+        <property name="amountConfirmDate" column="AMOUNTCONFIRMDATE" type="timestamp" />
+        <property name="openDate" column="OPENDATE" type="timestamp" />
+        <property name="contractNo" column="CONTRACTNO" />
+        <property name="signUserId" column="SIGNUSERID" />
+        <property name="bno" column="BNO" />
+        <property name="rno" column="RNO" />
+        <property name="registryNo" column="REGISTRYNO" />
+        <property name="bankOpenAcc" column="BANKOPENACC" />
+        <property name="maintainUserId" column="MAINTAINUSERID" />
+        <property name="contact" column="CONTACT" />
+        <property name="contactTel" column="CONTACTTEL" />
+        <property name="contactPhone" column="CONTACTPHONE" />
+        <property name="secondContact" column="SECONDCONTACT" />
+        <property name="secondContactTel" column="SECONDCONTACTTEL" />
+        <property name="secondContactPhone" column="SECONDCONTACTPHONE" />
+        <property name="riskContact" column="RISKCONTACT" />
+        <property name="riskContactPhone" column="RISKCONTACTPHONE" />
+        <property name="riskContactMail" column="RISKCONTACTMAIL" />
+        <property name="businessContacts" column="BUSINESSCONTACTS" />
+        <property name="businessContactsPhone" column="BUSINESSCONTACTSPHONE" />
+        <property name="businessContactsMail" column="BUSINESSCONTACTSMAIL" />
+        <property name="maintainUid" column="MAINTAINUID" />
+        <property name="maintainDate" column="MAINTAINDATE" type="timestamp" />
+        <property name="maintainType" column="MAINTAINTYPE" />
+        <property name="remarks" column="REMARKS" /> 
+        
+        <property name="regAddress" column="REGADDRESS" />
+		<property name="payBankID" column="PAYBANKID" />
+		<property name="profitContactPerson" column="PROFITCONTACTPERSON" />
+		<property name="profitContactPhone" column="PROFITCONTACTPHONE" />
+		<property name="profitContactEmail" column="PROFITCONTACTEMAIL" />
+		<property name="dealUpLoad" column="DEALUPLOAD" />
+		<property name="busLicUpLoad" column="BUSLICUPLOAD" />
+		<property name="proofOfOpenAccountUpLoad" column="PROOFOFOPENACCOUNTUPLOAD" />
+		<property name="legalAUpLoad" column="LEGALAUPLOAD" />
+		<property name="legalBUpLoad" column="LEGALBUPLOAD" />
+		<property name="accountAuthUpLoad" column="ACCOUNTAUTHUPLOAD" />
+		<property name="accountLegalAUpLoad" column="ACCOUNTLEGALAUPLOAD" />
+		<property name="accountLegalBUpLoad" column="ACCOUNTLEGALBUPLOAD" />
+		<property name="accountLegalHandUpLoad" column="ACCOUNTLEGALHANDUPLOAD" />
+		<property name="officeAddressUpLoad" column="OFFICEADDRESSUPLOAD" />
+		<property name="profitUpLoad" column="PROFITUPLOAD" />
+		<property name="agentLvl" column="AGENTLVL" />
+		<property name="approveStatus" column="APPROVESTATUS" />
+		<property name="agentShortNm" column="AGENTSHORTNM" />
+		<property name="returnReason" column="RETURNREASON" />
+		<property name="parentUnno" column="PARENTUNNO" />
+		
+		<property name="cycle" column="CYCLE" />
+		<property name="cashRate" column="CASHRATE" />
+		<property name="purseType" column="PURSETYPE" />
+		<property name="cashStatus" column="CASHSTATUS" />
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,351 @@
+package com.hrt.biz.check.entity.pagebean;
+
+import java.util.Date;
+
+public class CheckProfitTemplateMicroWBean {
+
+	private Integer wId;
+	private Integer aptId;
+	private String unno;
+	private Integer merchantType  ;		 //1理财；2秒到0.72；3非0.72秒到
+	private Integer profitType ;     	 // 分润方式  1：按金额分润  2：按笔分润
+	private Integer  profitRule ;    	 // 分润规则   1：单笔交易金额 2：其他
+	private Double startAmount;   		 // 借记卡手续费（理财）
+	private Double endAmount  ; 		 //借记卡封顶值
+	private Double  ruleThreshold ;   	// 借记卡费率
+	private Double creditBankRate;   	 // 贷记卡分润成本
+	private Double cashRate;   	         // T0提现费率
+	private Double cloudQuickRate;   	 //云闪付费率
+	private Double cashAmt;   	         // 转账费
+	//20180822调整//sl
+	private Double scanRate;   	         // 微信费率
+	private Double scanRate1;   	     // 支付宝费率
+	private Double scanRate2;   	     // 银联二维码费率
+	private Double cashAmt2;   	         // 扫码转账费
+	private Double cashAmt3;   	         // 快捷转账费
+	private Double subRate;				//代还费率
+	private Double profitPercent ;  	//利润百分比（小额）
+	private String matainType  ;    	//操作类型    A ：添加  M ：修改 D :删除
+	private Date matainDate  ;    	//生效日期
+	private Integer matainUserId;
+	private String tempName;
+	private String Tempname;
+	private String settMethod;
+	
+	private Double creditBankRate1;   	 // 贷记卡分润成本(秒到0.72)
+	private Double cashAmt1;   	         // 转账费(秒到)
+	private Double profitPercent1;   	 // 利润百分比
+	private Double startAmount2;   		 // 秒到快捷vip
+	private Double endAmount2; 		    //秒到快捷完美
+	private Double ruleThreshold2 ;   	// 秒到快捷提现
+	
+	private String mid;
+	private String rname;
+	
+	//20190508添加    yq
+	private String rebateType;    //mpos活动类型 
+
+	public Integer getwId() {
+		return wId;
+	}
+
+	public void setwId(Integer wId) {
+		this.wId = wId;
+	}
+
+	public String getRebateType() {
+		return rebateType;
+	}
+	public void setRebateType(String rebateType) {
+		this.rebateType = rebateType;
+	}
+	public String getRname() {
+		return rname;
+	}
+	public Double getScanRate1() {
+		return scanRate1;
+	}
+	public void setScanRate1(Double scanRate1) {
+		this.scanRate1 = scanRate1;
+	}
+	public Double getScanRate2() {
+		return scanRate2;
+	}
+	public void setScanRate2(Double scanRate2) {
+		this.scanRate2 = scanRate2;
+	}
+	public Double getCashAmt2() {
+		return cashAmt2;
+	}
+	public void setCashAmt2(Double cashAmt2) {
+		this.cashAmt2 = cashAmt2;
+	}
+	public Double getCashAmt3() {
+		return cashAmt3;
+	}
+	public void setCashAmt3(Double cashAmt3) {
+		this.cashAmt3 = cashAmt3;
+	}
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	public Double getSubRate() {
+		return subRate;
+	}
+	public void setSubRate(Double subRate) {
+		this.subRate = subRate;
+	}
+	public Double getStartAmount2() {
+		return startAmount2;
+	}
+	public void setStartAmount2(Double startAmount2) {
+		this.startAmount2 = startAmount2;
+	}
+	public Double getEndAmount2() {
+		return endAmount2;
+	}
+	public void setEndAmount2(Double endAmount2) {
+		this.endAmount2 = endAmount2;
+	}
+	public Double getRuleThreshold2() {
+		return ruleThreshold2;
+	}
+	public void setRuleThreshold2(Double ruleThreshold2) {
+		this.ruleThreshold2 = ruleThreshold2;
+	}
+	public Double getCloudQuickRate() {
+		return cloudQuickRate;
+	}
+	public void setCloudQuickRate(Double cloudQuickRate) {
+		this.cloudQuickRate = cloudQuickRate;
+	}
+	public Double getProfitPercent1() {
+		return profitPercent1;
+	}
+	public void setProfitPercent1(Double profitPercent1) {
+		this.profitPercent1 = profitPercent1;
+	}
+	public String getTempname() {
+		return Tempname;
+	}
+	public void setTempname(String tempname) {
+		Tempname = tempname;
+	}
+	private Double  creditBankRate2;   	//贷记卡分润成本(秒到非0.72)
+	private Double  profitPercent2 ;  	//利润百分比
+	private Double  profitPercent3 ;  	//快捷分润比例
+	
+	private String txnDay;
+	private String txnDay1;
+	
+	private Integer startAmount1;   		
+	private Integer endAmount1  ; 			
+
+	public Double getProfitPercent3() {
+		return profitPercent3;
+	}
+	public void setProfitPercent3(Double profitPercent3) {
+		this.profitPercent3 = profitPercent3;
+	}
+	public Double getCreditBankRate2() {
+		return creditBankRate2;
+	}
+	public void setCreditBankRate2(Double creditBankRate2) {
+		this.creditBankRate2 = creditBankRate2;
+	}
+	public Double getCashAmt1() {
+		return cashAmt1;
+	}
+	public void setCashAmt1(Double cashAmt1) {
+		this.cashAmt1 = cashAmt1;
+	}
+	public Double getCreditBankRate() {
+		return creditBankRate;
+	}
+	public void setCreditBankRate(Double creditBankRate) {
+		this.creditBankRate = creditBankRate;
+	}
+	public Double getCashRate() {
+		return cashRate;
+	}
+	public void setCashRate(Double cashRate) {
+		this.cashRate = cashRate;
+	}
+	public Double getCashAmt() {
+		return cashAmt;
+	}
+	public void setCashAmt(Double cashAmt) {
+		this.cashAmt = cashAmt;
+	}
+	public Double getScanRate() {
+		return scanRate;
+	}
+	public void setScanRate(Double scanRate) {
+		this.scanRate = scanRate;
+	}
+	public Double getCreditBankRate1() {
+		return creditBankRate1;
+	}
+	public void setCreditBankRate1(Double creditBankRate1) {
+		this.creditBankRate1 = creditBankRate1;
+	}
+	public Integer getStartAmount1() {
+		return startAmount1;
+	}
+	public void setStartAmount1(Integer startAmount1) {
+		this.startAmount1 = startAmount1;
+	}
+	public Integer getEndAmount1() {
+		return endAmount1;
+	}
+	public void setEndAmount1(Integer endAmount1) {
+		this.endAmount1 = endAmount1;
+	}
+	//当前页数
+	private Integer page;
+	
+	//总记录数
+	private Integer rows;
+	
+	//排序字段
+	private String sort;
+	
+	//排序规则 ASC DESC
+	private String order;
+	
+	public Integer getMatainUserId() {
+		return matainUserId;
+	}
+	public void setMatainUserId(Integer matainUserId) {
+		this.matainUserId = matainUserId;
+	}
+	public Integer getAptId() {
+		return aptId;
+	}
+	public void setAptId(Integer aptId) {
+		this.aptId = aptId;
+	}
+	public String getUnno() {
+		return unno;
+	}
+	public void setUnno(String unno) {
+		this.unno = unno;
+	}
+	public Integer getMerchantType() {
+		return merchantType;
+	}
+	public void setMerchantType(Integer merchantType) {
+		this.merchantType = merchantType;
+	}
+	public Integer getProfitType() {
+		return profitType;
+	}
+	public void setProfitType(Integer profitType) {
+		this.profitType = profitType;
+	}
+	public Integer getProfitRule() {
+		return profitRule;
+	}
+	public void setProfitRule(Integer profitRule) {
+		this.profitRule = profitRule;
+	}
+	public Double getStartAmount() {
+		return startAmount;
+	}
+	public void setStartAmount(Double startAmount) {
+		this.startAmount = startAmount;
+	}
+	public Double getEndAmount() {
+		return endAmount;
+	}
+	public void setEndAmount(Double endAmount) {
+		this.endAmount = endAmount;
+	}
+	public Double getRuleThreshold() {
+		return ruleThreshold;
+	}
+	public void setRuleThreshold(Double ruleThreshold) {
+		this.ruleThreshold = ruleThreshold;
+	}
+	public Double getProfitPercent() {
+		return profitPercent;
+	}
+	public void setProfitPercent(Double profitPercent) {
+		this.profitPercent = profitPercent;
+	}
+	public String getMatainType() {
+		return matainType;
+	}
+	public void setMatainType(String matainType) {
+		this.matainType = matainType;
+	}
+	public Date getMatainDate() {
+		return matainDate;
+	}
+	public void setMatainDate(Date matainDate) {
+		this.matainDate = matainDate;
+	}
+	public String getTempName() {
+		return tempName;
+	}
+	public void setTempName(String tempName) {
+		this.tempName = tempName;
+	}
+	public Double getProfitPercent2() {
+		return profitPercent2;
+	}
+	public void setProfitPercent2(Double profitPercent2) {
+		this.profitPercent2 = profitPercent2;
+	}
+	public Integer getPage() {
+		return page;
+	}
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	public Integer getRows() {
+		return rows;
+	}
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public String getTxnDay() {
+		return txnDay;
+	}
+	public void setTxnDay(String txnDay) {
+		this.txnDay = txnDay;
+	}
+	public String getTxnDay1() {
+		return txnDay1;
+	}
+	public void setTxnDay1(String txnDay1) {
+		this.txnDay1 = txnDay1;
+	}
+	public String getSettMethod() {
+		return settMethod;
+	}
+	public void setSettMethod(String settMethod) {
+		this.settMethod = settMethod;
+	}
+
+
+	
+}

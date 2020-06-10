@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.hrt.biz.bill.entity.model.BillSaleUnnoModel" table="BILL_SALE_UNNO">
+        <id name="bsuId" column="BSUID">
+            <generator class="sequence">
+                <param name="sequence">S_bill_sale_unno</param>
+            </generator>
+        </id>
+        <property name="unno" column="UNNO"/>
+        <property name="unLvl" column="UNLVL"/>
+        <property name="saleName" column="SALENAME"/>
+        <property name="sakeLvl" column="SAKELVL"/>
+        <property name="type" column="TYPE"/>
+        <property name="status" column="STATUS"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+    </class>
+</hibernate-mapping>

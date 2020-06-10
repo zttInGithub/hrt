@@ -1,0 +1,221 @@
+package com.hrt.frame.action.sysadmin;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Date;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.model.FileModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.FileBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.frame.service.sysadmin.IFileService;
+import com.hrt.util.StringUtil;
+import com.opensymphony.xwork2.ModelDriven;
+
+/**
+ * 上传下载专区
+ */
+public class FileAction extends BaseAction implements ModelDriven<FileBean> {
+
+	private static final long serialVersionUID = 1L;
+
+	private static final Log log = LogFactory.getLog(FileAction.class);
+
+	private IFileService fileService;
+	
+	private String ids;
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	private FileBean file = new FileBean();
+
+	private File upload;
+
+	public IFileService getFileService() {
+		return fileService;
+	}
+
+	public void setFileService(IFileService fileService) {
+		this.fileService = fileService;
+	}
+
+	public FileBean getFile() {
+		return file;
+	}
+
+	public void setFile(FileBean file) {
+		this.file = file;
+	}
+
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	@Override
+	public FileBean getModel() {
+		return file;
+	}
+
+	/**
+	 * 查询上传的文件
+	 */
+	public void listFiles() {
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb = fileService.queryFiles(file);
+		} catch (Exception e) {
+			log.error("分页查询信息异常：" + e);
+		}
+
+		super.writeJson(dgb);
+	}
+
+	/**
+	 * 查询运营中心报告
+	 */
+	public void listAgentFiles() {
+		DataGridBean dgb = new DataGridBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		try {
+			dgb = fileService.listAgentFiles(file,(UserBean) userSession);
+		} catch (Exception e) {
+			log.error("分页查询运营中心报告异常：" + e);
+		}
+
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 上传
+	 */
+	public void uploadFile() {
+		String fName = ServletActionContext.getRequest().getParameter("fileContact");
+		String fDesc = ServletActionContext.getRequest().getParameter("fileDesc");
+		//String realPath = "D:"+File.separator+StringUtil.toDateString(new Date(), "yyyyMMdd");
+		Map<String, Object> param=fileService.querySysParam();
+		String realPath= param.get("DOWNLOAD_PATH").toString()+File.separator+StringUtil.toDateString(new Date(), "yyyyMMdd");
+		File dir = new File(realPath);
+		dir.mkdirs();
+		String fPath = realPath + File.separator + fName;
+		FileInputStream fis=null;
+		FileOutputStream fos=null;
+		try {
+			fis=new FileInputStream(upload);
+			fos=new FileOutputStream(new File(fPath));
+			byte [] buffer=new byte[1024];
+			int len=0;
+			while((len=fis.read(buffer))>0){
+				fos.write(buffer,0,len);
+			} 
+			fos.close();
+			fis.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		//upload.renameTo(destFile);
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				if (fPath.length() > 0 && fPath != null) {
+					fileService.saveFile(fPath, fName, fDesc, ((UserBean) userSession).getLoginName());
+					json.setSuccess(true);
+					json.setMsg("文件上传成功!");
+				}
+			} catch (Exception e) {
+				log.error("上传文件异常：" + e);
+				json.setMsg("上传文件异常");
+			}
+		}
+		super.writeJson(json);
+	}
+
+	/**
+	 * 下载
+	 */
+	public void downloadFile() {
+		FileModel fileModel = null;
+		try {
+			fileModel = fileService.getFileSingle(file.getFileID());
+			String realPath= fileModel.getFilePath();
+			if (fileModel != null) {
+				fileModel.setFileName(fileModel.getFileName());
+				String filename = new String(fileModel.getFileName().getBytes("gb2312"), "ISO-8859-1"); // 该行代码用来解决下载的文件名是乱码
+				File file = new File(realPath);
+				byte a[] = new byte[1024 * 1024];
+				FileInputStream fin = new FileInputStream(file);
+				OutputStream outs = ServletActionContext.getResponse().getOutputStream();
+				ServletActionContext.getResponse().setHeader("Content-Disposition","attachment; filename=" + filename);
+				ServletActionContext.getResponse().setContentType("application/x-msdownload;charset=utf-8");
+				ServletActionContext.getResponse().flushBuffer();
+
+				int read = 0;
+				while ((read = fin.read(a)) != -1) {
+					outs.write(a, 0, read);
+				}
+				outs.close();
+				fin.close();
+			}
+		} catch (Exception e) {
+			log.error("下载文件异常：" + e);
+			try {
+				ServletActionContext.getResponse().setContentType("text/html;charset=GB2312"); 
+				ServletActionContext.getRequest().setCharacterEncoding("utf-8");
+				ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+				ServletActionContext.getResponse().getWriter().println("<script>alert('该文件已不存在');history.go(-1);</script>");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * 删除
+	 */
+	public void deleteFile(){
+		JsonBean json = new JsonBean();
+		FileModel fileModel = null;
+		
+		try {
+			fileModel = fileService.getFileSingle(Integer.parseInt(ids));
+			String realPath= fileModel.getFilePath();
+			File file = new File(realPath);
+			if(file.exists()){
+				file.delete();
+			}
+			boolean res = fileService.deleteFile(Integer.parseInt(ids));
+			if (res) {
+				json.setSuccess(true);
+				json.setMsg("删除文件成功");
+			}
+		} catch (Exception e) {
+			log.error("删除文件异常：" + e);
+			json.setMsg("删除文件失败");
+		}
+		
+		super.writeJson(json);
+	}
+}

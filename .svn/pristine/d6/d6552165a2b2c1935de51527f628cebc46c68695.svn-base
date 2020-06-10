@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+
+	xmlns:context="http://www.springframework.org/schema/context"
+
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+    http://www.springframework.org/schema/context
+
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+    http://cxf.apache.org/jaxws 
+
+    http://cxf.apache.org/schemas/jaxws.xsd">
+
+
+
+<!--
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />-->
+
+
+<bean id="gsClient" class="com.hrt.gmms.webservice.IGmmsService" factory-bean="clientFactory" factory-method="create" />  
+<bean id ="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">  
+	<property name ="serviceClass" value= "com.hrt.gmms.webservice.IGmmsService" />
+    <!-- <property name ="address" value= "http://test.hybchina.com.cn/AdmApp/service/gmmsService" />-->
+
+   	<!-- 石林  -->
+<!--	<property name ="address" value= "http://10.51.130.147:8080/AdmApp/service/gmmsService" />-->
+   	 <!-- NGINX测试  -->
+     <!--<property name ="address" value= "http://10.51.132.121:8080/AdmApp/service/gmmsService" />-->
+
+    <!-- test  -->
+<!--	<property name ="address" value= "http://10.52.11.214:8080/AdmApp/service/gmmsService" />-->
+	<property name ="address" value= "http://10.52.11.216:8080/AdmApp/service/gmmsService" />
+    <!-- nginx  -->
+<!--    <property name ="address" value= "http://10.51.132.121:8080//AdmApp/service/gmmsService" />-->
+    <!-- 张洪强  -->
+<!--    <property name ="address" value= "http://10.51.130.169:10087/AdmApp/service/gmmsService" />-->
+</bean>
+
+	<!-- <jaxws:client id="wsClient" serviceClass="com.hrt.biz.webservice.HrtServiceImpl" address="http://10.51.31.220:8080/HrtApp/service/hrtService" >
+	</jaxws:client> -->
+
+</beans>

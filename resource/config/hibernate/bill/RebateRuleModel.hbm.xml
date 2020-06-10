@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.RebateRuleModel" table="BILL_REBATE_RULE">
+        <id name="brrId" column="BRRID">
+            <generator class="sequence">
+                <param name="sequence">S_bill_rebate_rule</param>
+            </generator>
+        </id>
+        <property name="brrName" column="BRRNAME"/>
+        <property name="pointType" column="POINTTYPE"/>
+        <property name="txnWay" column="TXNWAY"/>
+        <property name="timeType" column="TIMETYPE"/>
+        <property name="cycle" column="CYCLE"/>
+        <property name="startTime" column="STARTTIME"/>
+        <property name="endTime" column="ENDTIME"/>
+        <property name="txnType" column="TXNTYPE"/>
+        <property name="txnAmount" column="TXNAMOUNT"/>
+        <property name="backType1" column="BACKTYPE1"/>
+        <property name="backAmount1" column="BACKAMOUNT1"/>
+        <property name="backType2" column="BACKTYPE2"/>
+        <property name="backAmount2" column="BACKAMOUNT2"/>
+        <property name="startMonth" column="STARTMONTH"/>
+        <property name="endMonth" column="ENDMONTH"/>
+        <property name="paymentAmount" column="PAYMENTAMOUNT"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+        
+        <property name="auditStatus" column="AUDITSTATUS"/>
+        <property name="rejectReason" column="REJECTREASON"/>
+        <property name="auditDate" column="AUDITDATE"/>
+        <property name="auditUser" column="AUDITUSER"/>
+    </class>
+</hibernate-mapping>

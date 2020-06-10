@@ -1,0 +1,147 @@
+package com.hrt.redis;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.util.PropertiesUtil;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisShardInfo;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
+
+public class RedisUtil  extends AbstractRedisCheck {
+
+	private static Log log = LogFactory.getLog(RedisUtil.class);
+	
+	private static String redisHost =PropertiesUtil.getProperties("param.properties").getProperty("redis.host");
+	private static String redisPwd =PropertiesUtil.getProperties("param.properties").getProperty("redis.passwd");
+	private static String redisPort =PropertiesUtil.getProperties("param.properties").getProperty("redis.port");
+	private static JedisLock jedisLock = new JedisLock();
+	static ShardedJedisPool pool;
+
+	    static{
+	        JedisPoolConfig config =new JedisPoolConfig();//Jedis池配置
+	        config.setMaxTotal(200);//最大活动的对象个数
+	        config.setMaxIdle(100);//对象最大空闲
+	        config.setMaxWaitMillis(3000);//获取对象时最大等待时间
+	        config.setTestOnBorrow(true);
+	        List<JedisShardInfo> jdsInfoList =new ArrayList<JedisShardInfo>(2);
+	        JedisShardInfo infoA = new JedisShardInfo(redisHost, redisPort);
+	        infoA.setPassword(redisPwd);
+	        jdsInfoList.add(infoA);
+	        pool =new ShardedJedisPool(config, jdsInfoList);
+	     }
+	    
+		public static boolean getRedisFlag() throws Exception{
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(2);
+	    	}
+			boolean broken = false;
+			try {
+				boolean flag=shardedJedis.exists("redisFlag");
+				 if(flag){
+					 String redisFlagStr=shardedJedis.get("redisFlag");
+					 if("true".equals(redisFlagStr)){
+						 return true;
+					 }else{
+						 return false;
+					 }
+				 }
+			} catch (Exception e) {
+	            log.error(e.getMessage(), e);
+	            broken = true;
+			}finally {
+			    if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+			}
+			return false;
+		}
+		/**
+		 * 花呗分期开关数据查询
+		 * @param productType  
+		 * @return
+		 * @throws Exception
+		 */
+		public static Map<String,Object> queryHuaBeiInfo(String productType) throws Exception{
+			ShardedJedis shardedJedis = pool.getResource();
+			if(shardedJedis==null ){
+				throw new Exception("获取redis客户端异常");
+			}
+			Map<String,Object> map = new HashMap<String, Object>();;
+			List<Map<String,Object>> li = new ArrayList<Map<String,Object>>();
+	    	Collection<Jedis> collection=shardedJedis.getAllShards();
+	    	Iterator<Jedis> jedis = collection.iterator();
+	    	while(jedis.hasNext()){
+	    		jedis.next().select(0);
+	    	}
+			boolean broken = false;
+			// JedisLock jedisLock = new JedisLock();
+	        try {
+	        	String isOff=null;
+				String stagesRate=null;
+				String txnLimit=null;
+				if("10000".equals(productType)) {
+					isOff=shardedJedis.hget("RebateInfo","isOff_MD");
+					stagesRate=shardedJedis.hget("RebateInfo","stagesRate_MD");
+					txnLimit = shardedJedis.hget("RebateInfo","txnLimit_MD");
+				}else if("10005".equals(productType)) {
+					isOff=shardedJedis.hget("RebateInfo","isOff_SYT");
+					stagesRate=shardedJedis.hget("RebateInfo","stagesRate_SYT");
+					txnLimit = shardedJedis.hget("RebateInfo","txnLimit_SYT");
+				}else {
+					return map;
+				}
+				log.info("新redis工具类请求参数：isOff["+isOff+"],stagesRate["+stagesRate+"],txnLimit["+txnLimit+"]");
+				map.put("isOff", isOff);
+				map.put("txnLimit", txnLimit);
+				String[] list = stagesRate.split(",");
+				for(String s:list){
+					Map<String,Object> obj = new HashMap<String, Object>();
+					String[] lis = s.split("-");
+					obj.put("stages", lis[0]);
+					obj.put("stagesRate", lis[1]);
+					// @author:lxg-20190805 花呗新填字段
+					obj.put("isDefaul", lis[2]);
+					li.add(obj);
+				}
+				map.put("slist", li);
+	        } catch (Exception e) {
+	            log.error(e.getMessage(), e);
+	            broken = true;
+	        } finally {
+			    if(broken){
+		            pool.returnBrokenResource(shardedJedis);
+			    }else{
+		            pool.returnResource(shardedJedis);
+			    }
+	        }
+	        return map;
+		}
+		public static void main(String[] args) {
+			boolean flag;
+			try {
+				queryHuaBeiInfo("10000");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+}

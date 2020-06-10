@@ -1,0 +1,359 @@
+package com.hrt.biz.bill.service.impl;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hrt.biz.bill.dao.IBillTerminalSimDao;
+import com.hrt.biz.bill.entity.model.BillTerminalSimModel;
+import com.hrt.biz.bill.entity.pagebean.BillTerminalSimBean;
+import com.hrt.biz.bill.service.IBillTerminalSimService;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * BillTerminalSimServiceImpl
+ * <p>
+ * This is description
+ * </p>
+ *
+ * @author xuegangliu 2020/05/12
+ * @since 1.8
+ **/
+public class BillTerminalSimServiceImpl implements IBillTerminalSimService {
+    private Log log = LogFactory.getLog(BillTerminalSimServiceImpl.class);
+
+    @Override
+    public DataGridBean queryBillTerminalSimGrid(BillTerminalSimBean billTerminalSimBean, UserBean userBean) {
+        DataGridBean dgb = new DataGridBean();
+        StringBuilder sqlCount = new StringBuilder();
+        StringBuilder sql = new StringBuilder();
+        Map map = new HashMap();
+        getQueryBillTerminalSimGridSql(billTerminalSimBean, userBean, sql, map);
+        sqlCount.append("select count(*) from (").append(sql.toString()).append(")");
+        Integer counts = billTerminalSimDao.querysqlCounts2(sqlCount.toString(), map);
+        sql.append(" order by createdate desc");
+        List<Map<String, Object>> list = billTerminalSimDao.queryObjectsBySqlList2(sql.toString(), map, billTerminalSimBean.getPage(), billTerminalSimBean.getRows());
+        dgb.setRows(list);
+        dgb.setTotal(counts);
+        return dgb;
+    }
+
+    private void getQueryBillTerminalSimGridSql(BillTerminalSimBean billTerminalSimBean, UserBean userBean, StringBuilder sql, Map map) {
+        sql.append("select * from (")
+                .append("select c.*,d.mid from (")
+                .append("select t1.btsid,t1.sn,t1.sim,t1.trydate,t1.initdate,t1.paydate,t1.deductdate,t1.status,t1.createdate,")
+                .append("t2.acceptday,t2.status snstatus,t2.termid")
+                .append(" from bill_terminal_sim t1,bill_terminalinfo t2 where t1.sn=t2.sn")
+                .append(") c left join bill_merchantterminalinfo d on c.termid=d.tid and d.maintaintype!='D' ) where 1=1");
+        if (userBean.getUnitLvl() == 0) {
+        } else {
+            sql.append(" and 1=0 ");
+        }
+        if (StringUtils.isNotEmpty(billTerminalSimBean.getSim())) {
+            sql.append(" and sim=:sim ");
+            map.put("sim", billTerminalSimBean.getSim());
+        }
+
+        if (StringUtils.isNotEmpty(billTerminalSimBean.getSn())) {
+            sql.append(" and sn=:sn ");
+            map.put("sn", billTerminalSimBean.getSn());
+        }
+
+        if(billTerminalSimBean.getStart()!=null && billTerminalSimBean.getEnd()!=null){
+            SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+            sql.append(" and paydate>=:paydate1 and paydate<=:paydate2 ");
+            map.put("paydate1",df.format(billTerminalSimBean.getStart()));
+            map.put("paydate2",df.format(billTerminalSimBean.getEnd()));
+        }
+
+        if (billTerminalSimBean.getStatus() != null) {
+            sql.append(" and status=:status ");
+            map.put("status", billTerminalSimBean.getStatus());
+        }
+
+        if (billTerminalSimBean.getSnStatus() != null) {
+            if (billTerminalSimBean.getSnStatus() == 2) {
+                sql.append(" and snstatus=:snstatus ");
+                map.put("snstatus", billTerminalSimBean.getSnStatus());
+            } else {
+                sql.append(" and snstatus!=2 ");
+            }
+        }
+
+        if (billTerminalSimBean.getInSims() != null) {
+            sql.append(" and sim in (").append(billTerminalSimBean.getInSims()).append(")");
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> exportBillTerminalSimGrid(BillTerminalSimBean billTerminalSimBean, UserBean userBean){
+        StringBuilder sql=new StringBuilder();
+        Map map=new HashMap();
+        getQueryBillTerminalSimGridSql(billTerminalSimBean,userBean,sql,map);
+        List<Map<String, Object>> list = billTerminalSimDao.queryObjectsBySqlListMap2(sql.toString(),map);
+        return list;
+    }
+
+    @Override
+    public boolean updateBillTerminalSim(BillTerminalSimBean billTerminalSimBean, UserBean userBean) {
+        BillTerminalSimModel billTerminalSimModel = billTerminalSimDao.queryObjectByHql("from BillTerminalSimModel where btsId=?", new Object[]{billTerminalSimBean.getBtsId()});
+        if (billTerminalSimModel != null) {
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getMid())) {
+                billTerminalSimModel.setMid(billTerminalSimBean.getMid());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getSim())) {
+                billTerminalSimModel.setSim(billTerminalSimBean.getSim());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getSn())) {
+                billTerminalSimModel.setSn(billTerminalSimBean.getSn());
+            }
+            if (billTerminalSimBean.getStatus() != null) {
+                billTerminalSimModel.setStatus(billTerminalSimBean.getStatus());
+            }
+            if (billTerminalSimBean.getSnStatus() != null) {
+                billTerminalSimModel.setSnStatus(billTerminalSimBean.getSnStatus());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getInitDate())) {
+                billTerminalSimModel.setInitDate(billTerminalSimBean.getInitDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getTryDate())) {
+                billTerminalSimModel.setTryDate(billTerminalSimBean.getTryDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getPayDate())) {
+                billTerminalSimModel.setPayDate(billTerminalSimBean.getPayDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getDeductDate())) {
+                billTerminalSimModel.setDeductDate(billTerminalSimBean.getDeductDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getActDate())) {
+                billTerminalSimModel.setActDate(billTerminalSimBean.getActDate());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getRemark1())) {
+                billTerminalSimModel.setRemark1(billTerminalSimBean.getRemark1());
+            }
+            if (StringUtils.isNotEmpty(billTerminalSimBean.getRemark2())) {
+                billTerminalSimModel.setRemark2(billTerminalSimBean.getRemark2());
+            }
+            billTerminalSimModel.setUpdateDate(new Date());
+            billTerminalSimModel.setUpdateUser(userBean.getUserID() + "");
+            billTerminalSimDao.updateObject(billTerminalSimModel);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Map> saveImportTermSimModifyXls(BillTerminalSimBean billTerminalSimBean, UserBean userBean,
+                                           String xlsfile){
+        List<Map> errList = new ArrayList<Map>();
+        File filename = new File(xlsfile);
+        HSSFWorkbook workbook = null;
+        try {
+            workbook = new HSSFWorkbook(new FileInputStream(filename));
+        } catch (IOException e) {
+            log.info("saveImportTermSimModifyXls异常",e);
+        }
+        HSSFSheet sheet = workbook.getSheetAt(0);
+        int sumCount = sheet.getPhysicalNumberOfRows()-1;
+        JSONObject jsonObject;
+        List<JSONObject> modifyList = new ArrayList<JSONObject>();
+        Set<String> uniqeSet= new HashSet<String>(sumCount);
+        for(int i = 1; i <= sumCount; i++) {
+            HSSFRow row = sheet.getRow(i);
+            HSSFCell cell = row.getCell((short) 0);
+            if (cell == null || cell.toString().trim().equals("")) {
+                break;
+            } else {
+                jsonObject=new JSONObject();
+                setImportTermSimModifyXlsJSONObject(jsonObject, row);
+                String errMsg = validateImportTermSimModifyXls(jsonObject,i+1,uniqeSet);
+                if(StringUtils.isNotEmpty(errMsg)){
+                    Map err = new HashMap();
+                    err.put("sim",jsonObject.getString("sim"));
+                    err.put("errMsg",errMsg);
+                    errList.add(err);
+                }else{
+                    if(errList.isEmpty()){
+                        modifyList.add(jsonObject);
+                    }
+                }
+            }
+        }
+        if(errList.isEmpty()){
+            updateImportTermSimModifyXls(modifyList,userBean);
+        }
+        return errList;
+    }
+
+    private void setImportTermSimModifyXlsJSONObject(JSONObject jsonObject, HSSFRow row) {
+        row.getCell((short) 0).setCellType(Cell.CELL_TYPE_STRING);
+        String sim = row.getCell((short) 0).getStringCellValue().trim();
+        jsonObject.put("sim",sim);
+
+        HSSFCell cell1 = row.getCell((short) 1);
+        if(cell1!=null) {
+            row.getCell((short) 1).setCellType(Cell.CELL_TYPE_STRING);
+            String simStatusValue = row.getCell((short) 1).getStringCellValue().trim();
+            if (StringUtils.isNotEmpty(simStatusValue)) {
+                if ("正常".equals(simStatusValue)) {
+                    jsonObject.put("status", 1);
+                } else if ("欠费".equals(simStatusValue)) {
+                    jsonObject.put("status", 2);
+                } else if ("注销".equals(simStatusValue)) {
+                    jsonObject.put("status", 3);
+                }
+            }
+        }
+
+        HSSFCell cell2 = row.getCell((short) 2);
+        if(cell2!=null) {
+            row.getCell((short) 2).setCellType(Cell.CELL_TYPE_STRING);
+            String tryDate = row.getCell((short) 2).getStringCellValue().trim();
+            jsonObject.put("tryDate", tryDate);
+        }
+
+        HSSFCell cell3 = row.getCell((short) 3);
+        if(cell3!=null) {
+            row.getCell((short) 3).setCellType(Cell.CELL_TYPE_STRING);
+            String payDate = row.getCell((short) 3).getStringCellValue().trim();
+            jsonObject.put("payDate", payDate);
+        }
+
+        HSSFCell cell4 = row.getCell((short) 4);
+        if(cell4!=null) {
+            row.getCell((short) 4).setCellType(Cell.CELL_TYPE_STRING);
+            String deductDate = row.getCell((short) 4).getStringCellValue().trim();
+            jsonObject.put("deductDate", deductDate);
+        }
+    }
+
+    private void updateImportTermSimModifyXls(List<JSONObject> modifyList,UserBean userBean){
+        for (JSONObject object : modifyList) {
+            StringBuilder upSql=new StringBuilder();
+            Map upMap=new HashMap();
+            boolean flag=false;
+            upSql.append("UPDATE BILL_TERMINAL_SIM T SET T.REMARK1=T.REMARK1 ");
+            if(object.containsKey("status")){
+                flag=true;
+                upSql.append(",T.STATUS=:STATUS");
+                upMap.put("STATUS",object.getInteger("status"));
+            }
+            if(object.containsKey("tryDate")){
+                flag=true;
+                upSql.append(",T.TRYDATE=:TRYDATE");
+                upMap.put("TRYDATE",object.getString("tryDate"));
+            }
+
+            if(object.containsKey("payDate")){
+                flag=true;
+                upSql.append(",T.PAYDATE=:PAYDATE");
+                upMap.put("PAYDATE",object.getString("payDate"));
+            }
+            if(object.containsKey("deductDate")){
+                flag=true;
+                upSql.append(",T.DEDUCTDATE=:DEDUCTDATE");
+                upMap.put("DEDUCTDATE",object.getString("deductDate"));
+            }
+            if(flag){
+                upSql.append(" WHERE T.SIM=:SIM ");
+                upMap.put("SIM",object.getString("sim"));
+                billTerminalSimDao.executeSqlUpdate(upSql.toString(),upMap);
+            }
+        }
+    }
+
+    private String validateImportTermSimModifyXls(JSONObject jsonObject,int row,Set uniqeSet){
+        StringBuilder errTip=new StringBuilder(256);
+        if(StringUtils.isEmpty(jsonObject.getString("sim"))){
+            errTip.append("第").append(row).append("行").append("SIM卡号不能为空.");
+        }else{
+            if(uniqeSet.contains(jsonObject.getString("sim"))){
+                errTip.append("第").append(row).append("行").append("SIM卡号已存在.");
+            }else{
+                uniqeSet.add(jsonObject.getString("sim"));
+            }
+        }
+        return errTip.toString();
+    }
+
+    public List<Map<String, Object>> exportBillTerminalSimMatch(BillTerminalSimBean billTerminalSimBean, UserBean userBean,
+                                                                String xlsfile){
+        File filename = new File(xlsfile);
+        HSSFWorkbook workbook = null;
+        try {
+            workbook = new HSSFWorkbook(new FileInputStream(filename));
+        } catch (IOException e) {
+            log.info("exportBillTerminalSimMatch异常",e);
+        }
+        HSSFSheet sheet = workbook.getSheetAt(0);
+        int sumCount = sheet.getPhysicalNumberOfRows()-1;
+        List<Map<String, Object>> reulst = new ArrayList<Map<String, Object>>(sumCount);
+        List<String> list=new ArrayList<String>((sumCount/1000)+1);
+        int SIZE=1024*20;
+        StringBuilder sims=new StringBuilder(SIZE);
+        int count=0;
+        for(int i = 1; i <= sumCount; i++) {
+            HSSFRow row = sheet.getRow(i);
+            HSSFCell cell = row.getCell((short) 0);
+            if (cell == null || cell.toString().trim().equals("")) {
+                break;
+            } else {
+                row.getCell((short) 0).setCellType(Cell.CELL_TYPE_STRING);
+                String sim = row.getCell((short) 0).getStringCellValue().trim();
+                if(StringUtils.isNotEmpty(sim)){
+                    if(sims.toString().isEmpty()){
+                        sims.append("'").append(sim).append("'");
+                        count++;
+                    }else{
+                        sims.append(",'").append(sim).append("'");
+                        count++;
+                    }
+
+                    if(count==1000){
+                        list.add(sims.toString());
+                        sims=new StringBuilder(SIZE);
+                    }
+                }
+            }
+        }
+        if(!sims.toString().isEmpty()){
+            list.add(sims.toString());
+        }
+        if(!list.isEmpty()){
+            for (String s : list) {
+                billTerminalSimBean.setInSims(s);
+                reulst.addAll(exportBillTerminalSimGrid(billTerminalSimBean,userBean));
+            }
+        }
+        return reulst;
+    }
+
+
+    private IBillTerminalSimDao billTerminalSimDao;
+
+    public IBillTerminalSimDao getBillTerminalSimDao() {
+        return billTerminalSimDao;
+    }
+
+    public void setBillTerminalSimDao(IBillTerminalSimDao billTerminalSimDao) {
+        this.billTerminalSimDao = billTerminalSimDao;
+    }
+}

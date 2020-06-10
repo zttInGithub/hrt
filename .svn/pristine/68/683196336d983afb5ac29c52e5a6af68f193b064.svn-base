@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hrt.biz.bill.entity.model.RebateRuleInfoModel" table="BILL_REBATERULE_INFO">
+        <id name="id" column="ID">
+            <generator class="sequence">
+                <param name="sequence">S_bill_rebateRule_info</param>
+            </generator>
+        </id>
+        <property name="brId" column="BRID"/>
+        <property name="brrId" column="BRRID"/>
+        <property name="startDate" column="STARTDATE"/>
+        <property name="endDate" column="ENDDATE"/>
+        <property name="status" column="STATUS"/>
+        <property name="createUser" column="CREATEUSER"/>
+        <property name="createDate" column="CREATEDATE"/>
+        <property name="updateUser" column="UPDATEUSER"/>
+        <property name="updateDate" column="UPDATEDATE"/>
+        <property name="remark1" column="REMARK1"/>
+        <property name="remark2" column="REMARK2"/>
+    </class>
+</hibernate-mapping>

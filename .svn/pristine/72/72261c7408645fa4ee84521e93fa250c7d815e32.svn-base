@@ -1,0 +1,112 @@
+package com.hrt.biz.bill.action;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoCommBean;
+import com.hrt.biz.bill.service.IMerchantInfoCommService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class MerchantInfoCommAction extends BaseAction implements ModelDriven<MerchantInfoCommBean>{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private static final Log log = LogFactory.getLog(MerchantInfoAction.class); 
+	
+	private MerchantInfoCommBean merchantInfoCommBean = new MerchantInfoCommBean();
+	
+	private IMerchantInfoCommService merchantInfoCommService;
+	
+	private String maid;
+	
+	
+	public IMerchantInfoCommService getMerchantInfoCommService() {
+		return merchantInfoCommService;
+	}
+	public void setMerchantInfoCommService(
+			IMerchantInfoCommService merchantInfoCommService) {
+		this.merchantInfoCommService = merchantInfoCommService;
+	}
+	public String getMaid() {
+		return maid;
+	}
+	public void setMaid(String maid) {
+		this.maid = maid;
+	}
+	
+	@Override
+	public MerchantInfoCommBean getModel() {
+		// TODO Auto-generated method stub
+		return merchantInfoCommBean;
+	}
+	
+	/**
+	 * 查询所有交行信息
+	 */
+	public void listBocomInfo(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb = merchantInfoCommService.queryMerchantInfoComm(merchantInfoCommBean);
+		} catch (Exception e) {
+			log.error("分页查询商户信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+
+	/**
+	 * 查询商户终端
+	 */
+	public void listMaid(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb = merchantInfoCommService.queryMaid(maid);
+		} catch (Exception e) {
+			log.error("查询商户信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 插入商户数据
+	 * 
+	 */
+	public void addMerchantInfo(){
+		JsonBean json= new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			//判断页面MID是否为空
+			if(merchantInfoCommBean.getMID()!=null && !"".equals(merchantInfoCommBean.getMID())){
+				//判断页面数据MID在数据库中是否已经存在
+				int count=merchantInfoCommService.queryMid(merchantInfoCommBean.getMID());
+				if(count==0){
+					try {
+						merchantInfoCommService.addMerchantInfo(merchantInfoCommBean);
+						json.setSuccess(true);
+						json.setMsg("商户信息插入成功！");
+					} catch (Exception e) {
+						json.setSuccess(false);
+						json.setMsg("商户信息插入异常！");
+						log.error("查询商户信息异常：" + e);
+					}
+				}else{
+					json.setMsg("商户编号已存在");
+					json.setSuccess(false);
+					}
+			}else{
+				json.setMsg("商户编号为空！");
+				json.setSuccess(false);
+			}
+		}
+		super.writeJson(json);
+	}
+		
+}

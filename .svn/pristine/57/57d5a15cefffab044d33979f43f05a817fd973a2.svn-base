@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="HotCardModel" table="PG_HOTMERCH">
+		<id name="phid" column="PHID">
+			<generator class="sequence">
+				<param name="sequence">S_PG_HOTMERCH</param>
+			</generator>
+		</id>
+		<property name="tname" column="TNAME"/>
+		<property name="identificationNumber" column="IDENTIFICATIONNUMBER"/>
+		<property name="license" column="LICENSE"/>
+		<property name="bankAccNo" column="BANKACCNO"/>
+		<property name="cdate" column="CDATE" type="timestamp"/>
+		<property name="cby" column="CBY"/>
+		<property name="sn" column="SN"/>
+		<property name="remarks"  column="REMARKS"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,323 @@
+package com.hrt.phone.action;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hrt.biz.util.CommonTools;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.alibaba.fastjson.JSON;
+import com.hrt.biz.util.gateway.MD5Util;
+import com.hrt.biz.util.unionpay.HrtRSAUtil;
+import com.hrt.biz.util.unionpay.SHAEncUtil;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.JsonBeanForSign;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.phone.service.IPhoneUserService;
+import com.hrt.phone.service.IPhoneWechatPublicAccService;
+import com.hrt.util.SimpleXmlUtil;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class PhoneUserAction extends BaseAction implements ModelDriven<UserBean> {
+
+	private static final long serialVersionUID = 1L;
+
+	private static final Log log = LogFactory.getLog(PhoneUserAction.class);
+
+	private UserBean user = new UserBean();
+
+	private IPhoneUserService phoneUserService;
+	private IPhoneWechatPublicAccService phoneWechatPublicAccService;
+
+	public IPhoneWechatPublicAccService getPhoneWechatPublicAccService() {
+		return phoneWechatPublicAccService;
+	}
+
+	public void setPhoneWechatPublicAccService(IPhoneWechatPublicAccService phoneWechatPublicAccService) {
+		this.phoneWechatPublicAccService = phoneWechatPublicAccService;
+	}
+
+	public IPhoneUserService getPhoneUserService() {
+		return phoneUserService;
+	}
+
+	public void setPhoneUserService(IPhoneUserService phoneUserService) {
+		this.phoneUserService = phoneUserService;
+	}
+
+	@Override
+	public UserBean getModel() {
+		return user;
+	}
+
+	public UserBean getUser() {
+		return user;
+	}
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
+
+	//解密登陆
+	public void decLogin(){
+		JsonBean json = new JsonBean();
+		boolean b = phoneWechatPublicAccService.addReplayAttack(super.getRequest().getParameter("uuid"), super.getRequest().getParameter("timeStamp"));
+		if(!b) {
+			json.setSuccess(false);
+			json.setMsg("数据有误！");
+		}else {
+			try{
+				String loginName = super.getRequest().getParameter("loginName");
+				String sign = super.getRequest().getParameter("sign");
+				Map<String,String> map1 = new HashMap<String, String>();
+				map1.put("loginName", loginName);
+				String md5 = MD5Util.MD5((SimpleXmlUtil.getSignBlock(map1)+"&key=dseesa325errtcyraswert749errtdyt"));
+				if(md5.equals(sign)){
+					loginName = HrtRSAUtil.decryptWithBase64(loginName);
+					if(loginName!=null&&!"".equals(loginName)){
+						user.setLoginName(loginName);
+						UserBean userBean = null;
+						try {
+							Map<String ,Object> map =new HashMap<String, Object>();
+							userBean = phoneUserService.login(user);
+							if (userBean != null) {
+									super.getRequest().getSession(true).setAttribute("user",userBean);
+									json.setSuccess(true);
+									if(userBean.getUseLvl()==3){
+										Integer isM35=phoneUserService.findMerchantIsM35(userBean.getLoginName());
+										map.put("isM35", isM35);
+									}else{
+										map.put("lvl", userBean.getUnitLvl());
+									}
+									map.put("mid", userBean.getLoginName());
+									map.put("userName",userBean.getUserName());
+									json.setObj(map);
+									json.setMsg("恭喜您登陆成功！");
+							} else {
+								super.getRequest().getSession(true).setAttribute("user",userBean);
+								json.setMsg("您未开通POS收款功能，没有对账信息可以展示。请联系维护销售！");
+								json.setSuccess(false);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							json.setMsg("用户登录异常！");
+							json.setSuccess(false);
+						}
+					}else{
+						json.setSuccess(false);
+						json.setMsg("数据有误！");
+					}
+				}else{
+					json.setMsg("数据有误！");
+					json.setSuccess(false);
+				}
+			}catch(Exception e){
+				log.error("解密登陆异常"+e);
+				json.setMsg("用户登录异常！");
+				json.setSuccess(false);
+			}
+		}
+		JsonBeanForSign json1 = new JsonBeanForSign();
+		String data = JSON.toJSONStringWithDateFormat(json, "yyyy-MM-dd HH:mm:ss");
+		String signs1 = SHAEncUtil.getSHA256Str(data);
+		json1.setSign(signs1);
+		json1.setData(data);
+		super.writeJson(json1);
+	}
+
+	public void loginDataV2() {
+		// @author:lxg-20191114 敏感信息加密处理
+		try {
+			String data=getRequest().getParameter("data");
+			String aesEn=getRequest().getParameter("aesEn");
+			String sck= CommonTools.getSck(aesEn);
+			String data0 = CommonTools.parseAesEnAndData(sck,data);
+//			user= JSONObject.parseObject(data0,UserBean.class);
+			user.setLoginName(JSON.parseObject(data0).getString("loginName"));
+			user.setSck(sck);
+			user.setEnc(true);
+			// https://github.com/alibaba/fastjson/issues/505 bug
+//			log.error("loginDataV2解密后的请求参数:"+JSON.toJSONString(user));
+			login();
+		} catch (Exception e) {
+			log.error("loginDataV2解密请求出错:"+e.getMessage());
+		}
+	}
+
+	public void login() {
+		HttpServletRequest request=this.getRequest();
+		JsonBean json = new JsonBean();
+		UserBean userBean = null;
+		try {
+			try {
+				String requestHeader = request.getHeader("user-agent").toLowerCase();
+				log.info("用户："+user.getLoginName()+"请求方式："+requestHeader);
+			} catch (Exception e) {
+				log.info("打印请求方式异常："+e.getMessage());
+			}
+			Map<String ,Object> map =new HashMap<String, Object>();
+			userBean = phoneUserService.login(user);
+			if (userBean != null) {
+//				if (userBean.getStatus() == 1) {
+					super.getRequest().getSession(true).setAttribute("user",userBean);
+					json.setSuccess(true);
+					if(userBean.getUseLvl()==3){
+						//如果用户级别为3则 用户为商户
+						Integer isM35=phoneUserService.findMerchantIsM35(userBean.getLoginName());
+						map.put("isM35", isM35);
+					}else{
+						//否则为 总公司（0），分公司（1），代理商（2）
+						map.put("lvl", userBean.getUnitLvl());
+					}
+					map.put("mid", userBean.getLoginName());
+					map.put("userName",userBean.getUserName());
+					json.setObj(map);
+					json.setMsg("恭喜您登陆成功！");
+//					super.writeJson(json);
+					// @author:lxg-20191114 敏感信息加密处理
+					super.writeJson(CommonTools.jsonBeanToString(json,user.isEnc(),user.getSck()));
+//				} else {
+//					json.setMsg("该账户已被停用！");
+//					json.setSuccess(false);
+//					super.writeJson(json);
+//				}
+			} else {
+				super.getRequest().getSession(true).setAttribute("user",userBean);
+				json.setMsg("您未开通POS收款功能，没有对账信息可以展示。请联系维护销售！");
+				json.setSuccess(false);
+//				super.writeJson(json);
+				// @author:lxg-20191114 敏感信息加密处理
+				super.writeJson(CommonTools.jsonBeanToString(json,user.isEnc(),user.getSck()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setMsg("用户登录异常！");
+			json.setSuccess(false);
+//			super.writeJson(json);
+			// @author:lxg-20191114 敏感信息加密处理
+			super.writeJson(CommonTools.jsonBeanToString(json,user.isEnc(),user.getSck()));
+		}
+
+	}
+
+    /**
+     * 银收宝登录
+     */
+	public void loginYSB() {
+		JsonBean json = new JsonBean();
+		UserBean userBean = new UserBean();
+		try {
+			Map<String ,Object> map =new HashMap<String, Object>();
+			// 查询商户是否存在
+            log.info("银收宝登录用户:"+user.getLoginName());
+			Map result = phoneUserService.loginYSB(user);
+			if(null!=result){
+//				map.put("isM35", result.get("ISM35"));
+				map.put("unno",result.get("UNNO"));
+				map.put("mid", user.getLoginName());
+				map.put("userName",user.getLoginName());
+				user.setUnNo(result.get("UNNO")+"");
+				user.setUseLvl(3);
+//				userBean.setIsM35Type(result.get("ISM35")+"");
+				json.setSuccess(true);
+				json.setObj(map);
+				json.setMsg("恭喜您登陆成功！");
+				super.getRequest().getSession(true).setAttribute("user",user);
+				super.writeJson(json);
+			}else{
+//				super.getRequest().getSession(true).setAttribute("user",userBean);
+				json.setMsg("该商户信息不存在,登录失败！");
+				json.setSuccess(false);
+				super.writeJson(json);
+			}
+            log.info("银收宝登录用户返回:"+JSON.toJSONString(json));
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setMsg("用户登录异常！");
+			json.setSuccess(false);
+			super.writeJson(json);
+		}
+	}
+
+	/**
+	 * 方法功能：传统商户app销售登陆
+	 * 参数：
+	 * 返回值：void
+	 * 异常：
+	 */
+	public void agentLogin() {
+		JsonBean json = new JsonBean();
+		try {
+			UserBean userBean = phoneUserService.agentLogin(user);
+			if (userBean != null) {
+				//if(userBean.getIsLogin()==0){
+					//userService.updateIsLoginStatus(userBean.getLoginName(), 1);
+					if(userBean.getStatus() == 1){
+						json.setObj(userBean);
+						json.setMsg("登陆成功");
+						json.setSuccess(true);
+					}else{
+						super.addFieldError("errorInfo", "该账户已停用！");
+						json.setMsg("该账户已停用！");
+						json.setSuccess(false);
+					}
+//				}else{
+//					super.addFieldError("errorInfo", "用户已登录，不可重复登录！");
+//					return "error";
+//				}
+			} else {
+				super.addFieldError("errorInfo", "登录失败，请重新登录！");
+				json.setMsg("用户登录失败！");
+				json.setSuccess(false);
+			}
+		} catch (Exception e) {
+			log.error("用户登录异常：" + e);
+			super.addFieldError("errorInfo", "用户登录异常！");
+			json.setMsg("用户登录异常！");
+			json.setSuccess(false);
+		}
+		super.writeJson(json);
+	}
+	
+	public void queryDataForHYB(){
+		JsonBean json =new JsonBean();
+		try {
+			List<Map<String,String>> list = phoneUserService.queryDataForHYB(user.getLoginName());
+			json.setMsg("查询成功");
+			json.setObj(list);
+			json.setSuccess(true);
+		} catch (Exception e) {
+			log.error("queryDataForHYB 异常:"+e);
+			json.setMsg("查询数据异常！");
+			json.setSuccess(false);
+		}
+		super.writeJson(json);
+	}
+
+	
+	/*
+	 * 会员宝核对密码
+	 */
+	public void queryMerchantPasswordInfo(){
+		JsonBean json =new JsonBean();
+		try {
+			List<Map<String,Object>> list = phoneUserService.queryMerchantPassword(user);
+			json.setObj(list);
+			json.setSuccess(true);
+			json.setMsg("查询成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.printStackTrace();
+			json.setMsg("查询数据异常！");
+			json.setSuccess(false);
+		}
+		super.writeJson(json);
+	}
+	
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.phone.entity.model">
+    <class name="GateOrderModel" table="BILL_GATEORDER">
+        <id name="goId" column="GOID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_GATEORDER</param>
+			</generator>
+        </id>
+      <property name="mid" column="MID"></property>  
+      <property name="hrtOrderId" column="HRTORDERID" ></property>
+      <property name="orderId" column="ORDERDERID" ></property>
+      <property name="payOrderId" column="PAYORDERID" ></property>
+      <property name="priceId" column="PRICEID" ></property>
+      <property name="uniqueCode" column="UNIQUECODE" ></property>
+      <property name="isQuick" column="IDQUICK" ></property>
+      <property name="isUsPrice" column="ISUSPRICE" ></property>
+      <property name="msg" column="MSG" ></property>
+      <property name="batchId" column="BATCHID" ></property>
+      <property name="totalFee" column="TOTALFEE" ></property>
+      <property name="privateFlag" column="PRIVATEFLAG" ></property>
+      <property name="state" column="STATE" ></property>
+      <property name="passMemo" column="PASSMEMO" ></property>
+      <property name="mainTainDate" column="MAINTAINDATE"></property>
+      <property name="mainTainType" column="MAINTAINTYPE"></property>
+      <property name="mainTainUid" column="MAINTAINUID"></property>
+      <property name="placeOrderTime" column="PlaceOrderTime"></property>
+      <property name="rebackorderTime" column="REBACKORDERTIME"></property>
+      <property name="appPayOrderTime" column="APPPAYORDERTIME"></property>
+      <property name="amount" column="AMOUNT"></property>
+      <property name="waitUploadImgIds" column="WAITUPLOADIMGIDS"></property>
+      <property name="oldHrtOrderId" column="OLDHRTORDERID"></property>
+    </class>
+</hibernate-mapping>

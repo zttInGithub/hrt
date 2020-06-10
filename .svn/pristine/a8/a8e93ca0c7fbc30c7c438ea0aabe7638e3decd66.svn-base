@@ -1,0 +1,20 @@
+package com.hrt.biz.bill.service;
+
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoCommBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+
+public interface IMerchantInfoCommService {
+	DataGridBean queryMerchantInfoComm(MerchantInfoCommBean merchantInfoComm);
+
+	DataGridBean queryMaid(String maid);
+	 
+	void addMerchantInfo(MerchantInfoCommBean merchantInfoComm);
+	
+	
+	/**
+	 * 查询mid是否存在
+	 * @param mid
+	 * @return
+	 */
+	int queryMid(String mid);
+}

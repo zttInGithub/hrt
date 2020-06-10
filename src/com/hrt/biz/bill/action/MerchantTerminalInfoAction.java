@@ -1,0 +1,645 @@
+package com.hrt.biz.bill.action;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.biz.bill.entity.model.MerchantTerminalInfoModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoBean;
+import com.hrt.biz.bill.service.IMerchantInfoService;
+import com.hrt.biz.bill.service.IMerchantTerminalInfoService;
+import com.hrt.frame.base.action.BaseAction;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.JsonBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+import com.hrt.util.UsePioOutExcel;
+import com.opensymphony.xwork2.ModelDriven;
+
+/**
+ * 商户终端申请
+ * @author tanwb
+ *
+ */
+public class MerchantTerminalInfoAction extends BaseAction implements ModelDriven<MerchantTerminalInfoBean>{
+
+	private static final long serialVersionUID = 1L;
+
+	private static final Log log = LogFactory.getLog(MerchantTerminalInfoAction.class);
+	
+	private MerchantTerminalInfoBean merchantTerminalInfo = new MerchantTerminalInfoBean();
+	
+	private IMerchantTerminalInfoService merchantTerminalInfoService;
+	
+	private IMerchantInfoService merchantInfoService;
+	
+	private String id;
+	
+	private File upload;
+	
+	public File getUpload() {
+		return upload;
+	}
+
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public MerchantTerminalInfoBean getModel() {
+		return merchantTerminalInfo;
+	}
+
+	public IMerchantTerminalInfoService getMerchantTerminalInfoService() {
+		return merchantTerminalInfoService;
+	}
+
+	public void setMerchantTerminalInfoService(
+			IMerchantTerminalInfoService merchantTerminalInfoService) {
+		this.merchantTerminalInfoService = merchantTerminalInfoService;
+	}
+	
+	public IMerchantInfoService getMerchantInfoService() {
+		return merchantInfoService;
+	}
+
+	public void setMerchantInfoService(IMerchantInfoService merchantInfoService) {
+		this.merchantInfoService = merchantInfoService;
+	}
+
+	
+	
+	public void addMerchantTerminalInfo(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				String[] values=getRequest().getParameterValues("IDNUM");
+				String bmid=getRequest().getParameter("BMID");
+				String mid=getRequest().getParameter("MID");
+				
+				int result = 0;
+				if(values != null && values.length > 0){
+					for (int i = 0; i < values.length; i++) {
+						String[] pram=values[i].split("#separate#");
+						boolean falg =merchantTerminalInfoService.queryMachineInfo(pram[1]);
+						if(falg){
+							result += merchantTerminalInfoService.TerminalInfoTerMID(pram[0]);
+						}else{
+							json.setSuccess(false);
+							json.setMsg("设备型号不存在！");
+							super.writeJson(json);
+						}
+					}
+				}
+				if(result==0){
+					Integer i = merchantTerminalInfoService.saveMerchantTerminalInfo(merchantTerminalInfo, ((UserBean)userSession), values, Integer.parseInt(bmid), mid);
+					if(i==1){
+						json.setSuccess(true);
+						json.setMsg("终端申请成功");
+					}else{
+						json.setSuccess(false);
+						json.setMsg("TUSN重复");
+					}
+				}else{
+					json.setSuccess(false);
+					json.setMsg("失败，所选终端有已被其它用户申请");
+				}
+			} catch (Exception e) {
+				log.error("终端申请异常：" + e);
+				json.setMsg("终端申请失败");
+			}
+		}
+		
+		super.writeJson(json);
+	}
+	
+	public void listMerchantTerminalInfoZ(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgb = merchantTerminalInfoService.queryMerchantTerminalInfoZ(merchantTerminalInfo, ((UserBean)userSession));
+		} catch (Exception e) {
+			log.error("分页查询终端信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	public void listMerchantTerminalInfoZ1(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			if("".equals(merchantTerminalInfo.getMid())||merchantTerminalInfo.getMid()==null){
+				merchantTerminalInfo.setMid("864");
+			}else if(!merchantTerminalInfo.getMid().startsWith("864")){
+				return;
+			}
+			dgb = merchantTerminalInfoService.queryMerchantTerminalInfoZ(merchantTerminalInfo, ((UserBean)userSession));
+		} catch (Exception e) {
+			log.error("分页查询终端信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 开通
+	 */
+	public void updateMerchantTerminalinfoY(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				MerchantTerminalInfoModel model=merchantTerminalInfoService.getInfoModel(merchantTerminalInfo.getBmtid());
+				if(!"Z".equals(model.getApproveStatus()) && !"C".equals(model.getApproveStatus())){
+					json.setSuccess(false);
+					json.setMsg("失败，该记录已经被其它用户审批");
+				}else{
+					merchantTerminalInfoService.updateMerchantTerminalinfoY(merchantTerminalInfo, ((UserBean)userSession));
+					json.setSuccess(true);
+					json.setMsg("商户开通成功");
+				}
+			} catch (Exception e) {
+				log.error("商户开通异常" + e);
+				json.setMsg("商户开通失败");
+			}
+		}
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 退回
+	 */
+	public void updateMerchantTerminalinfoK(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				MerchantTerminalInfoModel model=merchantTerminalInfoService.getInfoModel(merchantTerminalInfo.getBmtid());
+				if(!"Z".equals(model.getApproveStatus()) && !"C".equals(model.getApproveStatus())){
+					json.setSuccess(false);
+					json.setMsg("失败，该记录已经被其它用户审批");
+				}else{
+					if(merchantTerminalInfo.getProcessContext().equals("其他")){
+						merchantTerminalInfo.setProcessContext(merchantTerminalInfo.getProcessContext1());
+					}
+					merchantTerminalInfoService.updateMerchantTerminalinfoK(merchantTerminalInfo, ((UserBean)userSession));
+					json.setSuccess(true);
+					json.setMsg("商户退回成功");
+				}
+			} catch (Exception e) {
+				log.error("商户退回异常" + e);
+				json.setMsg("商户退回失败");
+			}
+		}
+		
+		super.writeJson(json);
+	}
+	
+	/**
+	 * 根据Mid查询对应的终端
+	 */
+	public void listMerchantTerminalInfoMid(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgb = merchantTerminalInfoService.queryMerchantTerminalInfoMid(merchantTerminalInfo, ((UserBean)userSession).getUnNo());
+		} catch (Exception e) {
+			log.error("分页查询终端信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 终端查询
+	 */
+	public void listMerchantTerminalInfo(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgb = merchantTerminalInfoService.queryMerchantTerminalInfo(merchantTerminalInfo,((UserBean)userSession).getUnNo());
+		} catch (Exception e) {
+			log.error("分页查询商户终端异常：" + e);
+		}
+		
+		super.writeJson(dgb);
+	}
+	
+	/**
+	 * 终端查询
+	 */
+	public void listMerchantTerminalInfobaodan(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			if(merchantTerminalInfo.getMaintainDateStr()==null||"".equals(merchantTerminalInfo.getMaintainDateStr())
+					||merchantTerminalInfo.getApproveDateStr()==null||"".equals(merchantTerminalInfo.getApproveDateStr())){
+			}else{
+				dgb = merchantTerminalInfoService.queryMerchantTerminalInfo(merchantTerminalInfo,((UserBean)userSession).getUnNo());
+			}
+		} catch (Exception e) {
+			log.error("分页查询商户终端异常：" + e);
+		}
+		
+		super.writeJson(dgb);
+	}
+	
+	public void export(){
+		String ids=getRequest().getParameter("id");
+		HttpServletResponse response=getResponse();
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				HSSFWorkbook wb=merchantTerminalInfoService.export(ids);
+				response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+				response.setHeader("Content-Disposition", "attachment; filename=" + new String("商户装机资料导出".getBytes("GBK"), "ISO-8859-1") + ".xls");  
+		        OutputStream ouputStream= response.getOutputStream();
+		        wb.write(ouputStream);  
+		        ouputStream.flush();  
+		        ouputStream.close();
+				json.setSuccess(true);
+				json.setMsg("导出商户装机资料Excel成功");
+			} catch (Exception e) {
+				log.error("导出商户装机资料Excel异常：" + e);
+				json.setMsg("导出商户装机资料Excel失败");
+			}
+		}
+	}
+	/*
+	 * 一清增机导入
+	 */
+	public void addMerchantTerminalInfoImport(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		UserBean user=(UserBean)userSession;
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				// 把文件保存到服务器目录下
+				String fileName = ServletActionContext.getRequest().getParameter("importMerchantFile2");
+				String basePath = ServletActionContext.getRequest().getRealPath("/upload");
+				File dir = new File(basePath);
+				dir.mkdir();
+				String path = basePath +"/"+fileName;
+				File destFile = new File(path);
+				upload.renameTo(destFile);
+				if(path.length() > 0 && path != null){
+					List<Object> result = merchantTerminalInfoService.addMerchantTerminalInfoImport(path, user, fileName);
+					if (result.size()>0){
+//						json.setSuccess(false);
+//						json.setMsg("部分终端导入未成功");
+//						super.writeJson(json);
+						removeUploadFile(basePath,path);
+						String[] cellFormatType = {"t","t","t"};
+						UsePioOutExcel.writeExcel(result, 3, super.getResponse(), "失败记录","一清增机失败记录" + ".xls", cellFormatType); // 调用导出方法
+						return;
+					}else{
+						json.setSuccess(true);
+						json.setMsg("提交商户增机申请成功");
+					}
+				}
+			} catch (Exception e) {
+				log.error("提交商户增机申请失败：" + e);
+				json.setMsg("提交商户增机申请失败");
+			}
+		}
+		super.writeJson(json);
+	}
+	
+	public void addMerchantTerminalInfoEdit(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				String[] values=getRequest().getParameterValues("MIDNUM");
+				
+				int result = 0;
+				for (int i = 0; i < values.length; i++) {
+					String[] pram=values[i].split("#separate#");
+					result += merchantTerminalInfoService.TerminalInfoTerMID(pram[1]);
+				}
+				if(result==0){
+					Integer i = merchantTerminalInfoService.saveInfo(merchantTerminalInfo, (UserBean)userSession,values);
+					if(i==1){
+						json.setSuccess(true);
+						json.setMsg("提交商户增机申请成功");
+					}else{
+						json.setSuccess(false);
+						json.setMsg("TUSN重复");
+					}
+				}else{
+					json.setSuccess(false);
+					json.setMsg("失败，所选终端有已被其它用户申请");
+				}
+				
+			} catch (Exception e) {
+				log.error("提交商户增机申请异常：" + e);
+				json.setMsg("提交商户增机申请失败");
+			}
+		}
+		
+		super.writeJson(json);
+	}
+	
+	//商户终端修改
+	public void merchantTerminalInfoEdit() {
+		JsonBean jsonBean = new JsonBean();
+		Object userJson = super.getRequest().getSession().getAttribute("user");
+		if (userJson == null) {
+			jsonBean.setSessionExpire(true);
+		}else {
+			boolean b = merchantInfoService.updateAndUpdateMerchantTerminalInfo(merchantTerminalInfo);
+			if (b==true) {
+				jsonBean.setSuccess(true);
+				jsonBean.setMsg("终端信息修改退回成功！");
+			}else {
+				jsonBean.setSuccess(false);
+				jsonBean.setMsg("终端信息修改退回失败！");
+			}
+		}
+		super.writeJson(jsonBean);
+	}
+	
+	public void listMerchantTerminalInfoBmid(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			dgb = merchantTerminalInfoService.queryMerchantTerminalInfoBmid(merchantTerminalInfo,(UserBean)userSession);
+		} catch (Exception e) {
+			log.error("分页查询增机信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	public void listMerchantTerminalInfoBmidZ(){
+		DataGridBean dgb = new DataGridBean();
+		try {
+			dgb = merchantTerminalInfoService.queryMerchantTerminalInfoBmidZ(merchantTerminalInfo.getMid());
+		} catch (Exception e) {
+			log.error("分页查询增机信息异常：" + e);
+		}
+		super.writeJson(dgb);
+	}
+	
+	public void deleteMerchantTerminalInfo(){
+		JsonBean json = new JsonBean();
+		try {
+			Object userSession = super.getRequest().getSession().getAttribute("user");
+			merchantTerminalInfoService.deleteMerchantTerminalInfo(merchantTerminalInfo.getBmtid(),((UserBean)userSession).getUserID(),merchantTerminalInfo.getTid());
+			json.setSuccess(true);
+			json.setMsg("删除终端信息成功");
+		} catch (Exception e) {
+			log.error("删除终端信息异常：" + e);
+			json.setMsg("删除终端信息失败");
+		}
+		super.writeJson(json);
+	}
+	
+	public void searchMerchantTerminalInfo(){
+		DataGridBean dgd = new DataGridBean();
+		try {
+			String nameCode = super.getRequest().getParameter("q");
+			String type = super.getRequest().getParameter("type");
+			String mid = super.getRequest().getParameter("mid");
+			dgd = merchantTerminalInfoService.searchMerchantTerminalInfo(nameCode,mid,type);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	super.writeJson(dgd);
+	}
+	
+	public void searchMerchantTerminalInfoBMTID(){
+		Map<String, String> map = new HashMap<String, String>();
+		try {
+			map = merchantTerminalInfoService.searchMerchantTerminalInfoBMTID(merchantTerminalInfo.getBmtid());
+		} catch (Exception e) {
+			log.error("查询原机型信息异常：" + e);
+		}
+		super.writeJson(map);
+	}
+	
+	
+	public void updateMerchantTerminalInfo(){
+		JsonBean json = new JsonBean();
+		try {
+			String installedAddress= new String(merchantTerminalInfo.getInstalledAddress().toString().getBytes("iso-8859-1"), "UTF-8");
+			String contactPerson= new String(merchantTerminalInfo.getContactPerson().toString().getBytes("iso-8859-1"), "UTF-8");
+			merchantTerminalInfo.setInstalledAddress(installedAddress);
+			merchantTerminalInfo.setContactPerson(contactPerson);
+			merchantTerminalInfoService.updateMerchantTerminalInfo(merchantTerminalInfo);
+			json.setSuccess(true);
+			json.setMsg("装机信息修改成功");
+		} catch (Exception e) {
+			log.error("装机信息修改异常：" + e);
+			json.setMsg("装机信息修改失败");
+		}
+		super.writeJson(json);
+	}
+	
+	/**
+	 * M35待挂终端--->确定
+	 */
+	
+	public void addMerchantMicroTerminalInfo(){
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				String[] values=getRequest().getParameterValues("IDNUM");
+				String bmid=getRequest().getParameter("BMID");
+				String mid=getRequest().getParameter("MID");
+				Integer tidCount=merchantInfoService.queryTidCountByLegalNum("", 1,mid);
+				Integer allCount=tidCount+values.length;
+				if(allCount<10){
+					merchantTerminalInfo.setRemarks("同一个身份证号下共申请Mpos("+allCount+")台！");
+					int result = 0;
+					if(values != null && values.length > 0){
+						for (int i = 0; i < values.length; i++) {
+							String[] pram=values[i].split("#separate#");
+							boolean falg =merchantTerminalInfoService.queryMachineInfo(pram[1]);
+							if(falg){
+								result += merchantTerminalInfoService.TerminalInfoTerMID(pram[0]);
+							}else{
+								json.setSuccess(false);
+								json.setMsg("设备型号不存在！");
+								super.writeJson(json);
+							}
+						}
+					}
+					if(result==0){
+						merchantTerminalInfoService.saveMerchantMicroTerminalInfo(merchantTerminalInfo, ((UserBean)userSession), values, Integer.parseInt(bmid), mid);
+						json.setSuccess(true);
+						json.setMsg("终端申请成功");
+					}else{
+						json.setSuccess(false);
+						json.setMsg("失败，所选终端有已被其它用户申请");
+					}
+				}else{
+					json.setSuccess(false);
+					json.setMsg("同一个身份证号申请Mpos超限(10台)！");
+				}
+			} catch (Exception e) {
+				log.error("终端申请异常：" + e);
+				json.setMsg("终端申请失败");
+			}
+		}
+		
+		super.writeJson(json);
+	}
+
+	//增机审批资料全部导出
+	public void exportAddTerminalInfo(){
+		HttpServletResponse response=getResponse();
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				HSSFWorkbook wb=merchantTerminalInfoService.exportAddTerminalInfo();
+				response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+				response.setHeader("Content-Disposition", "attachment; filename=" + new String("增机审批资料导出".getBytes("GBK"), "ISO-8859-1") + ".xls");  
+		        OutputStream ouputStream= response.getOutputStream();
+		        wb.write(ouputStream);  
+		        ouputStream.flush();  
+		        ouputStream.close();
+				json.setSuccess(true);
+				json.setMsg("导出增机审批资料Excel成功");
+			} catch (Exception e) {
+				log.error("导出增机审批资料Excel异常：" + e);
+				json.setMsg("导出增机审批资料Excel失败");
+			}
+		}
+	}
+	
+	//增机审批资料勾选导出
+	public void exportAddTerminalInfoSelected(){
+		String bmtids =super.getRequest().getParameter("bmtids");
+		HttpServletResponse response=getResponse();
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try{
+				HSSFWorkbook wb=merchantTerminalInfoService.exportAddTerminalInfoSelected(bmtids);
+				response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+				response.setHeader("Content-Disposition", "attachment; filename=" + new String("商户增机审批资料导出".getBytes("GBK"), "ISO-8859-1") + ".xls");  
+		        OutputStream ouputStream= response.getOutputStream();
+		        wb.write(ouputStream);  
+		        ouputStream.flush();  
+		        ouputStream.close();
+				json.setSuccess(true);
+				json.setMsg("导出增机审批资料Excel成功");
+			} catch (Exception e) {
+				log.error("导出增机审批资料Excel异常：" + e);
+				json.setMsg("导出增机审批资料Excel失败");
+			}
+		}
+	}
+	//增机审批资料勾选审批
+	public void shenAddTerminalInfoSelected(){
+		String bmtids =super.getRequest().getParameter("bmtids");
+		HttpServletResponse response=getResponse();
+		JsonBean json = new JsonBean();
+		Object userSession = super.getRequest().getSession().getAttribute("user");
+		//session失效
+		if (userSession == null) {
+			json.setSessionExpire(true);
+		} else {
+			try {
+				String ids[]=bmtids.split(",");
+				int result = 0;
+				for(int i = 0; i < ids.length; i++){
+					MerchantTerminalInfoModel model=merchantTerminalInfoService.getInfoModel(Integer.valueOf(ids[i]));
+					if(!"Z".equals(model.getApproveStatus()) && !"C".equals(model.getApproveStatus())){
+						result = result+1;
+					}else{
+						result = result;
+					}
+				}
+				if(result==0){
+					merchantTerminalInfoService.updateMerchantTerminalinfosY(merchantTerminalInfo, ((UserBean)userSession),ids);
+//					for(int i = 0; i < ids.length; i++){
+//						merchantTerminalInfo.setBmtid(Integer.valueOf(ids[i]));
+//						merchantTerminalInfo.setProcessContext("批量审批");
+//						merchantTerminalInfoService.updateMerchantTerminalinfoY(merchantTerminalInfo, ((UserBean)userSession));
+//					}
+					json.setSuccess(true);
+					json.setMsg("商户开通成功");
+				}else{
+					json.setSuccess(false);
+					json.setMsg("失败，该记录已经被其它用户审批");
+				}
+			} catch (Exception e) {
+				log.error("批量增机审批异常：" + e);
+				json.setMsg("批量增机审失败");
+				e.printStackTrace();
+			}
+		}
+		super.writeJson(json);
+	}
+	/**
+	 * 删除服务器上的上传文件
+	 * @param basePath
+	 * @param path
+	 */
+	public void removeUploadFile(String basePath,String path){
+		File file = new File(basePath);
+		String[] tempList = file.list();
+		File temp = null;
+		for (int i = 0; i < tempList.length; i++) {
+			if (path.endsWith(File.separator)) {
+				temp = new File(basePath + tempList[i]);
+			} else {
+				temp = new File(basePath + File.separator + tempList[i]);
+			}
+			if (temp.exists() && temp.isFile()) {
+				boolean flag = temp.delete(); // 删除上传到服务器的文件
+				int j = i + 1;
+				log.error("成功删除文件:第" + j + "个文件删除是否成功？" + flag);
+			} else {
+				log.error("文件不存在");
+			}
+		}
+	}
+}

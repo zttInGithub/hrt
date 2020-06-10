@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="PurchaseDeliverModel" table="bill_PurchaseDeliver">
+        <id name="pdlid" column="pdlid">
+            <generator class="sequence">
+				<param name="sequence">S_bill_PurchaseDeliver</param>
+			</generator>
+        </id>
+        <property name="poid" column="POID" />
+        <property name="pdid" column="PDID" />
+        <property name="deliverOrderID" column="DELIVERORDERID" />
+        <property name="deliverId" column="DELIVERID" />
+        <property name="deliverName" column="DELIVERNAME" />
+        <property name="deliveNum" column="DELIVENUM" />
+        <property name="deliveDate" column="DELIVEDATE" type="timestamp" />
+        <property name="deliver" column="DELIVER" />
+        <property name="deliverStatus" column="DELIVERSTATUS" />
+        <property name="deliverPurName" column="DELIVERPURNAME" />
+        <property name="deliverUnno" column="DELIVERUNNO" />
+        <property name="deliverContacts" column="DELIVERCONTACTS" />
+        <property name="deliverContactPhone" column="DELIVERCONTACTPHONE"/>
+        <property name="deliverContactMail" column="DELIVERCONTACTMAIL"/>
+        <property name="deliverReceiveaddr" column="DELIVERRECEIVEADDR" />
+        <property name="postCode" column="POSTCODE"/>
+        <property name="deliverRemark" column="DELIVERREMARK" />
+        <property name="deliverCdate" column="DELIVERCDATE" type="timestamp" />
+        <property name="deliverCby" column="DELIVERCBY"/>
+        <property name="deliverLmdate" column="DELIVERLMDATE" type="timestamp" />
+        <property name="deliverLmby" column="DELIVERLMBY" />
+        <property name="deliverMinfo1" column="DELIVERMINFO1"/>
+        <property name="deliverMinfo2" column="DELIVERMINFO2"/>
+        <property name="AllocatedNum" column="ALLOCATEDNUM"/>
+    </class>
+</hibernate-mapping>

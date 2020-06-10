@@ -1,0 +1,272 @@
+package com.hrt.biz.bill.entity.pagebean;
+
+import java.io.File;
+import java.util.Date;
+
+public class MerchantAuthenticityBean extends SecurityInfoBean {
+
+	//当前页数
+	private Integer page;
+		
+	//总记录数
+	private Integer rows;
+		
+	//排序字段
+	private String sort;
+		
+	//排序规则 ASC DESC
+	private String order;
+	
+	private Integer bmatid;			//主键
+	private String username;		//app用户名
+	private String unno;			//机构号
+	private String mid;				//商户编号
+	private String legalNum;		//身份证号
+	private String bankAccName;		//持卡人名称
+	private String bankAccNo;		//卡号
+	private String accnoExpdate;	//卡有效期
+	private String status;			//认证状态
+	private String respcd;			//认证返回码
+	private String respinfo;		//认证返回信息
+	private Date  cdate;			//认证时间
+	private String sysseqnb;		//流水号
+	private String cardName;		//持卡人姓名
+	private String wayName;			//异常重发通道
+	private String unitName;		//归属
+	private String authType ;		//认证类型 mer 商户；txn 交易
+	private String  approveNote;		//交易认证退回原因
+	private String  authUpload;		//交易认证图片名
+	private File  authUploadFile;		//交易认证图片
+	
+	private String  sign;		//防篡改标识
+	private String  sessionId;		//上送标识码
+	private String  phoneNo;		//认证电话
+	private Date cdate1;
+	private String cardholderName;	//持卡人姓名
+	private String sendType;		//类型 1插卡；2刷卡；3手填;4非接
+	
+	private String agentId;//产品类型
+	
+	private String returnUrl;//支付宝回调url
+
+    /**
+     * 图片Base64码字符串
+     */
+	private String uploadFileBaseInfo;
+
+    /**
+     * 是否微信端请求
+     */
+	private boolean weChatProg=false;
+
+	public boolean isWeChatProg() {
+		return weChatProg;
+	}
+
+	public String getUploadFileBaseInfo() {
+		return uploadFileBaseInfo;
+	}
+
+	public void setUploadFileBaseInfo(String uploadFileBaseInfo) {
+		this.uploadFileBaseInfo = uploadFileBaseInfo;
+	}
+
+	public void setWeChatProg(boolean weChatProg) {
+		this.weChatProg = weChatProg;
+	}
+
+	public String getReturnUrl() {
+		return returnUrl;
+	}
+	public void setReturnUrl(String returnUrl) {
+		this.returnUrl = returnUrl;
+	}
+	public String getAgentId() {
+		return agentId;
+	}
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
+	}
+	public String getCardholderName() {
+		return cardholderName;
+	}
+	public void setCardholderName(String cardholderName) {
+		this.cardholderName = cardholderName;
+	}
+	public String getSendType() {
+		return sendType;
+	}
+	public void setSendType(String sendType) {
+		this.sendType = sendType;
+	}
+	public String getWayName() {
+		return wayName;
+	}
+	public void setWayName(String wayName) {
+		this.wayName = wayName;
+	}
+	public Date getCdate1() {
+		return cdate1;
+	}
+	public void setCdate1(Date cdate1) {
+		this.cdate1 = cdate1;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	public String getSign() {
+		return sign;
+	}
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+	public String getUnno() {
+		return unno;
+	}
+	public void setUnno(String unno) {
+		this.unno = unno;
+	}
+	public File getAuthUploadFile() {
+		return authUploadFile;
+	}
+	public void setAuthUploadFile(File authUploadFile) {
+		this.authUploadFile = authUploadFile;
+	}
+	public String getApproveNote() {
+		return approveNote;
+	}
+	public void setApproveNote(String approveNote) {
+		this.approveNote = approveNote;
+	}
+	public String getAuthUpload() {
+		return authUpload;
+	}
+	public void setAuthUpload(String authUpload) {
+		this.authUpload = authUpload;
+	}
+	public String getAuthType() {
+		return authType;
+	}
+	public void setAuthType(String authType) {
+		this.authType = authType;
+	}
+	public Integer getBmatid() {
+		return bmatid;
+	}
+	public String getUnitName() {
+		return unitName;
+	}
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
+	}
+	public void setBmatid(Integer bmatid) {
+		this.bmatid = bmatid;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public String getCardName() {
+		return cardName;
+	}
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	public String getLegalNum() {
+		return legalNum;
+	}
+	public void setLegalNum(String legalNum) {
+		this.legalNum = legalNum;
+	}
+	public String getBankAccName() {
+		return bankAccName;
+	}
+	public void setBankAccName(String bankAccName) {
+		this.bankAccName = bankAccName;
+	}
+	public String getBankAccNo() {
+		return bankAccNo;
+	}
+	public void setBankAccNo(String bankAccNo) {
+		this.bankAccNo = bankAccNo;
+	}
+	public String getAccnoExpdate() {
+		return accnoExpdate;
+	}
+	public void setAccnoExpdate(String accnoExpdate) {
+		this.accnoExpdate = accnoExpdate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getRespcd() {
+		return respcd;
+	}
+	public void setRespcd(String respcd) {
+		this.respcd = respcd;
+	}
+	public String getRespinfo() {
+		return respinfo;
+	}
+	public void setRespinfo(String respinfo) {
+		this.respinfo = respinfo;
+	}
+	public Date getCdate() {
+		return cdate;
+	}
+	public void setCdate(Date cdate) {
+		this.cdate = cdate;
+	}
+	public String getSysseqnb() {
+		return sysseqnb;
+	}
+	public void setSysseqnb(String sysseqnb) {
+		this.sysseqnb = sysseqnb;
+	}
+	public Integer getPage() {
+		return page;
+	}
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	public Integer getRows() {
+		return rows;
+	}
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	
+	
+}

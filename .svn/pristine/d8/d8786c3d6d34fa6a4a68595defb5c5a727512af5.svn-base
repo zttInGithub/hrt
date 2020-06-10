@@ -1,0 +1,359 @@
+package com.hrt.biz.bill.service.impl;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.struts2.ServletActionContext;
+
+import com.hrt.biz.bill.dao.IAgentSalesDao;
+import com.hrt.biz.bill.dao.ICheckIncomeDao;
+import com.hrt.biz.bill.entity.model.AgentSalesModel;
+import com.hrt.biz.bill.entity.model.CheckIncomeModel;
+import com.hrt.biz.bill.entity.pagebean.CheckIncomeBean;
+import com.hrt.biz.bill.service.ICheckIncomeService;
+import com.hrt.frame.dao.sysadmin.IUnitDao;
+import com.hrt.frame.entity.model.UnitModel;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+
+public class CheckIncomeServiceImpl implements ICheckIncomeService
+{
+	private static final int CELL_TYPE_NUMERIC = 0;
+	private ICheckIncomeDao checkIncomeDao;
+	private IUnitDao unitDao;
+	private IAgentSalesDao agentSalesDao;
+	public IUnitDao getUnitDao() {
+		return unitDao;
+	}
+
+	public void setUnitDao(IUnitDao unitDao) {
+		this.unitDao = unitDao;
+	}
+
+	public ICheckIncomeDao getCheckIncomeDao() {
+		return checkIncomeDao;
+	}
+
+	public void setCheckIncomeDao(ICheckIncomeDao checkIncomeDao) {
+		this.checkIncomeDao = checkIncomeDao;
+	}
+
+	public IAgentSalesDao getAgentSalesDao() {
+		return agentSalesDao;
+	}
+
+	public void setAgentSalesDao(IAgentSalesDao agentSalesDao) {
+		this.agentSalesDao = agentSalesDao;
+	}
+
+	public DataGridBean CheckIncomequeryLists(CheckIncomeBean checkIncomeBean,UserBean userBean) {
+		String userhql = "from AgentSalesModel where userID = :userID and maintainType != :maintainType";
+		Map<String, Object> usermap = new HashMap<String, Object>();
+		usermap.put("userID", userBean.getUserID().toString());
+		usermap.put("maintainType", "D");
+		List<AgentSalesModel> agentSalesModels = agentSalesDao.queryObjectsByHqlList(userhql, usermap);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, userBean.getUnNo());
+		String untino=userBean.getUnNo();
+        String sql="select (c.totsamt-c.totmfee) SHOUCOUNT,c.mid,c.SETTLEDAY,c.TOTSAMT,c.TOTMFEE,c.TOTRAMT," +
+       				" c.TOTAAMT,c.TOTMNAMT,c.REMARKS,c.minfo1,b.RNAME, c.txnday ||'至'||c.txnday2 as TXNDAY,c.status,c.failmsg  " +
+       				" from check_income c inner join bill_merchantinfo b on c.mid=b.mid"; 
+//        if("0".equals(userBean.getIsM35Type())){
+//			sql +=" and b.isM35 !=1 ";
+//		}else if("1".equals(userBean.getIsM35Type())){
+//			sql +=" and b.isM35 = 1 ";
+//		}
+        if(agentSalesModels.size()==0){
+	   		if(userBean.getUseLvl()==3){
+				sql+=" and c.MID='"+userBean.getLoginName()+"'";
+			}else{
+		        if("110000".equals(userBean.getUnNo())){
+		        }else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){
+				}else{
+		        	sql+=" and b.unno in (select UNNO from sys_unit start with unno ='"+untino+"' and status=1 connect by NOCYCLE prior  unno =  upper_unit)  ";
+		        }	       
+			}
+       }else{
+    	   sql+=" and b.busid='"+agentSalesModels.get(0).getBusid()+"'";
+       }
+	   //查询条件
+	   if (null != checkIncomeBean.getDateone()&& null != checkIncomeBean.getDatetwo()
+			&& !checkIncomeBean.getDateone().equals("")&& !checkIncomeBean.getDatetwo().equals("")){
+		   sql+=" and c.settleday >='"+checkIncomeBean.getDateone().replace("-", "")+"' and c.settleday<='"+checkIncomeBean.getDatetwo().replace("-", "")+"'";	
+	   }else{
+		   sql+=" and c.settleday=to_char(sysdate,'yyyyMMdd')";		
+	   }
+	   if (null != checkIncomeBean.getMid() && !checkIncomeBean.getMid().equals("")){
+		   sql+=" and c.mid='"+checkIncomeBean.getMid()+"'";
+	   }
+	   sql+=" order by c.ciid ";
+	   String sqlCount="select count(*) from ( "+sql+" )";
+	 
+	   BigDecimal counts = checkIncomeDao.querysqlCounts(sqlCount, null);
+	   List proList = checkIncomeDao.queryObjectsBySqlList(sql,map,checkIncomeBean.getPage(), checkIncomeBean.getRows());
+	   DataGridBean dgd = new DataGridBean();
+	   dgd.setTotal(counts.intValue());
+	   dgd.setRows(proList);
+	   return dgd;
+		
+	}
+	
+	
+	
+	/**
+	 * 数据导出
+	 */
+	public List<Map<String, String>> CheckIncomeListExport(CheckIncomeBean checkIncomeBean,UserBean userBean){
+		String userhql = "from AgentSalesModel where userID = :userID and maintainType != :maintainType";
+		Map<String, Object> usermap = new HashMap<String, Object>();
+		usermap.put("userID", userBean.getUserID().toString());
+		usermap.put("maintainType", "D");
+		List<AgentSalesModel> agentSalesModels = agentSalesDao.queryObjectsByHqlList(userhql, usermap);
+		
+		 UnitModel unitModel = unitDao.getObjectByID(UnitModel.class, userBean.getUnNo());
+		 String untino=userBean.getUnNo();
+         String sql="select (c.totsamt-c.totmfee) SHOUCOUNT,c.mid,c.SETTLEDAY,c.TOTSAMT,c.TOTMFEE,c.TOTRAMT,nvl(c.TOTAAMT,'0') as TOTAAMT,c.TOTMNAMT,c.REMARKS,b.RNAME, c.txnday ||'至'||c.txnday2 as TXNDAY  " +
+       				" from check_income c,bill_merchantinfo b where c.mid=b.mid"; 
+//        if("0".equals(userBean.getIsM35Type())){
+// 			sql +=" and b.isM35 !=1 ";
+// 		}else if("1".equals(userBean.getIsM35Type())){
+// 			sql +=" and b.isM35 = 1 ";
+// 		}
+       if(agentSalesModels.size()==0){
+   		if(userBean.getUseLvl()==3){
+			sql+=" and c.MID in (select MID from  bill_MerchantInfo where  PARENTMID= '"+userBean.getLoginName()+"' or MID ='"+userBean.getLoginName()+"')";
+		}else{
+	        if("110000".equals(userBean.getUnNo())){
+	        	
+	        }else if(unitModel.getUnAttr() == 2 && unitModel.getUnLvl() == 0){
+				UnitModel parent = unitModel.getParent();
+				if("110000".equals(parent.getUnNo())){
+				}
+			}else if(unitModel.getUnAttr() == 1 && unitModel.getUnLvl() == 1){
+				sql+=" and b.unno IN (SELECT UNNO  FROM SYS_UNIT  WHERE UPPER_UNIT IN (SELECT UNNO FROM SYS_UNIT WHERE UPPER_UNIT = '"+untino+"' OR UNNO = '"+untino+"') OR UNNO = '"+untino+"')";
+			}else{
+	        	sql+=" and b.unno IN (SELECT UNNO FROM SYS_UNIT WHERE UPPER_UNIT = '"+untino+"' OR UNNO = '"+untino+"')";
+	        }	       
+		}
+       }else{
+    	   sql+=" and b.busid='"+agentSalesModels.get(0).getBusid()+"'";
+       }
+
+		//查询条件
+		if (null != checkIncomeBean.getDateone()
+				&& null != checkIncomeBean.getDatetwo()
+				&& !checkIncomeBean.getDateone().equals("")
+				&& !checkIncomeBean.getDatetwo().equals("")) 
+		{
+			sql+=" and to_char(to_date(c.settleday,'yyyy-MM-dd'),'yyyy-MM-dd') between '"+checkIncomeBean.getDateone()+"' and '"+checkIncomeBean.getDatetwo()+"'";	
+		}
+		else{
+			return null;
+//			Calendar calendar = Calendar.getInstance();
+//			int YY = calendar.get(Calendar.YEAR);
+//		    int MM = calendar.get(Calendar.MONTH)+1;
+//		    int DD = calendar.get(Calendar.DATE);
+//		    String timeDate=YY+"-";
+//		    if(MM<=9)
+//		    { timeDate=timeDate+"0"+MM;}
+//		    else{timeDate=timeDate+MM;}
+//		    if(DD<=9)
+//		    { timeDate=timeDate+"-"+"0"+DD;}
+//		    else{timeDate=timeDate+"-"+DD;}
+//		    
+//		    System.out.print(timeDate);
+//			sql+=" and to_char(to_date(c.settleday,'yyyy-MM-dd'),'yyyy-MM-dd')='"+timeDate+"'";		
+		}
+		if (null != checkIncomeBean.getMid()
+				&& !checkIncomeBean.getMid().equals("")) 
+		{
+			sql+=" and c.mid='"+checkIncomeBean.getMid()+"'";
+		}
+		sql+=" order by c.ciid ";
+		
+		List<Map<String, String>> list=checkIncomeDao.queryObjectsBySqlList(sql);
+		
+		return list;
+	}
+	
+	//数据导入
+	
+	public List<HashMap> saveimportCheckData(String xlsfile){
+		
+		List<HashMap> list=new ArrayList<HashMap>();
+		try { 
+			String filen = ServletActionContext.getRequest().getParameter("fileContact4");	//获取文件名
+			String subtime=filen.substring(0, 10);
+			if(filen.indexOf("结果") == -1){
+				String sqlfil="delete from check_income where to_char(to_date(settleday,'yyyy-MM-dd'),'yyyy-MM-dd')='"+subtime+"'";
+				checkIncomeDao.executeUpdate(sqlfil);	
+			}
+			File filename=new File(xlsfile);
+			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(filename));
+			HSSFSheet sheet=workbook.getSheetAt(0);
+			for(int i=1;i<sheet.getLastRowNum()+1 ;i++){
+				CheckIncomeModel checkModel= new CheckIncomeModel();			
+				String merchid="";
+				String settledate="";//清算日期
+				String txndates="";//交易日期
+				String rzamount="";//交易金额
+				String feeamount="";//手续费
+				String txnamount="";//应结算金额
+				String thnettingamount="";//退款金额
+				String thfeeamount="";//结算调整
+				String jfamount="";//实结算金额
+				String column5="";//备注
+				HSSFRow row=sheet.getRow(i);
+				HSSFCell cell;
+				//MID
+				cell = row.getCell((short)0);
+				if(cell==null || cell.toString().trim().equals("")){
+				break;
+				}else{
+				try {
+				 merchid=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				merchid="";
+				}
+				//结帐日期
+				cell = row.getCell((short)1);
+				settledate=cell.getStringCellValue();
+				//交易日期
+				cell = row.getCell((short)2);
+				txndates=cell.getStringCellValue();
+				//交易金额
+				try {
+				cell = row.getCell((short)3);
+				rzamount=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				rzamount="0";
+				}
+				//手续费
+				try {
+				cell = row.getCell((short)4);
+				feeamount=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				feeamount="0";
+				}
+				//应结算金额
+				try {
+				cell = row.getCell((short)5);
+				txnamount=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				txnamount="0";
+				}
+				//退款金额
+				try {
+				cell = row.getCell((short)6);
+				thnettingamount=cell.getStringCellValue().trim();
+				} catch (RuntimeException e) {
+				thnettingamount="0";
+				}
+				//结算调整
+				try {
+				cell = row.getCell((short)7);
+				thfeeamount=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				thfeeamount="0";
+				}
+				//实结算金额
+				try {
+				cell = row.getCell((short)8);
+				jfamount=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				jfamount="0";
+				}
+				//备注
+				try {
+				cell = row.getCell((short)9);
+				column5=cell.getStringCellValue();
+				} catch (RuntimeException e) {
+				column5="";
+				}
+				
+				checkModel.setMid(merchid);
+				checkModel.setSettleday(settledate);
+				
+			//  txndates="2014091105点至091405点" 将“点”去掉之后，将此日期分割成 两个日期来保存，
+			//	“至”后边不带年份 则补上年份
+				
+				if(txndates.contains("点")){
+					txndates =txndates.replaceAll("点", "").trim();
+					if(txndates.contains("至")){
+						String aa[] =txndates.split("至");
+						if(aa[1].length()==4 || aa[1].length()==6){
+							aa[1]=aa[0].substring(0,4)+aa[1];
+						}
+						checkModel.setTxnday(aa[0]);
+						checkModel.setTxnday2(aa[1]);
+					}
+				}else{
+					if(txndates.contains("至")){
+						String aa[] =txndates.split("至");
+						aa[0]=aa[0]+"00";
+						if(aa[1].length()==4){
+							aa[1]=aa[0].substring(0,4)+aa[1];
+						}
+						aa[1]=aa[1]+"24";
+						checkModel.setTxnday(aa[0]);
+						checkModel.setTxnday2(aa[1]);
+					}else{
+						checkModel.setTxnday(txndates+"00");
+						checkModel.setTxnday2(txndates+"24");
+					}
+				}
+
+				checkModel.setTotsamt(Double.parseDouble(rzamount));
+				checkModel.setTotmfee(Double.parseDouble(feeamount));
+				if(thnettingamount.equals("")){
+					thnettingamount="0";
+				}
+				checkModel.setTotramt(Double.parseDouble(thnettingamount));
+				if(thfeeamount.equals("")){
+					thfeeamount="0";
+				}
+				checkModel.setTotaamt(Double.parseDouble(thfeeamount));
+				if(jfamount.equals("")){
+					jfamount="0";
+				}
+				checkModel.setTotmnamt(Double.parseDouble(jfamount));
+				checkModel.setRemarks(column5);
+				checkIncomeDao.saveObject(checkModel);	
+				
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+		
+	}
+
+	@Override
+	public void updateSettleDate() {
+		// TODO Auto-generated method stub
+		checkIncomeDao.updateSettleDate();
+	}
+}

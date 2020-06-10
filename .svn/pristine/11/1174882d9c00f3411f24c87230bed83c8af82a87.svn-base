@@ -1,0 +1,35 @@
+package com.hrt.biz.bill.service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.hrt.biz.bill.entity.model.PurchaseOrderModel;
+import com.hrt.biz.bill.entity.pagebean.PurchaseOrderBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IPurchaseOrderService {
+	DataGridBean queryPurchaseOrders(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	PurchaseOrderModel savePurchaseOrder(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	Integer deletePurchaseOrder(Integer poid ,UserBean user);
+	boolean saveNewPurchaseOrder(Integer poid);
+	PurchaseOrderModel updatePurchaseOrder(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	Integer updatePurchaseOrderStatus(Integer poid ,UserBean user);
+	Integer updateEditPurchaseOrder(Integer poid ,UserBean user);
+	Integer updatePurchaseOrderStatusToEdit(Integer poid ,UserBean user);
+	DataGridBean queryPurchaseOrderWJoin(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	Integer updatePurchaseOrderY(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	Integer updatePurchaseOrderK(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	Integer updatePurchaseOrderAgainY(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	Integer updatePurchaseOrderAgainK(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	List<Map<String, Object>> exportPurchaseOrderWJoin(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	boolean findOrderID(String orderID);
+	Integer queryPurchaseOrderCancel(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	DataGridBean listCancelPurchaseOrder(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	DataGridBean queryPOSAccounts(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	List<Map<String, Object>> exportPOSAccounts(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	DataGridBean queryPOSProfitAndLoss(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	List<Map<String, Object>> exportPOSProfitAndLoss(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	DataGridBean queryPOSIncome(PurchaseOrderBean purchaseOrderBean,UserBean user);
+	List<Map<String, Object>> exportPOSIncome(PurchaseOrderBean purchaseOrderBean,UserBean user);
+}

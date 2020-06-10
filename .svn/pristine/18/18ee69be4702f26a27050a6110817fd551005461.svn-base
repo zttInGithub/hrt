@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.frame.entity.model">
+	<class name="NoticeModel" table="SYS_NOTICEID">
+		<id name="noticeID" column="NOTICEID">
+			<generator class="sequence">
+				<param name="sequence">S_SYS_NOTICEID</param>
+			</generator>
+		</id>
+		<property name="msgSendDate" column="MSGSENDDATE"/>
+		<property name="msgReceUnit" column="MSGRECVUNIT"/>
+		<property name="msgReceUID" column="MSGRECVUID"/>
+		<property name="msgSendUnit" column="MSGSENDUNIT"/>
+		<property name="msgSendUID" column="MSGSENDUID"/>
+		<property name="msgSendTime" type="timestamp" column="MSGSENDTIME"/>
+		<property name="msgGetTime" type="timestamp" column="MSGGETTIME"/>
+		<property name="status" column="STATUS"/>
+		<property name="msgTopic" column="MSGTOPIC"/>
+		<property name="msgDesc" column="MSGDESC"/>
+    </class>
+</hibernate-mapping>

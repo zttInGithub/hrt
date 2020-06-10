@@ -1,0 +1,491 @@
+package com.hrt.biz.bill.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.hrt.biz.bill.entity.model.MerchantInfoModel;
+import com.hrt.biz.bill.entity.pagebean.MerchantInfoBean;
+import com.hrt.biz.bill.entity.pagebean.MerchantTerminalInfoBean;
+import com.hrt.frame.entity.pagebean.DataGridBean;
+import com.hrt.frame.entity.pagebean.UserBean;
+
+public interface IMerchantInfoService {
+
+	/**
+	 * 查询认证失败统计
+	 */
+	public DataGridBean queryMerchantFalse(MerchantInfoBean matb, UserBean user) throws Exception ;
+
+	 /**
+	* 查询二维码
+	*/
+	 String queryMerchantWithQRUrl(MerchantInfoBean merchantInfo,UserBean user)throws Exception;
+	 /**
+	* 生成二维码
+	*/
+	public void updateMerchantWithQR(String bmids)throws Exception ;
+	/**
+	 * 生成商户二维码后，存贮链接和地址
+	 * 
+	 */
+	public void saveMerWithQRById(MerchantInfoModel merchantInfoModel)throws Exception ;
+	 /**
+	 * 查询出踢回和未放行的商户
+	 */
+	DataGridBean queryMerchantInfoZK(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+	/**
+	 * 认证通过认证失败统一查询
+	 */
+	public boolean MerchantAuthGo(String mid,String bankAccNo,String bankAccName,String legalNum)throws Exception;
+	List<Map<String,String>> updateAllMerchantAuth(String xlsfile,String fileName,UserBean user);
+	/**
+	 * 未认证商户查询(手录)
+	 */
+	public DataGridBean queryNoMerchant(MerchantInfoBean matb, UserBean user) throws Exception ;
+	/**
+	 * 修改未认证商户为认证成功（手录功能）
+	 */
+	public boolean updateMerchantGoByMid(String mid, UserBean user) throws Exception ;
+	/**
+	 * 认证回退认证失败统一查询
+	 */
+	public boolean MerchantAuthBack(String mid,String bankAccNo,String bankAccName,String legalNum)throws Exception;
+	/**
+	 * 提交结算
+	 */
+	public HSSFWorkbook export(String id)throws Exception;
+	/**
+	 * 方法功能：商户
+	 * 参数：merchantInfo
+	 * 	   loginName 当前登录用户名
+	 * 返回值：void
+	 * 异常：
+	 */
+	MerchantInfoModel saveMerchantInfo(MerchantInfoBean merchantInfo, UserBean user) throws Exception;
+	MerchantInfoModel saveMerchantInfobaodan(MerchantInfoBean merchantInfo, UserBean user) throws Exception;
+	Integer saveUnnoInfobaodan(String unno,String unnoname, UserBean user) throws Exception;
+	/**
+	 * 查询待放行的商户(入网时间为空)
+	 */
+	DataGridBean queryMerchantInfoWJoin(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+
+	DataGridBean queryMerchantInfoWJoin1(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+	
+	/**
+	 * 商户开通 修改状态
+	 */
+	MerchantInfoModel updateMerchantInfoC(MerchantInfoBean merchantInfo, UserBean user, String ids) throws Exception;
+	 /**
+	  * 获取一代机构号
+	  */
+	String getProvince(String unno);
+	/**
+	 * 商户开通 推送综合
+	 */
+	boolean updateMerchantInfoCToADM(MerchantInfoModel merchantInfoModel, UserBean user, String ids) throws Exception;
+	
+	boolean updateAggMerchantLimitCToADM(MerchantInfoBean merchantInfo, UserBean user) throws Exception;
+	
+	/**
+	 * 商户退回
+	 */
+	void updateMerchantInfoK(MerchantInfoBean merchantInfo, UserBean user, String ids) throws Exception;
+	
+	/**
+	 * 查询已放行的商户
+	 */
+	DataGridBean queryMerchantInfoY(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+	DataGridBean queryMerchantInfoY3(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+	DataGridBean queryUnnoCodeInfobaodan(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+	
+	DataGridBean listMerchantInfoYLog(MerchantInfoBean merchantInfo,UserBean user) throws Exception;
+	
+	/**
+	 * 方法功能：修改商户
+	 * 参数：merchantInfo
+	 * 	   loginName 当前登录用户名
+	 * 返回值：void
+	 * 异常：
+	 */
+	boolean updateMerchantInfo(MerchantInfoBean merchantInfo, UserBean user) throws Exception;
+	
+	/**
+	 * 删除商户
+	 */
+	void deleteMerchantInfo(MerchantInfoBean merchantInfoBean, UserBean user) throws Exception;
+	
+	/**
+	 * 查询商户代码
+	 * @param nameCode 
+	 */
+	DataGridBean searchMerchantInfo(String type, String nameCode, UserBean user, MerchantInfoBean merchantInfoBean) throws Exception;
+	
+	/**
+	 * 查询区域码
+	 */
+	DataGridBean searchCUPSendCodeInfo(String nameCode) throws Exception;
+
+	/**
+	 * 查询MCCID
+	 */
+	DataGridBean searchMCC(String nameCode) throws Exception;
+	
+	/**
+	 * 查询SYS_CODE
+	 */
+	DataGridBean searchAreaCode(String nameCode) throws Exception;
+	/**
+	 * 查询SYS_CODE
+	 */
+	DataGridBean searchAreaByProvince(String nameCode) throws Exception;
+	
+	/**
+	 * 查询bill_IndustryInfo
+	 */
+	DataGridBean searchIndustryInfo(String nameCode) throws Exception;
+	
+	/**
+	 * 查询出商户显示到下拉框select
+	 */
+	DataGridBean searchMerchantInfoTree(String unNo) throws Exception;
+	
+	/**
+	 * 查询商户明细
+	 */
+	List<Object> queryMerchantInfoDetailed(Integer bmid);
+	
+	/**
+	 * 根据Mid查询商户明细
+	 */
+	DataGridBean queryMerchantInfoMid(String mid);
+
+	/**
+	 * 导出所有
+	 */
+	List<Map<String, Object>> export(MerchantInfoBean merchantInfo,UserBean user);
+
+	/**
+	 * 勾选导出
+	 */
+	List<Map<String, Object>> exportSelected(String ids,UserBean user);
+	/**
+	 * 勾选导出
+	 */
+	List<Map<String, Object>> exportMicroMerSelected(String ids,UserBean user);
+	List<Map<String, Object>> exportMicroMerSelectedSyt(String ids,UserBean user);
+	List<Map<String, Object>> exportMicroMerSelectedPlus(String bmids, UserBean userSession);
+
+	/**
+	 * 根据id得到商户
+	 */
+	MerchantInfoModel getInfoModel(Integer id);
+	
+	/**
+	 * 审批成功
+	 */
+	void updateMerchantInfoY(MerchantInfoBean merchantInfoBean,UserBean user) throws Exception;
+	
+	/**
+	 * 根据注册名称或营业执照编号查询商户
+	 */
+	DataGridBean queryMerchantInfoBnoRname(MerchantInfoBean merchantInfoBean) throws Exception;
+
+	String getMid(String id);
+
+	boolean searchMCCById(String mccid);
+
+	String queryAreaCode(String areaCode);
+
+	/**
+	 * 查询可开通微商户list
+	 */
+	DataGridBean queryMicroMerchantInfoWJoin(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+	DataGridBean queryMicroMerchantInfoWJoinSyt(MerchantInfoBean merchantInfo,
+											 UserBean userBean);
+	DataGridBean queryMicroMerchantInfoWJoinPlus(MerchantInfoBean merchantInfo,
+												UserBean userBean);
+	DataGridBean queryMicroMerchantInfoWJoin1(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+
+	/**
+	 * 微商户查看明细
+	 */
+	List<Object> queryMerchantMicroInfoDetailed(Integer bmid);
+
+	/**
+	 * 审批通过微商户 修改状态
+	 */
+	MerchantInfoModel updateMerchantMicroInfoC(MerchantInfoBean merchantInfo,
+			UserBean userBean) throws Exception;
+	
+	/**
+	 * 审批通过微商户 推送综合
+	 */
+	boolean updateMerchantMicroInfoCToADM(MerchantInfoModel m,
+			UserBean userBean) throws Exception;
+	
+	/**
+	 * 批量审批通过微商户
+	 */
+	boolean updateMerchantMicroInfoCs(MerchantInfoBean merchantInfo,
+			UserBean userBean,String merchantInfoIds) throws Exception;
+
+	/**
+	 * 获取活动配置
+	 * @param rebateType 活动类型
+	 * @param amt 终端押金金额
+	 * @return Map
+	 * 	@key depositamt 押金金额
+	 * 	@key tradeamt   最低消费金额
+	 * 	@key adm_deposit_flag 综合推送值
+	 * 	@key app_deposit_flag app推送值
+	 */
+	Map getSelfTermConfig(Integer rebateType,Integer amt);
+
+	/**
+	 * 审批退回微商户
+	 */
+	void updateMerchantMicroInfoK(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+
+	String querySendCode(String sendCode);
+
+	void updateMerchantInfoY(MerchantInfoModel model, UserBean userSession) throws Exception;
+
+	/**
+	 * 入网报单--->查询出踢回和未放行的微商户
+	 */
+	DataGridBean queryMerchantMicroInfoZK(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+	DataGridBean queryMerchantMicroInfoZKSyt(MerchantInfoBean merchantInfo,
+										  UserBean userBean);
+	DataGridBean queryMerchantMicroInfoZKPlus(MerchantInfoBean merchantInfo,
+											 UserBean userBean);
+	/**
+	 * 微商户系统添加
+	 */
+	void saveMerchantMicroInfo(MerchantInfoBean merchantInfo, UserBean userBean);
+
+	/**
+	 * 微商户系统修改
+	 */
+	boolean updateMerchantMicroInfo(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+
+	void updateMerchantMicroInfoY(MerchantInfoBean merchantInfo,
+			UserBean userSession);
+
+	DataGridBean queryMerchantMicroToUnbid(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+	//plus用户下终端，用户信息
+	DataGridBean queryMerchantMicroToUnbidPlus(MerchantInfoBean merchantInfo,
+			UserBean userBean);
+
+	String updateUnbindSn(String sn, String mid);
+	//解绑plus的终端
+	String updateUnbindPlusSn(String sn, String mid);
+
+	boolean updateMoreSales(String xlsfile, UserBean user);
+
+	boolean saveMoreMerchantInfo(String xlsfile, UserBean user, String fileName);
+
+	boolean saveMoreMicroMerchantInfo(String xlsfile, UserBean user,
+			String fileName);
+
+	Integer searchMIDSeqInfo(String areaCode, String mccid, String loginName);
+
+	DataGridBean queryMicroMerchantInfoY(MerchantInfoBean merchantInfo,
+			UserBean userBean) throws Exception;
+
+	/**
+	 * 注销页面-按mid查询商户进行注销操作
+	 * @param merchantInfo
+	 * @param userBean
+	 * @return
+	 * @throws Exception
+	 */
+	DataGridBean queryMicroMerchantInfoY10631(MerchantInfoBean merchantInfo,
+										 UserBean userBean) throws Exception;
+	DataGridBean queryMicroMerchantInfoYSyt(MerchantInfoBean merchantInfo,
+										 UserBean userBean) throws Exception;
+	DataGridBean queryMicroMerchantInfoYPlus(MerchantInfoBean merchantInfo,
+											UserBean userBean) throws Exception;
+
+	/**
+	 * 收银台激活统计
+	 * @param merchantInfo
+	 * @param userBean
+	 * @return
+	 * @throws Exception
+	 */
+	DataGridBean querySytRebateTotal(MerchantInfoBean merchantInfo,
+											UserBean userBean) throws Exception;
+
+    /**
+     * 导出
+     * @param merchantInfo
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    List<Map<String, Object>>  querySytRebateTotalAll(MerchantInfoBean merchantInfo,
+                                                             UserBean user)throws Exception;
+	String queryUnitUnnoUtil(String unno);
+
+	List<Map<String, Object>> exportMicro(MerchantInfoBean merchantInfo, UserBean userBean);
+	List<Map<String, Object>> exportMicroSyt(MerchantInfoBean merchantInfo, UserBean userBean);
+	List<Map<String, Object>> exportMicroPlus(MerchantInfoBean merchantInfo, UserBean userBean);
+
+	boolean queryIsHotMerch(MerchantInfoBean merchantInfo);
+
+	DataGridBean queryAllMerchantInfo(MerchantInfoBean merchantInfo);
+
+	HSSFWorkbook exportAll(MerchantInfoBean merchantInfo, UserBean userBean);
+
+	/**
+	 * 判断手刷商户编号总数量是否已满！
+	 * @return boolean
+	 */
+	boolean queryMicroMerchantCount();
+	
+	String saveAggPayMerchantMid();
+	String saveSYTMerchantMid();
+
+	/**
+	 * PLUS商户mid生成
+	 * @return
+	 */
+	String savePlusMerchantMid();
+
+	/**
+	 * PRO商户mid生成
+	 * @return
+	 */
+	String savePROMerchantMid();
+
+	void updateMerchantBatchMicroInfoY(String ids, UserBean userSession);
+
+	//void saveMerchantInfoByHttpClient(MerchantInfoBean merchantInfo);
+	
+	/**
+	 * 商户转移
+	 * @return boolean
+	 */
+	boolean updateMerchantToUnit(String xlsfile,UserBean user,String fileName);
+	
+	/**
+	 * 统计已使用终端报表
+	 * @return HSSFWorkbook
+	 */
+	HSSFWorkbook queryTidUseing();
+	
+	/**
+	 * 查询法人身份证号下绑定手刷POS数量
+	 * @return Integer
+	 */
+	Integer queryTidCountByLegalNum(String leaglNum,Integer type,String mid);
+	Integer queryTidCountByLegalNum2(MerchantInfoBean merchantInfoBean,Integer type);
+
+    /**
+     * 查询法人身份证号下PLUS商户绑定POS数量
+     * @param merchantInfoBean
+     * @param type
+     * @return
+     */
+	Integer queryPlusTidCountByLegalNum(MerchantInfoBean merchantInfoBean,Integer type);
+
+	/**
+	 * 查询法人身份证号下PRO商户绑定POS数量
+	 * @param merchantInfoBean
+	 * @param type
+	 * @return
+	 */
+	Integer queryPROTidCountByLegalNum(MerchantInfoBean merchantInfoBean,Integer type);
+
+	/**
+	 * 查询法人身份证号下绑定聚合终端数量
+	 * @return Integer
+	 */
+	Integer queryQRidCountByLegalNum(String leaglNum,Integer type,String mid);
+	
+	public boolean updateAndUpdateMerchantTerminalInfo(MerchantTerminalInfoBean merchantTerminalInfo);
+	public List<Map<String, Object>> getRebateType(String mid,String sn);
+	
+	 /**
+	  * 根据商户mid查询mid
+	 * @param mid
+	 * @return
+	 */
+	MerchantInfoModel getMerInfoByMid(String mid);
+	
+	MerchantInfoModel getMerInfoByMidAll(String mid);
+	void uploadImage(MerchantInfoModel merchantInfoModel,MerchantInfoBean merchantInfoBean);
+	boolean queryAge(MerchantInfoBean merchantInfo);
+	Integer deleteMposMer(MerchantInfoBean merchantInfo, UserBean userBean);
+	void updateMerAuthType(String bmids);
+	boolean queryIsRegist(MerchantInfoBean merchantInfo);
+	
+	/*
+	 * 查询业务员开通商户数汇总
+	 */
+	DataGridBean queryYwyMerchantinfo(MerchantInfoBean merchantInfo, UserBean userBean) throws Exception;
+	List<Map<String, Object>> exportYwyMerchantinfo(MerchantInfoBean merchantInfo, UserBean userBean) throws Exception;
+	
+	/**
+	 * 商户证件号是否注册过 (992107  易宝付,982125  银收宝,982058  亿米付)
+	 * @param merchantInfo
+	 * @return
+	 */
+	boolean queryIsExistInHrtUnno(MerchantInfoBean merchantInfo);
+
+	/**
+	 * 批量解绑sn处理
+	 * @param xlsfile
+	 * @param name
+	 * @param user
+	 * @return
+	 */
+	List<Map> updateImportMicroToUnbid(String xlsfile, String name, UserBean user) ;
+
+	/**
+	 * 获取平台已有手机号的商户信息
+	 * @param remarks
+	 * @param type 1:plus同步商户信息获取 2:极速版秒到同步商户获取(只获取秒到商户)
+	 * @return
+	 */
+	List<MerchantInfoModel> getMerchantInfoByRemarks(String remarks,int type);
+
+    /**
+     * 手机号是否已经存在该产品的商户(除去注销的商户)
+     * @param phone
+     * @return
+     */
+    String isExistPhoneAndAgentId(String phone,String agentId);
+
+	/**
+	 * 同步商户的认证信息
+	 * @param merchantInfoBean
+	 * @return
+	 */
+	MerchantInfoModel saveSyncMerchantInfoByPhoneToNewPlus(MerchantInfoBean merchantInfoBean,String agentId);
+	
+	/**
+	 * 2019-11-15 YQ添加导出记录
+	 */
+	void saveExportLog(int type,int rows,Integer userId);
+	
+	/**
+	 * 2019-11-18 YQ查询导出记录
+	 */
+	DataGridBean queryExportLog(MerchantInfoBean merchantInfo);
+	//导出
+	List<Map<String, Object>> export10972(MerchantInfoBean merchantInfo) throws Exception;
+	/**
+	 * 实名认证线下导入--20191217
+	 */
+	List<Map<String, String>> ImportAuthType(String xlsfile, String fileName, UserBean user);
+	
+}

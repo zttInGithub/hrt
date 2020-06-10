@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 
+-->
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="PgUnnoMutipurseModel" table="PG_UNNO_MUTIPURSE">
+		<id name="pupid" column="PUPID">
+			<generator class="sequence">
+				<param name="sequence">S_PG_UNNO_MUTIPURSE</param>
+			</generator>
+		</id>
+		<property name="unno" column="UNNO"/>
+		<property name="curamt" column="CURAMT"/>
+		<property name="balance" column="BALANCE"/>
+		<property name="status" column="STATUS"/>
+		<property name="remarks" column="REMARKS"/>
+		<property name="minfo1" column="MINFO1"/>
+		<property name="cdate" type="timestamp"  column="CDATE"/>
+		<property name="balancetotal"  column="BALANCETOTAL"/>
+		<property name="frozenamt"  column="FROZENAMT"/>
+    </class>
+</hibernate-mapping>

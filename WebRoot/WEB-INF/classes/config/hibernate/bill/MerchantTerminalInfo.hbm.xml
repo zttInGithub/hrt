@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantTerminalInfoModel" table="BILL_MERCHANTTERMINALINFO">
+        <id name="bmtid" column="BMTID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTTERMINALINFO</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="mid" column="MID" />
+        <property name="tid" column="TID" />
+        <property name="sn" column="SN" />
+        <property name="bmaid" column="BMAID" />
+        <property name="installedAddress" column="InstalledAddress" />
+        <property name="installedName" column="InstalledName" />
+        <property name="contactPerson" column="ContactPerson" />
+        <property name="contactPhone" column="ContactPhone" />
+        <property name="contactTel" column="ContactTel" />
+        <property name="processContext" column="ProcessContext" />
+        <property name="maintainUid" column="MaintainUID" />
+        <property name="maintainDate" column="MaintainDate" type="timestamp" />
+        <property name="maintainType" column="MaintainType" />
+        <property name="approveUid" column="ApproveUID" />
+        <property name="approveDate" column="ApproveDate" type="timestamp"/>
+        <property name="approveStatus" column="ApproveStatus" />
+        <property name="status"  column="STATUS"/>
+        <property name="installedSIM"  column="INSTALLEDSIM"/>
+        <property name="depositFlag"  column="DEPOSITFLAG"/>
+    </class>
+</hibernate-mapping>

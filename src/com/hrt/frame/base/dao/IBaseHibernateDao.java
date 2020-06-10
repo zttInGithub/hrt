@@ -1,0 +1,262 @@
+package com.hrt.frame.base.dao;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 类功能：Dao父接口
+ * 创建人：wwy
+ * 创建日期：2012-11-29
+ */
+public interface IBaseHibernateDao<T> {
+	
+	/**
+	 * 方法功能：保存对象
+	 * 参数：o Model对象
+	 * 返回值：Model对象对用记录主键
+	 * 异常：
+	 */
+	public Serializable saveObject(T o);
+	
+	/**
+	 * 方法功能：批量保存
+	 * 参数：o List<Object>对象
+	 * 返回值：void
+	 * 异常：
+	 */
+	public void batchSaveObject(List<Object> list);
+	
+	public void executeUpdate(String sql);
+	/**
+	 * 方法功能：删除一个对象
+	 * 参数：o Model对象
+	 * 返回值：void
+	 * 异常：
+	 */
+	public void deleteObject(T o);
+
+	/**
+	 * 方法功能：更新一个对象
+	 * 参数：o Model对象
+	 * 返回值：void
+	 * 异常：
+	 */
+	public void updateObject(T o);
+	
+	/**
+	 * 方法功能：保存或更新对象
+	 * 参数：o Model对象
+	 * 返回值：void
+	 * 异常：
+	 */
+	public void saveOrUpdateObject(T o);
+
+	/**
+	 * 方法功能：HQL查询
+	 * 参数：hql hql语句
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsByHqlList(String hql);
+	
+	/**
+	 * 方法功能：HQL查询
+	 * 参数：hql hql语句
+	 * 	   param 参数List集合
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsByHqlList(String hql, List<Object> param);
+	
+	/**
+	 * 方法功能：HQL查询
+	 * 参数：hql hql语句
+	 * 	   param 参数Map集合
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsByHqlList(String hql, Map<String, Object> param);
+	
+	/**
+	 * 方法功能：HQL查询
+	 * 参数：hql hql语句
+	 * 	   param 参数数组
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsByHqlList(String hql, Object[] param);
+	
+	/**
+	 * 方法功能：查询集合(带分页)
+	 * 参数：hql hql语句
+	 * 	  page 页数
+	 * 	  rows 每页记录数
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsByHqlList(String hql, Integer page, Integer rows);
+	
+	/**
+	 * 方法功能：查询集合(带分页)
+	 * 参数：hql hql语句
+	 * 	  param 参数Map集合
+	 * 	  page 页数
+	 * 	  rows 每页记录数
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsByHqlList(String hql, Map<String, Object> param, Integer page, Integer rows);
+	public List<Map<String, String>> queryObjectsBySqlList(String sql, Map<String, Object> param, Integer page, Integer rows);
+	/**
+	 * 方法功能：查询集合(带分页)
+	 * 参数：hql hql语句
+	 * 	  param 参数Map集合
+	 * 	  page 页数
+	 * 	  rows 每页记录数
+	 * 返回值：List<Map<String ,Object>>
+	 * 异常：
+	 */
+	public List<Map<String, Object>> queryObjectsBySqlList2(String sql, Map<String, Object> param, Integer page, Integer rows);
+	/**
+	 * 方法功能：获得一个对象
+	 * 参数：id 对象标识
+	 * 返回值：Model对象
+	 * 异常：
+	 */
+	public T getObjectByID(Class<T> c, Serializable id);
+	
+	/**
+	 * 方法功能：查询单个对象
+	 * 参数：hql hql语句
+	 *    param 参数数组
+	 * 返回值：Model对象
+	 * 异常：
+	 */
+	public T queryObjectByHql(String hql, Object[] param);
+	
+	/**
+	 * 方法功能：查询单个对象
+	 * 参数：hql hql语句
+	 *    param 参数List集合
+	 * 返回值：Model对象
+	 * 异常：
+	 */
+	public T queryObjectByHql(String hql, List<Object> param);
+	
+	public T queryObjectBySql(String sql,  Map<String, Object> param);
+	
+	/**
+	 * 方法功能：查询记录数
+	 * 参数：hql hql语句
+	 * 返回值：参数到的记录数
+	 * 异常：
+	 */
+	public Long queryCounts(String hql);
+	
+	/**
+	 * 方法功能：查询记录数
+	 * 参数：hql hql语句
+	 *    param 参数Map集合
+	 * 返回值：参数到的记录数
+	 * 异常：
+	 */
+	public Long queryCounts(String hql, Map<String, Object> param);
+	public BigDecimal querysqlCounts(String sql, Map<String, Object> param);
+	
+	/**
+	 * 方法功能：执行HQL语句
+	 * 参数：hql hql语句
+	 * 返回值：执行记录数
+	 * 异常：
+	 */
+	public Integer executeHql(String hql);
+	
+	/**
+	 * 方法功能：执行HQL语句
+	 * 参数：hql hql语句
+	 * 	  param 参数数组
+	 * 返回值：执行记录数
+	 * 异常：
+	 */
+	public Integer executeHql(String hql, Object[] param);
+	
+	/**
+	 * 方法功能：执行HQL语句
+	 * 参数：hql hql语句
+	 * 	  param 参数Map集合
+	 * 返回值：执行记录数
+	 * 异常：
+	 */
+	public Integer executeHql(String hql, Map<String, Object> param);
+	
+	/**
+	 * 方法功能：执行HQL语句 条件是in()
+	 * 参数：hql hql语句
+	 * 	  param 参数Map集合
+	 * 返回值：执行记录数
+	 * 异常：
+	 */
+	Integer executeHqlIn(String hql, Map<String, Object[]> param);
+	
+	/**
+	 * 方法功能：执行SQL语句
+	 * 参数：sql sql语句
+	 * 返回值：List<Map<String, String>>
+	 * 异常：
+	 */
+	List<Map<String, String>> executeSql(String sql);
+	
+	
+	
+	/**
+	 * 方法功能：SQL查询
+	 * 参数：sql sql语句
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List queryObjectsBySqlList(String sql);
+	public List<Map<String, Object>> queryObjectsBySqlObject(String sql);
+	/**
+	 * 方法功能：SQL查询
+	 * 参数：sql sql语句
+	 * 	   param 参数Map集合
+	 * 返回值：List<T>
+	 * 异常：
+	 */
+	public List<T> queryObjectsBySqlList(String sql, Map<String, Object> param,Class cls);
+
+	List<T> executeSqlT(String sql,Class cls,Map<String, Object> param);
+
+	List<T> queryObjectsBySqlList(String sql, Map<String, Object> param);
+
+	List<T> queryObjectsBySqlLists(String sql, Map<String, Object> param,
+			Integer page, Integer rows,Class cls);
+	/**
+	 * 方法功能：SQL查询
+	 * 参数：sql sql语句
+	 * 	   param 参数Map集合
+	 * 返回值：List<<Map<String,Object>>
+	 * 异常：
+	 */
+	List<Map<String, Object>> executeSql2(String sql, Map<String, Object> param);
+	
+	Integer querysqlCounts2(String sql, Map<String, Object> param);
+	List<Map<String, String>> queryObjectsBySqlListMap(String sql,Map<String, Object> param);
+	List<Map<String, Object>> queryObjectsBySqlListMap2(String sql,Map<String, Object> param);
+	T queryObjectsByHqlListOpenNewSession(String hql, Object[] param);
+
+	/**
+	 * 方法功能：执行SQL更新语句
+	 * 参数：sql sql语句,Map<String,Object>
+	 * 返回值：Integer
+	 * 异常：
+	 */
+	Integer executeSqlUpdate(String sql, Map<String, Object> param);
+	
+	/**
+	 *方法功能：获取序列 
+	 */
+	String querySequence(String sql);
+}

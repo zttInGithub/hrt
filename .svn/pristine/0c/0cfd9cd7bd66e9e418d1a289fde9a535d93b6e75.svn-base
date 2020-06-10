@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+	<class name="TerminalInfoModel" table="BILL_TERMINALINFO">
+		<id name="btID" column="BTID">
+			<generator class="sequence">
+				<param name="sequence">S_BILL_TERMINALINFO</param>
+			</generator>
+		</id>
+		<property name="unNO" column="UNNO"/>
+		<property name="termID" column="TERMID"/>
+		<property name="keyType" column="KEYTYPE"/>
+		<property name="keyContext" column="KEYCONTEXT"/>
+		<property name="keyConfirmDate" type="timestamp"  column="KEYCONFIRMDATE"/>
+		<property name="allotConfirmDate" type="timestamp" column="ALLOTCONFIRMDATE"/>
+		<property name="usedConfirmDate" type="timestamp"  column="USEDCONFIRMDATE"/>
+		<property name="status"  column="STATUS"/>
+		<property name="maintainUID"  column="MAINTAINUID"/>
+		<property name="maintainDate" type="timestamp"  column="MAINTAINDATE"/>
+		<property name="maintainType"  column="MAINTAINTYPE"/>
+		<property name="sn" column="SN"/>
+		<property name="isM35" column="ISM35"/>
+		<property name="rate" column="RATE"/>
+		<property name="secondRate" column="SECONDRATE"/>
+		<property name="scanRate" column="SCANRATE"/>
+		<property name="rebateType" column="REBATETYPE"/>
+		<property name="depositAmt" column="DEPOSITAMT" />
+		<property name="snType" column="SNTYPE" />
+		<property name="batchID" column="BATCHID" />
+		<property name="terOrderID" column="TERORDERID" />
+		<property name="machineModel" column="MACHINEMODEL" />
+		<property name="pdlid" column="PDLID" />
+		<property name="storage" column="STORAGE" />
+		<property name="outDate" column="OUTDATE" type="timestamp"/>
+		<property name="isReturnCash" column="ISRETURNCASH" />
+		<property name="isSelect" column="ISSELECT" />
+		<property name="scanRateUp" column="SCANRATEUP" />
+		<property name="huabeiRate" column="HUABEIRATE" />
+    </class>
+</hibernate-mapping>

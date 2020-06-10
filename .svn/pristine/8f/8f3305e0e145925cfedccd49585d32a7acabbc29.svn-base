@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="MerchantInfoModel" table="BILL_MERCHANTINFO">
+        <id name="bmid" column="BMID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_MERCHANTINFO</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO" />
+        <property name="mid" column="MID" />
+        <property name="rname" column="RNAME" />
+        <property name="shortName" column="SHORTNAME" />
+        <property name="printName" column="PRINTNAME" />
+        <property name="businessScope" column="BUSINESSSCOPE" />
+        <property name="email" column="EMAIL" />
+        <property name="areaCode" column="AREA_CODE" />
+        <property name="sendCode" column="SEND_CODE" />
+        <property name="busid" column="BUSID" />
+        <property name="maintainUserId" column="MAINTAINUSERID" />
+        <property name="joinConfirmDate" column="JOINCONFIRMDATE" type="timestamp" />
+        <property name="checkConfirmDate" column="CHECKCONFIRMDATE" type="timestamp" />
+        <property name="legalPerson" column="LEGALPERSON" />
+        <property name="legalType" column="LEGALTYPE" />
+        <property name="legalNum" column="LEGALNUM" />
+        <property name="legalUploadFileName" column="LEGALUPLOADFILENAME" />
+        <property name="bno" column="BNO" />
+        <property name="baddr" column="BADDR" />
+        <property name="raddr" column="RADDR"/>
+        <property name="province_name" column="PROVINCE_NAME"/>
+        <property name="QX_name" column="QX_NAME"/>
+        <property name="naturalRate" column="NATURALRATE"/>
+        <property name="cashRate" column="CASHRATE"/>
+        <property name="secondRate" column="SECONDRATE"/>
+        <property name="regMoney" column="REGMONEY" />
+        <property name="bupLoad" column="BUPLOAD" />
+        <property name="rno" column="RNO" />
+        <property name="rupLoad" column="RUPLOAD" />
+        <property name="registryNo" column="REGISTRYNO" />
+        <property name="registryUpLoad" column="REGISTRYUPLOAD" />
+        <property name="materialNo" column="MATERIALNO" />
+        <property name="materialUpLoad" column="MATERIALUPLOAD" />
+        
+        <property name="photoUpLoad" column="PHOTOUPLOAD" />
+        <property name="bigdealUpLoad" column="BIGDEALUPLOAD" />
+        <property name="materialUpLoad1" column="MATERIALUPLOAD1" />
+        <property name="materialUpLoad2" column="MATERIALUPLOAD2" />
+        <property name="materialUpLoad3" column="MATERIALUPLOAD3" />
+        <property name="materialUpLoad4" column="MATERIALUPLOAD4" />
+        <property name="materialUpLoad5" column="MATERIALUPLOAD5" />
+        <property name="materialUpLoad6" column="MATERIALUPLOAD6" /> 
+        <property name="materialUpLoad7" column="MATERIALUPLOAD7" /> 
+        
+        <property name="contractNo" column="CONTRACTNO" />
+        <property name="contractPeriod" column="CONTRACTPERIOD" />
+        <property name="industryType" column="INDUSTRYTYPE" />
+        <property name="mccid" column="MCCID" />
+        <property name="realtimeQueryTimes" column="REALTIMEQUERYTIMES" />
+        <property name="settleCycle" column="SETTLECYCLE" />
+        <property name="settleRange" column="SETTLERANGE" />
+        <property name="settleMerger" column="SETTLEMERGER" />
+        <property name="payBankId" column="PAYBANKID" />
+        <property name="bankFeeRate" column="BANKFEERATE" />
+        <property name="feeAmt" column="FEEAMT" />
+        <property name="merchantType" column="MERCHANTTYPE" />
+        <property name="dealAmt" column="DEALAMT" />
+        <property name="accType" column="ACCTYPE" />
+        <property name="bankBranch" column="BANKBRANCH" />
+        <property name="bankAccNo" column="BANKACCNO" />
+        <property name="bankAccName" column="BANKACCNAME" />
+        <property name="bankType" column="BANKTYPE" />
+        <property name="areaType" column="AREATYPE" />
+        <property name="bankArea" column="BANKAREA" />
+        <property name="contactAddress" column="CONTACTADDRESS" />
+        <property name="contactPerson" column="CONTACTPERSON" />
+        <property name="contactPhone" column="CONTACTPHONE" />
+        <property name="contactTel" column="CONTACTTEL" />
+        <property name="processContext" column="PROCESSCONTEXT" />
+        <property name="accountStatus" column="ACCOUNTSTATUS" />
+        <property name="settleStatus" column="SETTLESTATUS" />
+        <property name="maintainUid" column="MAINTAINUID" />
+        <property name="maintainDate" column="MAINTAINDATE" type="timestamp" />
+        <property name="maintainType" column="MAINTAINTYPE" />
+        <property name="approveUid" column="APPROVEUID" />
+        <property name="approveDate" column="APPROVEDATE" type="timestamp" />
+        <property name="approveStatus" column="APPROVESTATUS" />
+        <property name="isForeign" column="ISFOREIGN" />
+        <property name="feeRateV" column="FEERATE_V" />
+        <property name="feeRateM" column="FEERATE_M" />
+        <property name="feeRateJ" column="FEERATE_J" />
+        <property name="feeRateA" column="FEERATE_A" />
+        <property name="feeRateD" column="FEERATE_D" />
+        <property name="parentMID" column="PARENTMID" />
+        <property name="deposit" column="DEPOSIT" />
+        <property name="charge" column="CHARGE" />
+        <property name="ip" column="IP" />
+        <property name="isM35" column="ISM35" />
+        <property name="hybPhone" column="HYBPHONE" />
+        <property name="remarks" column="REMARKS" />
+        <property name="legalExpdate" column="LEGALEXPDATE" />
+        <property name="bnoExpdate" column="BNOEXPDATE" />
+        <property name="accNum" column="ACCNUM" />
+        <property name="accExpdate" column="ACCEXPDATE" />
+        <property name="settMethod" column="SETTMETHOD" />
+        <property name="authType" column="AUTHTYPE" />
+        <property name="qrUrl" column="QR_URL" />
+        <property name="qrUpload" column="QR_UPLOAD" />
+        <property name="transterm" column="TRANSTERM" />
+        <property name="dcashRate" column="DCASHRATE" />
+        <property name="secondLimit" column="SECONDLIMIT" />
+        <property name="secondRate2" column="SECONDRATE2" />
+        <property name="ifCode" column="IFCODE" />
+        <property name="settleMethod" column="SETTLEMETHOD" />
+        <property name="creditBankRate" column="CREDITBANKRATE" /> 
+        <property name="creditFeeamt" column="CREDITFEEAMT" /> 
+        <property name="outsideBankRate" column="OUTSIDEBANKRATE" /> 
+        <property name="exchangTime" column="EXCHANGE_TIME" /> 
+        <property name="scanRate" column="SCANRATE" /> 
+        <property name="scanRate1" column="SCANRATE1" />
+        <property name="scanRate2" column="SCANRATE2" />
+        <property name="preSetTime" column="PRESETTIME" />
+        <property name="quotaAmt" column="QUOTAAMT" /> 
+        <property name="nonConnection" column="NONCONNECTION" /> 
+        <property name="conMccid" column="CONMCCID" /> 
+        <property name="posBackImg" column="POSBACKIMG" /> 
+        <property name="laborContractImg" column="LABORCONTRACTIMG" /> 
+        <property name="valuationType" column="VALUATIONTYPE" />
+        <property name="isRebate" column="ISREBATE" />
+        <property name="ifWhite" column="IFWHITE" />
+    </class>
+</hibernate-mapping>

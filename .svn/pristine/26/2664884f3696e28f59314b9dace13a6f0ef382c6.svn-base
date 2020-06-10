@@ -1,0 +1,106 @@
+#admApp ip
+#admAppIp=http://10.51.27.60
+admAppIp=http://10.51.130.147:8080
+#hyb url
+#hybUrl=http://10.51.25.42:7001/CubeMPOSConsole/mpos/insertPosTemp.do
+hybUrl=http://10.51.132.121:7001/CubeMPOSConsole/mpos/insertPosTemp.do
+#hyb unbind
+#hybUnbindUrl=http://10.51.25.42:7001/CubeCoreConsole/mpos/removeMpos.do
+hybUnbindUrl=http\://10.51.21.101\:8866/CubeMPOSConsole/mpos/removeMpos.do
+hybCube=http://test.hybunion.com/CubeMPOSConsole
+connectionHybUrl=http://10.51.87.34:80/CubeCoreConsole/quickpay/updateQuickPay.do
+#minsheng_auth shengchan
+msUrl=http://10.51.27.32:9876
+#ceshi
+#msUrl=http://10.51.29.215:9876
+#shengchan
+#hybMerAuthUrl=http://10.51.25.42:7002/CubeMPOSConsole/mpos/setIdentityVerify.do
+#ceshi
+hybMerAuthUrl=http\://10.51.132.121\:7001/CubeMPOSConsole/mpos/setIdentityVerify.do
+
+RiskLoginOrOUTUrl=http://114.247.60.83:8080/ries_interface/loginServlet
+
+RiskElseUrl=http://114.247.60.83:8080/ries_interface/httpServlet
+
+DictionaryUrl=http\://114.247.60.83\:8080/ries_interface/dataDictServlet
+
+RiskXSD=/u01/sign/riskinfo/xsd/
+
+
+RiskPKCertificate=/u01/sign/riskinfo/xhgyzs.cer
+MemberUnitsPFX=/u01/sign/riskinfo/hydw.pfx
+
+signPWD=11111111
+DecryptPWD=11111111
+
+loginMposPhone=http://test.hybunion.com/CubeMPOSConsole/merchant/merlogin.do
+#loginHybUrl=http\://10.51.132.121\:7001/CubeMPOSConsole/mpos/newInsertTerminal.do
+loginHybUrl=http\://10.51.21.101\:8866/CubeMPOSConsole/mpos/newInsertTerminal.do
+mesHybUrl=http://10.51.132.121:7001/CubeSMSConsole/SMS/sendHYBMessage.do
+
+getHrtOpenidUrl=https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx3fdc0bdce6b10c3f&secret=a7424de5bb113da51694b140cb92307e&code=
+getOpenidUrl=https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc427f61bd6079427&secret=e2efdc239f1b52a74d3579811eb1b191&code=
+#reFund
+#hybReFundUrl=http://10.51.132.121:7001/HYBComboPayment/refund/notify.do
+hybReFundUrl=http://10.51.67.32/HYBComboPayment/refund/notify.do
+
+#credit
+creditUrl=http://loan.hyb.com.cn/credit
+#creditUrl=http://10.51.29.125:9080/creditsys
+#aggPay
+#AggPayMerHybUrl=http\://10.51.132.121\:7001/HYBAgentAdminConsole/jhmerchant/updateMerchantInfo.do
+#AggPayTerHybUrl=http\://10.51.132.121\:7001/HYBAgentAdminConsole/jhmerchant/insertTerminal.do
+AggPayMerHybUrl=http://10.51.67.32:8877/HYBAgentAdminConsole/jhmerchant/updateMerchantInfo.do
+AggPayTerHybUrl=http://10.51.67.32:8877/HYBAgentAdminConsole/jhmerchant/insertTerminal.do
+
+#chexiao
+GateWayUrl=http://api.51fen.net:8020/gateway.aspx
+GateWayVision=1.0
+GateWayKeyVision=bjhybapi
+GateWayAesKey=827B176A-FA77-4A28-BAB8-72A3D2D9C383
+webSiteId=009024
+loginName=bjhybapi
+userPWD=123456
+
+jhTaskHybUrl=http://10.51.67.32:8877/HYBAgentAdminConsole/jhmerchant/upMerName.do
+#agent
+hrtAppUrl=https\://agentmobile.hybunion.cn
+
+#jixinrenzheng
+#jxUrl=http://121.201.18.232/jxdata/api/auth/execute.do
+#JXmiyao=P3LvWD2UzIxTiVkxLGTgXtK0twPs2Fdv
+#JXmerchno=0000000000000008
+#jxUrl=http://121.201.18.232/jxdata/api/auth/execute.do
+jxUrl=http://api.jixintech.net/jxdata/api/auth/execute.do
+JXmiyao=xp74nk2SjISxOcUIzhPrOxy1RqqMGop9
+JXmerchno=0000000000000327
+
+#zhuowang
+#serverAddress = https\://prmcap.eveus.com
+#keyStorePath =D\:/certs1/
+serverAddress =https://prdcap.eveus.com
+keyStorePath =/u01/sign/riskinfo/zhuowang/
+
+#kaola
+kaolaAddress=https://access.kaolazhengxin.com:8453/authentication.do?_t=json
+customerId=201804230000000001
+
+#yidao
+yidaoAddress=https://id.exocr.com:8080/bankcard
+yidaoAppId=97470178052276225
+yidaoAppKey=6dafe90c0f544bb4aa64cf85c6272dce
+
+#juhe
+juheAddress=http://v.juhe.cn/verifybankcard3/verify
+juheAppKey=3fdb5b08f6788828e9f76545076a7f95
+juheOpenId=JH1a2f6bd0482c0dd26423fe4b3af69c23
+
+#jedis propetis
+redis.host=10.52.11.216
+redis.port=6379
+redis.passwd=lpay
+jedis.maxactive=50
+jedis.maxidle=20
+jedis.maxwait=10
+jedis.timeout=60000
+jedis.test_no_borrow=true

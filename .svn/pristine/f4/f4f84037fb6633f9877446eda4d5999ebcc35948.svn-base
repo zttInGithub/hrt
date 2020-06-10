@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.hrt.biz.bill.entity.model">
+    <class name="AgentSalesModel" table="BILL_AGENTSALESINFO">
+        <id name="busid" column="BUSID">
+            <generator class="sequence">
+				<param name="sequence">S_BILL_AGENTSALESINFO</param>
+			</generator>
+        </id>
+        <property name="unno" column="UNNO"/>
+        <property name="saleName" column="SALENAME"/>
+        <property name="phone" column="PHONE" />
+        <property name="telephone" column="TELEPHONE" />
+        <property name="email" column="EMAIL" />
+        <property name="maintainUid" column="MAINTAINUID" />
+        <property name="maintainDate" column="MAINTAINDATE" type="timestamp"/>
+        <property name="maintainType" column="MAINTAINTYPE"/>
+        <property name="userID" column="USER_ID"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,355 @@
+package com.hrt.biz.util.mpos;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+
+/**
+ * 下发公钥，rsa加解密
+ *
+ * @author lxj
+ * 2018年9月27日
+ */
+public class RSAUtil {
+    static {
+        String public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6PFSemrieexPE/ag0ApU\r" +
+                "WUhvspI6o0r80/T/y+Pnbn18tQBEOd4VRuvgyhMC57E+x/XnsuJEsJbw8v3OpdHj\r" +
+                "WG3v540JQMTu066YbkeRfQ4F3CX++4cerohxcg3MW2o63+dq3C4FcD2zoYuvX0qP\r" +
+                "/nr3Lts0vk7dRVx28X/SxPzKdd8T806aaFgz6NHFEHfWgL6lvwLTWQE+K9zf0+R6\r" +
+                "6knZvgqmhhQtH1M7sqmfs88q2pksy+7JNnorQoQouWiHYsGS0+fFPtv0XljdwaTy\r" +
+                "Pv1Knd3Isi9uaGWU9UIhaahZZqhiEZUN90R12ihQ1T9dGQIp5PQvBqs5ZWb5Anoz\r" +
+                "CQIDAQAB\r";
+        String private_key = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDo8VJ6auJ57E8T\r" +
+                "9qDQClRZSG+ykjqjSvzT9P/L4+dufXy1AEQ53hVG6+DKEwLnsT7H9eey4kSwlvDy\r" +
+                "/c6l0eNYbe/njQlAxO7TrphuR5F9DgXcJf77hx6uiHFyDcxbajrf52rcLgVwPbOh\r" +
+                "i69fSo/+evcu2zS+Tt1FXHbxf9LE/Mp13xPzTppoWDPo0cUQd9aAvqW/AtNZAT4r\r" +
+                "3N/T5HrqSdm+CqaGFC0fUzuyqZ+zzyramSzL7sk2eitChCi5aIdiwZLT58U+2/Re\r" +
+                "WN3BpPI+/Uqd3ciyL25oZZT1QiFpqFlmqGIRlQ33RHXaKFDVP10ZAink9C8Gqzll\r" +
+                "ZvkCejMJAgMBAAECggEBAIgnVZAcHVgqWWZPx1sSTo8JGdCETCXZ1MGG+GSSR1l7\r" +
+                "m4KoLzirqEAV6wPx7MbEAPAbuVwDiSa2cwt0cm7VqU6so4byFrB26ylrack7p7wy\r" +
+                "kBZHVyxpo/Nb6QNDMWlVRChPOVSMybz7M51+6fiGuneCJCyND90Ud5ztGNC7Z9Se\r" +
+                "12h5FytJbjZg9aJxcdgEvobWvYPnx6gEcLduOONKj0YAwdoKLQ3PIpkD9oGoUjVL\r" +
+                "+PGyKHTig/o+JJT9kqnZv1ym94DQbbGD2btP1qpWiY+SuiVXPrW1pgAP6n5b6zG3\r" +
+                "eJZl+3iiOmQABcQIv4whXOJffuBBX8784YSXjd2L/AECgYEA/9EA2TEC8AhPDYCx\r" +
+                "WhSH+4Gui/Rypcf+Ko9HkOiPkYmiPlsi+2dDRYznsceaAaTW8jHuE4BiBDtJVMbx\r" +
+                "v5TZIf2SCn+ylnUn3z8uRbS/evI107Dk1ehqEvuO7HYShpIQIlsje7OvUrPTKUVF\r" +
+                "gW7S97nBCrmNgD5cUPGMr45LzcECgYEA6Rwd3iE0MrXMQRN1dtR9YotUxe2nXvtr\r" +
+                "I8kSkqKLOj0Isu6X5+jGnCjgwyCgaaqFxCYx6GUnGfv3F0mAbB0qfNYuGfCvQGQw\r" +
+                "+tzwwlpN8vmqyGsEtc5MtCaj+9h+wvgwoEbcUJG/DoF1Uuqt4iWUIGDXp77ajXjJ\r" +
+                "+q/3TTPMR0kCgYByjIIWvy2TkgTkBPZlYcAqTL1+Ce20ckNLh3ECYEC5aKnvxht5\r" +
+                "+5lR8XBmWPyLM+bT+Kukq944CtwhTBxAL0SzRbo5XUj4umkqPD5aFD+RrBeSPSma\r" +
+                "50FoUqCDHbPZ8lmrKKhQ4frly4QIfO5MsPVi3Bim1sOX41SvIhpfGhazgQKBgBYk\r" +
+                "To33125tqD4SLBkia9p9Y4r9XOV/uhiHE9WLzO+2NmpQkWs8yAizNU4zfikrQlN0\r" +
+                "UU9CtGkabsjueV1Lk+qRqYVbQDo8ig56CABd9YN7xYYN7D+cndqKxQ657Kh2TKAc\r" +
+                "uvaIMX6eO1ep5ORTL3O33yQW08mWTJEcP8A8iE3JAoGAedLmAgycu02MwAtaFZbv\r" +
+                "/yrE+BX976trG8xG5XbFVKQAv4ArSl9R2vID5/UF+lgcIcqZt1tGwx3+5itx1H3N\r" +
+                "Z0K/oUfNl/EIMua0EDVpep5AgsvboCXSGH7ApjSYzs8JoFU33kJ1xrVrnLth0Fi+\r" +
+                "o0IPjE+kt1ei2eZXJkIcrP8=\r";
+        try {
+            loadPublicKey(public_key);
+            loadPrivateKey(private_key);
+        } catch (Exception e) {
+            System.out.println("初始化错误");
+        }
+
+    }
+
+    private static String publickeyString;
+    private static String privatekeyString;
+
+    public static String getPublickeyString() {
+        return publickeyString;
+    }
+
+
+    public static String getPrivatekeyString() {
+        return privatekeyString;
+    }
+
+    private RSAUtil() {
+    }
+
+    public static String decryptWithBase64(String base64String) {
+        byte[] binaryData = new byte[0];
+        try {
+            binaryData = decrypt(getPrivateKey(), new BASE64Decoder().decodeBuffer(base64String));
+        } catch (Exception e) {
+        }
+        String string = new String(binaryData);
+        return string;
+    }
+
+    public static String encryptWithBase64(String string) throws Exception {
+        byte[] binaryData = encrypt(getPublicKey(), string.getBytes());
+        String base64String = new BASE64Encoder().encodeBuffer(binaryData);
+        return base64String;
+    }
+
+    /**
+     * 私钥
+     */
+    private static RSAPrivateKey privateKey;
+
+    /**
+     * 公钥
+     */
+    private static RSAPublicKey publicKey;
+
+    /**
+     * 获取私钥
+     *
+     * @return 当前的私钥对象
+     */
+    public static RSAPrivateKey getPrivateKey() {
+        return privateKey;
+    }
+
+    /**
+     * 获取公钥
+     *
+     * @return 当前的公钥对象
+     */
+    public static RSAPublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    /**
+     * 从文件中输入流中加载公钥
+     *
+     * @param in 公钥输入流
+     * @throws Exception 加载公钥时产生的异常
+     */
+    public void loadPublicKey(InputStream in) throws Exception {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String readLine = null;
+            StringBuilder sb = new StringBuilder();
+            while ((readLine = br.readLine()) != null) {
+                if (readLine.charAt(0) == '-') {
+                    continue;
+                } else {
+                    sb.append(readLine);
+                    sb.append('\r');
+                }
+            }
+            loadPublicKey(sb.toString());
+        } catch (IOException e) {
+            throw new Exception("公钥数据流读取错误");
+        } catch (NullPointerException e) {
+            throw new Exception("公钥输入流为空");
+        }
+    }
+
+    /**
+     * 从字符串中加载公钥
+     *
+     * @param publicKeyStr 公钥数据字符串
+     * @throws Exception 加载公钥时产生的异常
+     */
+    public static void loadPublicKey(String publicKeyStr) throws Exception {
+        try {
+            BASE64Decoder base64Decoder = new BASE64Decoder();
+            byte[] buffer = base64Decoder.decodeBuffer(publicKeyStr);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
+            publicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
+            publickeyString = publicKeyStr;
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("无此算法");
+        } catch (InvalidKeySpecException e) {
+            throw new Exception("公钥非法");
+        } catch (IOException e) {
+            throw new Exception("公钥数据内容读取错误");
+        } catch (NullPointerException e) {
+            throw new Exception("公钥数据为空");
+        }
+    }
+
+    /**
+     * 从文件中加载私钥
+     *
+     * @param in
+     * @throws Exception
+     */
+    public void loadPrivateKey(InputStream in) throws Exception {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String readLine = null;
+            StringBuilder sb = new StringBuilder();
+            while ((readLine = br.readLine()) != null) {
+                if (readLine.charAt(0) == '-') {
+                    continue;
+                } else {
+                    sb.append(readLine);
+                    sb.append('\r');
+                }
+            }
+            loadPrivateKey(sb.toString());
+        } catch (IOException e) {
+            throw new Exception("私钥数据读取错误");
+        } catch (NullPointerException e) {
+            throw new Exception("私钥输入流为空");
+        }
+    }
+
+    public static void loadPrivateKey(String privateKeyStr) throws Exception {
+        try {
+            BASE64Decoder base64Decoder = new BASE64Decoder();
+            byte[] buffer = base64Decoder.decodeBuffer(privateKeyStr);
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            privateKey = (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+            privatekeyString = privateKeyStr;
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("无此算法");
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+            throw new Exception("私钥非法");
+        } catch (IOException e) {
+            throw new Exception("私钥数据内容读取错误");
+        } catch (NullPointerException e) {
+            throw new Exception("私钥数据为空");
+        }
+
+    }
+
+    /**
+     * 加密过程
+     *
+     * @param publicKey     公钥
+     * @param plainTextData 明文数据
+     * @return
+     * @throws Exception 加密过程中的异常信息
+     */
+    public static byte[] encrypt(RSAPublicKey publicKey, byte[] plainTextData) throws Exception {
+        if (publicKey == null) {
+            throw new Exception("加密公钥为空, 请设置");
+        }
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance("RSA");// , new BouncyCastleProvider());
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] output = cipher.doFinal(plainTextData);
+            return output;
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("无此加密算法");
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvalidKeyException e) {
+            throw new Exception("加密公钥非法,请检查");
+        } catch (IllegalBlockSizeException e) {
+            throw new Exception("明文长度非法");
+        } catch (BadPaddingException e) {
+            throw new Exception("明文数据已损坏");
+        }
+    }
+
+    /**
+     * 解密过程
+     *
+     * @param privateKey 私钥
+     * @param cipherData 密文数据
+     * @return 明文
+     * @throws Exception 解密过程中的异常信息
+     */
+    public static byte[] decrypt(RSAPrivateKey privateKey, byte[] cipherData) throws Exception {
+        if (privateKey == null) {
+            throw new Exception("解密私钥为空, 请设置");
+        }
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance("RSA");// , new BouncyCastleProvider());
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            byte[] output = cipher.doFinal(cipherData);
+            return output;
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("无此解密算法");
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvalidKeyException e) {
+            throw new Exception("解密私钥非法,请检查");
+        } catch (IllegalBlockSizeException e) {
+            throw new Exception("密文长度非法");
+        } catch (BadPaddingException e) {
+            throw new Exception("密文数据已损坏");
+        }
+    }
+
+    /**
+     * 字节数据转字符串专用集合
+     */
+    private static final char[] HEX_CHAR = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+            'f'};
+
+    /**
+     * 字节数据转十六进制字符串
+     *
+     * @param data 输入数据
+     * @return 十六进制内容
+     */
+    public static String byteArrayToString(byte[] data) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < data.length; i++) {
+            // 取出字节的高四位 作为索引得到相应的十六进制标识符 注意无符号右移
+            stringBuilder.append(HEX_CHAR[(data[i] & 0xf0) >>> 4]);
+            // 取出字节的低四位 作为索引得到相应的十六进制标识符
+            stringBuilder.append(HEX_CHAR[(data[i] & 0x0f)]);
+            if (i < data.length - 1) {
+                stringBuilder.append(' ');
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 获取AESkey
+     *
+     * @param base64Str
+     * @return
+     */
+    public static String subMild16GetAesKey(String base64Str) {
+        String desStr = decryptWithBase64(base64Str);
+        if (desStr.length() != 48) {
+            System.out.println("null");
+            throw new RuntimeException("解密后位数不够48：" + desStr);
+        }
+        return desStr.substring(16, 32);
+    }
+
+    public static void main(String[] args) throws Exception {
+        try {
+            String test = "4cMBwJNUvsk8PGbh";
+            String testRSAEnWith64 = RSAUtil.encryptWithBase64(test);
+            String testRSADeWith64 = RSAUtil.decryptWithBase64(testRSAEnWith64);
+            System.out.println("\nEncrypt: \n" + testRSAEnWith64);
+            System.out.println("\nDecrypt: \n" + testRSADeWith64);
+
+//			// 请粘贴来自IOS端加密后的字符串
+            String rsaBase46StringFromIOS = "ETVa8h4gvTwqU+f46/83ACAXXqqaV816bXc/x5gAyQ3i/vakdttkbXfOeRGORhwWzFieQ2Y5sfpw8MMAQMaH0aZ7sdlUKLncCY6OdGzicXwLtbC7jyAcQgNcuxc53OzNa+Ds1ryPr+XFbkcIK1Yy3AjhUm1ol3NgdWk2e1kZ8AVWcl4E8vXdkTkm9BjNhCjlX+KpV2bLQBXh1u5pmDgDdfdyZGs2BA9LwLCujWRG/59xraRP3oPonN6mrR3oHuL+wqCnbQ5PX8DaZa1lE6LqCIHD2Zuh5Hsfi7+bcBxM3IaAtOHceqLbqHUOmu8Ql3dfCe0l+SLMgRVsxQr1YlMK4Q==";
+
+            String decryptStringFromIOS = RSAUtil.decryptWithBase64(rsaBase46StringFromIOS);
+            System.out.println("Decrypt result from ios client: \n" + decryptStringFromIOS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
